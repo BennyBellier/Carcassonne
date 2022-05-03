@@ -53,7 +53,7 @@ public class Configuration {
   String getFileLoggerName() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
     Date date = new Date();
-    return "Carcassonne_" + formatter.format(date) + ".log";
+    return formatter.format(date) + ".log";
   }
 
   public Logger logger() {
