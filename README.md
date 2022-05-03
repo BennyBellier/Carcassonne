@@ -1,18 +1,18 @@
-## Getting Started
+## Carcassonne
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Carcassonne est un jeu de plateau, nous vous proposons ici une version informatisée du jeu.
 
-## Folder Structure
+## Règles
 
-The workspace contains two folders by default, where:
+## Comment jouer
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+### Infrastructure
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Arborescence des fichiers
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Le dépôt contient deux dossiers princpaux, où :
 
-## Dependency Management
+- `src`: le dossier pour gérer les sources
+- `lib`: le dossier pour maintenir les dépendances
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Pendant ce temps, les fichiers de sortie compilés seront générés dans le dossier `bin`.

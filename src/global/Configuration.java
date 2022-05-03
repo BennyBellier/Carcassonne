@@ -2,7 +2,6 @@ package global;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.NoSuchElementException;
