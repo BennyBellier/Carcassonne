@@ -1,2 +1,44 @@
-mai 03, 2022 8:52:49 PM Carcassonne main
-INFOS: Lancement de l'application
+mai 04, 2022 5:46:32 PM Carcassonne main
+LE PLUS PRÉCIS: Lancement de l'application
+mai 04, 2022 5:46:32 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : START -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
+mai 04, 2022 5:46:32 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
+mai 04, 2022 5:46:32 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (1, 1)
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (-1, 0)
+mai 04, 2022 5:46:32 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : TOWN et START = true
+mai 04, 2022 5:46:32 PM model.GameSet redimTiles
+INFOS: Redimensionnement de la matrice : 3, 3 -> 5, 5
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+INFOS: Ajout de la tuile : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false au coordonnées (1, 2)
+mai 04, 2022 5:46:32 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false
+mai 04, 2022 5:46:32 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (0, -1)
+mai 04, 2022 5:46:32 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : CITY_OPEN et START = true
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+INFOS: Ajout de la tuile : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false au coordonnées (2, 1)
+mai 04, 2022 5:46:32 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false
+mai 04, 2022 5:46:32 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (2, 0)
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+AVERTISSEMENT: Impossible d'ajouter la tuile : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false au coordonnées (4, 2), aucune tuiles n'est à proximité
+mai 04, 2022 5:46:32 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = true
+mai 04, 2022 5:46:32 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (1, 0)
+mai 04, 2022 5:46:32 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : TOWN et START = false
+mai 04, 2022 5:46:32 PM model.GameSet addTile
+AVERTISSEMENT: Impossible d'ajouter la tuile : TOWN -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = true au coordonnées (3, 2)
