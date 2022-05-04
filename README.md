@@ -6,6 +6,8 @@ Carcassonne est un jeu de plateau, nous vous proposons ici une version informati
 
 ## Comment jouer
 
+
+----
 ### Infrastructure
 
 ## Arborescence des fichiers
