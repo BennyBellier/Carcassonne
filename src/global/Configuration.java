@@ -50,7 +50,7 @@ public class Configuration {
   }
 
   String getFileLoggerName() {
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
     Date date = new Date();
     return formatter.format(date) + ".log";
   }
