@@ -1,336 +1,346 @@
-mai 04, 2022 9:26:34 PM Carcassonne main
+mai 05, 2022 8:07:16 PM Carcassonne main
 LE PLUS PRÉCIS: Lancement de l'application
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : START -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM Carcassonne main
-PRÉCIS: Batterie de tests sur le plateau
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.GameSet getStartTilePoint
-INFOS: Récupération des coordonnées de la tuile de départ : (1, 1)
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-INFOS: Essaie de placement d'une tuile en (-1, 0)
-mai 04, 2022 9:26:34 PM model.Tile canConnect
-INFOS: Connexion entre la tuile : TOWN et START = true
-mai 04, 2022 9:26:34 PM model.GameSet redimTiles
-INFOS: Redimensionnement de la matrice : 3, 3 -> 5, 5
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-INFOS: Ajout de la tuile : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false au coordonnées (1, 2)
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.GameSet getStartTilePoint
-INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-INFOS: Essaie de placement d'une tuile en (0, -1)
-mai 04, 2022 9:26:34 PM model.Tile canConnect
-INFOS: Connexion entre la tuile : CITY_OPEN et START = true
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-INFOS: Ajout de la tuile : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false au coordonnées (2, 1)
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.GameSet getStartTilePoint
-INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-INFOS: Essaie de placement d'une tuile en (2, 0)
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-AVERTISSEMENT: Impossible d'ajouter la tuile : CITY_OPEN -> north = LAND, south = CITY_OPEN, east = LAND, ouest = CITY_OPEN, avec blason = false au coordonnées (4, 2), aucune tuiles n'est à proximité
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = true
-mai 04, 2022 9:26:34 PM model.GameSet getStartTilePoint
-INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-INFOS: Essaie de placement d'une tuile en (1, 0)
-mai 04, 2022 9:26:34 PM model.Tile canConnect
-INFOS: Connexion entre la tuile : TOWN et START = false
-mai 04, 2022 9:26:34 PM model.GameSet addTile
-AVERTISSEMENT: Impossible d'ajouter la tuile : TOWN -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = true au coordonnées (3, 2)
-mai 04, 2022 9:26:34 PM Carcassonne main
-PRÉCIS: Batterie de tests sur la pioche
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = ROAD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = CITY_OPEN, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = CITY_OPEN, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = CITY_OPEN, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = LAND, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = LAND, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ABBEY -> north = LAND, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ABBEY -> north = LAND, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = LAND, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = CITY_OPEN, south = ROAD, east = LAND, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Tile <init>
-INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche init_pioche
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = CITY, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ABBEY -> north = FIELD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = CITY, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ABBEY -> north = FIELD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = CITY, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = FIELD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = FIELD, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = ROAD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = CITY, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = FIELD, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = ROAD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = FIELD, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = CITY, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = FIELD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = FIELD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = CITY, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche initPioche
 INFOS: Initialisation de la pioche avec 71 tuiles
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = LAND, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = ROAD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = CITY_OPEN, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = CITY_OPEN, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = CITY_OPEN, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = LAND, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = LAND, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = LAND, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = true
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ABBEY -> north = LAND, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = LAND, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ABBEY -> north = LAND, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = CITY_OPEN, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ABBEY -> north = LAND, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile TOWN -> north = LAND, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = LAND, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile LAND -> north = CITY_OPEN, south = LAND, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = CITY_OPEN, south = ROAD, east = LAND, ouest = ROAD, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile CITY_OPEN -> north = CITY_OPEN, south = LAND, east = CITY_OPEN, ouest = CITY_OPEN, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = LAND, south = ROAD, east = ROAD, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
-INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = LAND, ouest = LAND, avec blason = false
-mai 04, 2022 9:26:34 PM model.Pioche piocheTuile
+mai 05, 2022 8:07:16 PM Carcassonne main
+PRÉCIS: Batterie de tests sur le plateau
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (1, 1)
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (-1, 0)
+mai 05, 2022 8:07:16 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : TOWN et ROAD = true
+mai 05, 2022 8:07:16 PM model.GameSet redimTiles
+INFOS: Redimensionnement de la matrice : 3, 3 -> 5, 5
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Ajout de la tuile : TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false au coordonnées (1, 2)
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = FIELD, south = CITY, east = FIELD, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (0, -1)
+mai 05, 2022 8:07:16 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : CITY et ROAD = true
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Ajout de la tuile : CITY -> north = FIELD, south = CITY, east = FIELD, ouest = CITY, avec blason = false et lié = true au coordonnées (2, 1)
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : CITY -> north = FIELD, south = CITY, east = FIELD, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (2, 0)
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+AVERTISSEMENT: Impossible d'ajouter la tuile : CITY -> north = FIELD, south = CITY, east = FIELD, ouest = CITY, avec blason = false et lié = true au coordonnées (4, 2), aucune tuiles n'est à proximité
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : TOWN -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = true et lié = false
+mai 05, 2022 8:07:16 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (1, 0)
+mai 05, 2022 8:07:16 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : TOWN et ROAD = false
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+AVERTISSEMENT: Impossible d'ajouter la tuile : TOWN -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = true et lié = false au coordonnées (3, 2)
+mai 05, 2022 8:07:16 PM model.Tile <init>
+INFOS: Génération d'une tuile de type : FIELD -> north = FIELD, south = FIELD, east = CITY, ouest = FIELD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.GameSet getStartTilePoint
+INFOS: Récupération des coordonnées de la tuile de départ : (2, 2)
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Essaie de placement d'une tuile en (1, -1)
+mai 05, 2022 8:07:16 PM model.Tile canConnect
+INFOS: Connexion entre la tuile : FIELD et CITY = true
+mai 05, 2022 8:07:16 PM model.GameSet addTile
+INFOS: Ajout de la tuile : FIELD -> north = FIELD, south = FIELD, east = CITY, ouest = FIELD, avec blason = true et lié = true au coordonnées (3, 1)
+mai 05, 2022 8:07:16 PM Carcassonne main
+PRÉCIS: Batterie de tests sur la pioche
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = CITY, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ABBEY -> north = FIELD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = CITY, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ABBEY -> north = FIELD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = CITY, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = FIELD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = FIELD, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = ROAD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = CITY, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = FIELD, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = ROAD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = FIELD, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ABBEY -> north = FIELD, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = CITY, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile CITY -> north = CITY, south = FIELD, east = CITY, ouest = CITY, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = true et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = FIELD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = FIELD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = FIELD, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile TOWN -> north = CITY, south = ROAD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = ROAD, east = CITY, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = ROAD, south = ROAD, east = FIELD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = CITY, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = CITY, south = FIELD, east = ROAD, ouest = ROAD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile ROAD -> north = FIELD, south = ROAD, east = ROAD, ouest = FIELD, avec blason = false et lié = false
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
+INFOS: Piochage de la tuile FIELD -> north = CITY, south = FIELD, east = FIELD, ouest = FIELD, avec blason = false et lié = true
+mai 05, 2022 8:07:16 PM model.Pioche piocheTuile
 AVERTISSEMENT: Impossible de piocher, la pioche est vide

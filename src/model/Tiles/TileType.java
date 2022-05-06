@@ -1,15 +1,15 @@
-package model;
+package model.Tiles;
 
 public enum TileType {
-  START,
-  TOWN,
-  CITY_OPEN,
-  ROAD,
-  ABBEY,
-  LAND;
+  START, // tuile de départ
+  TOWN, // petit ville au centre d'une seul tuile
+  CITY, // ville sur plusieurs tuiles
+  ROAD, // route
+  ABBEY, // abbey
+  FIELD; // prairie
 
   /**
-   * Retourne une chaine de caractère contenant qu'une lettre pour décrire la tuile
+   ** Retourne une chaine de caractère contenant qu'une lettre pour décrire la tuile
    * @return String
    */
   public String toOneCharString() {
@@ -18,21 +18,21 @@ public enum TileType {
         return "S";
       case TOWN:
         return "T";
-      case CITY_OPEN:
+      case CITY:
         return "C";
       case ROAD:
         return "R";
       case ABBEY:
         return "A";
-      case LAND:
-        return "L";
+      case FIELD:
+        return "F";
       default:
         return "";
     }
   }
 
   /**
-   * Retourne une chaine de caractère retournant le type de tuile
+   ** Retourne une chaine de caractère retournant le type de tuile
    */
   public String toString() {
     switch (this) {
@@ -40,14 +40,14 @@ public enum TileType {
         return "START";
       case TOWN:
         return "TOWN";
-      case CITY_OPEN:
-        return "CITY_OPEN";
+      case CITY:
+        return "CITY";
       case ROAD:
         return "ROAD";
       case ABBEY:
         return "ABBEY";
-      case LAND:
-        return "LAND";
+      case FIELD:
+        return "FIELD";
       default:
         return "";
     }

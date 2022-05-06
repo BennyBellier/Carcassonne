@@ -2,6 +2,10 @@ package model;
 
 import global.Configuration;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Tiles.*;
 
 public class GameSet {
 
@@ -9,24 +13,16 @@ public class GameSet {
   private Tile start;
 
   /**
-   * Initialise le plateau en y mettant la tuile de départ
+   ** Initialise le plateau en y mettant la tuile de départ
    */
   public GameSet() {
     tiles = new Tile[3][3];
-    start =
-      new Tile(
-        TileType.START,
-        TileType.CITY_OPEN,
-        TileType.ROAD,
-        TileType.LAND,
-        TileType.ROAD,
-        false
-      );
+    start = Tile.getStartTile();
     tiles[1][1] = start;
   }
 
   /**
-   * Retourne les coordonnées courante de la tuile de départ dans la matrice
+   ** Retourne les coordonnées courante de la tuile de départ dans la matrice
    * @return int
    */
   public Point getStartTilePoint() {
@@ -47,11 +43,12 @@ public class GameSet {
         }
       }
     }
+    Configuration.instance().logger().severe("Tuile de départ non trouvable");
     return null;
   }
 
   /**
-   * Redimensionne la matrice en ajoutant 1 colonnes de chaque côté du plateau courant
+   ** Redimensionne la matrice en ajoutant 1 colonnes de chaque côté du plateau courant
    */
   void redimTiles() {
     Tile[][] newTiles = new Tile[tiles.length + 2][tiles[0].length + 2];
@@ -77,7 +74,7 @@ public class GameSet {
   }
 
   /**
-   * Retourne vraie si il n'y a pas de tuiles sur les 4 côtés de la tuile à la position (x, y)
+   ** Retourne vraie si il n'y a pas de tuiles sur les 4 côtés de la tuile à la position (x, y)
    * @param x
    * @param y
    * @return boolean
@@ -92,7 +89,7 @@ public class GameSet {
   }
 
   /**
-   * Retourne vraie si une tuile se situe au coordonnées (x, y)
+   ** Retourne vraie si une tuile se situe au coordonnées (x, y)
    * @param x
    * @param y
    * @return boolean
@@ -104,7 +101,17 @@ public class GameSet {
   }
 
   /**
-   * Ajoute une tuile t aux coordonnées (x, y) si cela est possible
+   ** Retourne une copie de la matrice contenant les tuiles
+   * @return Tile[][]
+   */
+  public Tile[][] cloneSet() {
+    Tile[][] cp = tiles.clone();
+    for (int i = 0; i < cp.length; i++) cp[i] = tiles[i].clone();
+    return cp;
+  }
+
+  /**
+   ** Ajoute une tuile t aux coordonnées (x, y) si cela est possible
    * @param t Tiles
    * @param x int
    * @param y int
@@ -122,6 +129,14 @@ public class GameSet {
 
     x = (int) start.getX() + x;
     y = (int) start.getY() + y;
+
+    if (y < -1 || y > tiles.length + 1 || x < -1 || x > tiles[y].length + 1) {
+      Configuration
+        .instance()
+        .logger()
+        .severe("Impossible d'ajouter une tuile en dehors du plateau");
+      return false;
+    }
 
     if (noTilesAround(x, y)) {
       Configuration
@@ -228,8 +243,27 @@ public class GameSet {
     return true;
   }
 
+  public List<String> meeplePlacementPossible(Tile t) {
+    List<String> card = new ArrayList<>();
+    if (t.north() != TileType.FIELD)
+      card.add("n");
+    if (t.south() != TileType.FIELD)
+      card.add("s");
+    if (t.east() != TileType.FIELD)
+      card.add("e");
+    if (t.west() != TileType.FIELD)
+      card.add("w");
+    if (t.center() != TileType.FIELD && t.center() != TileType.TOWN)
+      card.add("c");
+    return card;
+  }
+
+  public Point tileAllowed(Tile t) {
+    return new Point(500,500);
+  }
+
   /**
-   * Retourne un String du plateau de tuiles
+   ** Retourne un String du plateau de tuiles
    * @return String
    */
   public String toString() {

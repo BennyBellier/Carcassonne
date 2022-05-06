@@ -5,22 +5,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import java.util.Set;
 import model.Graph.*;
 import model.Meeple;
 import model.Tiles.*;
 
-public class ProjectRoad extends Project {
+public class ProjectCity extends Project {
 
   private ArrayList<Meeple> meeples = new ArrayList<>();
 
-  /**
-   ** Génère un projet de type route au coordonnées déterminé par le meeple
-   * @param meeple Meeple placé sur la route
-   * @param set Tile[][] clone du plateau courant
-   */
-  public ProjectRoad(Meeple meeple, Tile[][] set) {
+  public ProjectCity(Meeple meeple, Tile[][] set) {
     super();
     meeples.add(meeple);
     g.addNode(set[meeple.getX()][meeple.getY()]);
@@ -28,7 +22,7 @@ public class ProjectRoad extends Project {
       .instance()
       .logger()
       .info(
-        "Création d'un projet route sur la case (" +
+        "Création d'un projet ville sur la case (" +
         meeple.getX() +
         ", " +
         meeple.getY() +
@@ -36,7 +30,7 @@ public class ProjectRoad extends Project {
       );
   }
 
-  /**
+    /**
    ** Evalue la valeur et l'état du projet de type route
    * <p>
    * L'évaluation se fait récursivement
@@ -52,11 +46,11 @@ public class ProjectRoad extends Project {
       .instance()
       .logger()
       .info(
-        "Évaluation du projet route aux coordonnées (" + x + ", " + y + ")"
+        "Évaluation du projet ville aux coordonnées (" + x + ", " + y + ")"
       );
     __evaluate(g, set, x, y, meeples.get(0).getCardinal());
 
-    if (isRoadFinish(g, g.getFirstNode()))
+    if (isCityFinish(g, g.getFirstNode()))
       finish = true;
     else
       finish = false;
@@ -65,7 +59,7 @@ public class ProjectRoad extends Project {
       .instance()
       .logger()
       .info(
-        "Le projet de route aux coordonnées (" +
+        "Le projet de ville aux coordonnées (" +
         x +
         ", " +
         y +
@@ -77,23 +71,23 @@ public class ProjectRoad extends Project {
       );
   }
 
-  /**
+    /**
    ** Détermine si le projet et fini ou non
    * <p>
    * Utilisation de la récurence pour tester si toutes les extrémités
-   * du graph sont des tuiles qui finissent une route
+   * du graph sont des tuiles qui ferme une ville
    * <p>
-   *! Attention, si il n'y as pas de tuiles alors la route n'est pas finie
+   *! Attention, si il n'y as pas de tuiles alors la ville n'est pas fermé
    * @param g Graph contenant les noeuds du projet
    * @param t la tuile de départ
-   * @return vraie si la route est complété (toutes les extrémités sont fermés)
+   * @return vraie si la ville est complété (toutes les extrémités sont fermés)
    */
-  boolean isRoadFinish(Graph<Tile> g, Tile t) {
-    if (g.getVoisins(t).size() == 0 && isEnder(t))
+  boolean isCityFinish(Graph<Tile> g, Tile t) {
+    if (g.getVoisins(t).size() == 0 && t.cityEnder())
       return true;
     else if (g.getVoisins(t).size() > 0) {
       for (Tile v : g.getVoisins(t)) {
-        if (isRoadFinish(g, v) == false)
+        if (isCityFinish(g, v) == false)
           return false;
       }
     }
@@ -112,78 +106,78 @@ public class ProjectRoad extends Project {
     Tile t = set[x][y];
     if (t != null && !g.hasNode(t)) {
       g.addNode(t);
-      if (!isEnder(t)) {
+      if (!t.cityEnder()) {
         switch (card) {
           case "c":
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == TileType.CITY) {
               g.addEdge(t, set[x][y + 1]);
               __evaluate(g, set, x, y + 1, "s");
             }
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == TileType.CITY) {
               g.addEdge(t, set[x + 1][y]);
               __evaluate(g, set, x + 1, y, "w");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == TileType.CITY) {
               g.addEdge(t, set[x][y - 1]);
               __evaluate(g, set, x, y - 1, "n");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == TileType.CITY) {
               g.addEdge(t, set[x - 1][y]);
               __evaluate(g, set, x - 1, y, "e");
             }
             break;
           case "n":
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == TileType.CITY) {
               g.addEdge(t, set[x + 1][y]);
               __evaluate(g, set, x + 1, y, "w");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == TileType.CITY) {
               g.addEdge(t, set[x][y - 1]);
               __evaluate(g, set, x, y - 1, "n");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == TileType.CITY) {
               g.addEdge(t, set[x - 1][y]);
               __evaluate(g, set, x - 1, y, "e");
             }
             break;
           case "s":
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == TileType.CITY) {
               g.addEdge(t, set[x][y + 1]);
               __evaluate(g, set, x, y + 1, "s");
             }
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == TileType.CITY) {
               g.addEdge(t, set[x + 1][y]);
               __evaluate(g, set, x + 1, y, "w");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == TileType.CITY) {
               g.addEdge(t, set[x - 1][y]);
               __evaluate(g, set, x - 1, y, "e");
             }
             break;
           case "e":
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == TileType.CITY) {
               g.addEdge(t, set[x][y + 1]);
               __evaluate(g, set, x, y + 1, "s");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == TileType.CITY) {
               g.addEdge(t, set[x][y - 1]);
               __evaluate(g, set, x, y - 1, "n");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == TileType.CITY) {
               g.addEdge(t, set[x - 1][y]);
               __evaluate(g, set, x - 1, y, "e");
             }
             break;
           case "w":
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == TileType.CITY) {
               g.addEdge(t, set[x][y + 1]);
               __evaluate(g, set, x, y + 1, "s");
             }
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == TileType.CITY) {
               g.addEdge(t, set[x + 1][y]);
               __evaluate(g, set, x + 1, y, "w");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == TileType.CITY) {
               g.addEdge(t, set[x][y - 1]);
               __evaluate(g, set, x, y - 1, "n");
             }
@@ -196,22 +190,9 @@ public class ProjectRoad extends Project {
   }
 
   /**
-   ** Retourne vraie si le centre de la tuile n'est pas un élément qui fini une route
-   * @param t Tile à tester
-   * @return vraie si la route se termine au centre de la tuile
-   */
-  boolean isEnder(Tile t) {
-    return (
-      t.center() == TileType.ABBEY ||
-      t.center() == TileType.CITY ||
-      t.center() == TileType.TOWN
-    );
-  }
-
-    /**
-   * Retourne le ou les identifiants des joueurs qui possèdent la route
+   * Retourne le ou les identifiants des joueurs qui possèdent la ville
    * @param nbP entier : Nombre de joueur dans la partie
-   * @return int[] tableau contenant le ou les identifiants des joueurs qui possédent la route
+   * @return int[] tableau contenant le ou les identifiants des joueurs qui possédent la ville
    */
   @Override
   public int[] owner(int nbP) {
