@@ -1,8 +1,7 @@
 package model;
 
 import global.Configuration;
-import model.Tiles.Tile;
-import model.Tiles.TileType;
+import model.Tiles.*;
 
 import java.util.*;
 
@@ -52,7 +51,7 @@ public class Pioche {
       int typeTuile = r.nextInt(24);
       if (numberPerTile[typeTuile][1] != 0) {
         numberPerTile[typeTuile][1] -= 1;
-        pioche.add(allp, getTileFromInt(typeTuile));
+        pioche.add(allp, Tile.getTileFromInt(typeTuile));
         ++allp;
       }
     }
@@ -75,255 +74,11 @@ public class Pioche {
   }
 
   /**
-   ** Créer et retourne une tuile correspondant à son numéro
-   * @param i int
-   * @return Tile
+   ** Retourne l'état de la pioche
+   * @return vraie si la pioche est vide
    */
-  Tile getTileFromInt(int i) {
-    switch (i) {
-      case 0:
-        return new Tile(
-          TileType.ABBEY,
-          TileType.FIELD,
-          TileType.FIELD,
-          TileType.FIELD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 1:
-        return new Tile(
-          TileType.ABBEY,
-          TileType.FIELD,
-          TileType.FIELD,
-          TileType.ROAD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 2:
-        return new Tile(
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          true,
-          true
-        );
-      case 3:
-        return new Tile(
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          false,
-          true
-        );
-      case 4:
-        return new Tile(
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          true,
-          true
-        );
-      case 5:
-        return new Tile(
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.ROAD,
-          TileType.CITY,
-          false,
-          true
-        );
-      case 6:
-        return new Tile(
-          TileType.CITY,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          true,
-          true
-        );
-      case 7:
-        return new Tile(
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.FIELD,
-          false,
-          true
-        );
-      case 8:
-        return new Tile(
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.FIELD,
-          true,
-          true
-        );
-      case 9:
-        return new Tile(
-          TileType.ROAD,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.ROAD,
-          TileType.ROAD,
-          false,
-          true
-        );
-      case 10:
-        return new Tile(
-          TileType.ROAD,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.ROAD,
-          TileType.ROAD,
-          true,
-          true
-        );
-      case 11:
-        return new Tile(
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          false,
-          true
-        );
-      case 12:
-        return new Tile(
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          true,
-          true
-        );
-      case 13:
-        return new Tile(
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 14:
-        return new Tile(
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 15:
-        return new Tile(
-          TileType.FIELD,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.FIELD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 16:
-        return new Tile(
-          TileType.ROAD,
-          TileType.CITY,
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 17:
-        return new Tile(
-          TileType.ROAD,
-          TileType.CITY,
-          TileType.FIELD,
-          TileType.ROAD,
-          TileType.ROAD,
-          false,
-          false
-        );
-      case 18:
-        return new Tile(
-          TileType.TOWN,
-          TileType.CITY,
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.ROAD,
-          false,
-          false
-        );
-      case 19:
-        return new Tile(
-          TileType.ROAD,
-          TileType.CITY,
-          TileType.ROAD,
-          TileType.FIELD,
-          TileType.ROAD,
-          false,
-          false
-        );
-      case 20:
-        return new Tile(
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.FIELD,
-          TileType.ROAD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 21:
-        return new Tile(
-          TileType.ROAD,
-          TileType.FIELD,
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.FIELD,
-          false,
-          false
-        );
-      case 22:
-        return new Tile(
-          TileType.TOWN,
-          TileType.FIELD,
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.ROAD,
-          false,
-          false
-        );
-      case 23:
-        return new Tile(
-          TileType.TOWN,
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.ROAD,
-          TileType.ROAD,
-          false,
-          false
-        );
-      default:
-        return null;
-    }
+  public boolean isEmpty() {
+    return pioche.isEmpty();
   }
 
   /**
@@ -339,5 +94,15 @@ public class Pioche {
     pioche.remove(0);
     Configuration.instance().logger().info("Piochage de la tuile " + t.toString());
     return t;
+  }
+
+  public void remiserTuile(Tile t) {
+    if (t != null) {
+      pioche.add(r.nextInt(pioche.size()), t);
+      Configuration.instance().logger().info("Tuile : " + t.toString() + " remiser");
+    }
+    else {
+      Configuration.instance().logger().severe("Impossible de remiser une tuile inexistante");
+    }
   }
 }

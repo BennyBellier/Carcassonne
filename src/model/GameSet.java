@@ -3,7 +3,9 @@ package model;
 import global.Configuration;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.Tiles.*;
 
@@ -258,8 +260,54 @@ public class GameSet {
     return card;
   }
 
-  public Point tileAllowed(Tile t) {
-    return new Point(500,500);
+  public Map<Integer, ArrayList<Integer>> tileAllowed(Tile t) {
+    Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+    for (int i = 0; i < tiles.length; i++) {
+      for (int j = 0; j < tiles[i].length; j++) {
+        if ((!map.containsKey(i) || (map.containsKey(i) && !map.get(i).contains(j))) && tiles[i][j] != null) {
+          for (int r = 0; r < 3; r++) {
+            if (tiles[i][j+1] == null && tiles[i][j].canConnect(t, "n")) {
+              ArrayList<Integer> l;
+              if (!map.containsKey(i))
+                l = new ArrayList<>();
+              else
+                l = map.get(i);
+              l.add(j+1);
+              map.put(i, l);
+            }
+            if (tiles[i][j-1] == null && tiles[i][j].canConnect(t, "s")) {
+              ArrayList<Integer> l;
+              if (!map.containsKey(i))
+                l = new ArrayList<>();
+              else
+                l = map.get(i);
+              l.add(j-1);
+              map.put(i, l);
+            }
+            if (tiles[i+1][j] == null && tiles[i][j].canConnect(t, "e")) {
+              ArrayList<Integer> l;
+              if (!map.containsKey(i))
+                l = new ArrayList<>();
+              else
+                l = map.get(i);
+              l.add(j);
+              map.put(i, l);
+            }
+            if (tiles[i-1][j] == null && tiles[i][j].canConnect(t, "w")) {
+              ArrayList<Integer> l;
+              if (!map.containsKey(i))
+                l = new ArrayList<>();
+              else
+                l = map.get(i);
+              l.add(j+1);
+              map.put(i, l);
+            }
+            t.turnLeft();
+          }
+        }
+      }
+    }
+    return map;
   }
 
   /**

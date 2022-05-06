@@ -1,3 +1,7 @@
+import java.util.Map.Entry;
+import java.util.ArrayList;
+
+
 import global.Configuration;
 import model.*;
 import model.Tiles.Tile;
@@ -90,6 +94,14 @@ public class Carcassonne {
           System.out.println("|" + t.toStringArray()[i] + "|");
         }
         System.out.println("+-----+");
+      }
+      if (t != null) {
+        System.out.println("Position :");
+        for (Entry<Integer, ArrayList<Integer>> pos : gameSet.tileAllowed(t).entrySet()) {
+          for (int i = 0; i < pos.getValue().size(); i++) {
+            System.out.print("(" + pos.getKey() + ", " + pos.getValue().get(i) + ") | ");
+          }
+        }
       }
     }
   }

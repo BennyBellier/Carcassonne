@@ -165,7 +165,7 @@ public class Tile {
             toString() +
             " et " +
             t.toString() +
-            " = " +
+            " == " +
             (n == t.south())
           );
         return n == t.south();
@@ -178,7 +178,7 @@ public class Tile {
             toString() +
             " et " +
             t.toString() +
-            " = " +
+            " == " +
             (e == t.west())
           );
         return e == t.west();
@@ -191,7 +191,7 @@ public class Tile {
             toString() +
             " et " +
             t.toString() +
-            " = " +
+            " == " +
             (s == t.north())
           );
         return s == t.north();
@@ -204,7 +204,7 @@ public class Tile {
             toString() +
             " et " +
             t.toString() +
-            " = " +
+            " == " +
             (w == t.east())
           );
         return w == t.east();
@@ -258,6 +258,15 @@ public class Tile {
   }
 
   /**
+   * Retourne un booléen vraie si les deux tuiles sont identiques
+   * @param t Tile avec laquelle tester l'égalité
+   * @return vraie si la tuile est égale à la tuile t
+   */
+  public boolean equalsTo(Tile t) {
+    return c == t.center() && n == t.north() && e == t.east() && s == t.south() && w == t.west() && b == t.blason() && cityEnder == t.cityEnder() && isStart == t.isStartTile();
+  }
+
+  /**
    * Crée et retourne la tuile de départ
    * @return Tile
    */
@@ -275,7 +284,256 @@ public class Tile {
     return start;
   }
 
-  public boolean equalsTo(Tile t) {
-    return c == t.center() && n == t.north() && e == t.east() && s == t.south() && w == t.west() && b == t.blason() && cityEnder == t.cityEnder() && isStart == t.isStartTile();
+
+  /**
+   ** Créer et retourne une tuile correspondant à son numéro
+   * @param i int
+   * @return Tile
+   */
+  public static Tile getTileFromInt(int i) {
+    switch (i) {
+      case 0:
+        return new Tile(
+          TileType.ABBEY,
+          TileType.FIELD,
+          TileType.FIELD,
+          TileType.FIELD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 1:
+        return new Tile(
+          TileType.ABBEY,
+          TileType.FIELD,
+          TileType.FIELD,
+          TileType.ROAD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 2:
+        return new Tile(
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          true,
+          true
+        );
+      case 3:
+        return new Tile(
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          false,
+          true
+        );
+      case 4:
+        return new Tile(
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          true,
+          true
+        );
+      case 5:
+        return new Tile(
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.ROAD,
+          TileType.CITY,
+          false,
+          true
+        );
+      case 6:
+        return new Tile(
+          TileType.CITY,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          true,
+          true
+        );
+      case 7:
+        return new Tile(
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.FIELD,
+          false,
+          true
+        );
+      case 8:
+        return new Tile(
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.FIELD,
+          true,
+          true
+        );
+      case 9:
+        return new Tile(
+          TileType.ROAD,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.ROAD,
+          TileType.ROAD,
+          false,
+          true
+        );
+      case 10:
+        return new Tile(
+          TileType.ROAD,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.ROAD,
+          TileType.ROAD,
+          true,
+          true
+        );
+      case 11:
+        return new Tile(
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          false,
+          true
+        );
+      case 12:
+        return new Tile(
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          true,
+          true
+        );
+      case 13:
+        return new Tile(
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 14:
+        return new Tile(
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 15:
+        return new Tile(
+          TileType.FIELD,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.FIELD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 16:
+        return new Tile(
+          TileType.ROAD,
+          TileType.CITY,
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 17:
+        return new Tile(
+          TileType.ROAD,
+          TileType.CITY,
+          TileType.FIELD,
+          TileType.ROAD,
+          TileType.ROAD,
+          false,
+          false
+        );
+      case 18:
+        return new Tile(
+          TileType.TOWN,
+          TileType.CITY,
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.ROAD,
+          false,
+          false
+        );
+      case 19:
+        return new Tile(
+          TileType.ROAD,
+          TileType.CITY,
+          TileType.ROAD,
+          TileType.FIELD,
+          TileType.ROAD,
+          false,
+          false
+        );
+      case 20:
+        return new Tile(
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.FIELD,
+          TileType.ROAD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 21:
+        return new Tile(
+          TileType.ROAD,
+          TileType.FIELD,
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.FIELD,
+          false,
+          false
+        );
+      case 22:
+        return new Tile(
+          TileType.TOWN,
+          TileType.FIELD,
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.ROAD,
+          false,
+          false
+        );
+      case 23:
+        return new Tile(
+          TileType.TOWN,
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.ROAD,
+          TileType.ROAD,
+          false,
+          false
+        );
+      default:
+        return null;
+    }
   }
 }
