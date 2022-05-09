@@ -1,43 +1,65 @@
 package model.Projects;
 
+
+import model.Graph.Graph;
 import global.Configuration;
-import model.Meeple;
 import model.Tiles.Tile;
 
 public class ProjectAbbey extends Project {
 
-  Meeple meeple;
+  int x, y;
 
   /**
-   ** Génère un projet de type Abbeye au coordonnées déterminé par le meeple
-   * @param meeple meeple placé sur l'abbeye
-   * @param set clone du plateau courant
+   ** Vérifie si pour l'abbeye à la case (x, y), est finie
+   * @param set Plateau de la partie courante
+   * @param x position x de l'abbeye
+   * @param y position y de l'abbeye
    */
-  public ProjectAbbey(Meeple meeple, Tile[][] set) {
+  public ProjectAbbey(Tile[][] set, int x, int y) {
     super();
-    this.meeple = meeple;
-    owner = meeple.getOwner();
-    g.addNode(set[meeple.getX()][meeple.getY()]);
-    Configuration.instance().logger().info("Création d'un projet abbeye sur la case (" + meeple.getX() + ", " + meeple.getY() + ")");
+    this.x = x;
+    this.y = y;
+    g.addNode(set[y][x]);
+    Configuration.instance().logger().info("Évaluation du projet abbeye sur la case (" + x + ", " + y + ")");
+    evaluate(g, set, null, x, y, "");
+    Configuration
+        .instance()
+        .logger()
+        .info(
+            "Le projet de l'abbeye aux coordonnées (" +
+                x +
+                ", " +
+                y +
+                ") est fini : " +
+                finished() +
+                ", il compte " +
+                value() +
+                " points");
   }
 
   /**
-   ** Évalue la valeur et l'état du projet de type Abbeye
-   * @param set Tile[][] utilise un clone du plateau pour effectuer l'évaluation
+   ** Évaluation récursive du projet de type abbeye
    */
-  public void evaluate(Tile[][] set) {
-    int x = meeple.getX();
-    int y = meeple.getY();
-    Configuration.instance().logger().info("Évaluation du projet abbeye sur la case (" + x + ", " + y +")");
+  @Override
+  void evaluate(Graph<Tile> g, Tile[][] set, Tile source, int x, int y, String card) {
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
-        if (set[x+i][y+j] != null && !g.hasNode(set[x+i][y+j]))
-          g.addNode(set[x+i][y+j]);
+        if (set[y + i][x + j] != null && !g.hasNode(set[y + i][x + j])) {
+          g.addNode(set[y + i][x + j]);
+        }
       }
     }
     if (g.getNodeCount() == 9) {
       finish = true;
       Configuration.instance().logger().info("Projet Abbeye de la case (" + x + ", " + y + ")");
     }
+  }
+
+  /**
+   ** Retourne la valeur courante du projet fini ou non
+   */
+  @Override
+  public int value() {
+    return g.getNodeCount();
   }
 }

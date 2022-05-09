@@ -33,6 +33,7 @@ public enum TileType {
 
   /**
    ** Retourne une chaine de caractère retournant le type de tuile
+   * @return String
    */
   public String toString() {
     switch (this) {

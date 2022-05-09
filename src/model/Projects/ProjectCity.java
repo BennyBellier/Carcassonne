@@ -1,90 +1,81 @@
 package model.Projects;
 
+import java.util.List;
+
 import global.Configuration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import model.Graph.*;
-import model.Meeple;
 import model.Tiles.*;
 
 public class ProjectCity extends Project {
 
-  private ArrayList<Meeple> meeples = new ArrayList<>();
+  int x, y;
 
-  public ProjectCity(Meeple meeple, Tile[][] set) {
-    super();
-    meeples.add(meeple);
-    g.addNode(set[meeple.getX()][meeple.getY()]);
-    Configuration
-      .instance()
-      .logger()
-      .info(
-        "Création d'un projet ville sur la case (" +
-        meeple.getX() +
-        ", " +
-        meeple.getY() +
-        ")"
-      );
-  }
-
-    /**
-   ** Evalue la valeur et l'état du projet de type route
-   * <p>
-   * L'évaluation se fait récursivement
-   * <p>
-   * @param set Tile[][] utilise un clone du plateau pour effectuer l'évaluation
+  /**
+   ** Vérifie si pour la portion de ville à la case (x, y), la ville qui y
+   ** correspond est terminée
+   *
+   * @param set         Plateau de la partie courante
+   * @param x           position x de l'abbeye
+   * @param y           position y de l'abbeye
+   * @param card        position de la portition de la ville sur la tuile
+   * @param cityVisited liste des tuiles contenant une villes visitées
    */
-  @Override
-  public void evaluate(Tile[][] set) {
-    int x = meeples.get(0).getX();
-    int y = meeples.get(0).getY();
-
+  public ProjectCity(Tile[][] set, int x, int y, String card, List<Tile> cityVisited) {
+    super();
+    this.x = x;
+    this.y = y;
+    g = new Graph<Tile>();
     Configuration
-      .instance()
-      .logger()
-      .info(
-        "Évaluation du projet ville aux coordonnées (" + x + ", " + y + ")"
-      );
-    __evaluate(g, set, x, y, meeples.get(0).getCardinal());
+        .instance()
+        .logger()
+        .info(
+            "Évaluation du projet ville aux coordonnées (" + x + ", " + y + ")");
+    evaluate(g, set, set[y][x], x, y, card);
 
-    if (isCityFinish(g, g.getFirstNode()))
+    cityVisited.addAll(g.getListOfNode());
+
+    if (g.isEmpty()) {
+      finish = false;
+    }
+
+    if (isCityFinish(g, (Tile) g.getListOfNode().toArray()[0]))
       finish = true;
     else
       finish = false;
 
     Configuration
-      .instance()
-      .logger()
-      .info(
-        "Le projet de ville aux coordonnées (" +
-        x +
-        ", " +
-        y +
-        ") est fini : " +
-        finish +
-        ", il compte " +
-        value() +
-        " points"
-      );
+        .instance()
+        .logger()
+        .info(
+            "Le projet de ville aux coordonnées (" +
+                x +
+                ", " +
+                y +
+                ") est fini : " +
+                finished() +
+                ", il compte " +
+                value() +
+                " points");
   }
 
-    /**
+  /**
    ** Détermine si le projet et fini ou non
    * <p>
    * Utilisation de la récurence pour tester si toutes les extrémités
    * du graph sont des tuiles qui ferme une ville
    * <p>
-   *! Attention, si il n'y as pas de tuiles alors la ville n'est pas fermé
+   * ! Attention, si il n'y as pas de tuiles alors la ville n'est pas fermé
+   *
    * @param g Graph contenant les noeuds du projet
    * @param t la tuile de départ
    * @return vraie si la ville est complété (toutes les extrémités sont fermés)
    */
   boolean isCityFinish(Graph<Tile> g, Tile t) {
-    if (g.getVoisins(t).size() == 0 && t.cityEnder())
+    if (g.getVoisins(t).size() == 0 && t.cityEnder()) {
+      if (g.getNodeCount() == 1)
+        return false;
       return true;
+    }
     else if (g.getVoisins(t).size() > 0) {
       for (Tile v : g.getVoisins(t)) {
         if (isCityFinish(g, v) == false)
@@ -96,90 +87,99 @@ public class ProjectCity extends Project {
 
   /**
    ** Partie récursive de la fonction d'évaluation
-   * @param g Graph contenant les noeuds compasant le projet
-   * @param set copy du plateau courant
-   * @param x position x de la tuile à tester
-   * @param y position y de la tuile à tester
+   *
+   * @param g    Graph contenant les noeuds compasant le projet
+   * @param set  copy du plateau courant
+   * @param source Tile tuile précédente permettant de créer les connexions dans le graphs
+   * @param x    position x de la tuile à tester
+   * @param y    position y de la tuile à tester
    * @param card cardinalité courante sur la tuile
    */
-  void __evaluate(Graph<Tile> g, Tile[][] set, int x, int y, String card) {
-    Tile t = set[x][y];
+  @Override
+  void evaluate(Graph<Tile> g, Tile[][] set, Tile source, int x, int y, String card) {
+    Tile t = set[y][x];
     if (t != null && !g.hasNode(t)) {
       g.addNode(t);
-      if (!t.cityEnder()) {
+      if (g.getNodeCount() > 1)
+        g.addEdge(source, t);
+      if (t.cityEnder() && g.getNodeCount() == 1) {
+        switch (card) {
+          case "n":
+            evaluate(g, set, t, x, y - 1, "s");
+          case "s":
+            evaluate(g, set, t, x, y + 1, "n");
+            break;
+          case "e":
+            evaluate(g, set, t, x + 1, y, "w");
+            break;
+          case "w":
+            evaluate(g, set, t, x - 1, y, "e");
+            break;
+          default:
+            break;
+        }
+      } else if (!t.cityEnder()) {
         switch (card) {
           case "c":
             if (t.north() == TileType.CITY) {
-              g.addEdge(t, set[x][y + 1]);
-              __evaluate(g, set, x, y + 1, "s");
+              evaluate(g, set, t, x, y - 1, "s");
             }
             if (t.east() == TileType.CITY) {
-              g.addEdge(t, set[x + 1][y]);
-              __evaluate(g, set, x + 1, y, "w");
+              evaluate(g, set, t, x + 1, y, "w");
             }
             if (t.south() == TileType.CITY) {
-              g.addEdge(t, set[x][y - 1]);
-              __evaluate(g, set, x, y - 1, "n");
+              evaluate(g, set, t, x, y + 1, "n");
             }
             if (t.west() == TileType.CITY) {
-              g.addEdge(t, set[x - 1][y]);
-              __evaluate(g, set, x - 1, y, "e");
+              evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "n":
+            evaluate(g, set, t, x, y - 1, "s");
             if (t.east() == TileType.CITY) {
-              g.addEdge(t, set[x + 1][y]);
-              __evaluate(g, set, x + 1, y, "w");
+              evaluate(g, set, t, x + 1, y, "w");
             }
             if (t.south() == TileType.CITY) {
-              g.addEdge(t, set[x][y - 1]);
-              __evaluate(g, set, x, y - 1, "n");
+              evaluate(g, set, t, x, y + 1, "n");
             }
             if (t.west() == TileType.CITY) {
-              g.addEdge(t, set[x - 1][y]);
-              __evaluate(g, set, x - 1, y, "e");
+              evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "s":
+            evaluate(g, set, t, x, y + 1, "n");
             if (t.north() == TileType.CITY) {
-              g.addEdge(t, set[x][y + 1]);
-              __evaluate(g, set, x, y + 1, "s");
+              evaluate(g, set, t, x, y - 1, "s");
             }
             if (t.east() == TileType.CITY) {
-              g.addEdge(t, set[x + 1][y]);
-              __evaluate(g, set, x + 1, y, "w");
+              evaluate(g, set, t, x + 1, y, "w");
             }
             if (t.west() == TileType.CITY) {
-              g.addEdge(t, set[x - 1][y]);
-              __evaluate(g, set, x - 1, y, "e");
+              evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "e":
+            evaluate(g, set, t, x + 1, y, "w");
             if (t.north() == TileType.CITY) {
-              g.addEdge(t, set[x][y + 1]);
-              __evaluate(g, set, x, y + 1, "s");
+              evaluate(g, set, t, x, y - 1, "s");
             }
             if (t.south() == TileType.CITY) {
-              g.addEdge(t, set[x][y - 1]);
-              __evaluate(g, set, x, y - 1, "n");
+              evaluate(g, set, t, x, y + 1, "n");
             }
             if (t.west() == TileType.CITY) {
-              g.addEdge(t, set[x - 1][y]);
-              __evaluate(g, set, x - 1, y, "e");
+              evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "w":
+            evaluate(g, set, t, x - 1, y, "e");
             if (t.north() == TileType.CITY) {
-              g.addEdge(t, set[x][y + 1]);
-              __evaluate(g, set, x, y + 1, "s");
+              evaluate(g, set, t, x, y - 1, "s");
             }
             if (t.east() == TileType.CITY) {
-              g.addEdge(t, set[x + 1][y]);
-              __evaluate(g, set, x + 1, y, "w");
+              evaluate(g, set, t, x + 1, y, "w");
             }
             if (t.south() == TileType.CITY) {
-              g.addEdge(t, set[x][y - 1]);
-              __evaluate(g, set, x, y - 1, "n");
+              evaluate(g, set, t, x, y + 1, "n");
             }
             break;
           default:
@@ -190,38 +190,26 @@ public class ProjectCity extends Project {
   }
 
   /**
-   * Retourne le ou les identifiants des joueurs qui possèdent la ville
-   * @param nbP entier : Nombre de joueur dans la partie
-   * @return int[] tableau contenant le ou les identifiants des joueurs qui possédent la ville
+   ** Retourne le nombre de blason que contient la ville
+   * @return int
+   */
+  int blasonCounter() {
+    int blason = 0;
+    for (Tile t : g.getListOfNode()) {
+      if (t.blason())
+        blason += 1;
+    }
+    return blason;
+  }
+
+  /**
+   ** Retourne la valeur courante du projet
+   * @return int
    */
   @Override
-  public int[] owner(int nbP) {
-    if (meeples.size() == 1) return new int[] {
-      meeples.get(0).getOwner(),
-    }; else {
-      Map<Integer, Integer> hm = new HashMap<>();
-      int max = 0;
-      for (Meeple meeple : meeples) {
-        int owner = meeple.getOwner();
-        hm.put(owner, hm.getOrDefault(owner, 0) + 1);
-      }
-      Set<Entry<Integer, Integer>> entrySet = hm.entrySet();
-      for (Entry<Integer, Integer> entry : entrySet) {
-        if (entry.getValue() > max) {
-          max = entry.getValue();
-        }
-      }
-      ArrayList<Integer> ownersList = new ArrayList<>();
-      for (Entry<Integer, Integer> entry : entrySet) {
-        if (entry.getValue() == max) {
-          ownersList.add(entry.getKey());
-        }
-      }
-      int[] owners = new int[ownersList.size()];
-      for (int i = 0; i < owners.length; i++) {
-        owners[i] = ownersList.get(i);
-      }
-      return owners;
-    }
+  public int value() {
+    if (finished())
+      return (g.getNodeCount() + blasonCounter()) * 2;
+    return g.getNodeCount() + blasonCounter();
   }
 }

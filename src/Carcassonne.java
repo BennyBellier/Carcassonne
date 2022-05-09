@@ -1,11 +1,12 @@
+
 import java.util.Map.Entry;
 import java.util.ArrayList;
 
 
 import global.Configuration;
 import model.*;
+import model.Projects.Project;
 import model.Tiles.Tile;
-import model.Tiles.TileType;
 
 public class Carcassonne {
 
@@ -16,77 +17,31 @@ public class Carcassonne {
 
     Configuration.instance().logger().fine("Batterie de tests sur le plateau");
     System.out.println(gameSet.toString());
-    gameSet.addTile(
-      new Tile(
-        TileType.TOWN,
-        TileType.FIELD,
-        TileType.ROAD,
-        TileType.ROAD,
-        TileType.ROAD,
-        false,
-        false
-      ),
-      -1,
-      0
-    );
-    gameSet.addTile(
-      new Tile(
-        TileType.CITY,
-        TileType.FIELD,
-        TileType.FIELD,
-        TileType.CITY,
-        TileType.CITY,
-        false,
-        true
-      ),
-      0,
-      -1
-    );
-    gameSet.addTile(
-      new Tile(
-        TileType.CITY,
-        TileType.FIELD,
-        TileType.FIELD,
-        TileType.CITY,
-        TileType.CITY,
-        false,
-        true
-      ),
-      2,
-      0
-    );
-    gameSet.addTile(
-      new Tile(
-        TileType.TOWN,
-        TileType.FIELD,
-        TileType.FIELD,
-        TileType.FIELD,
-        TileType.FIELD,
-        true,
-        false
-      ),
-      1,
-      0
-    );
-    gameSet.addTile(
-      new Tile(
-        TileType.FIELD,
-        TileType.FIELD,
-        TileType.CITY,
-        TileType.FIELD,
-        TileType.FIELD,
-        true,
-        true
-      ),
-      1,
-      -1
-    );
+    gameSet.addTile(Tile.getTileFromInt(22), -1, 0);
+    Tile t = Tile.getTileFromInt(7);
+    t.turnClock();
+    gameSet.addTile(t, 0, -1);
+    gameSet.addTile(t, 2, 0);
+    gameSet.addTile(Tile.getTileFromInt(0), 1, 0);
+    t = Tile.getTileFromInt(15);
+    t.turnCounterClock();
+    gameSet.addTile(t, 1, -1);
+    t = Tile.getTileFromInt(17);
+    t.turnClock();
+    gameSet.addTile(t, 1, 0);
+    t = Tile.getTileFromInt(1);
+    t.turnClock();
+    t.turnClock();
+    gameSet.addTile(t, 1, 1);
+
     System.out.println(gameSet.toString());
+
+    Project.evaluateProjects(gameSet.cloneSet());
 
     Configuration.instance().logger().fine("Batterie de tests sur la pioche");
 
     for (int j = 0; j < 72; j++) {
-      Tile t = p.piocheTuile();
+      t = p.piocheTuile();
       if (t != null) {
         System.out.println("piece n° : " + (j + 1));
         System.out.println("+-----+");
@@ -96,12 +51,14 @@ public class Carcassonne {
         System.out.println("+-----+");
       }
       if (t != null) {
+        System.out.println(gameSet.toString());
         System.out.println("Position :");
-        for (Entry<Integer, ArrayList<Integer>> pos : gameSet.tileAllowed(t).entrySet()) {
+        for (Entry<Integer, ArrayList<Integer>> pos : gameSet.tilePositionsAllowed(t, true).entrySet()) {
           for (int i = 0; i < pos.getValue().size(); i++) {
-            System.out.print("(" + pos.getKey() + ", " + pos.getValue().get(i) + ") | ");
+            System.out.print("(" + pos.getValue().get(i) + ", " + pos.getKey() + ") | ");
           }
         }
+        System.out.println();
       }
     }
   }

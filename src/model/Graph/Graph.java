@@ -27,11 +27,6 @@ public class Graph<T> {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  public T getFirstNode() {
-    return (T)map.entrySet().toArray()[0];
-  }
-
   // This function gives the count of vertices
   public int getNodeCount() {
     return map.keySet().size();
@@ -71,6 +66,10 @@ public class Graph<T> {
     return map.get(n);
   }
 
+  public boolean isEmpty() {
+    return map.isEmpty();
+  }
+
   // Prints the adjancency list of each Node.
   @Override
   public String toString() {
@@ -78,10 +77,10 @@ public class Graph<T> {
 
     for (T v : map.keySet()) {
       if (v != null) {
-        builder.append(v.toString() + " -> ");
+        builder.append(v.toString() + " ==> ");
         for (T w : map.get(v)) {
           if (w != null)
-            builder.append(w.toString() + " | ");
+            builder.append(w.toString() + " || ");
         }
         builder.append("\n");
       }

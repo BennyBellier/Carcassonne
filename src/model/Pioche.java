@@ -7,38 +7,15 @@ import java.util.*;
 
 public class Pioche {
 
-  private int[][] numberPerTile = {
-    { 0, 4 },
-    { 1, 2 },
-    { 2, 0 },
-    { 3, 3 },
-    { 4, 1 },
-    { 5, 1 },
-    { 6, 2 },
-    { 7, 3 },
-    { 8, 2 },
-    { 9, 3 },
-    { 10, 2 },
-    { 11, 1 },
-    { 12, 2 },
-    { 13, 2 },
-    { 14, 3 },
-    { 15, 5 },
-    { 16, 3 },
-    { 17, 3 },
-    { 18, 3 },
-    { 19, 4 },
-    { 20, 8 },
-    { 21, 9 },
-    { 22, 4 },
-    { 23, 1 },
-  };
+  // Un numéro à était attribué pour chacunes des tuiles uniques
+  // ci-dessous le tableau stock pour un type de tuiles (index) son nombre d'occurences dans le jeu
+  private int[] numberPerTile = { 4, 2, 0, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 4, 8, 9, 4, 1 };
   private LinkedList<Tile> pioche;
   private Random r;
 
   public Pioche() {
     pioche = new LinkedList<Tile>();
-    r = new Random();
+    r = new Random(5);
     initPioche();
   }
 
@@ -49,20 +26,21 @@ public class Pioche {
     int allp = 0;
     while (allp != 71) {
       int typeTuile = r.nextInt(24);
-      if (numberPerTile[typeTuile][1] != 0) {
-        numberPerTile[typeTuile][1] -= 1;
+      if (numberPerTile[typeTuile] != 0) {
+        numberPerTile[typeTuile] -= 1;
         pioche.add(allp, Tile.getTileFromInt(typeTuile));
         ++allp;
       }
     }
     Configuration
-      .instance()
-      .logger()
-      .info("Initialisation de la pioche avec " + pioche.size() + " tuiles");
+        .instance()
+        .logger()
+        .info("Initialisation de la pioche avec " + pioche.size() + " tuiles");
   }
 
   /**
    ** Retourne une copie de la pioche {@code LikedList<Tile>}.
+   *
    * @return LinkedList<Tile>
    */
   public LinkedList<Tile> getPioche() {
@@ -75,6 +53,7 @@ public class Pioche {
 
   /**
    ** Retourne l'état de la pioche
+   *
    * @return vraie si la pioche est vide
    */
   public boolean isEmpty() {
@@ -83,6 +62,7 @@ public class Pioche {
 
   /**
    ** Retourne une tuile dans la pioche
+   *
    * @return Tile
    */
   public Tile piocheTuile() {
@@ -96,12 +76,15 @@ public class Pioche {
     return t;
   }
 
+  /**
+   ** Remet une tuile dans la pioche
+   * @param t Tile à remiser
+   */
   public void remiserTuile(Tile t) {
     if (t != null) {
       pioche.add(r.nextInt(pioche.size()), t);
       Configuration.instance().logger().info("Tuile : " + t.toString() + " remiser");
-    }
-    else {
+    } else {
       Configuration.instance().logger().severe("Impossible de remiser une tuile inexistante");
     }
   }
