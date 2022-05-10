@@ -8,8 +8,7 @@ import model.Tiles.*;
 
 public class ProjectRoad extends Project {
 
-  int x, y;
-  List<Tile> visited;
+  Type type = Type.CITY;
 
   /**
    ** Vérifie si pour la portion de route à la case (x, y), la route qui y
@@ -23,8 +22,6 @@ public class ProjectRoad extends Project {
    */
   public ProjectRoad(Tile[][] set, int x, int y, String card, List<Tile> roadVisited) {
     super();
-    this.x = x;
-    this.y = y;
     Configuration
         .instance()
         .logger()
@@ -122,64 +119,64 @@ public class ProjectRoad extends Project {
       } else if (!isEnder(t)) {
         switch (card) {
           case "c":
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == Tile.Type.ROAD) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y + 1, "n");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == Tile.Type.ROAD) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "n":
             evaluate(g, set, t, x, y - 1, "s");
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == Tile.Type.ROAD) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y + 1, "n");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == Tile.Type.ROAD) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "s":
             evaluate(g, set, t, x, y + 1, "n");
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == Tile.Type.ROAD) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == Tile.Type.ROAD) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "e":
             evaluate(g, set, t, x + 1, y, "w");
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y + 1, "n");
             }
-            if (t.west() == TileType.ROAD) {
+            if (t.west() == Tile.Type.ROAD) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "w":
             evaluate(g, set, t, x - 1, y, "e");
-            if (t.north() == TileType.ROAD) {
+            if (t.north() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.east() == TileType.ROAD) {
+            if (t.east() == Tile.Type.ROAD) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.south() == TileType.ROAD) {
+            if (t.south() == Tile.Type.ROAD) {
               evaluate(g, set, t, x, y + 1, "n");
             }
             break;
@@ -198,9 +195,9 @@ public class ProjectRoad extends Project {
    * @return vraie si la route se termine au centre de la tuile
    */
   boolean isEnder(Tile t) {
-    return (t.center() == TileType.ABBEY ||
-        t.center() == TileType.CITY ||
-        t.center() == TileType.TOWN);
+    return (t.center() == Tile.Type.ABBEY ||
+        t.center() == Tile.Type.CITY ||
+        t.center() == Tile.Type.TOWN);
   }
 
   /**

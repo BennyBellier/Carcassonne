@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 import global.Configuration;
 import model.*;
+import model.Player.Type;
 import model.Projects.Project;
 import model.Tiles.Tile;
 
 public class Carcassonne {
 
-  public static void main(String[] args) throws Exception {
-    Configuration.instance().logger().finest("Lancement de l'application");
+  static void setOfTests() {
     GameSet gameSet = new GameSet();
     Pioche p = new Pioche();
 
@@ -61,5 +61,11 @@ public class Carcassonne {
         System.out.println();
       }
     }
+  }
+  public static void main(String[] args) throws Exception {
+    Configuration.instance().logger().finest("Lancement de l'application");
+    System.out.println(System.getProperty("os.name").toLowerCase());
+    System.out.println(System.getProperty("user.home"));
+    setOfTests();
   }
 }

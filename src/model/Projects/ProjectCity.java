@@ -8,8 +8,7 @@ import model.Tiles.*;
 
 public class ProjectCity extends Project {
 
-  int x, y;
-
+  Type type = Type.CITY;
   /**
    ** Vérifie si pour la portion de ville à la case (x, y), la ville qui y
    ** correspond est terminée
@@ -22,8 +21,6 @@ public class ProjectCity extends Project {
    */
   public ProjectCity(Tile[][] set, int x, int y, String card, List<Tile> cityVisited) {
     super();
-    this.x = x;
-    this.y = y;
     g = new Graph<Tile>();
     Configuration
         .instance()
@@ -121,64 +118,64 @@ public class ProjectCity extends Project {
       } else if (!t.cityEnder()) {
         switch (card) {
           case "c":
-            if (t.north() == TileType.CITY) {
+            if (t.north() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.east() == TileType.CITY) {
+            if (t.east() == Tile.Type.CITY) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.south() == TileType.CITY) {
+            if (t.south() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y + 1, "n");
             }
-            if (t.west() == TileType.CITY) {
+            if (t.west() == Tile.Type.CITY) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "n":
             evaluate(g, set, t, x, y - 1, "s");
-            if (t.east() == TileType.CITY) {
+            if (t.east() == Tile.Type.CITY) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.south() == TileType.CITY) {
+            if (t.south() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y + 1, "n");
             }
-            if (t.west() == TileType.CITY) {
+            if (t.west() == Tile.Type.CITY) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "s":
             evaluate(g, set, t, x, y + 1, "n");
-            if (t.north() == TileType.CITY) {
+            if (t.north() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.east() == TileType.CITY) {
+            if (t.east() == Tile.Type.CITY) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.west() == TileType.CITY) {
+            if (t.west() == Tile.Type.CITY) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "e":
             evaluate(g, set, t, x + 1, y, "w");
-            if (t.north() == TileType.CITY) {
+            if (t.north() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.south() == TileType.CITY) {
+            if (t.south() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y + 1, "n");
             }
-            if (t.west() == TileType.CITY) {
+            if (t.west() == Tile.Type.CITY) {
               evaluate(g, set, t, x - 1, y, "e");
             }
             break;
           case "w":
             evaluate(g, set, t, x - 1, y, "e");
-            if (t.north() == TileType.CITY) {
+            if (t.north() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y - 1, "s");
             }
-            if (t.east() == TileType.CITY) {
+            if (t.east() == Tile.Type.CITY) {
               evaluate(g, set, t, x + 1, y, "w");
             }
-            if (t.south() == TileType.CITY) {
+            if (t.south() == Tile.Type.CITY) {
               evaluate(g, set, t, x, y + 1, "n");
             }
             break;

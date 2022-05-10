@@ -6,7 +6,65 @@ import global.Configuration;
 
 public class Tile {
 
-  private TileType c, n, e, s, w;
+  public enum Type {
+    START, // tuile de départ
+    TOWN, // petit ville au centre d'une seul tuile
+    CITY, // ville sur plusieurs tuiles
+    ROAD, // route
+    ABBEY, // abbey
+    FIELD; // prairie
+
+    /**
+     ** Retourne une chaine de caractère contenant qu'une lettre pour décrire la
+     * tuile
+     *
+     * @return String
+     */
+    public String toOneCharString() {
+      switch (this) {
+        case START:
+          return "S";
+        case TOWN:
+          return "T";
+        case CITY:
+          return "C";
+        case ROAD:
+          return "R";
+        case ABBEY:
+          return "A";
+        case FIELD:
+          return "F";
+        default:
+          return "";
+      }
+    }
+
+    /**
+     ** Retourne une chaine de caractère retournant le type de tuile
+     *
+     * @return String
+     */
+    public String toString() {
+      switch (this) {
+        case START:
+          return "START";
+        case TOWN:
+          return "TOWN";
+        case CITY:
+          return "CITY";
+        case ROAD:
+          return "ROAD";
+        case ABBEY:
+          return "ABBEY";
+        case FIELD:
+          return "FIELD";
+        default:
+          return "";
+      }
+    }
+  }
+
+  private Type c, n, e, s, w;
   private boolean b, cityEnder, isStart = false;
 
   /**
@@ -21,11 +79,11 @@ public class Tile {
    * @param cityEnder vraie si la tuile ne contient que des partie qui finisse la ville
    */
   public Tile(
-      TileType center,
-      TileType north,
-      TileType east,
-      TileType south,
-      TileType west,
+      Type center,
+      Type north,
+      Type east,
+      Type south,
+      Type west,
       boolean blason,
       boolean cityEnder) {
     c = center;
@@ -46,35 +104,35 @@ public class Tile {
   /**
    ** Retourne le type de la tuile
    */
-  public TileType center() {
+  public Type center() {
     return c;
   }
 
   /**
    ** Retourne le type au nord de la tuile
    */
-  public TileType north() {
+  public Type north() {
     return n;
   }
 
   /**
    ** Retourne le type au sud de la tuile
    */
-  public TileType south() {
+  public Type south() {
     return s;
   }
 
   /**
    ** Retourne le type à l'est de la tuile
    */
-  public TileType east() {
+  public Type east() {
     return e;
   }
 
   /**
    ** Retourne le type à l'ouest de la tuile
    */
-  public TileType west() {
+  public Type west() {
     return w;
   }
 
@@ -109,15 +167,15 @@ public class Tile {
    */
   public ArrayList<String> getMeeplesPosition() {
     ArrayList<String> pos = new ArrayList<>();
-    if (c != TileType.TOWN && c != TileType.FIELD)
+    if (c != Type.TOWN && c != Type.FIELD)
       pos.add("c");
-    if (n != TileType.FIELD)
+    if (n != Type.FIELD)
       pos.add("n");
-    if (e != TileType.FIELD)
+    if (e != Type.FIELD)
       pos.add("e");
-    if (s != TileType.FIELD)
+    if (s != Type.FIELD)
       pos.add("s");
-    if (w != TileType.FIELD)
+    if (w != Type.FIELD)
       pos.add("w");
     return pos;
   }
@@ -144,7 +202,7 @@ public class Tile {
    ** Effectue une rotation de la tuile, dans le sens contraire des aiguilles d'une montre
    */
   public void turnCounterClock() {
-    TileType tmp = n;
+    Type tmp = n;
     n = e;
     e = s;
     s = w;
@@ -155,7 +213,7 @@ public class Tile {
    ** Effectue une rotation de la tuile, dans le sens des aiguilles d'une montre
    */
   public void turnClock() {
-    TileType tmp = n;
+    Type tmp = n;
     n = w;
     w = s;
     s = e;
@@ -167,7 +225,7 @@ public class Tile {
    * @return
    */
   public boolean hasRoad() {
-    return n == TileType.ROAD || w == TileType.ROAD || e == TileType.ROAD || s == TileType.ROAD;
+    return n == Type.ROAD || w == Type.ROAD || e == Type.ROAD || s == Type.ROAD;
   }
 
   /**
@@ -175,7 +233,7 @@ public class Tile {
    * @return
    */
   public boolean hasCity() {
-    return n == TileType.CITY || w == TileType.CITY || e == TileType.CITY || s == TileType.CITY || c == TileType.CITY;
+    return n == Type.CITY || w == Type.CITY || e == Type.CITY || s == Type.CITY || c == Type.CITY;
   }
 
   /**
@@ -316,11 +374,11 @@ public class Tile {
    */
   public static Tile getStartTile() {
     Tile start = new Tile(
-        TileType.ROAD,
-        TileType.CITY,
-        TileType.ROAD,
-        TileType.FIELD,
-        TileType.ROAD,
+        Type.ROAD,
+        Type.CITY,
+        Type.ROAD,
+        Type.FIELD,
+        Type.ROAD,
         false,
         true);
     start.setToStart();
@@ -337,218 +395,218 @@ public class Tile {
     switch (i) {
       case 0:
         return new Tile(
-            TileType.ABBEY,
-            TileType.FIELD,
-            TileType.FIELD,
-            TileType.FIELD,
-            TileType.FIELD,
+            Type.ABBEY,
+            Type.FIELD,
+            Type.FIELD,
+            Type.FIELD,
+            Type.FIELD,
             false,
             false);
       case 1:
         return new Tile(
-            TileType.ABBEY,
-            TileType.FIELD,
-            TileType.FIELD,
-            TileType.ROAD,
-            TileType.FIELD,
+            Type.ABBEY,
+            Type.FIELD,
+            Type.FIELD,
+            Type.ROAD,
+            Type.FIELD,
             false,
             false);
       case 2:
         return new Tile(
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
             true,
             false);
       case 3:
         return new Tile(
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
             false,
             false);
       case 4:
         return new Tile(
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
             true,
             false);
       case 5:
         return new Tile(
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.ROAD,
+            Type.CITY,
             false,
             false);
       case 6:
         return new Tile(
-            TileType.CITY,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
             true,
             false);
       case 7:
         return new Tile(
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.FIELD,
+            Type.FIELD,
+            Type.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.FIELD,
             false,
             false);
       case 8:
         return new Tile(
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.FIELD,
+            Type.FIELD,
+            Type.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.FIELD,
             true,
             false);
       case 9:
         return new Tile(
-            TileType.ROAD,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.ROAD,
+            Type.ROAD,
+            Type.CITY,
+            Type.CITY,
+            Type.ROAD,
+            Type.ROAD,
             false,
             false);
       case 10:
         return new Tile(
-            TileType.ROAD,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.ROAD,
+            Type.ROAD,
+            Type.CITY,
+            Type.CITY,
+            Type.ROAD,
+            Type.ROAD,
             true,
             false);
       case 11:
         return new Tile(
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
             false,
             false);
       case 12:
         return new Tile(
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
             true,
             false);
       case 13:
         return new Tile(
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.FIELD,
+            Type.FIELD,
+            Type.CITY,
+            Type.CITY,
+            Type.FIELD,
+            Type.FIELD,
             false,
             true);
       case 14:
         return new Tile(
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.FIELD,
+            Type.FIELD,
+            Type.CITY,
+            Type.FIELD,
+            Type.CITY,
+            Type.FIELD,
             false,
             true);
       case 15:
         return new Tile(
-            TileType.FIELD,
-            TileType.CITY,
-            TileType.FIELD,
-            TileType.FIELD,
-            TileType.FIELD,
+            Type.FIELD,
+            Type.CITY,
+            Type.FIELD,
+            Type.FIELD,
+            Type.FIELD,
             false,
             true);
       case 16:
         return new Tile(
-            TileType.ROAD,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.FIELD,
+            Type.ROAD,
+            Type.CITY,
+            Type.ROAD,
+            Type.ROAD,
+            Type.FIELD,
             false,
             true);
       case 17:
         return new Tile(
-            TileType.ROAD,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.FIELD,
+            Type.ROAD,
+            Type.CITY,
+            Type.ROAD,
+            Type.ROAD,
+            Type.FIELD,
             false,
             true);
       case 18:
         return new Tile(
-            TileType.TOWN,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.ROAD,
+            Type.TOWN,
+            Type.CITY,
+            Type.ROAD,
+            Type.ROAD,
+            Type.ROAD,
             false,
             true);
       case 19:
         return new Tile(
-            TileType.ROAD,
-            TileType.CITY,
-            TileType.ROAD,
-            TileType.FIELD,
-            TileType.ROAD,
+            Type.ROAD,
+            Type.CITY,
+            Type.ROAD,
+            Type.FIELD,
+            Type.ROAD,
             false,
             true);
       case 20:
         return new Tile(
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.FIELD,
-            TileType.ROAD,
-            TileType.FIELD,
+            Type.ROAD,
+            Type.ROAD,
+            Type.FIELD,
+            Type.ROAD,
+            Type.FIELD,
             false,
             false);
       case 21:
         return new Tile(
-            TileType.ROAD,
-            TileType.FIELD,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.FIELD,
+            Type.ROAD,
+            Type.FIELD,
+            Type.ROAD,
+            Type.ROAD,
+            Type.FIELD,
             false,
             false);
       case 22:
         return new Tile(
-            TileType.TOWN,
-            TileType.FIELD,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.ROAD,
+            Type.TOWN,
+            Type.FIELD,
+            Type.ROAD,
+            Type.ROAD,
+            Type.ROAD,
             false,
             false);
       case 23:
         return new Tile(
-            TileType.TOWN,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.ROAD,
-            TileType.ROAD,
+            Type.TOWN,
+            Type.ROAD,
+            Type.ROAD,
+            Type.ROAD,
+            Type.ROAD,
             false,
             false);
       default:

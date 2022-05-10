@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import model.Projects.Project;
 import model.Tiles.*;
 
 public class GameSet {
@@ -112,6 +114,12 @@ public class GameSet {
     for (int i = 0; i < cp.length; i++)
       cp[i] = tiles[i].clone();
     return cp;
+  }
+
+  public boolean removeTile(int x, int y) {
+    if (tiles[y][x] != null)
+      tiles[y][x] = null;
+    return true;
   }
 
   /**
@@ -311,6 +319,97 @@ public class GameSet {
       }
     }
     return map;
+  }
+
+  /**
+   **Retourne vraie si le meeple définie peut être placé
+   * @param m meeple définie avec la position (x, y) et sa cardinalité
+   * @return vraie si le meeple peut être placé, faux sinon
+   */
+  public boolean meeplePlacementAllowed(Meeple m) {
+    Tile t = tiles[m.getY()][m.getX()];
+    if (t != null) {
+      switch (m.getCardinal()) {
+        case "c":
+          return typeWhereMeepleAllow(t.center());
+          case "n":
+          return typeWhereMeepleAllow(t.north());
+          case "s":
+          return typeWhereMeepleAllow(t.south());
+          case "e":
+          return typeWhereMeepleAllow(t.east());
+          case "w":
+          return typeWhereMeepleAllow(t.west());
+      }
+    }
+    return false;
+  }
+
+  /**
+   ** Retourne vraie si le Type sur lequel on veut poser le meeple est autorisé
+   * @param t Type.Tile sur lequel on souhaite placer le meeple
+   * @return vraie si le meeple peut y être placé
+   */
+  boolean typeWhereMeepleAllow(Tile.Type t) {
+    return t != Tile.Type.FIELD || t != Tile.Type.TOWN;
+  }
+
+  /**
+   ** retourne la tuile sur le plateau au coordonnées (x, y)
+   * @param x int position x de la tuile
+   * @param y int position y de la tuile
+   * @return Tile
+   */
+  public Tile getTileFromCoord(int x, int y) {
+    return tiles[y][x].clone();
+  }
+
+  /**
+   ** Retourne le type du projet pour la cardinalité 'card' de la tuile (x, y) sur le plateau
+   * @param x int position x de la tuile sur le plateau
+   * @param y int position y de la tuile sur le plateau
+   * @param card String cardinalité recherché
+   * @return Projet.Type corrsepondant au type de la cardinalité de la tuile
+   */
+  public Project.Type getProjectType(int x, int y, String card) {
+    Tile t = getTileFromCoord(x, y);
+    switch (card) {
+      case "n":
+        return tileTypeToProjectType(t.north());
+      case "s":
+        return tileTypeToProjectType(t.south());
+
+      case "e":
+        return tileTypeToProjectType(t.east());
+
+      case "w":
+        return tileTypeToProjectType(t.west());
+
+      case "c":
+        return tileTypeToProjectType(t.center());
+
+
+      default:
+        return null;
+    }
+  }
+
+  /**
+   ** Retourne le type de projet en fonction du type de la tuile
+   * @param tt Tile.Type
+   * @return Project.Type correspondant au Tile.Type
+   */
+  public Project.Type tileTypeToProjectType(Tile.Type tt) {
+    switch (tt) {
+      case CITY:
+        return Project.Type.CITY;
+      case ROAD:
+        return Project.Type.ROAD;
+      case ABBEY:
+        return Project.Type.ABBEY;
+      default:
+        return null;
+    }
   }
 
   /**

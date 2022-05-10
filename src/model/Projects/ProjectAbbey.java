@@ -7,7 +7,7 @@ import model.Tiles.Tile;
 
 public class ProjectAbbey extends Project {
 
-  int x, y;
+  Type type = Type.ABBEY;
 
   /**
    ** Vérifie si pour l'abbeye à la case (x, y), est finie
@@ -17,8 +17,6 @@ public class ProjectAbbey extends Project {
    */
   public ProjectAbbey(Tile[][] set, int x, int y) {
     super();
-    this.x = x;
-    this.y = y;
     g.addNode(set[y][x]);
     Configuration.instance().logger().info("Évaluation du projet abbeye sur la case (" + x + ", " + y + ")");
     evaluate(g, set, null, x, y, "");
