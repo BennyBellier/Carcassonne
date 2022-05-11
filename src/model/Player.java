@@ -1,18 +1,42 @@
 package model;
 
+import java.util.Arrays;
+import java.util.List;
 
 public class Player {
 
   public enum Type {
     HUMAN,
-    IA;
+    IA_EASY,
+    IA_MEDIUM,
+    IA_HARD;
+
+    public byte toByte() {
+      switch (this) {
+        case HUMAN:
+          return (byte)0;
+        case IA_EASY:
+          return (byte)1;
+        case IA_MEDIUM:
+          return (byte)2;
+        case IA_HARD:
+          return (byte)3;
+
+          default:
+          return (byte)-1;
+      }
+    }
 
     public String toString() {
       switch (this) {
         case HUMAN:
           return "Humain";
-        case IA:
-          return "IA";
+        case IA_EASY:
+          return "IA EASY";
+        case IA_MEDIUM:
+          return "IA MEDIUM";
+        case IA_HARD:
+          return "IA HARD";
 
         default:
           return "";
@@ -143,5 +167,13 @@ public class Player {
   public void meepleRecovery() {
     meeplesNumber += 1;
     curNumberOfProject -= 1;
+  }
+
+  /**
+   ** Retourne la définition binaire du joueur pour une sauvegarde
+   * @return List<Byte>
+   */
+  public List<Byte> toByteArray() {
+    return Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects(), (byte) nbTilePlaced, Byte.parseByte(pseudo));
   }
 }

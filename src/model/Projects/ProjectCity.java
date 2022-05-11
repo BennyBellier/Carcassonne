@@ -3,8 +3,8 @@ package model.Projects;
 import java.util.List;
 
 import global.Configuration;
+import model.Tile;
 import model.Graph.*;
-import model.Tiles.*;
 
 public class ProjectCity extends Project {
 

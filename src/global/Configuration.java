@@ -17,24 +17,25 @@ public class Configuration {
   private static Configuration instance = null;
   Properties prop;
   Path logsFolder;
+  Path configFolder;
 
   public static InputStream charge(String name) {
     return ClassLoader.getSystemClassLoader().getResourceAsStream(name);
   }
 
-  private Path getConfigFolder() {
+  private Path setConfigFolder() {
     Path path = null;
     switch (OSInfo.getOs()) {
       case MAC:
-        path = Path.of(System.getProperty("user.home") + File.separator + "Library" + File.separator
+        configFolder = Path.of(System.getProperty("user.home") + File.separator + "Library" + File.separator
             + "Application Support" + File.separator + ".carcassonne");
         break;
       case WINDOWS:
-        path = Path.of(System.getProperty("user.home") + File.separator
+        configFolder = Path.of(System.getProperty("user.home") + File.separator
             + "Local Settings" + File.separator + "ApplicationData" + File.separator + ".carcassonne");
         break;
       case UNIX:
-        path = Path.of(System.getProperty("user.home") + File.separator + ".carcassonne");
+        configFolder = Path.of(System.getProperty("user.home") + File.separator + ".carcassonne");
         break;
 
       default:
@@ -48,41 +49,45 @@ public class Configuration {
   private void generateConfigFolder(Path configPath) {
     try {
       Files.createDirectories(configPath);
-      Files.createDirectories(Path.of(configPath.toString() + File.separator +"logs"));
-      Files.copy(Path.of("default.cfg"), Path.of(configPath + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
+      Files.createDirectories(Path.of(configPath.toString() + File.separator + "logs"));
+      Files.createDirectories(Path.of(configPath.toString() + File.separator + "saves"));
+      Files.copy(Path.of("assets/default.cfg"), Path.of(configPath + "/config.cfg"),
+          StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       System.err.println("Impossible de créer le dossier de configuration");
     }
   }
 
+  public String getConfigFolderPath() {
+    return configFolder.toString();
+  }
+
   private Configuration() {
     prop = new Properties();
-    Path configPath = getConfigFolder();
-
+    setConfigFolder();
     // Génération du dossier si il n'existe pas
-    if (!Files.exists(configPath))
-      generateConfigFolder(configPath);
+    if (!Files.exists(configFolder))
+      generateConfigFolder(configFolder);
 
-    logsFolder = Path.of(configPath.toString() + File.separator +"logs");
+    logsFolder = Path.of(configFolder.toString() + File.separator + "logs");
 
     // Utilisation du fichier de configuration contenue dans le dossier applications
     try {
-      if (prop == null) {
-        if (!Files.exists(Path.of(configPath.toFile() + File.separator + "config.cfg")))
-          Files.copy(Path.of("default.cfg"), Path.of(configPath + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
-        FileInputStream f = new FileInputStream(configPath.toFile() + File.separator + "config.cfg");
-        prop = new Properties(prop);
-        prop.load(f);
-        f.close();
-      }
+      if (!Files.exists(Path.of(configFolder.toFile() + File.separator + "config.cfg")))
+        Files.copy(Path.of("assets/default.cfg"), Path.of(configFolder + "/config.cfg"),
+            StandardCopyOption.REPLACE_EXISTING);
+      FileInputStream f = new FileInputStream(configFolder.toFile() + File.separator + "config.cfg");
+      prop = new Properties(prop);
+      prop.load(f);
+      f.close();
     } catch (Exception e) {
       // Utilisation du fichier de configuration par défaut
       try {
         prop = new Properties(prop);
-        FileInputStream f = new FileInputStream("default.cfg");
+        FileInputStream f = new FileInputStream("assets/default.cfg");
         prop.load(f);
         f.close();
-        Files.copy(Path.of("default.cfg"), Path.of(configPath + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(Path.of("default.cfg"), Path.of(configFolder + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
       } catch (Exception e2) {
         System.err.println("Impossible de charger le fichier de configuration");
       }
@@ -115,7 +120,7 @@ public class Configuration {
 
     if (log.getHandlers().length == 0) {
       try {
-        FileHandler fh = new FileHandler(logsFolder.toString()+ File.separator + getFileLoggerName());
+        FileHandler fh = new FileHandler(logsFolder.toString() + File.separator + getFileLoggerName());
         FileHandler fhLatest = new FileHandler(logsFolder.toString() + File.separator + "latest.log");
         log.addHandler(fh);
         log.addHandler(fhLatest);

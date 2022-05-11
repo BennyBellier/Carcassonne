@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.Projects.Project;
-import model.Tiles.*;
 
 public class GameSet {
 

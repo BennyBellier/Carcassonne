@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Arrays;
+import java.util.List;
+
 import global.Configuration;
 
 public class Meeple {
@@ -52,5 +55,13 @@ public class Meeple {
    */
   public int getOwner() {
     return player;
+  }
+
+  /**
+   ** Retourne la définition binaire d'un meeple
+   * @return List<Byte>
+   */
+  public List<Byte> toByteArray() {
+    return Arrays.asList((byte) player, (byte) x, (byte) y, Byte.parseByte(card));
   }
 }

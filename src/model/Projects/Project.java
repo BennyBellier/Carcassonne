@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import global.Configuration;
+import model.Tile;
 import model.Graph.*;
-import model.Tiles.*;
 
 public abstract class Project {
 

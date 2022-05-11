@@ -1,6 +1,8 @@
-package model.Tiles;
+package model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 import global.Configuration;
 
@@ -13,6 +15,26 @@ public class Tile {
     ROAD, // route
     ABBEY, // abbey
     FIELD; // prairie
+
+    public byte toByte() {
+      switch (this) {
+        case START:
+          return (byte)0;
+        case TOWN:
+          return (byte)1;
+        case CITY:
+          return (byte)2;
+        case ROAD:
+          return (byte)3;
+        case ABBEY:
+          return (byte)4;
+        case FIELD:
+          return (byte)5;
+
+        default:
+          return (byte)-1;
+      }
+    }
 
     /**
      ** Retourne une chaine de caractère contenant qu'une lettre pour décrire la
@@ -383,6 +405,15 @@ public class Tile {
         true);
     start.setToStart();
     return start;
+  }
+
+  /**
+   ** Retourne la défintion binaire de la tuile pour une sauvegarde
+   * @return List<Byte>
+   */
+  public List<Byte> toByteArray() {
+    return Arrays.asList(c.toByte(), n.toByte(), e.toByte(), s.toByte(), w.toByte(),
+        (byte) (b ? 1 : 0), (byte) (cityEnder ? 1 : 0), (byte) (isStart ? 1 : 0));
   }
 
   /**

@@ -1,7 +1,6 @@
 package model;
 
 import global.Configuration;
-import model.Tiles.*;
 
 import java.util.*;
 
@@ -36,6 +35,10 @@ public class Pioche {
         .instance()
         .logger()
         .info("Initialisation de la pioche avec " + pioche.size() + " tuiles");
+  }
+
+  public int size() {
+    return pioche.size();
   }
 
   /**
@@ -87,5 +90,17 @@ public class Pioche {
     } else {
       Configuration.instance().logger().severe("Impossible de remiser une tuile inexistante");
     }
+  }
+
+  /**
+   ** Retourne la définition binaire de la pioche
+   * @return List<Byte>
+   */
+  public List<Byte> toByteArray() {
+    List<Byte> bytes = new ArrayList<>();
+    for (int i = 0; i < pioche.size(); i++) {
+      bytes.addAll(pioche.get(i).toByteArray());
+    }
+    return bytes;
   }
 }

@@ -1,19 +1,20 @@
 
 import java.util.Map.Entry;
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 import global.Configuration;
 import model.*;
 import model.Player.Type;
 import model.Projects.Project;
-import model.Tiles.Tile;
 
 public class Carcassonne {
 
   static void setOfTests() {
     GameSet gameSet = new GameSet();
     Pioche p = new Pioche();
+
+    Save.save("test1", new Save(0, -1, -1, Tile.getTileFromInt(5), gameSet.cloneSet(), p, Arrays.asList(new Player("joueur1", Type.HUMAN), new Player("IA facile", Type.IA_EASY)), Arrays.asList(new Meeple(0, 1, 1, "s"))));
 
     Configuration.instance().logger().fine("Batterie de tests sur le plateau");
     System.out.println(gameSet.toString());

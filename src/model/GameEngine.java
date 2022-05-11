@@ -4,7 +4,6 @@ import java.util.List;
 
 import global.Configuration;
 import model.Projects.Project;
-import model.Tiles.Tile;
 
 public class GameEngine {
   private GameSet gameSet;
@@ -43,8 +42,7 @@ public class GameEngine {
   }
 
   /**
-   **
-   * @return
+   ** Récupère une tuile dans la pioche, si elle n'est pas posable alors elle est remisé est un nouvelle tuile est pioché
    */
   void piocheTuile() {
     if (!pioche.isEmpty()) {
@@ -54,6 +52,7 @@ public class GameEngine {
         pioche.remiserTuile(currentTile);
         currentTile = pioche.piocheTuile();
       }
+      Configuration.instance().logger().fine("Tuile pioché : " + currentTile.toString());
     }
   }
 
@@ -62,6 +61,7 @@ public class GameEngine {
    */
   void nextPlayer() {
     playerTurn = (playerTurn + 1) % nbPlayer;
+    Configuration.instance().logger().info("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
   /**
@@ -69,6 +69,7 @@ public class GameEngine {
    */
   void prevPlayer() {
     playerTurn = (playerTurn - 1) % nbPlayer;
+    Configuration.instance().logger().info("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
   /**
@@ -80,6 +81,7 @@ public class GameEngine {
     y = -1;
     nextPlayer();
     piocheTuile();
+    Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
   /**
@@ -90,6 +92,7 @@ public class GameEngine {
   public boolean placeMeeple(Meeple m) {
     if (players.get(playerTurn).meepleUse() && gameSet.meeplePlacementAllowed(m)) {
       meeplesOnSet.add(m);
+      Configuration.instance().logger().info(players.get(playerTurn) + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
       return true;
     }
     return false;
@@ -105,6 +108,7 @@ public class GameEngine {
     if (gameSet.addTile(currentTile, x, y)) {
       this.x = x;
       this.y = y;
+      Configuration.instance().logger().info(players.get(playerTurn) + " à poser une tuile sur la case (" + x + " ," + y + ")");
       return true;
     }
     return false;
@@ -115,6 +119,8 @@ public class GameEngine {
    * @return vraie si la tuile à était enlevé, faux sinon
    */
   public boolean removeTile() {
+    Configuration.instance().logger()
+        .info("La tuile sur la case (" + x + " ," + y + ") a était enlevé");
     return gameSet.removeTile(x, y);
   }
 
@@ -152,6 +158,7 @@ public class GameEngine {
           owner = i;
         }
       }
+      Configuration.instance().logger().fine(players.get(owner) + " est propiétaire du projet " + project.type() + "à la case" );
       players.get(owner).scorePlus(project.value());
     }
   }

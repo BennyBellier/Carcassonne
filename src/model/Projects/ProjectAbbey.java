@@ -1,9 +1,9 @@
 package model.Projects;
 
 
+import model.Tile;
 import model.Graph.Graph;
 import global.Configuration;
-import model.Tiles.Tile;
 
 public class ProjectAbbey extends Project {
 
