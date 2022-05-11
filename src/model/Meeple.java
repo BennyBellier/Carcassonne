@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +24,13 @@ public class Meeple {
     this.y = y;
     card = cardinal;
     Configuration.instance().logger().info("Génération d'un meeple pour le joueur " + player + ", au coordonnées (" + x + ", " + y + ") de cardinal : "+ card);
+  }
+
+  public Meeple(byte[] b) {
+    player = b[0];
+    x = b[1];
+    y = b[2];
+    card = Byte.toString(b[3]);
   }
 
   /**
@@ -62,6 +70,6 @@ public class Meeple {
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {
-    return Arrays.asList((byte) player, (byte) x, (byte) y, Byte.parseByte(card));
+    return Arrays.asList((byte) player, (byte) x, (byte) y, (byte) card.charAt(0));
   }
 }

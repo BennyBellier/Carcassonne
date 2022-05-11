@@ -19,20 +19,40 @@ public class Tile {
     public byte toByte() {
       switch (this) {
         case START:
-          return (byte)0;
+          return (byte) 0;
         case TOWN:
-          return (byte)1;
+          return (byte) 1;
         case CITY:
-          return (byte)2;
+          return (byte) 2;
         case ROAD:
-          return (byte)3;
+          return (byte) 3;
         case ABBEY:
-          return (byte)4;
+          return (byte) 4;
         case FIELD:
-          return (byte)5;
+          return (byte) 5;
 
         default:
-          return (byte)-1;
+          return (byte) -1;
+      }
+    }
+
+    public static Type fromByte(byte b) {
+      switch (b) {
+        case 0:
+          return START;
+        case 1:
+          return TOWN;
+        case 2:
+          return CITY;
+        case 3:
+          return ROAD;
+        case 4:
+          return ABBEY;
+        case 5:
+          return FIELD;
+
+        default:
+          return null;
       }
     }
 
@@ -98,7 +118,8 @@ public class Tile {
    * @param s         type de connexion au sud
    * @param w         type de connexion à l'ouest
    * @param b         vraie si la tuile as un blason
-   * @param cityEnder vraie si la tuile ne contient que des partie qui finisse la ville
+   * @param cityEnder vraie si la tuile ne contient que des partie qui finisse la
+   *                  ville
    */
   public Tile(
       Type center,
@@ -121,6 +142,19 @@ public class Tile {
         .info(
             "Génération d'une tuile de type : " +
                 toString());
+  }
+
+  public Tile(byte[] b) {
+    c = Type.fromByte(b[0]);
+    n = Type.fromByte(b[1]);
+    e = Type.fromByte(b[2]);
+    s = Type.fromByte(b[3]);
+    w =  Type.fromByte(b[4]);
+    this.b =  (b[5] == 1 ? true : false);
+    cityEnder = (b[6] == 1 ? true : false);
+
+    if (b[7] == 1)
+      isStart = true;
   }
 
   /**
@@ -160,6 +194,7 @@ public class Tile {
 
   /**
    ** Retourne vraie si la tuile a un blason, faux sinon
+   *
    * @return boolean
    */
   public boolean blason() {
@@ -167,7 +202,9 @@ public class Tile {
   }
 
   /**
-   ** Retourne vraie si la tuile ne contient qu'un ou plusieurs côté non relié fermant la ville
+   ** Retourne vraie si la tuile ne contient qu'un ou plusieurs côté non relié
+   * fermant la ville
+   *
    * @return boolean
    */
   public boolean cityEnder() {
@@ -221,7 +258,8 @@ public class Tile {
   }
 
   /**
-   ** Effectue une rotation de la tuile, dans le sens contraire des aiguilles d'une montre
+   ** Effectue une rotation de la tuile, dans le sens contraire des aiguilles d'une
+   * montre
    */
   public void turnCounterClock() {
     Type tmp = n;
@@ -244,6 +282,7 @@ public class Tile {
 
   /**
    ** Retourne vraie si la tuile possède une ou plusieurs routes
+   *
    * @return
    */
   public boolean hasRoad() {
@@ -252,6 +291,7 @@ public class Tile {
 
   /**
    ** Retourne vraie si la tuile possède une ou plusieurs partie(s) de villes
+   *
    * @return
    */
   public boolean hasCity() {
@@ -348,11 +388,11 @@ public class Tile {
    ** Retourne une chaine de caractère permettant d'afficher une tuile
    *
    * @return la valeur de retour est de type :
-   *$         +-------+
-   *$         |   C   |
-   *$         | R S R |
-   *$         |   L   |
-   *$         +-------+
+   *         $ +-------+
+   *         $ | C |
+   *         $ | R S R |
+   *         $ | L |
+   *         $ +-------+
    */
   public String[] toStringArray() {
     String[] str = new String[3];
@@ -409,6 +449,7 @@ public class Tile {
 
   /**
    ** Retourne la défintion binaire de la tuile pour une sauvegarde
+   *
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {

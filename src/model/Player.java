@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +25,23 @@ public class Player {
 
           default:
           return (byte)-1;
+      }
+    }
+
+    public static Type fromByte(byte b) {
+      switch (b) {
+        case 0:
+          return HUMAN;
+        case 1:
+          return IA_EASY;
+        case 2:
+          return IA_MEDIUM;
+        case 3:
+          return IA_HARD;
+
+
+        default:
+          return null;
       }
     }
 
@@ -58,11 +76,21 @@ public class Player {
     numberOfProjects = 0;
   }
 
+  public Player(byte[] b, String pseudo) {
+    this.pseudo = pseudo;
+    type = Type.fromByte(b[0]);
+    meeplesNumber = b[1];
+    score = b[2];
+    curNumberOfProject = b[3];
+    numberOfProjects = b[4];
+    nbTilePlaced = b[5];
+  }
+
   /**
    ** Retourne le pseudo du joueur
    * @return String
    */
-  public String Pseudo() {
+  public String pseudo() {
     return pseudo;
   }
 
@@ -161,6 +189,26 @@ public class Player {
     return false;
   }
 
+  public void setMeeplesNumber(int nb) {
+    meeplesNumber = nb;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
+
+  public void setCurNbProject(int nb) {
+    curNumberOfProject = nb;
+  }
+
+  public void setNbProject(int nb) {
+    numberOfProjects = nb;
+  }
+
+  public void setNbTilePlaced(int nb) {
+    nbTilePlaced = nb;
+  }
+
   /**
    ** Le joueur récupère un meeple, le nombre de projet courant est réduit de 1 puisque le projet est finie
    */
@@ -174,6 +222,6 @@ public class Player {
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {
-    return Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects(), (byte) nbTilePlaced, Byte.parseByte(pseudo));
+    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) 0));
   }
 }
