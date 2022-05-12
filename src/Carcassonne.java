@@ -7,6 +7,7 @@ import global.Configuration;
 import model.*;
 import model.Player.Type;
 import model.Projects.Project;
+import view.Audio;
 
 public class Carcassonne {
 
@@ -14,7 +15,8 @@ public class Carcassonne {
     GameSet gameSet = new GameSet();
     Pioche p = new Pioche();
 
-    Save.save("test1", new Save(0, -1, -1, Tile.getTileFromInt(5), gameSet.cloneSet(), p, Arrays.asList(new Player("joueur1", Type.HUMAN), new Player("IA facile", Type.IA_EASY)), Arrays.asList(new Meeple(0, 1, 1, "s"))));
+    // Saver.save("test1", new Save(0, -1, -1, Tile.getTileFromInt(5), gameSet.cloneSet(), p, Arrays.asList(new Player("joueur1", Type.HUMAN), new Player("IA facile", Type.IA_EASY)), Arrays.asList(new Meeple(0, 1, 1, "s"))));
+    // Saver.load("test1");
 
     // Configuration.instance().logger().fine("Batterie de tests sur le plateau");
     // System.out.println(gameSet.toString());
@@ -35,7 +37,7 @@ public class Carcassonne {
     // t.turnClock();
     // gameSet.addTile(t, 1, 1);
 
-    // System.out.println(gameSet.toString());
+    System.out.println(gameSet.toString());
 
     // Project.evaluateProjects(gameSet.cloneSet());
 
@@ -67,6 +69,13 @@ public class Carcassonne {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
     System.out.println(System.getProperty("user.home"));
-    setOfTests();
+    Audio audioPlayer = new Audio();
+
+    audioPlayer.music.play();
+    Thread.sleep(3000);
+    audioPlayer.music.stop();
+    while (true) {}
+
+    // setOfTests();
   }
 }

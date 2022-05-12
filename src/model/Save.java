@@ -1,8 +1,6 @@
 package model;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -93,31 +91,10 @@ public class Save {
     return res;
   }
 
-  public static String formatFileString(String s) {
-    if (!s.endsWith(".dat"))
-      s = s.concat(".dat");
-    return Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + s;
-  }
-
-  public static void save(String file, Save s) {
+  public static Save fromFile(FileInputStream inputStream) {
     try {
-      FileOutputStream outputStream = new FileOutputStream(new File(formatFileString(file)));
-
-      byte[] bytes = s.toArray();
-
-      outputStream.write(bytes, 0, bytes.length);
-
-      outputStream.close();
-    } catch (Exception e) {
-      Configuration.instance().logger().severe("Erreur, impossible d'enregistrer la partie");
-      e.printStackTrace();
-    }
-  }
-
-  public static Save load(String file) {
-    try {
-      FileInputStream inputStream = new FileInputStream(formatFileString(file));
       int nbPlayer, playerTurn, setLength, set0Length, currentTileX, currentTileY, nbMeeplesOnSet, piocheSize;
+
       Tile[][] set;
       Pioche p;
       List<Player> players = new ArrayList<>();
@@ -149,7 +126,7 @@ public class Save {
       else
         currentTile = new Tile(bytes);
 
-        // lecture du plateau
+      // lecture du plateau
       set = new Tile[setLength][set0Length];
       for (int i = 0; i < set.length; i++) {
         for (int j = 0; j < set[i].length; j++) {
@@ -157,7 +134,7 @@ public class Save {
           if (bytes[0] == -1)
             set[i][j] = null;
           else
-            set[i][j] =  new Tile(bytes);
+            set[i][j] = new Tile(bytes);
         }
       }
 
@@ -188,12 +165,9 @@ public class Save {
         inputStream.skip(1);
       }
 
-      inputStream.close();
-
       return new Save(playerTurn, currentTileX, currentTileY, currentTile, set, p, players, meeples);
     } catch (Exception e) {
-      Configuration.instance().logger().severe("Impossible de charger la partie");
-      e.printStackTrace();
+      Configuration.instance().logger().severe("Fichier de sauvegarde corrompu");
     }
     return null;
   }
