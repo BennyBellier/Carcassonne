@@ -1,19 +1,13 @@
 
-import java.util.Map.Entry;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import global.Configuration;
 import model.*;
-import model.Player.Type;
-import model.Projects.Project;
 import view.Audio;
 
 import view.Frames;
 import controller.Controleur;
 
 public class Carcassonne {
-    public window() {
+  public static void window() {
     try {
       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
         if ("Nimbus".equals(info.getName())) {
@@ -35,12 +29,16 @@ public class Carcassonne {
         new Frames(new Controleur()).setVisible(true);
       }
     });
+  }
 
   static void setOfTests() {
     GameSet gameSet = new GameSet();
     Pioche p = new Pioche();
 
-    // Saver.save("test1", new Save(0, -1, -1, Tile.getTileFromInt(5), gameSet.cloneSet(), p, Arrays.asList(new Player("joueur1", Type.HUMAN), new Player("IA facile", Type.IA_EASY)), Arrays.asList(new Meeple(0, 1, 1, "s"))));
+    // Saver.save("test1", new Save(0, -1, -1, Tile.getTileFromInt(5),
+    // gameSet.cloneSet(), p, Arrays.asList(new Player("joueur1", Type.HUMAN), new
+    // Player("IA facile", Type.IA_EASY)), Arrays.asList(new Meeple(0, 1, 1,
+    // "s"))));
     // Saver.load("test1");
 
     // Configuration.instance().logger().fine("Batterie de tests sur le plateau");
@@ -69,27 +67,29 @@ public class Carcassonne {
     // Configuration.instance().logger().fine("Batterie de tests sur la pioche");
 
     // for (int j = 0; j < 72; j++) {
-    //   t = p.piocheTuile();
-    //   if (t != null) {
-    //     System.out.println("piece n° : " + (j + 1));
-    //     System.out.println("+-----+");
-    //     for (int i = 0; i < 3; i++) {
-    //       System.out.println("|" + t.toStringArray()[i] + "|");
-    //     }
-    //     System.out.println("+-----+");
-    //   }
-    //   if (t != null) {
-    //     System.out.println(gameSet.toString());
-    //     System.out.println("Position :");
-    //     for (Entry<Integer, ArrayList<Integer>> pos : gameSet.tilePositionsAllowed(t, true).entrySet()) {
-    //       for (int i = 0; i < pos.getValue().size(); i++) {
-    //         System.out.print("(" + pos.getValue().get(i) + ", " + pos.getKey() + ") | ");
-    //       }
-    //     }
-    //     System.out.println();
-    //   }
+    // t = p.piocheTuile();
+    // if (t != null) {
+    // System.out.println("piece n° : " + (j + 1));
+    // System.out.println("+-----+");
+    // for (int i = 0; i < 3; i++) {
+    // System.out.println("|" + t.toStringArray()[i] + "|");
+    // }
+    // System.out.println("+-----+");
+    // }
+    // if (t != null) {
+    // System.out.println(gameSet.toString());
+    // System.out.println("Position :");
+    // for (Entry<Integer, ArrayList<Integer>> pos : gameSet.tilePositionsAllowed(t,
+    // true).entrySet()) {
+    // for (int i = 0; i < pos.getValue().size(); i++) {
+    // System.out.print("(" + pos.getValue().get(i) + ", " + pos.getKey() + ") | ");
+    // }
+    // }
+    // System.out.println();
+    // }
     // }
   }
+
   public static void main(String[] args) throws Exception {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
@@ -99,8 +99,7 @@ public class Carcassonne {
     audioPlayer.music.play();
     Thread.sleep(3000);
     audioPlayer.music.stop();
-    while (true) {}
-
+    window();
     // setOfTests();
   }
 }

@@ -1,37 +1,51 @@
 package view;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.io.InputStream;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import view.Images;
+import java.util.Map;
+
+import javax.swing.JComponent;
+
+import java.awt.*;
+
+import model.*;
+import model.Tile.Type;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-//package view;
-//import java.awt.*;
-//import model.GameEngine;
+
 /**
  *
  * @author ludov
  */
-public class AffichePlateau {
+public class AffichePlateau extends JComponent {
 
-  GameEngine gs;
-  Images img;
-  private Tile[][] plateau = gs.getSet();
+  GameSet gs = new GameSet();
+  Images img = new Images();
+  private Tile[][] plateau = gs.cloneSet();
   int taille = plateau.length;
-  Point p = gs.getStartTilePoint();
-  int tailleImg = height/(gs.nbTour+3);
-  ArrayList<InputStream> images = img.getImagesList();
+  int tailleImg = 100;
+  ArrayList<Image> images = img.getImagesList();
 
   public AffichePlateau() {
-      gs = new GameSet();
+    repaint();
   }
 
+  public void draw(Graphics2D g, int taille, int rota, int tailleImg) {
+    for (int i = 0; i < taille; i++) {
+      for (int j = 0; j < taille; j++) {
+        if (plateau[i][j] != null) {
+          Map.Entry<Image, Integer> m = getImageAndRotation(plateau[i][j]);
+          System.out.println("test");
+          g.drawImage(m.getKey(), i * 20, j * 20, 20, 20, null);
+        }
+      }
+    }
+
+  }
 
   public Map.Entry<Image, Integer> getImageAndRotation(Tile t) {
     if (t.center() == Type.ABBEY && t.north() == Type.FIELD && t.east() == Type.FIELD && t.south() == Type.FIELD
@@ -250,21 +264,4 @@ public class AffichePlateau {
     }
     return null;
   }
-
-  public void draw(Graphics2D g, int taille, int rota , int tailleImg) {
-        gs.getStartTilePoint();
-
-        g.draw(19.png , gs.getStartTilePoint().x , gs.getStartTilePoint().y , tailleImg/nbTou, height);
-
-        for(int i = 0; i<taille ; i++){
-            for(int j = 0 ; j<taille ; j++){
-                if (plateau.get(i).get(j)!=null){
-                    Map.Entry<Image, Integer> m = getImageAndRotation(plateau.get(i).get(j));
-                    g.draw
-                }
-            }
-        }
-
-   }
-
 }
