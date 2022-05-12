@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.JButton;
 
+import controller.Controleur;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -13,11 +15,11 @@ import javax.swing.JButton;
  */
 public class Frames extends javax.swing.JFrame {
     /**
-     * Creates new form 
+     * Creates new form
      */
     Controleur control;
     //Images imgs;
-    
+
     public Frames(Controleur c) {
         control = c ;
         initComponents();
@@ -25,9 +27,9 @@ public class Frames extends javax.swing.JFrame {
         setupPanel();
         control.getInterface(this);
     }
-    
+
     private void setupBoutons(){
-        //menuPanel 
+        //menuPanel
         donnerAction(continuerButton , "continuer");
         donnerAction(chargerButton , "charger");
         donnerAction(classementButton , "classement");
@@ -43,9 +45,9 @@ public class Frames extends javax.swing.JFrame {
         donnerAction(retourReglesButton , "rRegles");
         //creditsPanel
         donnerAction(retourCreditsButton , "rCredits");
-        
+
     }
-    
+
     private void setupPanel(){
         //imgs = new Images();
         //this.add(imgs);
@@ -55,21 +57,21 @@ public class Frames extends javax.swing.JFrame {
         optionsPanel.setVisible(false);
         plateauJeuPanel.setVisible(false);
         quitterOptionPane.setVisible(false);
-    
+
     }
-    
-    
+
+
     public void display() {
         System.out.println("display");
 
     }
-    
+
     public void donnerAction(JButton b , String actionCommand){
         b.setActionCommand(actionCommand);
         b.addActionListener(control);
     }
-    
-   
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -379,5 +381,5 @@ public class Frames extends javax.swing.JFrame {
     private javax.swing.JButton vsBotButton;
     private javax.swing.JButton vsButton;
     // End of variables declaration//GEN-END:variables
-    
+
 }

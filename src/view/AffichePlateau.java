@@ -1,3 +1,4 @@
+package view;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -26,12 +27,12 @@ public class AffichePlateau {
   Point p = gs.getStartTilePoint();
   int tailleImg = height/(gs.nbTour+3);
   ArrayList<InputStream> images = img.getImagesList();
-  
+
   public AffichePlateau() {
       gs = new GameSet();
   }
-  
-  
+
+
   public Map.Entry<Image, Integer> getImageAndRotation(Tile t) {
     if (t.center() == Type.ABBEY && t.north() == Type.FIELD && t.east() == Type.FIELD && t.south() == Type.FIELD
         && t.west() == Type.FIELD)
@@ -252,9 +253,9 @@ public class AffichePlateau {
 
   public void draw(Graphics2D g, int taille, int rota , int tailleImg) {
         gs.getStartTilePoint();
-        
+
         g.draw(19.png , gs.getStartTilePoint().x , gs.getStartTilePoint().y , tailleImg/nbTou, height);
-        
+
         for(int i = 0; i<taille ; i++){
             for(int j = 0 ; j<taille ; j++){
                 if (plateau.get(i).get(j)!=null){
@@ -265,5 +266,5 @@ public class AffichePlateau {
         }
 
    }
-   
+
 }
