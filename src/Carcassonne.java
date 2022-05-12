@@ -9,7 +9,32 @@ import model.Player.Type;
 import model.Projects.Project;
 import view.Audio;
 
+import view.Frames;
+import controller.Controleur;
+
 public class Carcassonne {
+    public window() {
+    try {
+      for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(info.getName())) {
+          javax.swing.UIManager.setLookAndFeel(info.getClassName());
+          break;
+        }
+      }
+    } catch (ClassNotFoundException ex) {
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    }
+    java.awt.EventQueue.invokeLater(new Runnable() {
+      public void run() {
+        new Frames(new Controleur()).setVisible(true);
+      }
+    });
 
   static void setOfTests() {
     GameSet gameSet = new GameSet();

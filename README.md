@@ -12,7 +12,7 @@ Carcassonne est un jeu de plateau, nous vous proposons ici une version informati
 
 ## Arborescence des fichiers
 
-Le dépôt contient deux dossiers princpaux, où :
+Le dépôt contient deux dossiers principaux, où :
 
 - `src`: le dossier pour gérer les sources
 - `lib`: le dossier pour maintenir les dépendances
