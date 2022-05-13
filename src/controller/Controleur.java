@@ -37,29 +37,27 @@ public class Controleur implements ActionListener {
 
         break;
       case "credits":
-        // f.menuPanel.setVisible(false);
-        // f.creditsPanel.setVisible(true);
+         f.menuPrincipale.setVisible(false);
+         f.menuCredits.setVisible(true);
         break;
       case "options":
-        // f.menuPanel.setVisible(false);
-        // f.optionsPanel.setVisible(true);
+         f.menuPrincipale.setVisible(false);
+         f.menuOptions.setVisible(true);
         break;
       case "quitter":
         String[] options = { "Oui", "Non" };
-        // int reply = f.quitterOptionPane.showOptionDialog(null, "Êtes-vous sûr.e de vouloir quitter le jeu ?",
-        //     "Quitter le jeu ?",
-        //     f.quitterOptionPane.YES_NO_OPTION, f.quitterOptionPane.QUESTION_MESSAGE, null, options, null);
-        // if (reply == f.quitterOptionPane.YES_OPTION) {
-        //   System.exit(0);
-        // }
+        int reply = f.quitterOptionPane.showOptionDialog(null, "Êtes-vous sûr.e de vouloir quitter le jeu ?", "Quitter le jeu ?",f.quitterOptionPane.YES_NO_OPTION, f.quitterOptionPane.QUESTION_MESSAGE, null, options, null);
+        if (reply == f.quitterOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
         break;
       case "vsHumain":
         break;
       case "vsBot":
         break;
       case "regles":
-        // f.menuPanel.setVisible(false);
-        // f.reglesPanel.setVisible(true);
+         f.menuPrincipale.setVisible(false);
+         f.reglesPanel.setVisible(true);
         break;
       case "retourMP":
         f.menuPrincipale();
