@@ -34,7 +34,14 @@ public class AffichePlateau extends JComponent {
     repaint();
   }
 
-  public void draw(Graphics2D g, int taille, int rota, int tailleImg) {
+  @Override
+  public void paintComponent(Graphics g) {
+
+    Graphics2D drawable = (Graphics2D) g;
+    int width = getSize().width;
+    int height = getSize().height;
+    drawable.clearRect(0, 0, width, height);
+
     for (int i = 0; i < taille; i++) {
       for (int j = 0; j < taille; j++) {
         if (plateau[i][j] != null) {

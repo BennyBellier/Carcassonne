@@ -94,11 +94,11 @@ public class Carcassonne {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
     System.out.println(System.getProperty("user.home"));
-    Audio audioPlayer = new Audio();
+    // Audio audioPlayer = new Audio();
 
-    audioPlayer.music.play();
-    Thread.sleep(3000);
-    audioPlayer.music.stop();
+    // audioPlayer.music.play();
+    // Thread.sleep(3000);
+    // audioPlayer.music.stop();
     window();
     // setOfTests();
   }

@@ -18,4 +18,9 @@ public class Audio {
     fxVolume = Integer.parseInt(Configuration.instance().lis("FX"));
     music = new Music();
   }
+
+  public void playMusic() {
+    Thread t = new Thread(music);
+    t.start();
+  }
 }

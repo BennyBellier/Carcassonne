@@ -29,8 +29,7 @@ public class Controleur implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
       case "continuer":
-        f.menuPanel.setVisible(false);
-        f.plateauJeuPanel.setVisible(true);
+
         break;
       case "charger":
         break;
@@ -38,41 +37,32 @@ public class Controleur implements ActionListener {
 
         break;
       case "credits":
-        f.menuPanel.setVisible(false);
-        f.creditsPanel.setVisible(true);
+        // f.menuPanel.setVisible(false);
+        // f.creditsPanel.setVisible(true);
         break;
       case "options":
-        f.menuPanel.setVisible(false);
-        f.optionsPanel.setVisible(true);
+        // f.menuPanel.setVisible(false);
+        // f.optionsPanel.setVisible(true);
         break;
       case "quitter":
         String[] options = { "Oui", "Non" };
-        int reply = f.quitterOptionPane.showOptionDialog(null, "Êtes-vous sûr.e de vouloir quitter le jeu ?",
-            "Quitter le jeu ?",
-            f.quitterOptionPane.YES_NO_OPTION, f.quitterOptionPane.QUESTION_MESSAGE, null, options, null);
-        if (reply == f.quitterOptionPane.YES_OPTION) {
-          System.exit(0);
-        }
+        // int reply = f.quitterOptionPane.showOptionDialog(null, "Êtes-vous sûr.e de vouloir quitter le jeu ?",
+        //     "Quitter le jeu ?",
+        //     f.quitterOptionPane.YES_NO_OPTION, f.quitterOptionPane.QUESTION_MESSAGE, null, options, null);
+        // if (reply == f.quitterOptionPane.YES_OPTION) {
+        //   System.exit(0);
+        // }
         break;
       case "vsHumain":
         break;
       case "vsBot":
         break;
       case "regles":
-        f.menuPanel.setVisible(false);
-        f.reglesPanel.setVisible(true);
+        // f.menuPanel.setVisible(false);
+        // f.reglesPanel.setVisible(true);
         break;
-      case "rOptions":
-        f.menuPanel.setVisible(true);
-        f.optionsPanel.setVisible(false);
-        break;
-      case "rRegles":
-        f.menuPanel.setVisible(true);
-        f.reglesPanel.setVisible(false);
-        break;
-      case "rCredits":
-        f.menuPanel.setVisible(true);
-        f.creditsPanel.setVisible(false);
+      case "retourMP":
+        f.menuPrincipale();
         break;
       default:
         System.out.println("Commande invalide");

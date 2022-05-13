@@ -20,7 +20,7 @@ public class Music implements Runnable {
         playlist.add(AudioSystem.getAudioInputStream(new File(f.toPath().toString())));
       }
       clip = AudioSystem.getClip();
-      clip.open(playlist.get(playlistNumber));
+      clip.open(playlist.get(0));
       thread = new Thread(this);
     } catch (Exception e) {
       Configuration.instance().logger().warning("Impossible de charger les fichiers audio");
@@ -45,19 +45,19 @@ public class Music implements Runnable {
   @Override
   public void run() {
     clip.start();
-    while (thread.isAlive()) {
-      if (!clip.isRunning()) {
-        clip.close();
-        playlistNumber = (playlistNumber + 1) % playlist.size();
-        try {
-          clip.open(playlist.get(playlistNumber));
-          clip.start();
-        }
-        catch (Exception e) {
-          Configuration.instance().logger().severe("Impossible de lire la musique");
-        }
-      }
-    }
+    // while (thread.isAlive()) {
+    //   if (!clip.isRunning()) {
+    //     clip.close();
+    //     playlistNumber = (playlistNumber + 1) % playlist.size();
+    //     try {
+    //       clip.open(playlist.get(playlistNumber));
+    //       clip.start();
+    //     }
+    //     catch (Exception e) {
+    //       Configuration.instance().logger().severe("Impossible de lire la musique");
+    //     }
+    //   }
+    // }
   }
 
 }

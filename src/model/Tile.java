@@ -9,7 +9,6 @@ import global.Configuration;
 public class Tile {
 
   public enum Type {
-    START, // tuile de départ
     TOWN, // petit ville au centre d'une seul tuile
     CITY, // ville sur plusieurs tuiles
     ROAD, // route
@@ -18,8 +17,6 @@ public class Tile {
 
     public byte toByte() {
       switch (this) {
-        case START:
-          return (byte) 0;
         case TOWN:
           return (byte) 1;
         case CITY:
@@ -38,8 +35,6 @@ public class Tile {
 
     public static Type fromByte(byte b) {
       switch (b) {
-        case 0:
-          return START;
         case 1:
           return TOWN;
         case 2:
@@ -64,8 +59,6 @@ public class Tile {
      */
     public String toOneCharString() {
       switch (this) {
-        case START:
-          return "S";
         case TOWN:
           return "T";
         case CITY:
@@ -88,8 +81,6 @@ public class Tile {
      */
     public String toString() {
       switch (this) {
-        case START:
-          return "START";
         case TOWN:
           return "TOWN";
         case CITY:
