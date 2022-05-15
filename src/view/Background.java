@@ -7,11 +7,11 @@ import java.io.File;
 
 public class Background extends JComponent{
 
-  Image background;
+  Image backgroundTitle, backgroundPanel;
 
   public Background() {
     try {
-      background = ImageIO.read(new File("assets/Images/background.png"));
+      backgroundTitle = ImageIO.read(new File("assets/Images/BackgroundTitle.jpg"));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -22,6 +22,6 @@ public class Background extends JComponent{
     Graphics2D drawable = (Graphics2D) g;
     int width = getSize().width;
     int height = getSize().height;
-    drawable.drawImage(background, 0, 0, width, height, null);
+    drawable.drawImage(backgroundTitle, 0, 0, width, height, null);
   }
 }

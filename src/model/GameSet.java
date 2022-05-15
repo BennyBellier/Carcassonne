@@ -34,7 +34,7 @@ public class GameSet {
           Configuration
               .instance()
               .logger()
-              .info(
+              .finer(
                   "Récupération des coordonnées de la tuile de départ : (" +
                       i +
                       ", " +
@@ -62,7 +62,7 @@ public class GameSet {
     Configuration
         .instance()
         .logger()
-        .info(
+        .fine(
             "Redimensionnement de la matrice : " +
                 tiles.length +
                 ", " +
@@ -83,10 +83,10 @@ public class GameSet {
    * @return boolean
    */
   boolean noTilesAround(int x, int y) {
-    return !(isTiles(y, x - 1) ||
-        isTiles(y, x + 1) ||
-        isTiles(y - 1, x) ||
-        isTiles(y + 1, x));
+    return !(isTiles(x - 1, y) ||
+        isTiles(x + 1,y) ||
+        isTiles(x, y - 1) ||
+        isTiles(x, y + 1));
   }
 
   /**
@@ -122,7 +122,8 @@ public class GameSet {
   }
 
   /**
-   ** Ajoute une tuile t aux coordonnées (x, y) si cela est possible et retourne vraie si la tuile à pu être posé, faux sinon
+   ** Ajoute une tuile t aux coordonnées (x, y) si cela est possible et retourne
+   * vraie si la tuile à pu être posé, faux sinon
    *
    * @param t Tile à poser
    * @param x int position x sur laquelle posé la tuile
@@ -138,7 +139,7 @@ public class GameSet {
     Configuration
         .instance()
         .logger()
-        .info("Essaie de placement d'une tuile en (" + x + ", " + y + ")");
+        .fine("Essaie de placement d'une tuile en (" + x + ", " + y + ")");
 
     x = (int) start.getX() + x;
     y = (int) start.getY() + y;
@@ -251,7 +252,9 @@ public class GameSet {
   }
 
   /**
-   ** Retourne vraie si toutes les côtés de la tuiles peuvent être connectés au tuiles environnantes
+   ** Retourne vraie si toutes les côtés de la tuiles peuvent être connectés au
+   * tuiles environnantes
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @param t Tile à tester
@@ -291,8 +294,9 @@ public class GameSet {
    ** Retourne la liste de tous les emplacements possibles pour la tuile t (avec
    ** les rotations ou non)
    *
-   * @param t Tile
-   * @param withRota booléen si vraie alors calcul avec les rotations possibles, sinon calcul sans les rotations
+   * @param t        Tile
+   * @param withRota booléen si vraie alors calcul avec les rotations possibles,
+   *                 sinon calcul sans les rotations
    * @return Map<Integer, ArrayList<Integer>>
    */
   public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile t, boolean withRota) {
@@ -321,23 +325,24 @@ public class GameSet {
   }
 
   /**
-   **Retourne vraie si le meeple définie peut être placé
+   ** Retourne vraie si le meeple définie peut être placé
+   *
    * @param m meeple définie avec la position (x, y) et sa cardinalité
    * @return vraie si le meeple peut être placé, faux sinon
    */
   public boolean meeplePlacementAllowed(Meeple m) {
-    Tile t = tiles[m.getY()][m.getX()];
+    Tile t = tiles[m.getY() + getStartTilePoint().y][m.getX() + getStartTilePoint().x];
     if (t != null) {
       switch (m.getCardinal()) {
         case "c":
           return typeWhereMeepleAllow(t.center());
-          case "n":
+        case "n":
           return typeWhereMeepleAllow(t.north());
-          case "s":
+        case "s":
           return typeWhereMeepleAllow(t.south());
-          case "e":
+        case "e":
           return typeWhereMeepleAllow(t.east());
-          case "w":
+        case "w":
           return typeWhereMeepleAllow(t.west());
       }
     }
@@ -346,6 +351,7 @@ public class GameSet {
 
   /**
    ** Retourne vraie si le Type sur lequel on veut poser le meeple est autorisé
+   *
    * @param t Type.Tile sur lequel on souhaite placer le meeple
    * @return vraie si le meeple peut y être placé
    */
@@ -355,6 +361,7 @@ public class GameSet {
 
   /**
    ** retourne la tuile sur le plateau au coordonnées (x, y)
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @return Tile
@@ -364,9 +371,11 @@ public class GameSet {
   }
 
   /**
-   ** Retourne le type du projet pour la cardinalité 'card' de la tuile (x, y) sur le plateau
-   * @param x int position x de la tuile sur le plateau
-   * @param y int position y de la tuile sur le plateau
+   ** Retourne le type du projet pour la cardinalité 'card' de la tuile (x, y) sur
+   * le plateau
+   *
+   * @param x    int position x de la tuile sur le plateau
+   * @param y    int position y de la tuile sur le plateau
    * @param card String cardinalité recherché
    * @return Projet.Type corrsepondant au type de la cardinalité de la tuile
    */
@@ -387,7 +396,6 @@ public class GameSet {
       case "c":
         return tileTypeToProjectType(t.center());
 
-
       default:
         return null;
     }
@@ -395,6 +403,7 @@ public class GameSet {
 
   /**
    ** Retourne le type de projet en fonction du type de la tuile
+   *
    * @param tt Tile.Type
    * @return Project.Type correspondant au Tile.Type
    */

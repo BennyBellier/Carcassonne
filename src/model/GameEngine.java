@@ -1,6 +1,8 @@
 package model;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.awt.Point;
 
 import global.Configuration;
 import model.Projects.Project;
@@ -14,14 +16,17 @@ public class GameEngine {
   private Tile currentTile;
   private int x = -1, y = -1;
 
-  public GameEngine(Player... players) {
+  public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
     pioche = new Pioche();
     piocheTuile();
-    nbPlayer = players.length;
-    for (Player p : players)
-      this.players.add(p);
-    Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + players.length + " joueurs");
+    nbPlayer = playersIn.length;
+    players = new ArrayList<>(nbPlayer);
+    meeplesOnSet = new ArrayList<>();
+    for (Player p : playersIn) {
+      players.add(p);
+    }
+    Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
   }
 
   /**
@@ -39,6 +44,68 @@ public class GameEngine {
    */
   public Tile[][] getSet() {
     return gameSet.cloneSet();
+  }
+
+  public Tile getCurrentTile() {
+    return currentTile;
+  }
+
+  public int getPiocheSize() {
+    return pioche.size();
+  }
+
+  public int getNbPlayer() {
+    return nbPlayer;
+  }
+
+  public List<Player> getListPlayers() {
+    return players;
+  }
+
+  public boolean humanAddTile(int x, int y) {
+    Point start = gameSet.getStartTilePoint();
+    if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
+      currentTile = null;
+      System.out.println(gameSet.toString());
+      endOfTurn();
+      return true;
+    }
+    return false;
+  }
+
+  public boolean clic(int x, int y, String card) {
+    if (currentTile != null) {
+      Point start = gameSet.getStartTilePoint();
+      if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
+        currentTile = null;
+        return true;
+      }
+      return false;
+    }
+    else {
+      Point start = gameSet.getStartTilePoint();
+      if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, card))) {
+        endOfTurn();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean canEndTurn() {
+    return currentTile == null;
+  }
+
+  public void turnCurrentTile() {
+    currentTile.turnClock();
+  }
+
+  public Point getStartTilePoint() {
+    return gameSet.getStartTilePoint();
+  }
+
+  public int getPlayerTurn() {
+    return playerTurn;
   }
 
   /**
@@ -76,7 +143,7 @@ public class GameEngine {
    ** Remise à zéro des valeurs, récupération d'une nouvelle tuile,
    ** et passeage au joueur suivant
    */
-  void endOfTurn() {
+  public void endOfTurn() {
     x = -1;
     y = -1;
     nextPlayer();

@@ -64,9 +64,10 @@ public class Player {
 
   private String pseudo;
   private Type type;
-  private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects;
+  private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects, color;
 
-  public Player(String name, Type type) {
+
+  public Player(String name, Type type, int color) {
     pseudo = name;
     this.type = type;
     meeplesNumber = 7;
@@ -74,6 +75,7 @@ public class Player {
     nbTilePlaced = 0;
     curNumberOfProject = 0;
     numberOfProjects = 0;
+    this.color = color;
   }
 
   public Player(byte[] b, String pseudo) {

@@ -8,13 +8,13 @@ public class Pioche {
 
   // Un numéro à était attribué pour chacunes des tuiles uniques
   // ci-dessous le tableau stock pour un type de tuiles (index) son nombre d'occurences dans le jeu
-  private int[] numberPerTile = { 4, 2, 0, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 4, 8, 9, 4, 1 };
+  private int[] numberPerTile = { 4, 2, 1, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 3, 8, 9, 4, 1 };
   private LinkedList<Tile> pioche;
   private Random r;
 
   public Pioche() {
     pioche = new LinkedList<Tile>();
-    r = new Random(5);
+    r = new Random();
     initPioche();
   }
 
