@@ -99,12 +99,12 @@ public class Carcassonne {
   }
 
   static void startGame() {
-    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN), new Player("Wall-E", Type.IA_EASY), new Player("Benny", Type.HUMAN));
+    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, 0x00ff00), new Player("Wall-E", Type.IA_EASY, 0x000000), new Player("Benny", Type.HUMAN, 0x101eff));
 
     AffichePlateau affPlat = new AffichePlateau(gm);
 
     Controleur c = new Controleur(gm);
-    c.getAfficheur(affPlat);
+    c.setAfficheur(affPlat);
     affPlat.addMouseListener(new Mouse(affPlat, c));
 
     JFrame frame = new JFrame();

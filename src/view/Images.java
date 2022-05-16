@@ -34,6 +34,9 @@ public class Images {
     }
   }
 
+  /**
+   ** Charge les images des tuiles dans la liste images
+   */
   void loadTiles() {
     int j;
     for (int i = 0; i <= 18; i++) {
@@ -56,10 +59,18 @@ public class Images {
     }
   }
 
+  /**
+   ** Retourne l'image de blason
+   * @return Image
+   */
   public Image blason() {
     return blason;
   }
 
+  /**
+   ** Retourne la liste des images
+   * @return ArrayList<ArrayList<Image>>
+   */
   public ArrayList<ArrayList<Image>> getImagesList() {
     return images;
   }

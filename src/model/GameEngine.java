@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.awt.Point;
 
 import global.Configuration;
+import model.Player.Type;
 import model.Projects.Project;
 
 public class GameEngine {
@@ -46,22 +47,44 @@ public class GameEngine {
     return gameSet.cloneSet();
   }
 
+  /**
+   ** Retourne la tuile courante
+   * @return Tile
+   */
   public Tile getCurrentTile() {
     return currentTile;
   }
 
+  /**
+   ** Retourne la taille courante de la pioche
+   * @return int
+   */
   public int getPiocheSize() {
     return pioche.size();
   }
 
+  /**
+   ** Retourne le nombre de joueur
+   * @return int
+   */
   public int getNbPlayer() {
     return nbPlayer;
   }
 
+  /**
+   ** Retourne la liste des joueurs
+   * @return List<Players>
+   */
   public List<Player> getListPlayers() {
     return players;
   }
 
+  /**
+   ** Effectue les calculs pour l'ajout d'une tuile par un utilisateur
+   * @param x position x du placement de la tuile
+   * @param y position y du placement de la tuile
+   * @return boolean vraie si la tuile a été posé, faux sinon
+   */
   public boolean humanAddTile(int x, int y) {
     Point start = gameSet.getStartTilePoint();
     if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
@@ -73,37 +96,60 @@ public class GameEngine {
     return false;
   }
 
+  /**
+   ** Effectue l'action du clic en fonction de l'état courant du tour du joueur
+   * @param x position x de la tuile à placer ou du meeple
+   * @param y position y de la tuile à placer ou du meeple
+   * @param card cardinalité du meeple à placer
+   * @return boolean vraie si la pose de la tuile ou du meeple a été effectué, faux sinon
+   */
   public boolean clic(int x, int y, String card) {
-    if (currentTile != null) {
-      Point start = gameSet.getStartTilePoint();
-      if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
-        currentTile = null;
-        return true;
-      }
-      return false;
-    }
-    else {
-      Point start = gameSet.getStartTilePoint();
-      if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, card))) {
-        endOfTurn();
-        return true;
+    if (players.get(playerTurn).type() == Type.HUMAN) {
+      if (currentTile != null) {
+        Point start = gameSet.getStartTilePoint();
+        if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
+          currentTile = null;
+          return true;
+        }
+        return false;
+      } else {
+        Point start = gameSet.getStartTilePoint();
+        if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, card))) {
+          endOfTurn();
+          return true;
+        }
       }
     }
     return false;
   }
 
+  /**
+   ** Renvoie vraie si le joueur peut terminer son tour
+   * @return boolean
+   */
   public boolean canEndTurn() {
     return currentTile == null;
   }
 
+  /**
+   ** Tourne la tuile courante d'un quart de tour vers la droite
+   */
   public void turnCurrentTile() {
     currentTile.turnClock();
   }
 
+  /**
+   ** Retourne le Point contenant la position de la tuile de départ
+   * @return Point
+   */
   public Point getStartTilePoint() {
     return gameSet.getStartTilePoint();
   }
 
+  /**
+   ** Retoune l'entier correspondant aua joueur entrain de jouer son tour
+   * @return int
+   */
   public int getPlayerTurn() {
     return playerTurn;
   }
@@ -157,11 +203,13 @@ public class GameEngine {
    * @return vraie si le placement à eu lieu
    */
   public boolean placeMeeple(Meeple m) {
-    if (players.get(playerTurn).meepleUse() && gameSet.meeplePlacementAllowed(m)) {
+    if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
+      players.get(playerTurn).meepleUse();
       meeplesOnSet.add(m);
-      Configuration.instance().logger().info(players.get(playerTurn) + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
+      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
       return true;
     }
+
     return false;
   }
 

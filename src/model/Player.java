@@ -96,6 +96,10 @@ public class Player {
     return pseudo;
   }
 
+  public int color() {
+    return color;
+  }
+
   /**
    ** Retourne le type de joueur humain ou ia
    * @return Type
@@ -174,6 +178,10 @@ public class Player {
     return numberOfProjects;
   }
 
+  public boolean canUseMeeple() {
+    return meeplesNumber > 0;
+  }
+
   /**
    ** Utilise un meeple du joueur et retourne vraie si c'est possible, faux sinon
    * <p>
@@ -181,14 +189,12 @@ public class Player {
    * Augmente de 1 le nombre de projet courant et global du joueur
    * @return booléen vraie si le joueur peut utiliser un meeple, faux sinon
    */
-  public boolean meepleUse() {
+  public void meepleUse() {
     if (meeplesNumber > 0) {
       meeplesNumber -= 1;
       curNumberOfProject += 1;
       numberOfProjects += 1;
-      return true;
     }
-    return false;
   }
 
   public void setMeeplesNumber(int nb) {

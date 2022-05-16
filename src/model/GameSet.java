@@ -115,6 +115,12 @@ public class GameSet {
     return cp;
   }
 
+  /**
+   ** Retourne vraie si la tuile de position (x, y) du plateau a été enlevé
+   * @param x int position x de la tuile
+   * @param y int position y de la tuile
+   * @return boolean vraie si la tuile a été enlevé, faux sinon
+   */
   public boolean removeTile(int x, int y) {
     if (tiles[y][x] != null)
       tiles[y][x] = null;
@@ -331,8 +337,9 @@ public class GameSet {
    * @return vraie si le meeple peut être placé, faux sinon
    */
   public boolean meeplePlacementAllowed(Meeple m) {
-    Tile t = tiles[m.getY() + getStartTilePoint().y][m.getX() + getStartTilePoint().x];
+    Tile t = tiles[m.getX() + getStartTilePoint().x][m.getY() + getStartTilePoint().y];
     if (t != null) {
+      System.out.println(t.toString());
       switch (m.getCardinal()) {
         case "c":
           return typeWhereMeepleAllow(t.center());
@@ -356,7 +363,7 @@ public class GameSet {
    * @return vraie si le meeple peut y être placé
    */
   boolean typeWhereMeepleAllow(Tile.Type t) {
-    return t != Tile.Type.FIELD || t != Tile.Type.TOWN;
+    return t != Tile.Type.FIELD && t != Tile.Type.TOWN;
   }
 
   /**

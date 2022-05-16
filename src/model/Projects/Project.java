@@ -23,8 +23,7 @@ public abstract class Project {
 
   /**
    ** Retourne l'état du projet
-   *
-   * @return
+   * @return boolean
    */
   public final boolean finished() {
     return finish;
@@ -39,7 +38,7 @@ public abstract class Project {
 
   /**
    ** Retourne le type Project.Type de projet
-   * @return
+   * @return Project.Type
    */
   public final Type type() {
     return type;

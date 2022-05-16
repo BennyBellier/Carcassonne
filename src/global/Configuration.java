@@ -23,6 +23,10 @@ public class Configuration {
     return ClassLoader.getSystemClassLoader().getResourceAsStream(name);
   }
 
+  /**
+   * Genere le fichiers de configuration du jeu
+   * @param configPath
+   */
   private void generateConfigFolder(Path configPath) {
     try {
       Files.createDirectories(configPath);
@@ -35,6 +39,10 @@ public class Configuration {
     }
   }
 
+  /**
+   ** Retourne la chaine de caractère du chemin vers le fichier de configuration
+   * @return String
+   */
   public String getConfigFolderPath() {
     return configFolder.toString();
   }

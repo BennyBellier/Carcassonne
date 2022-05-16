@@ -45,6 +45,10 @@ public class Pioche {
         .info("Initialisation de la pioche avec " + pioche.size() + " tuiles");
   }
 
+  /**
+   ** Retourne la taille de la pioche
+   * @return int
+   */
   public int size() {
     return pioche.size();
   }
