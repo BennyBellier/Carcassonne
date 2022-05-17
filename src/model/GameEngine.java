@@ -15,7 +15,7 @@ public class GameEngine {
   private List<Meeple> meeplesOnSet;
   private int playerTurn, nbPlayer;
   private CurrentTile currentTile;
-  private int x = -1, y = -1;
+  // private int x = -1, y = -1;
 
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
@@ -176,8 +176,6 @@ public class GameEngine {
    ** et passeage au joueur suivant
    */
   public void endOfTurn() {
-    x = -1;
-    y = -1;
     nextPlayer();
     piocheTuile();
     Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
@@ -207,8 +205,6 @@ public class GameEngine {
    */
   public boolean placeTile(int x, int y) {
     if (gameSet.addTile(currentTile.tile, x, y)) {
-      this.x = x;
-      this.y = y;
       Configuration.instance().logger().info(players.get(playerTurn) + " à poser une tuile sur la case (" + x + " ," + y + ")");
       return true;
     }
@@ -220,11 +216,13 @@ public class GameEngine {
    * @return vraie si la tuile à était enlevé, faux sinon
    */
   public boolean removeTile() {
-    Configuration.instance().logger()
-        .info("La tuile sur la case (" + x + " ," + y + ") a était enlevé");
-    if (gameSet.removeTile(x, y)) {
-      currentTile.unplaced();
-      return true;
+    if (currentTile.placed) {
+      Configuration.instance().logger()
+          .info("La tuile sur la case (" + currentTile.x + " ," + currentTile.y + ") a était enlevé");
+      if (gameSet.removeTile(currentTile.x + gameSet.getStartTilePoint().x, currentTile.y + gameSet.getStartTilePoint().y)) {
+        currentTile.unplaced();
+        return true;
+      }
     }
     return false;
   }

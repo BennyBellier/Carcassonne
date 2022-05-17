@@ -148,7 +148,6 @@ public class AffichePlateau extends JComponent {
       }
       meepleX += ((currentTile.x + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((currentTile.y + gm.getStartTilePoint().x) * tileSize);
-      // drawable.setColor(new Color(gm.getListPlayers().get().color()));
       drawable.drawImage(meeplePossibility, meepleX, meepleY, meepleSize, meepleSize, null);
     }
   }

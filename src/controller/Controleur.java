@@ -16,6 +16,10 @@ import view.AffichePlateau;
  */
 public class Controleur implements ActionListener {
 
+  public enum Command {
+    RemoveTile;
+  }
+
   AffichePlateau tab;
   GameEngine ge;
 
@@ -106,6 +110,18 @@ public class Controleur implements ActionListener {
       ge.turnCurrentTile();
       tab.repaint();
     }
+  }
+
+  public void command(Command cmd) {
+    switch (cmd) {
+      case RemoveTile:
+        ge.removeTile();
+        break;
+
+      default:
+        break;
+    }
+    tab.repaint();
   }
 
   @Override

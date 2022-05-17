@@ -5,6 +5,7 @@ import model.Player.Type;
 import view.AffichePlateau;
 
 import view.Frame;
+import view.Keybord;
 import view.Mouse;
 
 import java.awt.*;
@@ -111,6 +112,7 @@ public class Carcassonne {
     frame.setMinimumSize(new Dimension(853, 480));
     frame.setMaximumSize(new Dimension(1920, 1080));
     frame.add(affPlat);
+    frame.addKeyListener(new Keybord(c));
     frame.setSize(new Dimension(1080, 720));
     frame.setVisible(true);
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
