@@ -21,7 +21,7 @@ public class Frames extends javax.swing.JFrame {
     Player p;
     Controleur control;
     Images imgs;
-    Background bg;
+  
     Random r = new Random();
     Color c , bleu , noir , vert , rouge;
     private Color couleurBleu = new Color(7,45,249);
@@ -39,7 +39,7 @@ public class Frames extends javax.swing.JFrame {
     public Frames(Controleur c) {
         control = c;
         imgs = new Images();
-        bg = new Background();
+        
         initComponents();
         setupBoutons();
         setupPanel();
@@ -60,6 +60,7 @@ public class Frames extends javax.swing.JFrame {
     
     private void setupPanel() {
         menuPrincipale();
+        
     
     }
 
@@ -73,7 +74,7 @@ public class Frames extends javax.swing.JFrame {
     }
 
     public void menuPrincipale() {
-        bg.affichageMenu();
+        background.affichageMenu();
         menuPrincipale.setVisible(true);
         options.setVisible(false);
         parties.setVisible(false);
@@ -1057,7 +1058,7 @@ public class Frames extends javax.swing.JFrame {
         parties.setVisible(true);
         menuPrincipale.setVisible(false);
         boutonSupDesactiver();
-        bg.affichageJouer();
+        background.affichageJouer();
     }                                     
 
     private void nouvellePartieActionPerformed(java.awt.event.ActionEvent evt) {                                               
@@ -1072,7 +1073,7 @@ public class Frames extends javax.swing.JFrame {
     private void menuCreditsActionPerformed(java.awt.event.ActionEvent evt) {                                            
         credits.setVisible(true);
         menuPrincipale.setVisible(false);
-        bg.affichageCredits();
+        background.affichageCredits();
     }                                           
 
     private void quitterActionPerformed(java.awt.event.ActionEvent evt) {                                        
@@ -1086,13 +1087,13 @@ public class Frames extends javax.swing.JFrame {
     private void menuReglesActionPerformed(java.awt.event.ActionEvent evt) {                                           
         regles.setVisible(true);
         menuPrincipale.setVisible(false);
-        bg.affichageRegles();
+        background.affichageRegles();
     }                                          
 
     private void menuOptionsActionPerformed(java.awt.event.ActionEvent evt) {                                            
         options.setVisible(true);
         menuPrincipale.setVisible(false);
-        bg.affichageOptions();
+        background.affichageOptions();
     }                                           
 
     private void retourReglesActionPerformed(java.awt.event.ActionEvent evt) {                                             

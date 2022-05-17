@@ -11,7 +11,8 @@ public class Background extends JComponent{
 
   public Background() {
     try {
-      currentbackground = ImageIO.read(new File("assets/Images/background2.png"));
+      //currentbackground = ImageIO.read(new File("assets/Images/background2.png"));
+      menu = ImageIO.read(new File("assets/Images/background2.png"));
       credits = ImageIO.read(new File("assets/Images/Credits.jpg"));
       jouer = ImageIO.read(new File("assets/Images/Jouer.jpg"));
       nouvellePartie = ImageIO.read(new File("assets/Images/NouvellePartie.jpg"));
@@ -24,6 +25,7 @@ public class Background extends JComponent{
 
   public void affichageCredits() {
     currentbackground = credits;
+    System.out.println(currentbackground);
     repaint();
   }
 
@@ -39,24 +41,31 @@ public class Background extends JComponent{
 
   public void affichageOptions() {
     currentbackground = options;
+    System.out.println(currentbackground);
     repaint();
   }
 
   public void affichageRegles() {
     currentbackground = regles;
+    System.out.println(currentbackground);
     repaint();
   }
 
   public void affichageMenu(){
     currentbackground = menu;
+    System.out.println(currentbackground);
     repaint();
   }
 
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D drawable = (Graphics2D) g;
+    
     int width = getSize().width;
     int height = getSize().height;
+    
+    drawable.clearRect(0, 0, width, height);
+
     drawable.drawImage(currentbackground, 0, 0, width, height, null);
   }
 }
