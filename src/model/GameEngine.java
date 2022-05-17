@@ -14,7 +14,7 @@ public class GameEngine {
   private List<Player> players;
   private List<Meeple> meeplesOnSet;
   private int playerTurn, nbPlayer;
-  private Tile currentTile;
+  private CurrentTile currentTile;
   private int x = -1, y = -1;
 
   public GameEngine(Player... playersIn) {
@@ -49,9 +49,9 @@ public class GameEngine {
 
   /**
    ** Retourne la tuile courante
-   * @return Tile
+   * @return CurrentTile
    */
-  public Tile getCurrentTile() {
+  public CurrentTile getCurrentTile() {
     return currentTile;
   }
 
@@ -80,23 +80,6 @@ public class GameEngine {
   }
 
   /**
-   ** Effectue les calculs pour l'ajout d'une tuile par un utilisateur
-   * @param x position x du placement de la tuile
-   * @param y position y du placement de la tuile
-   * @return boolean vraie si la tuile a été posé, faux sinon
-   */
-  public boolean humanAddTile(int x, int y) {
-    Point start = gameSet.getStartTilePoint();
-    if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
-      currentTile = null;
-      System.out.println(gameSet.toString());
-      endOfTurn();
-      return true;
-    }
-    return false;
-  }
-
-  /**
    ** Effectue l'action du clic en fonction de l'état courant du tour du joueur
    * @param x position x de la tuile à placer ou du meeple
    * @param y position y de la tuile à placer ou du meeple
@@ -105,10 +88,12 @@ public class GameEngine {
    */
   public boolean clic(int x, int y, String card) {
     if (players.get(playerTurn).type() == Type.HUMAN) {
-      if (currentTile != null) {
+      if (!currentTile.placed) {
         Point start = gameSet.getStartTilePoint();
-        if (gameSet.addTile(currentTile, x - start.x, y - start.y)) {
-          currentTile = null;
+        if (gameSet.addTile(currentTile.tile, x - start.x, y - start.y)) {
+          currentTile.placed();
+          currentTile.x = x - start.x;
+          currentTile.y = y - start.y;
           return true;
         }
         return false;
@@ -128,14 +113,14 @@ public class GameEngine {
    * @return boolean
    */
   public boolean canEndTurn() {
-    return currentTile == null;
+    return currentTile.placed;
   }
 
   /**
    ** Tourne la tuile courante d'un quart de tour vers la droite
    */
   public void turnCurrentTile() {
-    currentTile.turnClock();
+    currentTile.tile.turnClock();
   }
 
   /**
@@ -159,11 +144,12 @@ public class GameEngine {
    */
   void piocheTuile() {
     if (!pioche.isEmpty()) {
-      currentTile = pioche.piocheTuile();
+      currentTile = new CurrentTile(pioche.piocheTuile());
+      currentTile.unplaced();
 
-      while (gameSet.tilePositionsAllowed(currentTile, true).size() == 0) {
-        pioche.remiserTuile(currentTile);
-        currentTile = pioche.piocheTuile();
+      while (gameSet.tilePositionsAllowed(currentTile.tile, true).size() == 0) {
+        pioche.remiserTuile(currentTile.tile);
+        currentTile.tile =  pioche.piocheTuile();
       }
       Configuration.instance().logger().fine("Tuile pioché : " + currentTile.toString());
     }
@@ -220,7 +206,7 @@ public class GameEngine {
    * @return vraie si la tuile a pu être poser, faux sinon
    */
   public boolean placeTile(int x, int y) {
-    if (gameSet.addTile(currentTile, x, y)) {
+    if (gameSet.addTile(currentTile.tile, x, y)) {
       this.x = x;
       this.y = y;
       Configuration.instance().logger().info(players.get(playerTurn) + " à poser une tuile sur la case (" + x + " ," + y + ")");
@@ -236,7 +222,11 @@ public class GameEngine {
   public boolean removeTile() {
     Configuration.instance().logger()
         .info("La tuile sur la case (" + x + " ," + y + ") a était enlevé");
-    return gameSet.removeTile(x, y);
+    if (gameSet.removeTile(x, y)) {
+      currentTile.unplaced();
+      return true;
+    }
+    return false;
   }
 
   /**

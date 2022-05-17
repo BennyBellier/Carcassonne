@@ -25,16 +25,18 @@ public class AffichePlateau extends JComponent {
 
   GameEngine gm;
   ArrayList<ArrayList<Image>> images;
-  Image blason;
+  Image blason, meeplePossibility;
   int tileSize, startX, startY;
   Random rand;
   Graphics2D drawable;
+  CurrentTile currentTile;
 
   public AffichePlateau(GameEngine gameEngine) {
     gm = gameEngine;
     Images imgs = new Images();
-    images = imgs.getImagesList();
-    blason = imgs.blason();
+    images = imgs.list;
+    blason = imgs.blason;
+    meeplePossibility = imgs.meeplePossibility;
   }
 
   /**
@@ -118,6 +120,39 @@ public class AffichePlateau extends JComponent {
     }
   }
 
+  void meeplePlacementPaint() {
+    int meepleSize = tileSize / 8;
+    for (String card : currentTile.tile.getMeeplesPosition()) {
+      int meepleX = startX, meepleY = startY;
+      switch (card) {
+        case "c":
+          meepleX += ((tileSize / 2) - (meepleSize / 2));
+          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          break;
+        case "n":
+          meepleY += (tileSize * 0.03);
+          meepleX += ((tileSize / 2) - (meepleSize / 2));
+          break;
+        case "e":
+          meepleX += tileSize - (meepleSize + tileSize * 0.01);
+          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          break;
+        case "s":
+          meepleX += ((tileSize / 2) - (meepleSize / 2));
+          meepleY += tileSize - (meepleSize + tileSize * 0.01);
+          break;
+        case "w":
+          meepleX += tileSize * 0.03;
+          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          break;
+      }
+      meepleX += ((currentTile.x + gm.getStartTilePoint().y) * tileSize);
+      meepleY += ((currentTile.y + gm.getStartTilePoint().x) * tileSize);
+      // drawable.setColor(new Color(gm.getListPlayers().get().color()));
+      drawable.drawImage(meeplePossibility, meepleX, meepleY, meepleSize, meepleSize, null);
+    }
+  }
+
   /**
    ** Affiche les blasons des tuiles
    * @param x position x du coin supérieur gauche ou placer le blason
@@ -133,7 +168,7 @@ public class AffichePlateau extends JComponent {
     drawable = (Graphics2D) g;
     drawable.clearRect(0, 0, getSize().width, getSize().height);
     Tile[][] plateau = gm.getSet();
-    Tile currentTile = gm.getCurrentTile();
+    currentTile = gm.getCurrentTile();
     getTileSize();
 
     for (int i = 0; i < plateau.length; i++) {
@@ -162,11 +197,14 @@ public class AffichePlateau extends JComponent {
 
     g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 80, getSize().height - 120);
 
-    if (currentTile != null) {
-      drawable.drawImage(getImage(currentTile), getSize().width - 100, getSize().height - 100, 85, 85, null);
-      if (currentTile.blason()) {
+    if (!currentTile.placed) {
+      drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
+      if (currentTile.tile.blason()) {
         drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
       }
+    }
+    else {
+      meeplePlacementPaint();
     }
     meeplePaint();
   }

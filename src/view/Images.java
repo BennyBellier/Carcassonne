@@ -21,13 +21,14 @@ import java.nio.file.Path;
  */
 public class Images {
 
-  Image blason;
-  ArrayList<ArrayList<Image>> images = new ArrayList<>();
+  Image blason, meeplePossibility;
+  ArrayList<ArrayList<Image>> list = new ArrayList<>();
 
   public Images() {
     try {
       loadTiles();
       blason = ImageIO.read(new File("assets/Images/blason.png"));
+      meeplePossibility = ImageIO.read(new File("assets/Images/meeple.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -40,16 +41,16 @@ public class Images {
   void loadTiles() {
     int j;
     for (int i = 0; i <= 18; i++) {
-      images.add(new ArrayList<>());
+      list.add(new ArrayList<>());
     }
 
     for (int i = 0; i <= 18; i++) {
       j = 1;
       try {
-        images.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + ".png")));
+        list.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + ".png")));
         while (j < 4) {
           if (Files.exists(Path.of("assets/Images/tiles/" + i + "-" + j + ".png")))
-          images.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + "-" + j + ".png")));
+          list.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + "-" + j + ".png")));
           ++j;
         }
       } catch (IOException e) {
@@ -57,21 +58,5 @@ public class Images {
         e.printStackTrace();
       }
     }
-  }
-
-  /**
-   ** Retourne l'image de blason
-   * @return Image
-   */
-  public Image blason() {
-    return blason;
-  }
-
-  /**
-   ** Retourne la liste des images
-   * @return ArrayList<ArrayList<Image>>
-   */
-  public ArrayList<ArrayList<Image>> getImagesList() {
-    return images;
   }
 }
