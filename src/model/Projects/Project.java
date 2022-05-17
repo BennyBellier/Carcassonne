@@ -1,9 +1,12 @@
 package model.Projects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import global.Configuration;
+import model.Meeple;
 import model.Tile;
 import model.Graph.*;
 
@@ -52,7 +55,34 @@ public abstract class Project {
    * @return
    */
   public final Tile[] getListofTiles() {
-    return (Tile[]) g.getListOfNode().toArray();
+    Tile[] res = new Tile[g.getListOfNode().size()];
+    Iterator<Tile> it = g.getListOfNode().iterator();
+    for (int i = 0; i < g.getListOfNode().size(); i++) {
+      res[i] = (Tile) it.next();
+    }
+    return res;
+  }
+
+  public boolean equals(Project p) {
+    if (type != p.type())
+      return false;
+
+    List<Tile> project1 = new ArrayList<>(Arrays.asList(getListofTiles()));
+    List<Tile> project2 = new ArrayList<>(Arrays.asList(p.getListofTiles()));
+
+    if (project1.size() != project2.size())
+      return false;
+
+    for (int i = 0; i < project1.size(); i++) {
+      for (int j = 0; j < project2.size(); j++) {
+        if (project1.get(i).equalsTo(project2.get(j)))
+          break;
+        if (j == project2.size() - 1)
+          return false;
+      }
+    }
+
+    return false;
   }
 
   /**

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import global.Configuration;
+import model.Projects.Project;
 
 public class Meeple {
 

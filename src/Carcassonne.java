@@ -100,7 +100,7 @@ public class Carcassonne {
   }
 
   static void startGame() {
-    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, 0x00ff00), /* new Player("Wall-E", Type.IA_EASY, 0x000000), */ new Player("Benny", Type.HUMAN, 0x101eff));
+    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, 0x00ff00), /* new Player("Wall-E", Type.IA_EASY, 0xff0000), */ new Player("Benny", Type.HUMAN, 0x101eff));
 
     AffichePlateau affPlat = new AffichePlateau(gm);
 

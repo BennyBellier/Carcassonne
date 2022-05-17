@@ -374,7 +374,7 @@ public class GameSet {
    * @return Tile
    */
   public Tile getTileFromCoord(int x, int y) {
-    return tiles[y][x].clone();
+    return tiles[x][y].clone();
   }
 
   /**
@@ -393,13 +393,10 @@ public class GameSet {
         return tileTypeToProjectType(t.north());
       case "s":
         return tileTypeToProjectType(t.south());
-
       case "e":
         return tileTypeToProjectType(t.east());
-
       case "w":
         return tileTypeToProjectType(t.west());
-
       case "c":
         return tileTypeToProjectType(t.center());
 
