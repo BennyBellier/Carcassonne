@@ -118,10 +118,20 @@ public class Carcassonne {
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
+
+
   public static void main(String[] args) throws Exception {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
     System.out.println(System.getProperty("user.home"));
+    // Audio audioPlayer = new Audio();
+
+    // audioPlayer.music.play();
+    // Thread.sleep(3000);
+    // audioPlayer.music.stop();
+
+    window();
+    // setOfTests();
     startGame();
   }
 }

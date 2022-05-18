@@ -128,6 +128,7 @@ public class Controleur implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     System.out.print(e.getActionCommand());
     switch (e.getActionCommand()) {
+
       default:
         System.out.println("Commande invalide");
         break;
