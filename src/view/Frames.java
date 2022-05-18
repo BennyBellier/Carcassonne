@@ -400,13 +400,13 @@ public class Frames extends javax.swing.JFrame {
         setTitle("Carcassonne");
         setMinimumSize(new java.awt.Dimension(1280, 720));
 
-        background.setMinimumSize(new java.awt.Dimension(1280, 720));
+        background.setMinimumSize(null);
         background.setPreferredSize(new java.awt.Dimension(1980, 1080));
 
         menuPrincipale.setOpaque(false);
         menuPrincipale.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        jouer.setFont(new java.awt.Font("Old London Alternate", 0, 34)); // NOI18N
+        jouer.setFont(new java.awt.Font("Old London", 0, 34)); // NOI18N
         jouer.setText("Jouer");
         jouer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,7 +416,7 @@ public class Frames extends javax.swing.JFrame {
 
         version.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        quitter.setFont(new java.awt.Font("Old London Alternate", 0, 26)); // NOI18N
+        quitter.setFont(new java.awt.Font("Old London", 0, 26)); // NOI18N
         quitter.setText("Quitter");
         quitter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -424,7 +424,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        menuCredits.setFont(new java.awt.Font("Old London Alternate", 0, 28)); // NOI18N
+        menuCredits.setFont(new java.awt.Font("Old London", 0, 28)); // NOI18N
         menuCredits.setText("Crédits");
         menuCredits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -432,7 +432,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        menuOptions.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        menuOptions.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         menuOptions.setText("Options");
         menuOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,7 +440,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        menuRegles.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        menuRegles.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         menuRegles.setText("Règles");
         menuRegles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -486,14 +486,14 @@ public class Frames extends javax.swing.JFrame {
                 .addContainerGap(343, Short.MAX_VALUE))
         );
 
-        jouerPanel.setMinimumSize(new java.awt.Dimension(1280, 720));
+        jouerPanel.setMinimumSize(null);
         jouerPanel.setOpaque(false);
         jouerPanel.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        jeuEnReseaux.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        jeuEnReseaux.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         jeuEnReseaux.setText("Jeu en réseaux");
 
-        nouvellePartie.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        nouvellePartie.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         nouvellePartie.setText("Nouvelle Partie");
         nouvellePartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -514,7 +514,7 @@ public class Frames extends javax.swing.JFrame {
         ));
         sauvegardeScroll.setViewportView(sauvegardeTable);
 
-        retourParties.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        retourParties.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         retourParties.setText("Retour");
         retourParties.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -527,13 +527,13 @@ public class Frames extends javax.swing.JFrame {
         jouerPanelLayout.setHorizontalGroup(
             jouerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jouerPanelLayout.createSequentialGroup()
-                .addContainerGap(432, Short.MAX_VALUE)
+                .addContainerGap(421, Short.MAX_VALUE)
                 .addComponent(sauvegardeScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(178, 178, 178)
+                .addGap(191, 191, 191)
                 .addGroup(jouerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(nouvellePartie, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jeuEnReseaux, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addContainerGap(441, Short.MAX_VALUE))
             .addGroup(jouerPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(retourParties, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -542,25 +542,25 @@ public class Frames extends javax.swing.JFrame {
         jouerPanelLayout.setVerticalGroup(
             jouerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jouerPanelLayout.createSequentialGroup()
-                .addContainerGap(442, Short.MAX_VALUE)
+                .addContainerGap(412, Short.MAX_VALUE)
                 .addGroup(jouerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jouerPanelLayout.createSequentialGroup()
                         .addComponent(sauvegardeScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(250, 250, 250)
+                        .addGap(280, 280, 280)
                         .addComponent(retourParties, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jouerPanelLayout.createSequentialGroup()
                         .addComponent(nouvellePartie, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)
+                        .addGap(128, 128, 128)
                         .addComponent(jeuEnReseaux, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(339, 339, 339))))
+                        .addGap(373, 373, 373))))
         );
 
-        options.setMinimumSize(new java.awt.Dimension(1280, 720));
+        options.setMinimumSize(null);
         options.setOpaque(false);
         options.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourOptions.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        retourOptions.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         retourOptions.setText("Retour");
         retourOptions.setAlignmentX(0.5F);
         retourOptions.addActionListener(new java.awt.event.ActionListener() {
@@ -576,12 +576,12 @@ public class Frames extends javax.swing.JFrame {
             .addGroup(optionsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(retourOptions)
-                .addContainerGap(1801, Short.MAX_VALUE))
+                .addContainerGap(1704, Short.MAX_VALUE))
         );
         optionsLayout.setVerticalGroup(
             optionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionsLayout.createSequentialGroup()
-                .addContainerGap(1022, Short.MAX_VALUE)
+                .addContainerGap(933, Short.MAX_VALUE)
                 .addComponent(retourOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -589,7 +589,7 @@ public class Frames extends javax.swing.JFrame {
         regles.setOpaque(false);
         regles.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourRegles.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        retourRegles.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         retourRegles.setText("Retour");
         retourRegles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -600,10 +600,9 @@ public class Frames extends javax.swing.JFrame {
         reglesScrollPane.setBackground(new Color (0,0,0,0));
         reglesScrollPane.setBorder(null);
         reglesScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        reglesScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         reglesPane.setEditable(false);
-        reglesPane.setBackground(new Color (0,0,0,0));
+        reglesPane.setBackground(new Color (0,0,0,100));
         reglesPane.setBorder(null);
         reglesPane.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         reglesPane.setText("But :\n\nLes joueurs posent des tuiles tour après tour afin de créer un paysage formé de routes, de villes, d’abbayes. \nVous placerez vos meeples(pions) sur ces tuiles comme voleurs, chevaliers, moines ou paysans afin de marquer des points. \nLe joueur qui aura le plus de points après le décompte final sera déclaré vainqueur.  \n\nDéroulement : \n\tLe joueur dont c’est le tour réalise les actions suivantes dans l’ordre :\n \n\t- Placement d’une tuile : Le joueur doit piocher une tuile Terrain et la placer face visible afin de continuer le paysage. \n\t   La tuile piocher sera visible en bas à droite de l’écran.\n \n\t- Pose d’un meeple : Le joueur peut poser un meeple de sa réserve sur la tuile qu’il vient de placer. \n\t   Ce n’est pas obligatoire. On ne peut pas placer 2 meeples sur 2 cases adjacentes. \n\nLes points : \t\n\tLes routes \t\n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme voleur sur une des\n\t sections de route de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un voleur sur cette route. \n\tVotre adversaire pioche alors une tuile qu’il place pour continuer le paysage. Pour qu’une route soit complétée\n\tet rapporte des points, ses deux extrémités doivent être reliées à un village, une ville ou une abbaye, ou entre elles\n\ten formant une boucle. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre route. \n\tLorsque qu’une route est complète chaque tuile de cette dernière vous rapporte 1 point \n\n\tLes villes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme chevalier sur une des sections de ville\n\t de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un chevalier dans cette ville. Votre adversaire pioche alors \n\tune tuile qu’il place pour continuer le paysage. Pour qu’une ville soit complétée et rapporte des points, elle doit être entourée\n\tde murs sans trou à l’intérieur. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre ville. \n\tLorsque qu’une ville est complète chaque tuile de cette dernière vous rapporte 2 points, de plus, chaque blason dans une ville \n\tcomplétée rapporte 2 points de plus.  \n\n\tLes abbayes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme moine sur une abbayes. \n\tUne abbaye est complétée lorsqu’elle est complètement entourée de tuiles, une abbaye complétée rapporte \n\t1 point par tuile la complétant (incluant celle de l’abbaye).");
@@ -621,9 +620,9 @@ public class Frames extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(retourRegles))
                     .addGroup(reglesLayout.createSequentialGroup()
-                        .addGap(169, 169, 169)
+                        .addGap(171, 171, 171)
                         .addComponent(reglesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1285, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(466, Short.MAX_VALUE))
+                .addContainerGap(464, Short.MAX_VALUE))
         );
         reglesLayout.setVerticalGroup(
             reglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -638,7 +637,7 @@ public class Frames extends javax.swing.JFrame {
         credits.setOpaque(false);
         credits.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourCredits.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        retourCredits.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         retourCredits.setText("Retour");
         retourCredits.setAlignmentX(1.0F);
         retourCredits.setAlignmentY(1.0F);
@@ -669,26 +668,26 @@ public class Frames extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(retourCredits))
                     .addGroup(creditsLayout.createSequentialGroup()
-                        .addGap(514, 514, 514)
+                        .addGap(164, 164, 164)
                         .addComponent(creditsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 667, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(739, Short.MAX_VALUE))
+                .addContainerGap(1089, Short.MAX_VALUE))
         );
         creditsLayout.setVerticalGroup(
             creditsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(creditsLayout.createSequentialGroup()
-                .addContainerGap(443, Short.MAX_VALUE)
+                .addContainerGap(463, Short.MAX_VALUE)
                 .addComponent(creditsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(123, 123, 123)
+                .addGap(103, 103, 103)
                 .addComponent(retourCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        plateauJeu.setMinimumSize(new java.awt.Dimension(1280, 720));
+        plateauJeu.setMinimumSize(null);
         plateauJeu.setOpaque(false);
         plateauJeu.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        JeuScrollPane.setMinimumSize(new java.awt.Dimension(1280, 720));
-        JeuScrollPane.setPreferredSize(new java.awt.Dimension(1280, 720));
+        JeuScrollPane.setMinimumSize(null);
+        JeuScrollPane.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         javax.swing.GroupLayout plateauJeuLayout = new javax.swing.GroupLayout(plateauJeu);
         plateauJeu.setLayout(plateauJeuLayout);
@@ -701,11 +700,11 @@ public class Frames extends javax.swing.JFrame {
             .addComponent(JeuScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        newGame.setMinimumSize(new java.awt.Dimension(1280, 720));
+        newGame.setMinimumSize(null);
         newGame.setOpaque(false);
         newGame.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourParametre.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        retourParametre.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         retourParametre.setText("Retour");
         retourParametre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -713,7 +712,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        ajouterJoueur.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        ajouterJoueur.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         ajouterJoueur.setText("Ajouter un joueur");
         ajouterJoueur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -721,7 +720,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        ajouterIA.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        ajouterIA.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         ajouterIA.setText("Ajouter IA");
         ajouterIA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -729,7 +728,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        lancerLaPartie.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        lancerLaPartie.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         lancerLaPartie.setText("Lancer la partie");
         lancerLaPartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -737,7 +736,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        difficulterBox.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        difficulterBox.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen", "Terminator" }));
 
         cBleu.setBackground(new java.awt.Color(7, 45, 249));
@@ -780,25 +779,25 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        joueurs.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        joueurs.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         joueurs.setForeground(new java.awt.Color(255, 255, 255));
         joueurs.setText("Joueurs :");
 
-        j1.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
+        j1.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
 
-        pseudoLabel.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        pseudoLabel.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         pseudoLabel.setForeground(new java.awt.Color(255, 255, 255));
         pseudoLabel.setText("Pseudo:");
 
-        j2.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
+        j2.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
 
-        j3.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
+        j3.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
 
-        j4.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
+        j4.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
 
-        j5.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
+        j5.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
 
-        pseudo.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
+        pseudo.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
 
         supprimerJ1.setBorder(null);
         supprimerJ1.addActionListener(new java.awt.event.ActionListener() {
@@ -836,24 +835,19 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        cJoueurLabel.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+        cJoueurLabel.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
         cJoueurLabel.setForeground(new java.awt.Color(255, 255, 255));
         cJoueurLabel.setText("Couleur du Joueur:");
 
+       
         javax.swing.GroupLayout newGameLayout = new javax.swing.GroupLayout(newGame);
         newGame.setLayout(newGameLayout);
         newGameLayout.setHorizontalGroup(
             newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(newGameLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(retourParametre)
-                .addGap(16, 16, 16)
                 .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(newGameLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lancerLaPartie, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newGameLayout.createSequentialGroup()
-                        .addGap(112, 112, 112)
+                        .addGap(341, 341, 341)
                         .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pseudoLabel)
@@ -871,31 +865,37 @@ public class Frames extends javax.swing.JFrame {
                                 .addComponent(cJaune, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(15, 15, 15)
                                 .addComponent(cNoir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
-                                .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(ajouterIA, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ajouterJoueur))
-                                .addGap(92, 92, 92)
-                                .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(joueurs)
-                                    .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(j2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(j3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(j4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(j5, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(supprimerJ1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(supprimerJ2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(supprimerJ3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(supprimerJ4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(supprimerJ5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 517, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGap(90, 90, 90)
+                                .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ajouterIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ajouterJoueur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(newGameLayout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addComponent(retourParametre)))
+                .addGap(113, 113, 113)
+                .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(joueurs)
+                    .addGroup(newGameLayout.createSequentialGroup()
+                        .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(j4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(j5, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(j3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(j2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lancerLaPartie, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(supprimerJ2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supprimerJ1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supprimerJ3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supprimerJ4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supprimerJ5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         newGameLayout.setVerticalGroup(
             newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newGameLayout.createSequentialGroup()
+            .addGroup(newGameLayout.createSequentialGroup()
                 .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(newGameLayout.createSequentialGroup()
                         .addGap(172, 172, 172)
@@ -903,24 +903,25 @@ public class Frames extends javax.swing.JFrame {
                             .addComponent(pseudoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cJoueurLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(joueurs, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(newGameLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
                                 .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cRouge, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cVert, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cJaune, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cNoir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cBleu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(9, 9, 9))
-                            .addComponent(ajouterJoueur, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4))
+                                    .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(newGameLayout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(newGameLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(ajouterJoueur, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newGameLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(supprimerJ1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(j1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(supprimerJ1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50)
                 .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(newGameLayout.createSequentialGroup()
@@ -944,11 +945,11 @@ public class Frames extends javax.swing.JFrame {
                     .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ajouterIA, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(difficulterBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 436, Short.MAX_VALUE)
+                .addGap(170, 170, 170)
                 .addGroup(newGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lancerLaPartie, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(retourParametre, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(272, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -959,37 +960,37 @@ public class Frames extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jouerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
+                    .addComponent(jouerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
+                    .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(regles, javax.swing.GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 169, Short.MAX_VALUE)
+                    .addComponent(regles, javax.swing.GroupLayout.DEFAULT_SIZE, 1641, Short.MAX_VALUE)
+                    .addGap(0, 170, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 234, Short.MAX_VALUE)
-                    .addComponent(credits, javax.swing.GroupLayout.DEFAULT_SIZE, 1197, Short.MAX_VALUE)
-                    .addGap(0, 234, Short.MAX_VALUE)))
+                    .addGap(0, 339, Short.MAX_VALUE)
+                    .addComponent(credits, javax.swing.GroupLayout.DEFAULT_SIZE, 1302, Short.MAX_VALUE)
+                    .addGap(0, 339, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(menuPrincipale, javax.swing.GroupLayout.DEFAULT_SIZE, 1460, Short.MAX_VALUE)
+                    .addComponent(menuPrincipale, javax.swing.GroupLayout.DEFAULT_SIZE, 1968, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(plateauJeu, javax.swing.GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
+                    .addComponent(plateauJeu, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(newGame, javax.swing.GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
+                    .addComponent(newGame, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         backgroundLayout.setVerticalGroup(
@@ -998,38 +999,38 @@ public class Frames extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jouerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                    .addComponent(jouerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                    .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 102, Short.MAX_VALUE)
-                    .addComponent(regles, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 174, Short.MAX_VALUE)
+                    .addComponent(regles, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+                    .addGap(0, 74, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 130, Short.MAX_VALUE)
-                    .addComponent(credits, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
-                    .addGap(0, 131, Short.MAX_VALUE)))
+                    .addGap(0, 182, Short.MAX_VALUE)
+                    .addComponent(credits, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
+                    .addGap(0, 181, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(menuPrincipale, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                    .addComponent(menuPrincipale, javax.swing.GroupLayout.DEFAULT_SIZE, 1068, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(plateauJeu, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                    .addComponent(plateauJeu, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 104, Short.MAX_VALUE)
-                    .addComponent(newGame, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
-                    .addGap(0, 103, Short.MAX_VALUE)))
+                    .addGap(0, 138, Short.MAX_VALUE)
+                    .addComponent(newGame, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                    .addGap(0, 137, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1038,15 +1039,15 @@ public class Frames extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-               )
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                )
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-               )
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                )
         );
 
         pack();
