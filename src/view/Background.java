@@ -25,7 +25,6 @@ public class Background extends JComponent{
 
   public void affichageCredits() {
     currentbackground = credits;
-    System.out.println(currentbackground);
     repaint();
   }
 
@@ -41,19 +40,16 @@ public class Background extends JComponent{
 
   public void affichageOptions() {
     currentbackground = options;
-    System.out.println(currentbackground);
     repaint();
   }
 
   public void affichageRegles() {
     currentbackground = regles;
-    System.out.println(currentbackground);
     repaint();
   }
 
   public void affichageMenu(){
     currentbackground = menu;
-    System.out.println(currentbackground);
     repaint();
   }
 

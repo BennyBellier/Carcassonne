@@ -90,6 +90,8 @@ public class Carcassonne {
     // }
   }
 
+  
+
   public static void main(String[] args) throws Exception {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
@@ -99,6 +101,7 @@ public class Carcassonne {
     // audioPlayer.music.play();
     // Thread.sleep(3000);
     // audioPlayer.music.stop();
+    
     window();
     // setOfTests();
   }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author ludov
  */
 public class Images {
-
+  
   Image img2;
   ArrayList<Image> images = new ArrayList<>(24);
 
