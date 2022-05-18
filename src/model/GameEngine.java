@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.Point;
 
 import global.Configuration;
@@ -108,9 +109,11 @@ public class GameEngine {
         return false;
       } else {
         Point start = gameSet.getStartTilePoint();
-        if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, card))) {
-          endOfTurn();
-          return true;
+        if (x - start.x == currentTile.x && y - start.y == currentTile.y) {
+          if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, card))) {
+            endOfTurn();
+            return true;
+          }
         }
       }
     }
@@ -202,11 +205,15 @@ public class GameEngine {
    * @return vraie si le placement à eu lieu
    */
   public boolean placeMeeple(Meeple m) {
+    for (Meeple meep : meeplesOnSet) {
+      if (m.equal(meep))
+        return false;
+    }
+
     if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
       players.get(playerTurn).meepleUse();
       meeplesOnSet.add(m);
-      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
-          + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
+      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
       return true;
     }
 
@@ -265,8 +272,16 @@ public class GameEngine {
     return false;
   }
 
-  boolean meepleonProject(Project p, Meeple m) {
+  boolean equalType(Project p, Meeple m) {
     return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
+  }
+
+  boolean meepleOnProjectTile(Project p, Meeple m) {
+    return p.graph().hasNode(gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
+  }
+
+  boolean meepleOnProject(Project p, Meeple m) {
+    return equalType(p, m) && meepleOnProject(p, m);
   }
 
   /*
@@ -277,29 +292,36 @@ public class GameEngine {
   void projectsEvaluation() {
     List<Project> projects = Project.evaluateProjects(gameSet.cloneSet());
 
+    for (Meeple m : meeplesOnSet) {
+      System.out.println(m.toString());
+    }
+
     for (Project project : projects) {
-        int[] ownersValue = new int[nbPlayer];
-
-        for (Meeple m : meeplesOnSet) {
-          if (meepleonProject(project, m) && project.graph().hasNode(gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y))) {
-            ownersValue[m.player] += 1;
-            meeplesOnSet.remove(m);
-            players.get(m.player).meepleRecovery();
-          }
+      int[] ownersValue = new int[nbPlayer];
+      Iterator<Meeple> it = meeplesOnSet.iterator();
+      int index = 0;
+      while (it.hasNext()) {
+        Meeple m = it.next();
+        if (meepleOnProject(project, m)) {
+          ownersValue[m.player] += 1;
+          players.get(m.player).meepleRecovery();
+          meeplesOnSet.remove(index);
+          ++index;
         }
+      }
 
-        int owner = 0, ownerValue = 0;
+      int owner = 0, ownerValue = 0;
 
-        for (int i = 0; i < ownersValue.length; i++) {
-          if (ownersValue[i] > ownerValue) {
-            ownerValue = ownersValue[i];
-            owner = i;
-          }
+      for (int i = 0; i < ownersValue.length; i++) {
+        if (ownersValue[i] > ownerValue) {
+          ownerValue = ownersValue[i];
+          owner = i;
         }
-        Configuration.instance().logger()
-            .fine(players.get(owner) + " est propiétaire du projet " + project.type() + "à la case");
-        players.get(owner).scorePlus(project.value());
-        projectsEvaluate.add(project);
+      }
+      Configuration.instance().logger()
+          .fine(players.get(owner) + " est propiétaire du projet " + project.type() + "à la case");
+      players.get(owner).scorePlus(project.value());
+      projectsEvaluate.add(project);
     }
   }
 

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import global.Configuration;
-import model.Projects.Project;
 
 public class Meeple {
 
@@ -65,11 +64,19 @@ public class Meeple {
     return player;
   }
 
+  public boolean equal(Meeple m) {
+    return x == m.getX() && y == m.getY() && card.equals(m.getCardinal());
+  }
+
   /**
    ** Retourne la définition binaire d'un meeple
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {
     return Arrays.asList((byte) player, (byte) x, (byte) y, (byte) card.charAt(0));
+  }
+
+  public String toString() {
+    return player + " (" + x + ", " + y + ") " + card;
   }
 }

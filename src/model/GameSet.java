@@ -174,6 +174,9 @@ public class GameSet {
       return false;
     }
 
+    if (tiles[y][x] != null)
+      return false;
+
     if (y >= 0 && y < tiles.length) {
       if (x - 1 >= 0 && !t.canConnect(tiles[y][x - 1], "w")) {
         Configuration
