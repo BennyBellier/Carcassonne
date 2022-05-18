@@ -19,6 +19,9 @@ public class Audio {
     music = new Music();
   }
 
+  /**
+   * Lance la music
+   */
   public void playMusic() {
     Thread t = new Thread(music);
     t.start();

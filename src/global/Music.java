@@ -28,10 +28,16 @@ public class Music implements Runnable {
     }
   }
 
+  /**
+   * Lance le thread permettant de joué la music
+   */
   public void play() {
     thread.start();
   }
 
+  /**
+   * Stop les 
+   */
   public void stop() {
     if (clip.isRunning()) {
       clip.stop();
@@ -42,6 +48,9 @@ public class Music implements Runnable {
 
   }
 
+  /**
+   * Lance le clip jouant la musique
+   */
   @Override
   public void run() {
     clip.start();

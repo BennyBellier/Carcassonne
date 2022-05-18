@@ -8,8 +8,8 @@ import model.Graph.*;
 
 public class ProjectRoad extends Project {
 
-  Type type = Type.CITY;
-
+  private Graph g;
+  private boolean finish;
   /**
    ** Vérifie si pour la portion de route à la case (x, y), la route qui y
    ** correspond est terminée
@@ -21,24 +21,27 @@ public class ProjectRoad extends Project {
    * @param cityVisited liste des tuiles contenant une villes visitées
    */
   public ProjectRoad(Tile[][] set, int x, int y, String card, List<Tile> roadVisited) {
-    super();
+    super(Type.CITY);
+    g = new Graph();
+    finish = false;
+
     Configuration
         .instance()
         .logger()
-        .info(
-            "Évaluation du projet route aux coordonnées (" + x + ", " + y + "), direction : " + card);
+        .info("Évaluation du projet route aux coordonnées (" + x + ", " + y + "), direction : " + card);
     evaluate(g, set, set[y][x], x, y, card);
 
-    roadVisited.addAll(g.getListOfNode());
+    roadVisited.addAll(g.getSetOfNode());
 
     if (g.isEmpty()) {
       finish = false;
     }
-
-    if (isRoadFinish(g, (Tile) g.getListOfNode().toArray()[0]))
-      finish = true;
-    else
-      finish = false;
+    else {
+      if (isRoadFinish(g, (Tile) g.getListofNode()[0]))
+        finish = true;
+      else
+        finish = false;
+    }
 
     Configuration
         .instance()
@@ -67,13 +70,12 @@ public class ProjectRoad extends Project {
    * @param t la tuile de départ
    * @return vraie si la route est complété (toutes les extrémités sont fermés)
    */
-  boolean isRoadFinish(Graph<Tile> g, Tile t) {
+  boolean isRoadFinish(Graph g, Tile t) {
+    if (g.getNodeCount() == 1)
+      return false;
     if (g.getVoisins(t).size() == 0 && isEnder(t)) {
-      if (g.getNodeCount() == 1)
-        return false;
       return true;
     }
-
     else if (g.getVoisins(t).size() > 0) {
       for (Tile v : g.getVoisins(t)) {
         if (isRoadFinish(g, v) == false)
@@ -93,8 +95,8 @@ public class ProjectRoad extends Project {
    * @param y    position y de la tuile à tester
    * @param card cardinalité courante sur la tuile
    */
-  @Override
-  void evaluate(Graph<Tile> g, Tile[][] set, Tile source, int x, int y, String card) {
+  // @Override
+  void evaluate(Graph g, Tile[][] set, Tile source, int x, int y, String card) {
     Tile t = set[y][x];
     if (t != null && !g.hasNode(t)) {
       g.addNode(t);
@@ -207,5 +209,15 @@ public class ProjectRoad extends Project {
   @Override
   public int value() {
     return g.getNodeCount();
+  }
+
+  @Override
+  public boolean isFinish() {
+    return finish;
+  }
+
+  @Override
+  public Graph graph() {
+    return g;
   }
 }

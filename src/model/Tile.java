@@ -127,12 +127,6 @@ public class Tile {
     w = west;
     b = blason;
     this.cityEnder = cityEnder;
-    Configuration
-        .instance()
-        .logger()
-        .info(
-            "Génération d'une tuile de type : " +
-                toString());
   }
 
   public Tile(byte[] b) {
@@ -307,7 +301,7 @@ public class Tile {
         Configuration
             .instance()
             .logger()
-            .info(
+            .fine(
                 "Connexion north entre la tuile : " +
                     toString() +
                     " et " +
@@ -319,7 +313,7 @@ public class Tile {
         Configuration
             .instance()
             .logger()
-            .info(
+            .fine(
                 "Connexion east entre la tuile : " +
                     toString() +
                     " et " +
@@ -331,7 +325,7 @@ public class Tile {
         Configuration
             .instance()
             .logger()
-            .info(
+            .fine(
                 "Connexion south entre la tuile : " +
                     toString() +
                     " et " +
@@ -343,7 +337,7 @@ public class Tile {
         Configuration
             .instance()
             .logger()
-            .info(
+            .fine(
                 "Connexion west entre la tuile : " +
                     toString() +
                     " et " +

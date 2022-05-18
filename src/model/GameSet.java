@@ -34,7 +34,7 @@ public class GameSet {
           Configuration
               .instance()
               .logger()
-              .info(
+              .finer(
                   "Récupération des coordonnées de la tuile de départ : (" +
                       i +
                       ", " +
@@ -62,7 +62,7 @@ public class GameSet {
     Configuration
         .instance()
         .logger()
-        .info(
+        .fine(
             "Redimensionnement de la matrice : " +
                 tiles.length +
                 ", " +
@@ -83,10 +83,10 @@ public class GameSet {
    * @return boolean
    */
   boolean noTilesAround(int x, int y) {
-    return !(isTiles(y, x - 1) ||
-        isTiles(y, x + 1) ||
-        isTiles(y - 1, x) ||
-        isTiles(y + 1, x));
+    return !(isTiles(x - 1, y) ||
+        isTiles(x + 1,y) ||
+        isTiles(x, y - 1) ||
+        isTiles(x, y + 1));
   }
 
   /**
@@ -115,6 +115,12 @@ public class GameSet {
     return cp;
   }
 
+  /**
+   ** Retourne vraie si la tuile de position (x, y) du plateau a été enlevé
+   * @param x int position x de la tuile
+   * @param y int position y de la tuile
+   * @return boolean vraie si la tuile a été enlevé, faux sinon
+   */
   public boolean removeTile(int x, int y) {
     if (tiles[y][x] != null)
       tiles[y][x] = null;
@@ -122,7 +128,8 @@ public class GameSet {
   }
 
   /**
-   ** Ajoute une tuile t aux coordonnées (x, y) si cela est possible et retourne vraie si la tuile à pu être posé, faux sinon
+   ** Ajoute une tuile t aux coordonnées (x, y) si cela est possible et retourne
+   * vraie si la tuile à pu être posé, faux sinon
    *
    * @param t Tile à poser
    * @param x int position x sur laquelle posé la tuile
@@ -138,7 +145,7 @@ public class GameSet {
     Configuration
         .instance()
         .logger()
-        .info("Essaie de placement d'une tuile en (" + x + ", " + y + ")");
+        .fine("Essaie de placement d'une tuile en (" + x + ", " + y + ")");
 
     x = (int) start.getX() + x;
     y = (int) start.getY() + y;
@@ -166,6 +173,9 @@ public class GameSet {
                   ", aucune tuiles n'est à proximité");
       return false;
     }
+
+    if (tiles[y][x] != null)
+      return false;
 
     if (y >= 0 && y < tiles.length) {
       if (x - 1 >= 0 && !t.canConnect(tiles[y][x - 1], "w")) {
@@ -251,7 +261,9 @@ public class GameSet {
   }
 
   /**
-   ** Retourne vraie si toutes les côtés de la tuiles peuvent être connectés au tuiles environnantes
+   ** Retourne vraie si toutes les côtés de la tuiles peuvent être connectés au
+   * tuiles environnantes
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @param t Tile à tester
@@ -291,8 +303,9 @@ public class GameSet {
    ** Retourne la liste de tous les emplacements possibles pour la tuile t (avec
    ** les rotations ou non)
    *
-   * @param t Tile
-   * @param withRota booléen si vraie alors calcul avec les rotations possibles, sinon calcul sans les rotations
+   * @param t        Tile
+   * @param withRota booléen si vraie alors calcul avec les rotations possibles,
+   *                 sinon calcul sans les rotations
    * @return Map<Integer, ArrayList<Integer>>
    */
   public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile t, boolean withRota) {
@@ -321,23 +334,25 @@ public class GameSet {
   }
 
   /**
-   **Retourne vraie si le meeple définie peut être placé
+   ** Retourne vraie si le meeple définie peut être placé
+   *
    * @param m meeple définie avec la position (x, y) et sa cardinalité
    * @return vraie si le meeple peut être placé, faux sinon
    */
   public boolean meeplePlacementAllowed(Meeple m) {
-    Tile t = tiles[m.getY()][m.getX()];
+    Tile t = tiles[m.getX() + getStartTilePoint().x][m.getY() + getStartTilePoint().y];
     if (t != null) {
+      System.out.println(t.toString());
       switch (m.getCardinal()) {
         case "c":
           return typeWhereMeepleAllow(t.center());
-          case "n":
+        case "n":
           return typeWhereMeepleAllow(t.north());
-          case "s":
+        case "s":
           return typeWhereMeepleAllow(t.south());
-          case "e":
+        case "e":
           return typeWhereMeepleAllow(t.east());
-          case "w":
+        case "w":
           return typeWhereMeepleAllow(t.west());
       }
     }
@@ -346,27 +361,31 @@ public class GameSet {
 
   /**
    ** Retourne vraie si le Type sur lequel on veut poser le meeple est autorisé
+   *
    * @param t Type.Tile sur lequel on souhaite placer le meeple
    * @return vraie si le meeple peut y être placé
    */
   boolean typeWhereMeepleAllow(Tile.Type t) {
-    return t != Tile.Type.FIELD || t != Tile.Type.TOWN;
+    return t != Tile.Type.FIELD && t != Tile.Type.TOWN;
   }
 
   /**
    ** retourne la tuile sur le plateau au coordonnées (x, y)
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @return Tile
    */
   public Tile getTileFromCoord(int x, int y) {
-    return tiles[y][x].clone();
+    return tiles[x][y].clone();
   }
 
   /**
-   ** Retourne le type du projet pour la cardinalité 'card' de la tuile (x, y) sur le plateau
-   * @param x int position x de la tuile sur le plateau
-   * @param y int position y de la tuile sur le plateau
+   ** Retourne le type du projet pour la cardinalité 'card' de la tuile (x, y) sur
+   * le plateau
+   *
+   * @param x    int position x de la tuile sur le plateau
+   * @param y    int position y de la tuile sur le plateau
    * @param card String cardinalité recherché
    * @return Projet.Type corrsepondant au type de la cardinalité de la tuile
    */
@@ -377,16 +396,12 @@ public class GameSet {
         return tileTypeToProjectType(t.north());
       case "s":
         return tileTypeToProjectType(t.south());
-
       case "e":
         return tileTypeToProjectType(t.east());
-
       case "w":
         return tileTypeToProjectType(t.west());
-
       case "c":
         return tileTypeToProjectType(t.center());
-
 
       default:
         return null;
@@ -395,6 +410,7 @@ public class GameSet {
 
   /**
    ** Retourne le type de projet en fonction du type de la tuile
+   *
    * @param tt Tile.Type
    * @return Project.Type correspondant au Tile.Type
    */

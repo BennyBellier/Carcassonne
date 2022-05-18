@@ -16,36 +16,17 @@ import java.util.logging.*;
 public class Configuration {
   private static Configuration instance = null;
   Properties prop;
-  Path logsFolder;
-  Path configFolder;
+  Path configFolder = Path.of(System.getProperty("user.home") + File.separator + ".carcassonne");
+  Path logsFolder = Path.of(configFolder.toString() + File.separator + "logs");
 
   public static InputStream charge(String name) {
     return ClassLoader.getSystemClassLoader().getResourceAsStream(name);
   }
 
-  private Path setConfigFolder() {
-    Path path = null;
-    switch (OSInfo.getOs()) {
-      case MAC:
-        configFolder = Path.of(System.getProperty("user.home") + File.separator + "Library" + File.separator
-            + "Application Support" + File.separator + ".carcassonne");
-        break;
-      case WINDOWS:
-        configFolder = Path.of(System.getProperty("user.home") + File.separator
-            + "Local Settings" + File.separator + "ApplicationData" + File.separator + ".carcassonne");
-        break;
-      case UNIX:
-        configFolder = Path.of(System.getProperty("user.home") + File.separator + ".carcassonne");
-        break;
-
-      default:
-        logger().severe("Votre système d'exploitation n'est pas supporté");
-        System.exit(0);
-        break;
-    }
-    return path;
-  }
-
+  /**
+   * Genere le fichiers de configuration du jeu
+   * @param configPath
+   */
   private void generateConfigFolder(Path configPath) {
     try {
       Files.createDirectories(configPath);
@@ -58,22 +39,23 @@ public class Configuration {
     }
   }
 
+  /**
+   ** Retourne la chaine de caractère du chemin vers le fichier de configuration
+   * @return String
+   */
   public String getConfigFolderPath() {
     return configFolder.toString();
   }
 
   private Configuration() {
     prop = new Properties();
-    setConfigFolder();
     // Génération du dossier si il n'existe pas
     if (!Files.exists(configFolder))
       generateConfigFolder(configFolder);
 
-    logsFolder = Path.of(configFolder.toString() + File.separator + "logs");
-
     // Utilisation du fichier de configuration contenue dans le dossier applications
     try {
-      if (!Files.exists(Path.of(configFolder.toFile() + File.separator + "config.cfg")))
+      if (!Files.exists(Path.of(configFolder.toString() + File.separator + "config.cfg")))
         Files.copy(Path.of("assets/default.cfg"), Path.of(configFolder + "/config.cfg"),
             StandardCopyOption.REPLACE_EXISTING);
       FileInputStream f = new FileInputStream(configFolder.toFile() + File.separator + "config.cfg");
@@ -87,7 +69,7 @@ public class Configuration {
         FileInputStream f = new FileInputStream("assets/default.cfg");
         prop.load(f);
         f.close();
-        Files.copy(Path.of("default.cfg"), Path.of(configFolder + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(Path.of("default.cfg"), Path.of(configFolder.toString() + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
       } catch (Exception e2) {
         System.err.println("Impossible de charger le fichier de configuration");
       }

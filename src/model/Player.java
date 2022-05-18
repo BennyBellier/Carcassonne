@@ -64,9 +64,10 @@ public class Player {
 
   private String pseudo;
   private Type type;
-  private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects;
+  private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects, color;
 
-  public Player(String name, Type type) {
+
+  public Player(String name, Type type, int color) {
     pseudo = name;
     this.type = type;
     meeplesNumber = 7;
@@ -74,6 +75,7 @@ public class Player {
     nbTilePlaced = 0;
     curNumberOfProject = 0;
     numberOfProjects = 0;
+    this.color = color;
   }
 
   public Player(byte[] b, String pseudo) {
@@ -92,6 +94,10 @@ public class Player {
    */
   public String pseudo() {
     return pseudo;
+  }
+
+  public int color() {
+    return color;
   }
 
   /**
@@ -172,6 +178,10 @@ public class Player {
     return numberOfProjects;
   }
 
+  public boolean canUseMeeple() {
+    return meeplesNumber > 0;
+  }
+
   /**
    ** Utilise un meeple du joueur et retourne vraie si c'est possible, faux sinon
    * <p>
@@ -179,14 +189,12 @@ public class Player {
    * Augmente de 1 le nombre de projet courant et global du joueur
    * @return booléen vraie si le joueur peut utiliser un meeple, faux sinon
    */
-  public boolean meepleUse() {
+  public void meepleUse() {
     if (meeplesNumber > 0) {
       meeplesNumber -= 1;
       curNumberOfProject += 1;
       numberOfProjects += 1;
-      return true;
     }
-    return false;
   }
 
   public void setMeeplesNumber(int nb) {

@@ -56,12 +56,13 @@ public class Background extends JComponent{
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D drawable = (Graphics2D) g;
-    
+
     int width = getSize().width;
     int height = getSize().height;
-    
+
     drawable.clearRect(0, 0, width, height);
 
     drawable.drawImage(currentbackground, 0, 0, width, height, null);
+    drawable.drawImage(backgroundTitle, 0, 0, width, height, null);
   }
 }

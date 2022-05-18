@@ -8,7 +8,9 @@ import model.Graph.*;
 
 public class ProjectCity extends Project {
 
-  Type type = Type.CITY;
+  private Graph g;
+  private boolean finish;
+
   /**
    ** Vérifie si pour la portion de ville à la case (x, y), la ville qui y
    ** correspond est terminée
@@ -20,8 +22,10 @@ public class ProjectCity extends Project {
    * @param cityVisited liste des tuiles contenant une villes visitées
    */
   public ProjectCity(Tile[][] set, int x, int y, String card, List<Tile> cityVisited) {
-    super();
-    g = new Graph<Tile>();
+    super(Type.CITY);
+    g = new Graph();
+    finish = false;
+
     Configuration
         .instance()
         .logger()
@@ -29,16 +33,20 @@ public class ProjectCity extends Project {
             "Évaluation du projet ville aux coordonnées (" + x + ", " + y + ")");
     evaluate(g, set, set[y][x], x, y, card);
 
-    cityVisited.addAll(g.getListOfNode());
+    cityVisited.addAll(g.getSetOfNode());
+
+    System.out.println(g.toString());
 
     if (g.isEmpty()) {
       finish = false;
     }
+    else {
+      if (isCityFinish(g, (Tile) g.getListofNode()[0]))
+        finish = true;
+      else
+        finish = false;
+    }
 
-    if (isCityFinish(g, (Tile) g.getListOfNode().toArray()[0]))
-      finish = true;
-    else
-      finish = false;
 
     Configuration
         .instance()
@@ -49,7 +57,7 @@ public class ProjectCity extends Project {
                 ", " +
                 y +
                 ") est fini : " +
-                finished() +
+                isFinish() +
                 ", il compte " +
                 value() +
                 " points");
@@ -67,7 +75,7 @@ public class ProjectCity extends Project {
    * @param t la tuile de départ
    * @return vraie si la ville est complété (toutes les extrémités sont fermés)
    */
-  boolean isCityFinish(Graph<Tile> g, Tile t) {
+  boolean isCityFinish(Graph g, Tile t) {
     if (g.getVoisins(t).size() == 0 && t.cityEnder()) {
       if (g.getNodeCount() == 1)
         return false;
@@ -92,12 +100,12 @@ public class ProjectCity extends Project {
    * @param y    position y de la tuile à tester
    * @param card cardinalité courante sur la tuile
    */
-  @Override
-  void evaluate(Graph<Tile> g, Tile[][] set, Tile source, int x, int y, String card) {
+  // @Override
+  void evaluate(Graph g, Tile[][] set, Tile source, int x, int y, String card) {
     Tile t = set[y][x];
     if (t != null && !g.hasNode(t)) {
       g.addNode(t);
-      if (g.getNodeCount() > 1)
+      if (g.getNodeCount() > 1 && !t.equalsTo(source))
         g.addEdge(source, t);
       if (t.cityEnder() && g.getNodeCount() == 1) {
         switch (card) {
@@ -192,7 +200,7 @@ public class ProjectCity extends Project {
    */
   int blasonCounter() {
     int blason = 0;
-    for (Tile t : g.getListOfNode()) {
+    for (Tile t : g.getListofNode()) {
       if (t.blason())
         blason += 1;
     }
@@ -205,8 +213,18 @@ public class ProjectCity extends Project {
    */
   @Override
   public int value() {
-    if (finished())
+    if (isFinish())
       return (g.getNodeCount() + blasonCounter()) * 2;
     return g.getNodeCount() + blasonCounter();
+  }
+
+  @Override
+  public boolean isFinish() {
+    return finish;
+  }
+
+  @Override
+  public Graph graph() {
+    return g;
   }
 }
