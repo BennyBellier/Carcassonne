@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.awt.Color;
 
 public class Player {
 
@@ -64,10 +65,11 @@ public class Player {
 
   private String pseudo;
   private Type type;
-  private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects, color;
+  private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects;
+  private Color color;
 
 
-  public Player(String name, Type type, int color) {
+  public Player(String name, Type type, Color color) {
     pseudo = name;
     this.type = type;
     meeplesNumber = 7;
@@ -96,7 +98,7 @@ public class Player {
     return pseudo;
   }
 
-  public int color() {
+  public Color color() {
     return color;
   }
 

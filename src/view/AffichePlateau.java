@@ -115,7 +115,7 @@ public class AffichePlateau extends JComponent {
       }
       meepleX += ((m.getY() + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((m.getX() + gm.getStartTilePoint().x) * tileSize);
-      drawable.setColor(new Color(gm.getListPlayers().get(m.getOwner()).color()));
+      drawable.setColor(gm.getListPlayers().get(m.getOwner()).color());
       drawable.fillOval(meepleX, meepleY, meepleSize, meepleSize);
     }
   }
@@ -187,7 +187,7 @@ public class AffichePlateau extends JComponent {
     for (int i = 0; i < gm.getNbPlayer(); i++) {
       if (gm.getPlayerTurn() == i)
         g.drawString(">", 0, (int)  (15 + i * (getSize().height * 0.10)));
-      drawable.setColor(new Color(gm.getListPlayers().get(i).color()));
+      drawable.setColor(gm.getListPlayers().get(i).color());
       g.drawString(players.get(i).pseudo(), 10, (int) (15 + i * (getSize().height * 0.10)));
       drawable.drawString(String.valueOf(players.get(i).score()), 100, (int)  (15 + i * (getSize().height * 0.10)));
       drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 80, (int)  (15 + i * (getSize().height * 0.10)));

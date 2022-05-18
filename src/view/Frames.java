@@ -1,7 +1,7 @@
 package view;
 
 import controller.Controleur;
-import view.Player.pType;
+import model.Player;
 import java.awt.*;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -176,7 +176,7 @@ public class Frames extends javax.swing.JFrame {
             ajouterIA.setEnabled(false);
             ajouterJoueur.setEnabled(false);
         }
-        p = new Player(text,pType.HUMAN,c);
+        p = new Player(text,Player.Type.HUMAN, c);
         players.add(p);
     }
 
@@ -1189,17 +1189,17 @@ public class Frames extends javax.swing.JFrame {
             case 0:
                 setColor();
                 ajouterIA("IA Facile");
-                players.add(new Player("IA Facile",pType.IA_EASY,c));
+                players.add(new Player("IA Facile",Player.Type.IA_EASY,c));
                 break;
             case 1:
                 setColor();
                 ajouterIA("IA Moyen");
-                players.add(new Player("IA Moyen",pType.IA_MEDIUM,c));
+                players.add(new Player("IA Moyen",Player.Type.IA_MEDIUM,c));
                 break;
             case 2:
                 setColor();
                 ajouterIA("Terminator");
-                players.add(new Player("Terminator",pType.IA_HARD,c));
+                players.add(new Player("Terminator",Player.Type.IA_HARD,c));
                 break;
         }
 

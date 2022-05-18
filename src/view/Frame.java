@@ -323,7 +323,6 @@ public class Frame extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JPanel Background;
   private javax.swing.JButton charger;
   private javax.swing.JPanel choixDeuxJoueurs;
   private javax.swing.JButton classement;

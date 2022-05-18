@@ -63,6 +63,5 @@ public class Background extends JComponent{
     drawable.clearRect(0, 0, width, height);
 
     drawable.drawImage(currentbackground, 0, 0, width, height, null);
-    drawable.drawImage(backgroundTitle, 0, 0, width, height, null);
   }
 }

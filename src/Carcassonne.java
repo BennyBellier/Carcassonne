@@ -100,22 +100,22 @@ public class Carcassonne {
   }
 
   static void startGame() {
-    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, 0x00ff00), /* new Player("Wall-E", Type.IA_EASY, 0xff0000), */ new Player("Benny", Type.HUMAN, 0x101eff));
+    // GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, 0x00ff00), /* new Player("Wall-E", Type.IA_EASY, 0xff0000), */ new Player("Benny", Type.HUMAN, 0x101eff));
 
-    AffichePlateau affPlat = new AffichePlateau(gm);
+    // AffichePlateau affPlat = new AffichePlateau(gm);
 
-    Controleur c = new Controleur(gm);
-    c.setAfficheur(affPlat);
-    affPlat.addMouseListener(new Mouse(affPlat, c));
+    // Controleur c = new Controleur(gm);
+    // c.setAfficheur(affPlat);
+    // affPlat.addMouseListener(new Mouse(affPlat, c));
 
-    JFrame frame = new JFrame();
-    frame.setMinimumSize(new Dimension(853, 480));
-    frame.setMaximumSize(new Dimension(1920, 1080));
-    frame.add(affPlat);
-    frame.addKeyListener(new Keybord(c));
-    frame.setSize(new Dimension(1080, 720));
-    frame.setVisible(true);
-    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    // JFrame frame = new JFrame();
+    // frame.setMinimumSize(new Dimension(853, 480));
+    // frame.setMaximumSize(new Dimension(1920, 1080));
+    // frame.add(affPlat);
+    // frame.addKeyListener(new Keybord(c));
+    // frame.setSize(new Dimension(1080, 720));
+    // frame.setVisible(true);
+    // frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
 
@@ -132,6 +132,6 @@ public class Carcassonne {
 
     window();
     // setOfTests();
-    startGame();
+    // startGame();
   }
 }
