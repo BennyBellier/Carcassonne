@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Background extends JComponent{
+public class Background extends JComponent {
 
   Image currentbackground , menu , credits , jouer , nouvellePartie , options , regles;
 
@@ -53,6 +53,11 @@ public class Background extends JComponent{
     repaint();
   }
 
+  public void desactivate() {
+    currentbackground = null;
+    repaint();
+  }
+
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D drawable = (Graphics2D) g;
@@ -61,7 +66,7 @@ public class Background extends JComponent{
     int height = getSize().height;
 
     drawable.clearRect(0, 0, width, height);
-
-    drawable.drawImage(currentbackground, 0, 0, width, height, null);
+    if (currentbackground != null)
+      drawable.drawImage(currentbackground, 0, 0, width, height, null);
   }
 }

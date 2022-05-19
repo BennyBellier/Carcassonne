@@ -1,18 +1,19 @@
 
-import global.Configuration;
-import model.*;
-import model.Player.Type;
-import view.AffichePlateau;
+import java.awt.Color;
+import java.awt.Dimension;
 
-import view.Frame;
-import view.Keybord;
-import view.Mouse;
-
-import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import controller.Controleur;
+import global.Configuration;
+import model.*;
+import model.Player.Type;
+import view.AffichePlateau;
+import view.Frames;
+import view.Keybord;
+import view.Mouse;
+
 
 
 public class Carcassonne {
@@ -25,17 +26,17 @@ public class Carcassonne {
         }
       }
     } catch (ClassNotFoundException ex) {
-      java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     } catch (InstantiationException ex) {
-      java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     } catch (IllegalAccessException ex) {
-      java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(Frames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     java.awt.EventQueue.invokeLater(new Runnable() {
       public void run() {
-        new Frame().setVisible(true);
+        new Frames().setVisible(true);
       }
     });
   }
@@ -100,22 +101,26 @@ public class Carcassonne {
   }
 
   static void startGame() {
-    // GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, 0x00ff00), /* new Player("Wall-E", Type.IA_EASY, 0xff0000), */ new Player("Benny", Type.HUMAN, 0x101eff));
+    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, new Color(0x00ff00)), new Player("Benny", Type.HUMAN, new Color(0x101eff)));
 
-    // AffichePlateau affPlat = new AffichePlateau(gm);
+    AffichePlateau affPlat = new AffichePlateau();
 
-    // Controleur c = new Controleur(gm);
-    // c.setAfficheur(affPlat);
-    // affPlat.addMouseListener(new Mouse(affPlat, c));
+    affPlat.setGameEngine(gm);
 
-    // JFrame frame = new JFrame();
-    // frame.setMinimumSize(new Dimension(853, 480));
-    // frame.setMaximumSize(new Dimension(1920, 1080));
-    // frame.add(affPlat);
-    // frame.addKeyListener(new Keybord(c));
-    // frame.setSize(new Dimension(1080, 720));
-    // frame.setVisible(true);
-    // frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    Controleur c = new Controleur(gm);
+    c.setAfficheur(affPlat);
+    affPlat.addMouseListener(new Mouse(affPlat, c));
+
+    JFrame frame = new JFrame();
+    frame.setMinimumSize(new Dimension(853, 480));
+    frame.setMaximumSize(new Dimension(1920, 1080));
+    frame.add(affPlat);
+    Keybord keys = new Keybord();
+    frame.addKeyListener(keys);
+    keys.setControleur(c);
+    frame.setSize(new Dimension(1080, 720));
+    frame.setVisible(true);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
 

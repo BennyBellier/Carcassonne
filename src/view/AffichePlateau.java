@@ -31,16 +31,21 @@ public class AffichePlateau extends JComponent {
   Graphics2D drawable;
   CurrentTile currentTile;
 
-  public AffichePlateau(GameEngine gameEngine) {
-    gm = gameEngine;
+  public AffichePlateau() {
     Images imgs = new Images();
     images = imgs.list;
     blason = imgs.blason;
     meeplePossibility = imgs.meeplePossibility;
+    repaint();
+  }
+
+  public void setGameEngine(GameEngine gameEngine) {
+    gm = gameEngine;
   }
 
   /**
    ** Retourne la taille courante de la tuile
+   *
    * @return int
    */
   public int tailleTuile() {
@@ -49,6 +54,7 @@ public class AffichePlateau extends JComponent {
 
   /**
    ** Retourne le décalage x du plateau
+   *
    * @return int
    */
   public int getOffsetX() {
@@ -57,6 +63,7 @@ public class AffichePlateau extends JComponent {
 
   /**
    ** Retourne le décalage Y du plateau
+   *
    * @return int
    */
   public int getOffsetY() {
@@ -154,6 +161,7 @@ public class AffichePlateau extends JComponent {
 
   /**
    ** Affiche les blasons des tuiles
+   *
    * @param x position x du coin supérieur gauche ou placer le blason
    * @param y position y du coin supérieur gauche ou placer le blason
    */
@@ -164,52 +172,56 @@ public class AffichePlateau extends JComponent {
 
   @Override
   public void paintComponent(Graphics g) {
-    drawable = (Graphics2D) g;
-    drawable.clearRect(0, 0, getSize().width, getSize().height);
-    Tile[][] plateau = gm.getSet();
-    currentTile = gm.getCurrentTile();
-    getTileSize();
+    if (gm != null) {
+      drawable = (Graphics2D) g;
+      drawable.clearRect(0, 0, getSize().width, getSize().height);
+      Tile[][] plateau = gm.getSet();
+      currentTile = gm.getCurrentTile();
+      getTileSize();
 
-    for (int i = 0; i < plateau.length; i++) {
-      drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
-      for (int j = 0; j < plateau[i].length; j++) {
-        drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
-        if (plateau[i][j] != null) {
-          drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
-              tileSize, null);
-          if (plateau[i][j].blason())
-            drawBlason((int) (startX + tileSize*0.15  + j * tileSize), (int) (startY + tileSize * 0.15 + i * tileSize));
+      for (int i = 0; i < plateau.length; i++) {
+        drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
+        for (int j = 0; j < plateau[i].length; j++) {
+          drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
+          if (plateau[i][j] != null) {
+            drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
+                tileSize, null);
+            if (plateau[i][j].blason())
+              drawBlason((int) (startX + tileSize * 0.15 + j * tileSize),
+                  (int) (startY + tileSize * 0.15 + i * tileSize));
+          }
         }
       }
-    }
 
-    List<Player> players = gm.getListPlayers();
-    for (int i = 0; i < gm.getNbPlayer(); i++) {
-      if (gm.getPlayerTurn() == i)
-        g.drawString(">", 0, (int)  (15 + i * (getSize().height * 0.10)));
-      drawable.setColor(gm.getListPlayers().get(i).color());
-      g.drawString(players.get(i).pseudo(), 10, (int) (15 + i * (getSize().height * 0.10)));
-      drawable.drawString(String.valueOf(players.get(i).score()), 100, (int)  (15 + i * (getSize().height * 0.10)));
-      drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 80, (int)  (15 + i * (getSize().height * 0.10)));
-      drawable.setColor(Color.BLACK);
-    }
-
-    g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 80, getSize().height - 120);
-
-    if (!currentTile.placed) {
-      drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
-      if (currentTile.tile.blason()) {
-        drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
+      List<Player> players = gm.getListPlayers();
+      for (int i = 0; i < gm.getNbPlayer(); i++) {
+        if (gm.getPlayerTurn() == i)
+          g.drawString(">", 0, (int) (15 + i * (getSize().height * 0.10)));
+        drawable.setColor(gm.getListPlayers().get(i).color());
+        g.drawString(players.get(i).pseudo(), 10, (int) (15 + i * (getSize().height * 0.10)));
+        drawable.drawString(String.valueOf(players.get(i).score()), 100, (int) (15 + i * (getSize().height * 0.10)));
+        drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 80,
+            (int) (15 + i * (getSize().height * 0.10)));
+        drawable.setColor(Color.BLACK);
       }
+
+      g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 80, getSize().height - 120);
+
+      if (!currentTile.placed) {
+        drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
+        if (currentTile.tile.blason()) {
+          drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
+        }
+      } else {
+        meeplePlacementPaint();
+      }
+      meeplePaint();
     }
-    else {
-      meeplePlacementPaint();
-    }
-    meeplePaint();
   }
 
   /**
    ** Retourne l'image correspondant à la tuile t
+   *
    * @param t Tile
    * @return Image
    */
