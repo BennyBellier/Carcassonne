@@ -158,6 +158,7 @@ public class Frames extends javax.swing.JFrame {
             desactivation();
             j2.setText(text);
             supprimerJ2.setVisible(true);
+            lancerLaPartie.setEnabled(true);
         }else if (j3.getText().isEmpty() && (!j1.getText().isEmpty()) && (!j2.getText().isEmpty())){
             j3.setForeground(c);
             desactivation();
@@ -192,6 +193,7 @@ public class Frames extends javax.swing.JFrame {
             desactivation();
             j2.setText(text);
             supprimerJ2.setVisible(true);
+            lancerLaPartie.setEnabled(true);
         }else if (j3.getText().isEmpty() && (!j1.getText().isEmpty()) && (!j2.getText().isEmpty())){
             j3.setForeground(c);
             desactivation();
@@ -394,6 +396,7 @@ public class Frames extends javax.swing.JFrame {
         supprimerJ3 = new javax.swing.JButton();
         supprimerJ4 = new javax.swing.JButton();
         supprimerJ5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         cJoueurLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -406,7 +409,7 @@ public class Frames extends javax.swing.JFrame {
         menuPrincipale.setOpaque(false);
         menuPrincipale.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        jouer.setFont(new java.awt.Font("Old London", 0, 34)); // NOI18N
+        jouer.setFont(new java.awt.Font("Old London Alternate", 0, 34)); // NOI18N
         jouer.setText("Jouer");
         jouer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,7 +419,7 @@ public class Frames extends javax.swing.JFrame {
 
         version.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        quitter.setFont(new java.awt.Font("Old London", 0, 26)); // NOI18N
+        quitter.setFont(new java.awt.Font("Old London Alternate", 0, 26)); // NOI18N
         quitter.setText("Quitter");
         quitter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -424,7 +427,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        menuCredits.setFont(new java.awt.Font("Old London", 0, 28)); // NOI18N
+        menuCredits.setFont(new java.awt.Font("Old London Alternate", 0, 28)); // NOI18N
         menuCredits.setText("Crédits");
         menuCredits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -432,7 +435,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        menuOptions.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        menuOptions.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         menuOptions.setText("Options");
         menuOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,7 +443,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        menuRegles.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        menuRegles.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         menuRegles.setText("Règles");
         menuRegles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -490,10 +493,10 @@ public class Frames extends javax.swing.JFrame {
         jouerPanel.setOpaque(false);
         jouerPanel.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        jeuEnReseaux.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        jeuEnReseaux.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         jeuEnReseaux.setText("Jeu en réseaux");
 
-        nouvellePartie.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        nouvellePartie.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         nouvellePartie.setText("Nouvelle Partie");
         nouvellePartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -514,7 +517,7 @@ public class Frames extends javax.swing.JFrame {
         ));
         sauvegardeScroll.setViewportView(sauvegardeTable);
 
-        retourParties.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        retourParties.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         retourParties.setText("Retour");
         retourParties.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -535,20 +538,20 @@ public class Frames extends javax.swing.JFrame {
                     .addComponent(jeuEnReseaux, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(441, Short.MAX_VALUE))
             .addGroup(jouerPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(193, 193, 193)
                 .addComponent(retourParties, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jouerPanelLayout.setVerticalGroup(
             jouerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jouerPanelLayout.createSequentialGroup()
-                .addContainerGap(412, Short.MAX_VALUE)
+                .addContainerGap(405, Short.MAX_VALUE)
                 .addGroup(jouerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jouerPanelLayout.createSequentialGroup()
                         .addComponent(sauvegardeScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(280, 280, 280)
+                        .addGap(191, 191, 191)
                         .addComponent(retourParties, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addGap(102, 102, 102))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jouerPanelLayout.createSequentialGroup()
                         .addComponent(nouvellePartie, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(128, 128, 128)
@@ -560,7 +563,7 @@ public class Frames extends javax.swing.JFrame {
         options.setOpaque(false);
         options.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourOptions.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        retourOptions.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         retourOptions.setText("Retour");
         retourOptions.setAlignmentX(0.5F);
         retourOptions.addActionListener(new java.awt.event.ActionListener() {
@@ -589,7 +592,7 @@ public class Frames extends javax.swing.JFrame {
         regles.setOpaque(false);
         regles.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourRegles.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        retourRegles.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         retourRegles.setText("Retour");
         retourRegles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -617,30 +620,28 @@ public class Frames extends javax.swing.JFrame {
             .addGroup(reglesLayout.createSequentialGroup()
                 .addGroup(reglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(reglesLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(75, 75, 75)
                         .addComponent(retourRegles))
                     .addGroup(reglesLayout.createSequentialGroup()
                         .addGap(171, 171, 171)
                         .addComponent(reglesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1285, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(464, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         reglesLayout.setVerticalGroup(
             reglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reglesLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(reglesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(retourRegles, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(54, 54, 54))
         );
 
         credits.setOpaque(false);
         credits.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourCredits.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        retourCredits.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         retourCredits.setText("Retour");
-        retourCredits.setAlignmentX(1.0F);
-        retourCredits.setAlignmentY(1.0F);
         retourCredits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 retourCreditsActionPerformed(evt);
@@ -652,11 +653,9 @@ public class Frames extends javax.swing.JFrame {
         creditsTextArea.setColumns(20);
         creditsTextArea.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         creditsTextArea.setRows(5);
-        creditsTextArea.setText("\n\t\n\tLOUBEAU Ludovic\n\tBERTRAMOND Camille\n\tKETTENIS Soteris\n\tFERREIRA Alexis\n\tBERENGUIER Lucas\n\tBELLIER Benjamin");
+        creditsTextArea.setText("\t\n\n\t                       \n\n                                                  \n                                                \n                                            \n\n\t                    BELLIER Benjamin\n                                              BERENGUIER Lucas\n                                              BERTRAMOND Camille\n\t                    FERREIRA Alexis\n\t                    KETTENIS Soteris\n                                              LOUBEAU Ludovic");
         creditsTextArea.setBorder(null);
         creditsTextArea.setFocusable(false);
-        creditsTextArea.setMinimumSize(null);
-        creditsTextArea.setPreferredSize(null);
 
         javax.swing.GroupLayout creditsLayout = new javax.swing.GroupLayout(credits);
         credits.setLayout(creditsLayout);
@@ -665,46 +664,54 @@ public class Frames extends javax.swing.JFrame {
             .addGroup(creditsLayout.createSequentialGroup()
                 .addGroup(creditsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(creditsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(retourCredits))
+                        .addGap(250, 250, 250)
+                        .addComponent(creditsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 1260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(creditsLayout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(creditsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 667, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(1089, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(retourCredits)))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
         creditsLayout.setVerticalGroup(
             creditsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(creditsLayout.createSequentialGroup()
-                .addContainerGap(463, Short.MAX_VALUE)
-                .addComponent(creditsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
+                .addContainerGap(177, Short.MAX_VALUE)
+                .addComponent(creditsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
                 .addComponent(retourCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(55, 55, 55))
         );
 
-        plateauJeu.setMinimumSize(null);
+
+
+
         plateauJeu.setOpaque(false);
         plateauJeu.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        JeuScrollPane.setMinimumSize(null);
-        JeuScrollPane.setPreferredSize(new java.awt.Dimension(1920, 1080));
+        jButton1.setText("jButton1");
 
         javax.swing.GroupLayout plateauJeuLayout = new javax.swing.GroupLayout(plateauJeu);
         plateauJeu.setLayout(plateauJeuLayout);
         plateauJeuLayout.setHorizontalGroup(
             plateauJeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JeuScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(plateauJeuLayout.createSequentialGroup()
+                .addGap(643, 643, 643)
+                .addComponent(jButton1)
+                .addContainerGap(1200, Short.MAX_VALUE))
         );
         plateauJeuLayout.setVerticalGroup(
             plateauJeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JeuScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(plateauJeuLayout.createSequentialGroup()
+                .addGap(362, 362, 362)
+                .addComponent(jButton1)
+                .addContainerGap(693, Short.MAX_VALUE))
         );
+
 
         newGame.setMinimumSize(null);
         newGame.setOpaque(false);
         newGame.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        retourParametre.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        retourParametre.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         retourParametre.setText("Retour");
         retourParametre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -712,7 +719,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        ajouterJoueur.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        ajouterJoueur.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         ajouterJoueur.setText("Ajouter un joueur");
         ajouterJoueur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -720,7 +727,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        ajouterIA.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        ajouterIA.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         ajouterIA.setText("Ajouter IA");
         ajouterIA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -728,7 +735,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        lancerLaPartie.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        lancerLaPartie.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         lancerLaPartie.setText("Lancer la partie");
         lancerLaPartie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -736,7 +743,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        difficulterBox.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        difficulterBox.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen", "Terminator" }));
 
         cBleu.setBackground(new java.awt.Color(7, 45, 249));
@@ -779,25 +786,25 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        joueurs.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        joueurs.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         joueurs.setForeground(new java.awt.Color(255, 255, 255));
         joueurs.setText("Joueurs :");
 
-        j1.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
+        j1.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
 
-        pseudoLabel.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        pseudoLabel.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         pseudoLabel.setForeground(new java.awt.Color(255, 255, 255));
         pseudoLabel.setText("Pseudo:");
 
-        j2.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
+        j2.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
 
-        j3.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
+        j3.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
 
-        j4.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
+        j4.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
 
-        j5.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
+        j5.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
 
-        pseudo.setFont(new java.awt.Font("Old London", 0, 24)); // NOI18N
+        pseudo.setFont(new java.awt.Font("Old London Alternate", 0, 24)); // NOI18N
 
         supprimerJ1.setBorder(null);
         supprimerJ1.addActionListener(new java.awt.event.ActionListener() {
@@ -835,7 +842,7 @@ public class Frames extends javax.swing.JFrame {
             }
         });
 
-        cJoueurLabel.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+        cJoueurLabel.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
         cJoueurLabel.setForeground(new java.awt.Color(255, 255, 255));
         cJoueurLabel.setText("Couleur du Joueur:");
 
@@ -1142,6 +1149,9 @@ public class Frames extends javax.swing.JFrame {
         players.remove(1);
         remplace2();
         ajouterIA.setEnabled(true);
+        if (j2.getText().isEmpty()){
+            lancerLaPartie.setEnabled(false);
+        }
     }                                           
 
     private void supprimerJ1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
@@ -1180,9 +1190,9 @@ public class Frames extends javax.swing.JFrame {
     }                                     
 
     private void lancerLaPartieActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        jouerPanel.setVisible(false);
+        newGame.setVisible(false);
         plateauJeu.setVisible(true);
-        affListe();
+      
     }                                              
 
     private void ajouterIAActionPerformed(java.awt.event.ActionEvent evt) {                                          
@@ -1276,5 +1286,8 @@ public class Frames extends javax.swing.JFrame {
     private javax.swing.JButton supprimerJ4;
     private javax.swing.JButton supprimerJ5;
     private javax.swing.JLabel version;
+ 
+    private javax.swing.JButton jButton1;
+
     // End of variables declaration                   
 }
