@@ -5,10 +5,12 @@ import global.Configuration;
 import model.GameEngine;
 import model.Player;
 import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -37,6 +39,7 @@ public class Frames extends javax.swing.JFrame {
    * Creates new form Frames
    */
   public Frames() {
+    setIcon();
     loadFont();
     imgs = new Images();
     // basculeEnPleineEcran();
@@ -44,6 +47,14 @@ public class Frames extends javax.swing.JFrame {
     setupBoutons();
     setupPanel();
     addKeyListener(keyboard);
+  }
+
+  void setIcon() {
+    try {
+      setIconImage(ImageIO.read(Configuration.charge("Images/logo.png")));
+    } catch(IOException e) {
+      Configuration.instance().logger().severe("Impossible de charger l'icon");
+    }
   }
 
   private void setupBoutons() {
