@@ -7,7 +7,7 @@ import java.io.File;
 
 public class Background extends JComponent {
 
-  Image currentbackground , menu , credits , jouer , nouvellePartie , options , regles;
+  Image currentbackground , menu , credits , jouer , nouvellePartie , options , regles , plateauInGame;
 
   public Background() {
     try {
@@ -18,6 +18,7 @@ public class Background extends JComponent {
       nouvellePartie = ImageIO.read(new File("assets/Images/NouvellePartie.jpg"));
       options = ImageIO.read(new File("assets/Images/Options.jpg"));
       regles = ImageIO.read(new File("assets/Images/Regles.jpg"));
+      plateauInGame = ImageIO.read(new File("assets/Images/bois.jpg"));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -55,6 +56,11 @@ public class Background extends JComponent {
 
   public void desactivate() {
     currentbackground = null;
+    repaint();
+  }
+
+  public void affichagePlateauInGame() {
+    currentbackground = plateauInGame;
     repaint();
   }
 

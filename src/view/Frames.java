@@ -95,6 +95,7 @@ public class Frames extends javax.swing.JFrame {
     ajouterJoueur.setEnabled(false);
     credits.setVisible(false);
     plateauJeu.setVisible(false);
+    menuInGame.setVisible(false);
   }
 
   public void boutonSupDesactiver() {
@@ -344,55 +345,61 @@ public class Frames extends javax.swing.JFrame {
   private void initComponents() {
 
     quitterOptionPane = new javax.swing.JOptionPane();
-    background = new Background();
-    menuPrincipale = new javax.swing.JPanel();
-    jouer = new javax.swing.JButton();
-    version = new javax.swing.JLabel();
-    quitter = new javax.swing.JButton();
-    menuCredits = new javax.swing.JButton();
-    menuOptions = new javax.swing.JButton();
-    menuRegles = new javax.swing.JButton();
-    jouerPanel = new javax.swing.JPanel();
-    jeuEnReseaux = new javax.swing.JButton();
-    nouvellePartie = new javax.swing.JButton();
-    sauvegardeScroll = new javax.swing.JScrollPane();
-    sauvegardeTable = new javax.swing.JTable();
-    retourParties = new javax.swing.JButton();
-    options = new javax.swing.JPanel();
-    retourOptions = new javax.swing.JButton();
-    regles = new javax.swing.JPanel();
-    retourRegles = new javax.swing.JButton();
-    reglesScrollPane = new javax.swing.JScrollPane();
-    reglesPane = new javax.swing.JTextPane();
-    credits = new javax.swing.JPanel();
-    retourCredits = new javax.swing.JButton();
-    creditsTextArea = new javax.swing.JTextArea();
-    plateauJeu = new AffichePlateau();
-    newGame = new javax.swing.JPanel();
-    retourParametre = new javax.swing.JButton();
-    ajouterJoueur = new javax.swing.JButton();
-    ajouterIA = new javax.swing.JButton();
-    lancerLaPartie = new javax.swing.JButton();
-    difficulterBox = new javax.swing.JComboBox<>();
-    cBleu = new javax.swing.JButton();
-    cRouge = new javax.swing.JButton();
-    cVert = new javax.swing.JButton();
-    cJaune = new javax.swing.JButton();
-    cNoir = new javax.swing.JButton();
-    joueurs = new javax.swing.JLabel();
-    j1 = new javax.swing.JLabel();
-    pseudoLabel = new javax.swing.JLabel();
-    j2 = new javax.swing.JLabel();
-    j3 = new javax.swing.JLabel();
-    j4 = new javax.swing.JLabel();
-    j5 = new javax.swing.JLabel();
-    pseudo = new javax.swing.JTextField();
-    supprimerJ1 = new javax.swing.JButton();
-    supprimerJ2 = new javax.swing.JButton();
-    supprimerJ3 = new javax.swing.JButton();
-    supprimerJ4 = new javax.swing.JButton();
-    supprimerJ5 = new javax.swing.JButton();
-    cJoueurLabel = new javax.swing.JLabel();
+        background = new Background();
+        menuPrincipale = new javax.swing.JPanel();
+        jouer = new javax.swing.JButton();
+        version = new javax.swing.JLabel();
+        quitter = new javax.swing.JButton();
+        menuCredits = new javax.swing.JButton();
+        menuOptions = new javax.swing.JButton();
+        menuRegles = new javax.swing.JButton();
+        jouerPanel = new javax.swing.JPanel();
+        jeuEnReseaux = new javax.swing.JButton();
+        nouvellePartie = new javax.swing.JButton();
+        sauvegardeScroll = new javax.swing.JScrollPane();
+        sauvegardeTable = new javax.swing.JTable();
+        retourParties = new javax.swing.JButton();
+        options = new javax.swing.JPanel();
+        retourOptions = new javax.swing.JButton();
+        regles = new javax.swing.JPanel();
+        retourRegles = new javax.swing.JButton();
+        reglesScrollPane = new javax.swing.JScrollPane();
+        reglesPane = new javax.swing.JTextPane();
+        credits = new javax.swing.JPanel();
+        retourCredits = new javax.swing.JButton();
+        creditsTextArea = new javax.swing.JTextArea();
+        plateauJeu = new AffichePlateau();
+        menuPlateau = new javax.swing.JButton();
+        newGame = new javax.swing.JPanel();
+        retourParametre = new javax.swing.JButton();
+        ajouterJoueur = new javax.swing.JButton();
+        ajouterIA = new javax.swing.JButton();
+        lancerLaPartie = new javax.swing.JButton();
+        difficulterBox = new javax.swing.JComboBox<>();
+        cBleu = new javax.swing.JButton();
+        cRouge = new javax.swing.JButton();
+        cVert = new javax.swing.JButton();
+        cJaune = new javax.swing.JButton();
+        cNoir = new javax.swing.JButton();
+        joueurs = new javax.swing.JLabel();
+        j1 = new javax.swing.JLabel();
+        pseudoLabel = new javax.swing.JLabel();
+        j2 = new javax.swing.JLabel();
+        j3 = new javax.swing.JLabel();
+        j4 = new javax.swing.JLabel();
+        j5 = new javax.swing.JLabel();
+        pseudo = new javax.swing.JTextField();
+        supprimerJ1 = new javax.swing.JButton();
+        supprimerJ2 = new javax.swing.JButton();
+        supprimerJ3 = new javax.swing.JButton();
+        supprimerJ4 = new javax.swing.JButton();
+        supprimerJ5 = new javax.swing.JButton();
+        cJoueurLabel = new javax.swing.JLabel();
+        menuInGame = new javax.swing.JPanel();
+        sauvgarderInGame = new javax.swing.JButton();
+        reglesInGame = new javax.swing.JButton();
+        retourInGame = new javax.swing.JButton();
+        retourMenuInGame = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
@@ -678,6 +685,40 @@ public class Frames extends javax.swing.JFrame {
 
     plateauJeu.setOpaque(true);
     plateauJeu.setPreferredSize(new java.awt.Dimension(1920, 1080));
+
+    menuPlateau.setText("Menu");
+    menuPlateau.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            menuPlateauActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout plateauJeuLayout = new javax.swing.GroupLayout(plateauJeu);
+        plateauJeu.setLayout(plateauJeuLayout);
+        plateauJeuLayout.setHorizontalGroup(
+            plateauJeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plateauJeuLayout.createSequentialGroup()
+                .addContainerGap(1845, Short.MAX_VALUE)
+                .addComponent(menuPlateau)
+                .addContainerGap())
+            .addGroup(plateauJeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plateauJeuLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(menuInGame, javax.swing.GroupLayout.DEFAULT_SIZE, 1896, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        plateauJeuLayout.setVerticalGroup(
+            plateauJeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plateauJeuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(menuPlateau)
+                .addContainerGap(1042, Short.MAX_VALUE))
+            .addGroup(plateauJeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plateauJeuLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(menuInGame, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
     newGame.setMinimumSize(null);
     newGame.setOpaque(false);
@@ -974,6 +1015,63 @@ public class Frames extends javax.swing.JFrame {
                         javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(272, Short.MAX_VALUE)));
 
+                menuInGame.setBackground(new Color (0,0,0,50));
+                menuInGame.setOpaque(false);
+                menuInGame.setPreferredSize(new java.awt.Dimension(1920, 1080));
+        
+                sauvgarderInGame.setText("Sauvegarder");
+        sauvgarderInGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sauvgarderInGameActionPerformed(evt);
+            }
+        });
+
+        reglesInGame.setText("Régles");
+        reglesInGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reglesInGameActionPerformed(evt);
+            }
+        });
+
+        retourInGame.setText("Retour au jeu");
+        retourInGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourInGameActionPerformed(evt);
+            }
+        });
+
+        retourMenuInGame.setText("Menu Principale");
+        retourMenuInGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retourMenuInGameActionPerformed(evt);
+            }
+        });
+                javax.swing.GroupLayout menuInGameLayout = new javax.swing.GroupLayout(menuInGame);
+                menuInGame.setLayout(menuInGameLayout);
+                menuInGameLayout.setHorizontalGroup(
+                    menuInGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuInGameLayout.createSequentialGroup()
+                        .addContainerGap(1163, Short.MAX_VALUE)
+                        .addGroup(menuInGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(retourMenuInGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sauvgarderInGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(reglesInGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(retourInGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(638, 638, 638))
+                );
+                menuInGameLayout.setVerticalGroup(
+                    menuInGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuInGameLayout.createSequentialGroup()
+                        .addContainerGap(552, Short.MAX_VALUE)
+                        .addComponent(sauvgarderInGame)
+                        .addGap(18, 18, 18)
+                        .addComponent(reglesInGame)
+                        .addGap(18, 18, 18)
+                        .addComponent(retourInGame)
+                        .addGap(18, 18, 18)
+                        .addComponent(retourMenuInGame)
+                        .addGap(374, 374, 374))
+                );
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
     background.setLayout(backgroundLayout);
     backgroundLayout.setHorizontalGroup(
@@ -1212,13 +1310,14 @@ public class Frames extends javax.swing.JFrame {
   private void lancerLaPartieActionPerformed(java.awt.event.ActionEvent evt) {
     newGame.setVisible(false);
     plateauJeu.setVisible(true);
-
+    
     GameEngine gm = new GameEngine(playersToArray());
     plateauJeu.setGameEngine(gm);
     Controleur c = new Controleur(gm);
     keyboard.setControleur(c);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, c));
     c.setAfficheur(plateauJeu);
+    
 
   }
 
@@ -1258,6 +1357,30 @@ public class Frames extends javax.swing.JFrame {
     jouerPanel.setVisible(true);
   }
 
+  private void menuPlateauActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    menuInGame.setVisible(true);
+    plateauJeu.setFocusable(false);
+}  
+
+private void sauvgarderInGameActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+  menuInGame.setVisible(false);
+}                                                
+
+private void reglesInGameActionPerformed(java.awt.event.ActionEvent evt) {                                             
+  menuInGame.setVisible(false);
+  plateauJeu.setVisible(false);
+  regles.setVisible(true);
+}                                            
+
+private void retourInGameActionPerformed(java.awt.event.ActionEvent evt) {                                             
+  menuInGame.setVisible(false);
+  plateauJeu.setFocusable(true);
+}                                            
+
+private void retourMenuInGameActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+  menuPrincipale();
+}                                       
+
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
   private javax.swing.JButton ajouterJoueur;
@@ -1282,27 +1405,33 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JLabel joueurs;
   private javax.swing.JButton lancerLaPartie;
   private javax.swing.JButton menuCredits;
+  private javax.swing.JPanel menuInGame;
   private javax.swing.JButton menuOptions;
+  private javax.swing.JButton menuPlateau;
   public javax.swing.JPanel menuPrincipale;
   private javax.swing.JButton menuRegles;
   private javax.swing.JPanel newGame;
   private javax.swing.JButton nouvellePartie;
-  private AffichePlateau plateauJeu;
   public javax.swing.JPanel options;
+  public AffichePlateau plateauJeu;
   private javax.swing.JTextField pseudo;
   private javax.swing.JLabel pseudoLabel;
   private javax.swing.JButton quitter;
   public javax.swing.JOptionPane quitterOptionPane;
   public javax.swing.JPanel regles;
+  private javax.swing.JButton reglesInGame;
   private javax.swing.JTextPane reglesPane;
   private javax.swing.JScrollPane reglesScrollPane;
   private javax.swing.JButton retourCredits;
+  private javax.swing.JButton retourInGame;
+  private javax.swing.JButton retourMenuInGame;
   private javax.swing.JButton retourOptions;
   private javax.swing.JButton retourParametre;
   private javax.swing.JButton retourParties;
   private javax.swing.JButton retourRegles;
   private javax.swing.JScrollPane sauvegardeScroll;
   private javax.swing.JTable sauvegardeTable;
+  private javax.swing.JButton sauvgarderInGame;
   private javax.swing.JButton supprimerJ1;
   private javax.swing.JButton supprimerJ2;
   private javax.swing.JButton supprimerJ3;
