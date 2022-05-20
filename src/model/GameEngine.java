@@ -104,6 +104,9 @@ public class GameEngine {
           currentTile.placed();
           currentTile.x = x - start.x;
           currentTile.y = y - start.y;
+          if (players.get(playerTurn).nbMeeplesRestant() == 0) {
+            endOfTurn();
+          }
           return true;
         }
         return false;
@@ -302,12 +305,12 @@ public class GameEngine {
       int index = 0;
       while (it.hasNext()) {
         Meeple m = it.next();
-        if (meepleOnProject(project, m)) {
-          ownersValue[m.player] += 1;
-          players.get(m.player).meepleRecovery();
-          meeplesOnSet.remove(index);
-          ++index;
-        }
+        // if (meepleOnProject(project, m)) {
+        //   ownersValue[m.player] += 1;
+        //   players.get(m.player).meepleRecovery();
+        //   meeplesOnSet.remove(index);
+        //   ++index;
+        // }
       }
 
       int owner = 0, ownerValue = 0;

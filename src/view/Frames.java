@@ -59,13 +59,9 @@ public class Frames extends javax.swing.JFrame {
 
   private void setupBoutons() {
     // menuPanel
-
     // optionsPanel
-
     // reglesPanel
-
     // creditsPanel
-
   }
 
   void loadFont() {
