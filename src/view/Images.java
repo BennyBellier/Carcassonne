@@ -9,11 +9,9 @@ import javax.imageio.ImageIO;
 import global.Configuration;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.nio.file.Path;
 
 /**
  *
@@ -27,8 +25,9 @@ public class Images {
   public Images() {
     try {
       loadTiles();
-      blason = ImageIO.read(new File("assets/Images/blason.png"));
-      meeplePossibility = ImageIO.read(new File("assets/Images/meeple.png"));
+      blason = ImageIO.read(Configuration.charge("Images/blason.png"));
+      meeplePossibility = ImageIO.read(
+          Configuration.charge("Images/meeple.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -47,10 +46,11 @@ public class Images {
     for (int i = 0; i <= 18; i++) {
       j = 1;
       try {
-        list.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + ".png")));
+        list.get(i).add(ImageIO.read(Configuration.charge("Images/tiles/" + i + ".png")));
         while (j < 4) {
-          if (Files.exists(Path.of("assets/Images/tiles/" + i + "-" + j + ".png")))
-          list.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + "-" + j + ".png")));
+          InputStream in;
+          if ((in = Configuration.charge("Images/tiles/" + i + "-" + j + ".png")) != null)
+            list.get(i).add(ImageIO.read(in));
           ++j;
         }
       } catch (IOException e) {
