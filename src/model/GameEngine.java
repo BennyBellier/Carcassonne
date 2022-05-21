@@ -8,6 +8,7 @@ import java.awt.Point;
 import global.Configuration;
 import model.Player.Type;
 import model.Projects.Project;
+import model.Projects.ProjectRoad;
 
 public class GameEngine {
   private GameSet gameSet;
@@ -104,6 +105,7 @@ public class GameEngine {
           currentTile.placed();
           currentTile.x = x - start.x;
           currentTile.y = y - start.y;
+
           if (players.get(playerTurn).nbMeeplesRestant() == 0) {
             endOfTurn();
           }
@@ -201,22 +203,290 @@ public class GameEngine {
     Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
+  Project.Type projectOf(Meeple m) {
+    return gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y,
+        m.getCardinal());
+  }
+
+  /**
+   ** Retourne vraie si et seulement si le le meeple (x, y, card) peut être posé dans la ville
+   * @param x
+   * @param y
+   * @param card
+   * @param start
+   * @return
+   */
+  boolean allowMeepleInCity(int x, int y, String card, Point start) {
+    Tile t;
+    boolean allowed = true;
+    for (Meeple m2 : meeplesOnSet) { // boucle sur tout les meeples sur le plateau
+      if (!allowed)
+        break;
+      if (projectOf(m2) != Project.Type.CITY) // SI pas de type CITY alors break
+        break;
+      if ((t = gameSet.getTileFromCoord(m2.getX() + start.x, m2.getY() + start.y)) == null) // si tuile null alors break
+        break;
+
+      if (gameSet.getTileFromCoord(x + start.x, y + start.y).cityEnder()) {
+        switch (card) {
+          case "n":
+            if (!(x == m2.getX()) && !(y - 1 == m2.getY()))
+              break;
+            if (t.cityEnder() && m2.getCardinal().equals("s"))
+              allowed = false;
+            else if (!t.cityEnder())
+              allowed = false;
+            break;
+          case "s":
+            if (!(x == m2.getX()) && !(y + 1 == m2.getY()))
+              break;
+            if (t.cityEnder() && m2.getCardinal().equals("n"))
+              allowed = false;
+            else if (!t.cityEnder())
+              allowed = false;
+            break;
+          case "e":
+            if (!(x + 1 == m2.getX()) && !(y == m2.getY()))
+              break;
+            if (t.cityEnder() && m2.getCardinal().equals("w"))
+              allowed = false;
+            else if (!t.cityEnder())
+              allowed = false;
+            break;
+          case "w":
+            if (!(x - 1 == m2.getX()) && !(y == m2.getY()))
+              break;
+            if (t.cityEnder() && m2.getCardinal().equals("e"))
+              allowed = false;
+            else if (!t.cityEnder())
+              allowed = false;
+            break;
+
+          default:
+            break;
+        }
+      } else {
+        // test coté est
+        if (x + 1 == m2.getX() && y == m2.getY()) {
+          if (t.cityEnder() && m2.getCardinal().equals("w"))
+            allowed = false;
+          else if (!t.cityEnder())
+            allowed = false;
+        }
+        // test côté ouest
+        if (x - 1 == m2.getX() && y == m2.getY()) {
+          if (t.cityEnder() && m2.getCardinal().equals("e"))
+            allowed = false;
+          else if (!t.cityEnder())
+            allowed = false;
+        }
+        // test côté nord
+        if (x == m2.getX() && y + 1 == m2.getY()) {
+          if (t.cityEnder() && m2.getCardinal().equals("s"))
+            allowed = false;
+          else if (!t.cityEnder())
+            allowed = false;
+        }
+        // test côté sud
+        if (x == m2.getX() && y - 1 == m2.getY()) {
+          if (t.cityEnder() && m2.getCardinal().equals("n"))
+            allowed = false;
+          else if (!t.cityEnder())
+            allowed = false;
+        }
+      }
+    }
+    return allowed;
+  }
+/**
+ ** Retourne vraie si il n'y as pas de meeple déjà présent sur la route (x, y, card)
+ * @param x
+ * @param y
+ * @param card
+ * @return
+ */
+  boolean detectMeepleOnRoad(int x, int y, String card) {
+    for (Meeple m : meeplesOnSet) {
+      if (x == m.getX() && y == m.getY() && Project.Type.ROAD == projectOf(m)) {
+        if (ProjectRoad.isEnder(gameSet.getTileFromCoord(x, y)) && card == m.getCardinal())
+          return true;
+        else
+          return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   ** Vérifie si sur le route il n'y as pas déjà un meeple
+   * Fonction récursive
+   * @param visited
+   * @param x
+   * @param y
+   * @param card
+   * @return
+   */
+  boolean checkMeepleOnRoad(List<Tile> visited, int x, int y, String card) {
+    if (detectMeepleOnRoad(x, y, card))
+      return true;
+    Tile t = gameSet.getTileFromCoord(x, y);
+    if (t != null && !visited.contains(t)) {
+      visited.add(t);
+      if (ProjectRoad.isEnder(t) && visited.size() == 1) {
+        switch (card) {
+          case "n":
+            return checkMeepleOnRoad(visited, x, y - 1, "s");
+          case "s":
+            return checkMeepleOnRoad(visited, x, y + 1, "n");
+          case "e":
+            return checkMeepleOnRoad(visited, x + 1, y, "w");
+          case "w":
+            return checkMeepleOnRoad(visited, x - 1, y, "e");
+        }
+      } else if (!(ProjectRoad.isEnder(t))) {
+        boolean res = false;
+        switch (card) {
+          case "c":
+            if (t.north() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y - 1, "s");
+            }
+            if (t.east() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x + 1, y, "w");
+            }
+            if (t.south() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y + 1, "n");
+            }
+            if (t.west() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x - 1, y, "e");
+            }
+          case "n":
+            res = checkMeepleOnRoad(visited, x, y - 1, "s");
+            if (!res && t.east() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x + 1, y, "w");
+            }
+            if (!res && t.south() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y + 1, "n");
+            }
+            if (!res && t.west() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x - 1, y, "e");
+            }
+            break;
+          case "s":
+            res = checkMeepleOnRoad(visited, x, y + 1, "n");
+            if (!res && t.north() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y - 1, "s");
+            }
+            if (!res && t.east() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x + 1, y, "w");
+            }
+            if (!res && t.west() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x - 1, y, "e");
+            }
+            break;
+          case "e":
+            res = checkMeepleOnRoad(visited, x + 1, y, "w");
+            if (!res && t.north() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y - 1, "s");
+            }
+            if (!res && t.south() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y + 1, "n");
+            }
+            if (!res && t.west() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x - 1, y, "e");
+            }
+            break;
+          case "w":
+            res = checkMeepleOnRoad(visited, x - 1, y, "e");
+            if (!res && t.north() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y - 1, "s");
+            }
+            if (!res && t.east() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x + 1, y, "w");
+            }
+            if (!res && t.south() == Tile.Type.ROAD) {
+              res = checkMeepleOnRoad(visited, x, y + 1, "n");
+            }
+            break;
+          default:
+            break;
+        }
+        return res;
+      }
+    }
+    return false;
+  }
+
+  /**
+   ** Retourne vraie si le meeple peut être posé
+   * @param m
+   * @return
+   */
+  boolean meeplePlacementAllowed(Meeple m) {
+    // if (meeplesOnSet.size() == 0)
+    // return true;
+    Point start = gameSet.getStartTilePoint();
+    Project.Type p1 = gameSet.getProjectType(m.getX() + start.x, m.getY() + start.y, m.getCardinal());
+    switch (p1) {
+      case CITY:
+        return allowMeepleInCity(m.getX(), m.getY(), m.getCardinal(), start);
+
+      // case ROAD:
+      // List<Tile> visited = new ArrayList<>();
+      // return !checkMeepleOnRoad(visited, m.getX() + start.x, m.getY() + start.y,
+      // m.getCardinal());
+
+      default:
+        return true;
+    }
+  }
+
+  /**
+   ** Retourne la liste des possitions possibles du meeple sur la tuile courante
+   * @return
+   */
+  public List<String> getMeeplePositions() {
+    List<String> res = new ArrayList<>();
+    if (players.get(playerTurn).nbMeeplesRestant() > 0) { // vérification si le joueurs à des meeples disponibles
+
+      for (String pos : currentTile.tile.getMeeplesPosition()) {
+        switch (currentTile.tile.getCardinalType(pos)) {
+          case CITY:
+            Point start = gameSet.getStartTilePoint();
+            if (allowMeepleInCity(currentTile.x, currentTile.y, pos, start))
+              res.add(pos);
+            break;
+
+          case ROAD:
+          default:
+            res.add(pos);
+            break;
+        }
+      }
+    }
+    return res;
+  }
+
   /**
    ** Place un meeple (si possible) du joueur dont c'est le tour
    *
    * @param m meeple définie à placer
    * @return vraie si le placement à eu lieu
    */
-  public boolean placeMeeple(Meeple m) {
+  boolean placeMeeple(Meeple m) {
     for (Meeple meep : meeplesOnSet) {
       if (m.equal(meep))
         return false;
     }
 
+    if (!meeplePlacementAllowed(m)) {
+      return false;
+    }
+
     if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
       players.get(playerTurn).meepleUse();
       meeplesOnSet.add(m);
-      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
+      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
+          + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
       return true;
     }
 
@@ -276,11 +546,13 @@ public class GameEngine {
   }
 
   boolean equalType(Project p, Meeple m) {
-    return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
+    return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x,
+        m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
   }
 
   boolean meepleOnProjectTile(Project p, Meeple m) {
-    return p.graph().hasNode(gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
+    return p.graph().hasNode(
+        gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
   }
 
   boolean meepleOnProject(Project p, Meeple m) {
@@ -306,10 +578,10 @@ public class GameEngine {
       while (it.hasNext()) {
         Meeple m = it.next();
         // if (meepleOnProject(project, m)) {
-        //   ownersValue[m.player] += 1;
-        //   players.get(m.player).meepleRecovery();
-        //   meeplesOnSet.remove(index);
-        //   ++index;
+        // ownersValue[m.player] += 1;
+        // players.get(m.player).meepleRecovery();
+        // meeplesOnSet.remove(index);
+        // ++index;
         // }
       }
 

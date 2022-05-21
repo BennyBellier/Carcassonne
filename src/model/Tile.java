@@ -203,6 +203,23 @@ public class Tile {
     isStart = true;
   }
 
+  public Type getCardinalType(String card) {
+    switch (card) {
+      case "c":
+        return center();
+      case "n":
+        return north();
+      case "s":
+        return south();
+      case "e":
+        return east();
+      case "w":
+        return west();
+      default:
+        return null;
+    }
+  }
+
   /**
    ** Retourne la lsite des cardinaux de la tuile ou l'on peut poser un meeple
    *

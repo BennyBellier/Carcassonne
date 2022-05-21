@@ -42,7 +42,7 @@ public class Frames extends javax.swing.JFrame {
     setIcon();
     loadFont();
     imgs = new Images();
-    // basculeEnPleineEcran();
+    basculeEnPleineEcran();
     initComponents();
     setupBoutons();
     setupPanel();

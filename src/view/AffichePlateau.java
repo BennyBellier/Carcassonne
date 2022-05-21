@@ -129,7 +129,7 @@ public class AffichePlateau extends JComponent {
 
   void meeplePlacementPaint() {
     int meepleSize = tileSize / 8;
-    for (String card : currentTile.tile.getMeeplesPosition()) {
+    for (String card : gm.getMeeplePositions()) {
       int meepleX = startX, meepleY = startY;
       switch (card) {
         case "c":

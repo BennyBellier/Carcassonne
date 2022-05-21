@@ -12,8 +12,7 @@ public class Background extends JComponent {
 
   public Background() {
     try {
-      //currentbackground = ImageIO.read(Configuration.charge("Images/background2.png"));
-      menu = ImageIO.read(Configuration.charge("Images/background2.png"));
+      menu = ImageIO.read(Configuration.charge("Images/BackgroundTitle.jpg"));
       credits = ImageIO.read(Configuration.charge("Images/Credits.jpg"));
       jouer = ImageIO.read(Configuration.charge("Images/Jouer.jpg"));
       nouvellePartie = ImageIO.read(Configuration.charge("Images/NouvellePartie.jpg"));
