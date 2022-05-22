@@ -381,6 +381,13 @@ public class GameSet {
     return tiles[x][y];
   }
 
+  /**
+   ** Retourne le type à la position (x, y card)
+   * @param x
+   * @param y
+   * @param card
+   * @return Tile.Type
+   */
   public Tile.Type getCardType(int x, int y, String card) {
     Tile t = getTileFromCoord(x, y);
     return t.getCardinalType(card);

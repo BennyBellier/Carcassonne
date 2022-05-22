@@ -190,7 +190,7 @@ public class Tile {
 
   /**
    ** Retourne vraie si la tuile ne contient qu'un ou plusieurs côté non relié
-   * fermant la ville
+   ** fermant la ville
    *
    * @return boolean
    */
@@ -198,6 +198,10 @@ public class Tile {
     return cityEnder;
   }
 
+  /**
+   ** Retourne vraie si la tuile termine une route
+   * @return boolean
+   */
   public boolean roadEnder() {
     return roadEnder;
   }
