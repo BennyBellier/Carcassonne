@@ -213,7 +213,6 @@ public class AffichePlateau extends JComponent {
           drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
         }
       } else {
-        if (players.get(gm.getPlayerTurn()).nbMeeplesRestant() > 0)
           meeplePlacementPaint();
       }
 

@@ -8,7 +8,6 @@ import java.awt.Point;
 import global.Configuration;
 import model.Player.Type;
 import model.Projects.Project;
-import model.Projects.ProjectRoad;
 
 public class GameEngine {
   private GameSet gameSet;
@@ -31,6 +30,13 @@ public class GameEngine {
       players.add(p);
     }
     Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
+  }
+
+  public boolean isGameRunning() {
+    if (pioche != null)
+      return pioche.size() != 0;
+    else
+      return true;
   }
 
   /**
@@ -102,11 +108,11 @@ public class GameEngine {
       if (!currentTile.placed) {
         Point start = gameSet.getStartTilePoint();
         if (gameSet.addTile(currentTile.tile, x - start.x, y - start.y)) {
-          currentTile.placed();
           currentTile.x = x - start.x;
           currentTile.y = y - start.y;
+          currentTile.placed();
 
-          if (players.get(playerTurn).nbMeeplesRestant() == 0) {
+          if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
             endOfTurn();
           }
           return true;
@@ -203,237 +209,187 @@ public class GameEngine {
     Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
-  Project.Type projectOf(Meeple m) {
-    return gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y,
+  Tile.Type projectOf(Meeple m) {
+    return gameSet.getCardType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y,
         m.getCardinal());
   }
 
   /**
-   ** Retourne vraie si et seulement si le le meeple (x, y, card) peut être posé dans la ville
+   ** Retourne vraie si et seulement si le le meeple (x, y, card) peut être posé
+   * dans la ville
+   *
    * @param x
    * @param y
    * @param card
    * @param start
    * @return
    */
-  boolean allowMeepleInCity(int x, int y, String card, Point start) {
+  boolean allowMeepleInCity(List<Tile> visited, int x, int y, String card, Tile.Type type,  Point start) {
     Tile t;
-    boolean allowed = true;
-    for (Meeple m2 : meeplesOnSet) { // boucle sur tout les meeples sur le plateau
-      if (!allowed)
-        break;
-      if (projectOf(m2) != Project.Type.CITY) // SI pas de type CITY alors break
-        break;
-      if ((t = gameSet.getTileFromCoord(m2.getX() + start.x, m2.getY() + start.y)) == null) // si tuile null alors break
-        break;
+    boolean ender = false;
+    StringBuilder str = new StringBuilder();
 
-      if (gameSet.getTileFromCoord(x + start.x, y + start.y).cityEnder()) {
+    str.append("Évaluation de la tuile (" + x + ", " + y + ") -> " + card + ", type = " + type.toString() +"\n");
+
+    if ((t = gameSet.getTileFromCoord(y + start.y, x + start.x)) == null) {
+      str.append("\tLa tuile est null \n");
+      System.out.println(str.toString());
+      return true;
+    }
+
+    if (t.getCardinalType(card) != type)
+      return true;
+
+    if (!visited.contains(t)) {
+      visited.add(t);
+
+      if (isMeepleInCity(x, y, card, ender, type, start)) {
+        str.append("\tLa tuile contient déjà un meeple qui empêche le placement" + "\n");
+        System.out.println(str.toString());
+        return false;
+      }
+
+      if (type == Tile.Type.CITY)
+        ender = t.cityEnder();
+      if (type == Tile.Type.ROAD)
+        ender = t.roadEnder();
+
+      System.out.println(type.toString() + " -> " + ender);
+
+      if (ender) {
+        str.append("\tLa tuile est une fin de " + type.toString() + "\n");
         switch (card) {
           case "n":
-            if (!(x == m2.getX()) && !(y - 1 == m2.getY()))
-              break;
-            if (t.cityEnder() && m2.getCardinal().equals("s"))
-              allowed = false;
-            else if (!t.cityEnder())
-              allowed = false;
-            break;
+            str.append("\t Évaluation sur la cardinalité nord" + "\n");
+            if (t.north() == type && allowMeepleInCity(visited, x, y - 1, "s", type, start)) {
+              str.append("\tLa tuile (" + x + ", " + y + ") permet de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile (" + x + ", " + (y - 1) + ") ne permet pas de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return false;
+            }
           case "s":
-            if (!(x == m2.getX()) && !(y + 1 == m2.getY()))
-              break;
-            if (t.cityEnder() && m2.getCardinal().equals("n"))
-              allowed = false;
-            else if (!t.cityEnder())
-              allowed = false;
-            break;
+            str.append("\t Évaluation sur la cardinalité sud" + "\n");
+            if (t.south() == type && allowMeepleInCity(visited, x, y + 1, "n", type, start)) {
+              str.append("\tLa tuile (" + x + ", " + (y + 1) + ") permet de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile (" + x + ", " + y + ") ne permet pas de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return false;
+            }
           case "e":
-            if (!(x + 1 == m2.getX()) && !(y == m2.getY()))
-              break;
-            if (t.cityEnder() && m2.getCardinal().equals("w"))
-              allowed = false;
-            else if (!t.cityEnder())
-              allowed = false;
-            break;
+            str.append("\t Évaluation sur la cardinalité est" + "\n");
+            if (t.east() == type && allowMeepleInCity(visited, x + 1, y, "w", type, start)) {
+              str.append("\tLa tuile (" + (x + 1) + ", " + y + ") permet de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile (" + x + ", " + y + ") ne permet pas de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return false;
+            }
           case "w":
-            if (!(x - 1 == m2.getX()) && !(y == m2.getY()))
-              break;
-            if (t.cityEnder() && m2.getCardinal().equals("e"))
-              allowed = false;
-            else if (!t.cityEnder())
-              allowed = false;
-            break;
-
-          default:
-            break;
+            str.append("\t Évaluation sur la cardinalité ouest" + "\n");
+            if (t.west() == type && allowMeepleInCity(visited, x - 1, y, "e", type, start)) {
+              str.append("\tLa tuile (" + (x - 1) + ", " + y + ") permet de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile (" + x + ", " + y + ") ne permet pas de poser un meeple" + "\n");
+              System.out.println(str.toString());
+              return false;
+            }
         }
       } else {
-        // test coté est
-        if (x + 1 == m2.getX() && y == m2.getY()) {
-          if (t.cityEnder() && m2.getCardinal().equals("w"))
-            allowed = false;
-          else if (!t.cityEnder())
-            allowed = false;
+        str.append("\tLa tuile n'est pas une fin de " + type.toString() + "\n");
+        boolean n = true, s = true, e = true, w = true;
+        if (t.north() == type) {
+          str.append("\tÉvaluation de la cardinalité nod" + "\n");
+          if (t.north() == type)
+            n = allowMeepleInCity(visited, x, y - 1, "s", type, start);
         }
-        // test côté ouest
-        if (x - 1 == m2.getX() && y == m2.getY()) {
-          if (t.cityEnder() && m2.getCardinal().equals("e"))
-            allowed = false;
-          else if (!t.cityEnder())
-            allowed = false;
+        if (t.south() == type) {
+          str.append("\tÉvaluation de la cardinalité sud" + "\n");
+          if (t.south() == type)
+            s = allowMeepleInCity(visited, x, y + 1, "n", type, start);
         }
-        // test côté nord
-        if (x == m2.getX() && y + 1 == m2.getY()) {
-          if (t.cityEnder() && m2.getCardinal().equals("s"))
-            allowed = false;
-          else if (!t.cityEnder())
-            allowed = false;
+        if (t.east() == type) {
+          str.append("\tÉvaluation de la cardinalité est" + "\n");
+          if (t.east() == type)
+            e = allowMeepleInCity(visited, x + 1, y, "w", type, start);
         }
-        // test côté sud
-        if (x == m2.getX() && y - 1 == m2.getY()) {
-          if (t.cityEnder() && m2.getCardinal().equals("n"))
-            allowed = false;
-          else if (!t.cityEnder())
-            allowed = false;
+        if (t.west() == type) {
+          str.append("\tÉvaluation de la cardinalité ouest" + "\n");
+          if (t.west() == type)
+            w = allowMeepleInCity(visited, x - 1, y, "e", type, start);
         }
+        str.append("\tRésultat de la tuile (" + x + ", " + y + ") -> " + card + " : nord = " + n + ", sud = " + s + ", est = " + e + ", ouest = " + w + "\n");
+        System.out.println(str.toString());
+        return (n && s && e && w);
       }
     }
-    return allowed;
-  }
-/**
- ** Retourne vraie si il n'y as pas de meeple déjà présent sur la route (x, y, card)
- * @param x
- * @param y
- * @param card
- * @return
- */
-  boolean detectMeepleOnRoad(int x, int y, String card) {
-    for (Meeple m : meeplesOnSet) {
-      if (x == m.getX() && y == m.getY() && Project.Type.ROAD == projectOf(m)) {
-        if (ProjectRoad.isEnder(gameSet.getTileFromCoord(x, y)) && card == m.getCardinal())
-          return true;
-        else
-          return true;
-      }
-    }
-    return false;
+    System.out.println(str.toString());
+    return !isMeepleInCity(x, y, card, ender, type, start);
   }
 
   /**
-   ** Vérifie si sur le route il n'y as pas déjà un meeple
-   * Fonction récursive
-   * @param visited
+   ** Retourne vraie si un des meeples sur le plateau est sur une tuile de la ville
+   * qui viens d'être étandue
+   *
    * @param x
    * @param y
    * @param card
+   * @param cityEnder
+   * @param start
    * @return
    */
-  boolean checkMeepleOnRoad(List<Tile> visited, int x, int y, String card) {
-    if (detectMeepleOnRoad(x, y, card))
+  boolean isMeepleInCity(int x, int y, String card, boolean ender, Tile.Type type, Point start) {
+    if (gameSet.getTileFromCoord(y + start.y, x + start.x) == null)
       return true;
-    Tile t = gameSet.getTileFromCoord(x, y);
-    if (t != null && !visited.contains(t)) {
-      visited.add(t);
-      if (ProjectRoad.isEnder(t) && visited.size() == 1) {
-        switch (card) {
-          case "n":
-            return checkMeepleOnRoad(visited, x, y - 1, "s");
-          case "s":
-            return checkMeepleOnRoad(visited, x, y + 1, "n");
-          case "e":
-            return checkMeepleOnRoad(visited, x + 1, y, "w");
-          case "w":
-            return checkMeepleOnRoad(visited, x - 1, y, "e");
-        }
-      } else if (!(ProjectRoad.isEnder(t))) {
-        boolean res = false;
-        switch (card) {
-          case "c":
-            if (t.north() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y - 1, "s");
-            }
-            if (t.east() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x + 1, y, "w");
-            }
-            if (t.south() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y + 1, "n");
-            }
-            if (t.west() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x - 1, y, "e");
-            }
-          case "n":
-            res = checkMeepleOnRoad(visited, x, y - 1, "s");
-            if (!res && t.east() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x + 1, y, "w");
-            }
-            if (!res && t.south() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y + 1, "n");
-            }
-            if (!res && t.west() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x - 1, y, "e");
-            }
-            break;
-          case "s":
-            res = checkMeepleOnRoad(visited, x, y + 1, "n");
-            if (!res && t.north() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y - 1, "s");
-            }
-            if (!res && t.east() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x + 1, y, "w");
-            }
-            if (!res && t.west() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x - 1, y, "e");
-            }
-            break;
-          case "e":
-            res = checkMeepleOnRoad(visited, x + 1, y, "w");
-            if (!res && t.north() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y - 1, "s");
-            }
-            if (!res && t.south() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y + 1, "n");
-            }
-            if (!res && t.west() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x - 1, y, "e");
-            }
-            break;
-          case "w":
-            res = checkMeepleOnRoad(visited, x - 1, y, "e");
-            if (!res && t.north() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y - 1, "s");
-            }
-            if (!res && t.east() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x + 1, y, "w");
-            }
-            if (!res && t.south() == Tile.Type.ROAD) {
-              res = checkMeepleOnRoad(visited, x, y + 1, "n");
-            }
-            break;
-          default:
-            break;
-        }
-        return res;
+
+    System.out.println("(" + x + ", " + y + ", " + card + ") end = " + ender + ", type = " + type );
+
+    for (Meeple m : meeplesOnSet) {
+        if (x == m.getY() && y == m.getX()) {
+          System.out.println(m.toString());
+          if (!ender) {
+            if (projectOf(m) == type)
+              return true;
+            else
+              return false;
+          }
+          else if (m.getCardinal() == card)
+            return true;
       }
     }
     return false;
   }
 
+
+
   /**
    ** Retourne vraie si le meeple peut être posé
+   *
    * @param m
    * @return
    */
   boolean meeplePlacementAllowed(Meeple m) {
-    // if (meeplesOnSet.size() == 0)
-    // return true;
+    if (meeplesOnSet.size() == 0)
+      return true;
+
     Point start = gameSet.getStartTilePoint();
     Project.Type p1 = gameSet.getProjectType(m.getX() + start.x, m.getY() + start.y, m.getCardinal());
+
     switch (p1) {
       case CITY:
-        return allowMeepleInCity(m.getX(), m.getY(), m.getCardinal(), start);
+        return allowMeepleInCity(new ArrayList<>(), m.getY(), m.getX(), m.getCardinal(), Tile.Type.CITY, start);
 
-      // case ROAD:
-      // List<Tile> visited = new ArrayList<>();
-      // return !checkMeepleOnRoad(visited, m.getX() + start.x, m.getY() + start.y,
-      // m.getCardinal());
+      case ROAD:
+        return allowMeepleInCity(new ArrayList<>(), m.getY(), m.getX(), m.getCardinal(), Tile.Type.ROAD, start);
 
       default:
         return true;
@@ -441,22 +397,33 @@ public class GameEngine {
   }
 
   /**
-   ** Retourne la liste des possitions possibles du meeple sur la tuile courante
+   ** Retourne la liste des positions possibles du meeple sur la tuile courante
+   *
    * @return
    */
   public List<String> getMeeplePositions() {
     List<String> res = new ArrayList<>();
+    if (meeplesOnSet.size() == 0) {
+      res.addAll(currentTile.tile.getMeeplesPosition());
+      return res;
+    }
     if (players.get(playerTurn).nbMeeplesRestant() > 0) { // vérification si le joueurs à des meeples disponibles
+
+      Point start = gameSet.getStartTilePoint();
 
       for (String pos : currentTile.tile.getMeeplesPosition()) {
         switch (currentTile.tile.getCardinalType(pos)) {
           case CITY:
-            Point start = gameSet.getStartTilePoint();
-            if (allowMeepleInCity(currentTile.x, currentTile.y, pos, start))
+
+            if (allowMeepleInCity(new ArrayList<>(), currentTile.x, currentTile.y, pos, Tile.Type.CITY, start))
               res.add(pos);
             break;
 
           case ROAD:
+            if (allowMeepleInCity(new ArrayList<>(), currentTile.x, currentTile.y, pos, Tile.Type.ROAD, start))
+              res.add(pos);
+            break;
+
           default:
             res.add(pos);
             break;
@@ -494,8 +461,8 @@ public class GameEngine {
   }
 
   /**
-   ** Place une tuile sur le plateau à al position (x, y), retourne vraie si
-   * possible, faux sinon
+   ** Place une tuile sur le plateau à la position (x, y), retourne vraie si
+   ** possible, faux sinon
    *
    * @param x int position x de la tuile à placer
    * @param y int position y de la tuile à placer

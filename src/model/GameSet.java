@@ -117,7 +117,7 @@ public class GameSet {
 
   /**
    ** Retourne vraie si la tuile de position (x, y) du plateau a été enlevé
-   * 
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @return boolean vraie si la tuile a été enlevé, faux sinon
@@ -379,6 +379,11 @@ public class GameSet {
    */
   public Tile getTileFromCoord(int x, int y) {
     return tiles[x][y];
+  }
+
+  public Tile.Type getCardType(int x, int y, String card) {
+    Tile t = getTileFromCoord(x, y);
+    return t.getCardinalType(card);
   }
 
   /**
