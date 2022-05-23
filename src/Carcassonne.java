@@ -70,7 +70,7 @@ public class Carcassonne {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
     System.out.println(System.getProperty("user.home"));
-    // window();
-    startGame();
+    window();
+    //startGame();
   }
 }
