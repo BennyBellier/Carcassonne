@@ -21,7 +21,7 @@ import java.nio.file.Path;
  */
 public class Images {
 
-  Image blason, meeplePossibility;
+  Image blason, meeplePossibility , plateauInGame , croix , menu;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
 
   public Images() {
@@ -29,10 +29,21 @@ public class Images {
       loadTiles();
       blason = ImageIO.read(new File("assets/Images/blason.png"));
       meeplePossibility = ImageIO.read(new File("assets/Images/meeple.png"));
+      plateauInGame = ImageIO.read(new File("assets/Images/bois.jpg"));
+      croix = ImageIO.read(new File("assets/Images/skip.png"));
+      menu = ImageIO.read(new File("assets/Images/icon_menu.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
     }
+  }
+
+  public Image croix(){
+    return croix;
+  }
+
+  public Image menu(){
+    return menu;
   }
 
   /**

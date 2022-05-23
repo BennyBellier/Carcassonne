@@ -64,6 +64,11 @@ public class Background extends JComponent {
     repaint();
   }
 
+  public void affichageMenuBoutons() {
+    currentbackground = plateauInGame;
+    repaint();
+  }
+
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D drawable = (Graphics2D) g;
