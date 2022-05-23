@@ -5,9 +5,12 @@ import global.Configuration;
 import model.GameEngine;
 import model.Player;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -29,11 +32,14 @@ public class Frames extends javax.swing.JFrame {
   private String textField;
   ArrayList<Player> players = new ArrayList<>();
   Keybord keyboard = new Keybord();
+  Font uniFont;
 
   /**
    * Creates new form Frames
    */
   public Frames() {
+    setIcon();
+    loadFont();
     imgs = new Images();
     initComponents();
     setupBoutons();
@@ -42,15 +48,28 @@ public class Frames extends javax.swing.JFrame {
     basculeEnPleineEcran();
   }
 
+  void setIcon() {
+    try {
+      setIconImage(ImageIO.read(Configuration.charge("Images/logo.png")));
+    } catch(IOException e) {
+      Configuration.instance().logger().severe("Impossible de charger l'icon");
+    }
+  }
+
   private void setupBoutons() {
     // menuPanel
-
     // optionsPanel
-
     // reglesPanel
-
     // creditsPanel
+  }
 
+  void loadFont() {
+    try {
+      InputStream is = Configuration.charge("OldLondon.ttf");
+      uniFont = Font.createFont(Font.TRUETYPE_FONT, is);
+    } catch (Exception e) {
+      Configuration.instance().logger().severe("Impossible de charger la police de caractères");
+    }
   }
 
   private void setupPanel() {
@@ -420,7 +439,7 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipale.setPreferredSize(new java.awt.Dimension(1920, 1080));
     menuPrincipale.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jouer.setFont(new java.awt.Font("Old London Alternate", 0, 34)); // NOI18N
+    jouer.setFont(uniFont.deriveFont((float) 34)); // NOI18N
     jouer.setText("Jouer");
     jouer.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,12 +448,13 @@ public class Frames extends javax.swing.JFrame {
     });
     menuPrincipale.add(jouer, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 450, 300, 50));
 
-    version.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+    version.setFont(uniFont.deriveFont((float) 16)); // NOI18N
+    version.setForeground(new java.awt.Color(0xffffff));
     version.setText(Configuration.instance().lis("Version"));
     version.setForeground(new java.awt.Color(255, 255, 255));
     menuPrincipale.add(version, new org.netbeans.lib.awtextra.AbsoluteConstraints(1761, 1040, 150, 30));
 
-    quitter.setFont(new java.awt.Font("Old London Alternate", 0, 26)); // NOI18N
+    quitter.setFont(uniFont.deriveFont((float) 26)); // NOI18N
     quitter.setText("Quitter");
     quitter.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,7 +463,7 @@ public class Frames extends javax.swing.JFrame {
     });
     menuPrincipale.add(quitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 750, 100, 35));
 
-    menuCredits.setFont(new java.awt.Font("Old London Alternate", 0, 28)); // NOI18N
+    menuCredits.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     menuCredits.setText("Crédits");
     menuCredits.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -452,7 +472,7 @@ public class Frames extends javax.swing.JFrame {
     });
     menuPrincipale.add(menuCredits, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 750, 104, 35));
 
-    menuOptions.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+    menuOptions.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     menuOptions.setText("Options");
     menuOptions.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,7 +481,7 @@ public class Frames extends javax.swing.JFrame {
     });
     menuPrincipale.add(menuOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 650, 300, 50));
 
-    menuRegles.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+    menuRegles.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     menuRegles.setText("Règles");
     menuRegles.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -477,11 +497,11 @@ public class Frames extends javax.swing.JFrame {
     jouerPanel.setPreferredSize(new java.awt.Dimension(1920, 1080));
     jouerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jeuEnReseaux.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+    jeuEnReseaux.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     jeuEnReseaux.setText("Jeu en réseaux");
     jouerPanel.add(jeuEnReseaux, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 590, 250, 60));
 
-    nouvellePartie.setFont(new java.awt.Font("Old London Alternate", 0, 30)); // NOI18N
+    nouvellePartie.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     nouvellePartie.setText("Nouvelle Partie");
     nouvellePartie.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1020,9 +1040,9 @@ public class Frames extends javax.swing.JFrame {
     players.remove(1);
     remplace2();
     ajouterIA.setEnabled(true);
-    if (j2.getText().isEmpty()){
+    if (j2.getText().isEmpty()) {
       lancerLaPartie.setEnabled(false);
-    } 
+    }
   }
 
   private void supprimerJ1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1033,9 +1053,9 @@ public class Frames extends javax.swing.JFrame {
     players.remove(0);
     remplace1();
     ajouterIA.setEnabled(true);
-    if (j2.getText().isEmpty()){
+    if (j2.getText().isEmpty()) {
       lancerLaPartie.setEnabled(false);
-    } 
+    }
   }
 
   private void cNoirActionPerformed(java.awt.event.ActionEvent evt) {

@@ -50,7 +50,7 @@ public class Meeple {
 
   /**
    ** Retourne le cardinal determinant la position du Meeple sur la tuile
-   * @return String type : "n", "s", "e", "o", "c"
+   * @return String type : "n", "s", "e", "w", "c"
    */
   public String getCardinal() {
     return card;

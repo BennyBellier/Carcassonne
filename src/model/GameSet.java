@@ -84,7 +84,7 @@ public class GameSet {
    */
   boolean noTilesAround(int x, int y) {
     return !(isTiles(x - 1, y) ||
-        isTiles(x + 1,y) ||
+        isTiles(x + 1, y) ||
         isTiles(x, y - 1) ||
         isTiles(x, y + 1));
   }
@@ -117,6 +117,7 @@ public class GameSet {
 
   /**
    ** Retourne vraie si la tuile de position (x, y) du plateau a été enlevé
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @return boolean vraie si la tuile a été enlevé, faux sinon
@@ -377,7 +378,19 @@ public class GameSet {
    * @return Tile
    */
   public Tile getTileFromCoord(int x, int y) {
-    return tiles[x][y].clone();
+    return tiles[x][y];
+  }
+
+  /**
+   ** Retourne le type à la position (x, y card)
+   * @param x
+   * @param y
+   * @param card
+   * @return Tile.Type
+   */
+  public Tile.Type getCardType(int x, int y, String card) {
+    Tile t = getTileFromCoord(x, y);
+    return t.getCardinalType(card);
   }
 
   /**

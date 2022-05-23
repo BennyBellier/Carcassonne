@@ -130,7 +130,7 @@ public class AffichePlateau extends JComponent {
 
   void meeplePlacementPaint() {
     int meepleSize = tileSize / 8;
-    for (String card : currentTile.tile.getMeeplesPosition()) {
+    for (String card : gm.getMeeplePositions()) {
       int meepleX = startX, meepleY = startY;
       switch (card) {
         case "c":
@@ -199,7 +199,7 @@ public class AffichePlateau extends JComponent {
       for (int i = 0; i < gm.getNbPlayer(); i++) {
         if (gm.getPlayerTurn() == i)
           g.drawString(">", 0, (int) (15 + i * (getSize().height * 0.10)));
-        drawable.setColor(gm.getListPlayers().get(i).color());
+        drawable.setColor(players.get(i).color());
         g.drawString(players.get(i).pseudo(), 10, (int) (15 + i * (getSize().height * 0.10)));
         drawable.drawString(String.valueOf(players.get(i).score()), 100, (int) (15 + i * (getSize().height * 0.10)));
         drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 80,
@@ -215,8 +215,9 @@ public class AffichePlateau extends JComponent {
           drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
         }
       } else {
-        meeplePlacementPaint();
+          meeplePlacementPaint();
       }
+
       meeplePaint();
     }
   }

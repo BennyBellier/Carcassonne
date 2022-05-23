@@ -3,6 +3,7 @@ package global;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.io.File;
@@ -16,8 +17,8 @@ import java.util.logging.*;
 public class Configuration {
   private static Configuration instance = null;
   Properties prop;
-  Path configFolder = Path.of(System.getProperty("user.home") + File.separator + ".carcassonne");
-  Path logsFolder = Path.of(configFolder.toString() + File.separator + "logs");
+  Path configFolder = Paths.get(System.getProperty("user.home") + File.separator + ".carcassonne");
+  Path logsFolder = Paths.get(configFolder.toString() + File.separator + "logs");
 
   public static InputStream charge(String name) {
     return ClassLoader.getSystemClassLoader().getResourceAsStream(name);
@@ -30,9 +31,9 @@ public class Configuration {
   private void generateConfigFolder(Path configPath) {
     try {
       Files.createDirectories(configPath);
-      Files.createDirectories(Path.of(configPath.toString() + File.separator + "logs"));
-      Files.createDirectories(Path.of(configPath.toString() + File.separator + "saves"));
-      Files.copy(Path.of("assets/default.cfg"), Path.of(configPath + "/config.cfg"),
+      Files.createDirectories(Paths.get(configPath.toString() + File.separator + "logs"));
+      Files.createDirectories(Paths.get(configPath.toString() + File.separator + "saves"));
+      Files.copy(Paths.get("assets/default.cfg"), Paths.get(configPath + "/config.cfg"),
           StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       System.err.println("Impossible de créer le dossier de configuration");
@@ -55,8 +56,8 @@ public class Configuration {
 
     // Utilisation du fichier de configuration contenue dans le dossier applications
     try {
-      if (!Files.exists(Path.of(configFolder.toString() + File.separator + "config.cfg")))
-        Files.copy(Path.of("assets/default.cfg"), Path.of(configFolder + "/config.cfg"),
+      if (!Files.exists(Paths.get(configFolder.toString() + File.separator + "config.cfg")))
+        Files.copy(Configuration.charge("default.cfg"), Paths.get(configFolder + "/config.cfg"),
             StandardCopyOption.REPLACE_EXISTING);
       FileInputStream f = new FileInputStream(configFolder.toFile() + File.separator + "config.cfg");
       prop = new Properties(prop);
@@ -66,10 +67,10 @@ public class Configuration {
       // Utilisation du fichier de configuration par défaut
       try {
         prop = new Properties(prop);
-        FileInputStream f = new FileInputStream("assets/default.cfg");
+        InputStream f = Configuration.charge("default.cfg");
         prop.load(f);
         f.close();
-        Files.copy(Path.of("default.cfg"), Path.of(configFolder.toString() + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(Configuration.charge("default.cfg"), Paths.get(configFolder.toString() + "/config.cfg"), StandardCopyOption.REPLACE_EXISTING);
       } catch (Exception e2) {
         System.err.println("Impossible de charger le fichier de configuration");
       }

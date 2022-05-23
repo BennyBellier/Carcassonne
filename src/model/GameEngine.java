@@ -32,6 +32,13 @@ public class GameEngine {
     Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
   }
 
+  public boolean isGameRunning() {
+    if (pioche != null)
+      return pioche.size() != 0;
+    else
+      return true;
+  }
+
   /**
    ** Renvoie un reset de la partie en cours
    *
@@ -101,9 +108,13 @@ public class GameEngine {
       if (!currentTile.placed) {
         Point start = gameSet.getStartTilePoint();
         if (gameSet.addTile(currentTile.tile, x - start.x, y - start.y)) {
-          currentTile.placed();
           currentTile.x = x - start.x;
           currentTile.y = y - start.y;
+          currentTile.placed();
+
+          if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
+            endOfTurn();
+          }
           return true;
         }
         return false;
@@ -199,21 +210,216 @@ public class GameEngine {
   }
 
   /**
+   ** Retourne le Tile.Type du meeple m
+   * @param m Meeple
+   * @return Tile.Type
+   */
+  Tile.Type projectOf(Meeple m) {
+    return gameSet.getCardType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y,
+        m.getCardinal());
+  }
+
+  /**
+   ** Retourne vraie si le meeple (x, y, card) peut être placé en respectant les
+   ** règles du jeu
+   *
+   * @param visited
+   * @param x
+   * @param y
+   * @param card
+   * @param type
+   * @param start
+   * @return
+   */
+  boolean allowMeeple(List<Tile> visited, int x, int y, String card, Tile.Type type, Point start) {
+    Tile t;
+    boolean ender = false;
+
+    if ((t = gameSet.getTileFromCoord(y + start.y, x + start.x)) == null) {
+      return true;
+    }
+
+    if (t.getCardinalType(card) != type)
+      return true;
+
+    if (!visited.contains(t)) {
+      visited.add(t);
+
+      if (isMeepleOnTile(x, y, card, ender, type, start)) {
+        return false;
+      }
+
+      if (type == Tile.Type.CITY)
+        ender = t.cityEnder();
+      if (type == Tile.Type.ROAD)
+        ender = t.roadEnder();
+
+      System.out.println(type.toString() + " -> " + ender);
+
+      if (ender) {
+        switch (card) {
+          case "n":
+            if (t.north() == type && allowMeeple(visited, x, y - 1, "s", type, start)) {
+              return true;
+            } else {
+              return false;
+            }
+          case "s":
+            if (t.south() == type && allowMeeple(visited, x, y + 1, "n", type, start)) {
+              return true;
+            } else {
+              return false;
+            }
+          case "e":
+            if (t.east() == type && allowMeeple(visited, x + 1, y, "w", type, start)) {
+              return true;
+            } else {
+              return false;
+            }
+          case "w":
+            if (t.west() == type && allowMeeple(visited, x - 1, y, "e", type, start)) {
+              return true;
+            } else {
+              return false;
+            }
+        }
+      } else {
+        boolean n = true, s = true, e = true, w = true;
+        if (t.north() == type) {
+          if (t.north() == type)
+            n = allowMeeple(visited, x, y - 1, "s", type, start);
+        }
+        if (t.south() == type) {
+          if (t.south() == type)
+            s = allowMeeple(visited, x, y + 1, "n", type, start);
+        }
+        if (t.east() == type) {
+          if (t.east() == type)
+            e = allowMeeple(visited, x + 1, y, "w", type, start);
+        }
+        if (t.west() == type) {
+          if (t.west() == type)
+            w = allowMeeple(visited, x - 1, y, "e", type, start);
+        }
+        return (n && s && e && w);
+      }
+    }
+    return !isMeepleOnTile(x, y, card, ender, type, start);
+  }
+
+  /**
+   ** Retourne vraie si il y a un meeple qui est placé n'importe ou sur la tuile
+   ** (x, y) ou si il est placé sur la cardinalité de la tuile (x, y, card) si
+   ** celle-ci est une fin de route ou de ville
+   *
+   * @param x
+   * @param y
+   * @param card
+   * @param ender si la tuile est de type fin de route ou ville
+   * @param type  type ville ou route
+   * @param start emplacement de la tuile de départ sur le plateau
+   * @return vraie si il y a un meeple, faus sinon
+   */
+  boolean isMeepleOnTile(int x, int y, String card, boolean ender, Tile.Type type, Point start) {
+    if (gameSet.getTileFromCoord(y + start.y, x + start.x) == null)
+      return true;
+
+    for (Meeple m : meeplesOnSet) {
+      if (x == m.getY() && y == m.getX()) {
+        System.out.println(m.toString());
+        if (!ender) {
+          if (projectOf(m) == type)
+            return true;
+          else
+            return false;
+        } else if (m.getCardinal() == card)
+          return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   ** Retourne vraie si le meeple peut être posé
+   *
+   * @param m
+   * @return
+   */
+  boolean meeplePlacementAllowed(Meeple m) {
+    if (meeplesOnSet.size() == 0)
+      return true;
+
+    Point start = gameSet.getStartTilePoint();
+    Project.Type p1 = gameSet.getProjectType(m.getX() + start.x, m.getY() + start.y, m.getCardinal());
+    switch (p1) {
+      case CITY:
+        return allowMeeple(new ArrayList<>(), m.getY(), m.getX(), m.getCardinal(), Tile.Type.CITY, start);
+
+      case ROAD:
+        return allowMeeple(new ArrayList<>(), m.getY(), m.getX(), m.getCardinal(), Tile.Type.ROAD, start);
+
+      default:
+        return true;
+    }
+  }
+
+  /**
+   ** Retourne la liste des positions possibles du meeple sur la tuile courante
+   *
+   * @return List<String>
+   */
+  public List<String> getMeeplePositions() {
+    List<String> res = new ArrayList<>();
+    if (meeplesOnSet.size() == 0) {
+      res.addAll(currentTile.tile.getMeeplesPosition());
+      return res;
+    }
+    if (players.get(playerTurn).nbMeeplesRestant() > 0) { // vérification si le joueurs à des meeples disponibles
+
+      Point start = gameSet.getStartTilePoint();
+
+      for (String pos : currentTile.tile.getMeeplesPosition()) {
+        switch (currentTile.tile.getCardinalType(pos)) {
+          case CITY:
+            if (allowMeeple(new ArrayList<>(), currentTile.x, currentTile.y, pos, Tile.Type.CITY, start))
+              res.add(pos);
+            break;
+
+          case ROAD:
+            if (allowMeeple(new ArrayList<>(), currentTile.x, currentTile.y, pos, Tile.Type.ROAD, start))
+              res.add(pos);
+            break;
+
+          default:
+            res.add(pos);
+            break;
+        }
+      }
+    }
+    return res;
+  }
+
+  /**
    ** Place un meeple (si possible) du joueur dont c'est le tour
    *
    * @param m meeple définie à placer
    * @return vraie si le placement à eu lieu
    */
-  public boolean placeMeeple(Meeple m) {
+  boolean placeMeeple(Meeple m) {
     for (Meeple meep : meeplesOnSet) {
       if (m.equal(meep))
         return false;
     }
 
+    if (!meeplePlacementAllowed(m)) {
+      return false;
+    }
+
     if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
       players.get(playerTurn).meepleUse();
       meeplesOnSet.add(m);
-      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
+      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
+          + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
       return true;
     }
 
@@ -221,8 +427,8 @@ public class GameEngine {
   }
 
   /**
-   ** Place une tuile sur le plateau à al position (x, y), retourne vraie si
-   * possible, faux sinon
+   ** Place une tuile sur le plateau à la position (x, y), retourne vraie si
+   ** possible, faux sinon
    *
    * @param x int position x de la tuile à placer
    * @param y int position y de la tuile à placer
@@ -264,6 +470,11 @@ public class GameEngine {
     return meeplesOnSet;
   }
 
+  /**
+   ** Retourne vraie si le projet à déjà était évalué
+   * @param p
+   * @return
+   */
   boolean projectAlreadyEvaluate(Project p) {
     for (Project project : projectsEvaluate) {
       if (project.equals(p))
@@ -272,14 +483,34 @@ public class GameEngine {
     return false;
   }
 
+  /**
+   ** Retourne vraie si le meeple est le projet sont de même type
+   * @param p
+   * @param m
+   * @return
+   */
   boolean equalType(Project p, Meeple m) {
-    return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
+    return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x,
+        m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
   }
 
+  /**
+   ** Retourne vraie si le meeple est sur la même tuile que le projet
+   * @param p
+   * @param m
+   * @return
+   */
   boolean meepleOnProjectTile(Project p, Meeple m) {
-    return p.graph().hasNode(gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
+    return p.graph().hasNode(
+        gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
   }
 
+  /**
+   ** Retourne vraie si le meeple est sur le projet
+   * @param p
+   * @param m
+   * @return
+   */
   boolean meepleOnProject(Project p, Meeple m) {
     return equalType(p, m) && meepleOnProject(p, m);
   }
@@ -302,12 +533,12 @@ public class GameEngine {
       int index = 0;
       while (it.hasNext()) {
         Meeple m = it.next();
-        if (meepleOnProject(project, m)) {
-          ownersValue[m.player] += 1;
-          players.get(m.player).meepleRecovery();
-          meeplesOnSet.remove(index);
-          ++index;
-        }
+        // if (meepleOnProject(project, m)) {
+        // ownersValue[m.player] += 1;
+        // players.get(m.player).meepleRecovery();
+        // meeplesOnSet.remove(index);
+        // ++index;
+        // }
       }
 
       int owner = 0, ownerValue = 0;

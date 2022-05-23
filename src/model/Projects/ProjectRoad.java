@@ -196,7 +196,7 @@ public class ProjectRoad extends Project {
    * @param t Tile à tester
    * @return vraie si la route se termine au centre de la tuile
    */
-  boolean isEnder(Tile t) {
+  public static boolean isEnder(Tile t) {
     return (t.center() == Tile.Type.ABBEY ||
         t.center() == Tile.Type.CITY ||
         t.center() == Tile.Type.TOWN);
