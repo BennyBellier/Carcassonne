@@ -59,7 +59,7 @@ public abstract class Project {
    *
    * @return Projects[] liste des projets finie
    */
-  public static List<Project> evaluateProjects(Tile[][] t) {
+  public static List<Project> evaluateProjects(Tile[][] t, boolean endGame) {
     List<Project> projects = new ArrayList<>();
     List<Tile> cityVisit = new ArrayList<>();
     List<Tile> roadVisit = new ArrayList<>();
@@ -71,27 +71,27 @@ public abstract class Project {
           if (t[i][j].hasRoad()) {
             if (t[i][j].center() == Tile.Type.ROAD) {
               ProjectRoad p = new ProjectRoad(t, j, i, "c", roadVisit);
-              if (p.isFinish())
+              if (p.isFinish() || endGame)
                 projects.add(p);
             } else {
               if (t[i][j].south() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "s", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
               if (t[i][j].north() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "n", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
               if (t[i][j].east() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "e", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
               if (t[i][j].west() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "w", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
             }
@@ -101,7 +101,7 @@ public abstract class Project {
           abbeyVisit.add(t[i][j]);
           if (t[i][j].center() == Tile.Type.ABBEY) {
             ProjectAbbey p = new ProjectAbbey(t, j, i);
-            if (p.isFinish())
+            if (p.isFinish() || endGame)
               projects.add(p);
           }
         }
@@ -110,47 +110,47 @@ public abstract class Project {
           if (t[i][j].hasCity()) {
             if (t[i][j].center() == Tile.Type.CITY) {
               ProjectCity p = new ProjectCity(t, j, i, "c", cityVisit);
-              if (p.isFinish())
+              if (p.isFinish() || endGame)
                 projects.add(p);
               break;
             } else {
               if (t[i][j].cityEnder()) {
                 if (t[i][j].south() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "s", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
                 if (t[i][j].north() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "n", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
                 if (t[i][j].east() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "e", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
                 if (t[i][j].west() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "w", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
               } else {
                 if (t[i][j].south() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "s", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 } else if (t[i][j].north() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "n", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 } else if (t[i][j].east() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "e", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 } else if (t[i][j].west() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "w", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
               }
