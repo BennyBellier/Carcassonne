@@ -30,9 +30,10 @@ public class AffichePlateau extends JComponent {
   Random rand;
   Graphics2D drawable;
   CurrentTile currentTile;
+  Images imgs;
 
   public AffichePlateau() {
-    Images imgs = new Images();
+    imgs = new Images();
     images = imgs.list;
     blason = imgs.blason;
     meeplePossibility = imgs.meeplePossibility;
@@ -175,14 +176,15 @@ public class AffichePlateau extends JComponent {
     if (gm != null) {
       drawable = (Graphics2D) g;
       drawable.clearRect(0, 0, getSize().width, getSize().height);
+      drawable.drawImage(imgs.plateauInGame, 0, 0, getSize().width,getSize().height,null);
       Tile[][] plateau = gm.getSet();
       currentTile = gm.getCurrentTile();
       getTileSize();
 
       for (int i = 0; i < plateau.length; i++) {
-        drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
+        //drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
         for (int j = 0; j < plateau[i].length; j++) {
-          drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
+          //drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
           if (plateau[i][j] != null) {
             drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
                 tileSize, null);
