@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Point;
@@ -8,6 +9,7 @@ import java.awt.Point;
 import global.Configuration;
 import model.Player.Type;
 import model.Projects.Project;
+import model.Projects.TileOfProject;
 
 public class GameEngine {
   private GameSet gameSet;
@@ -209,6 +211,10 @@ public class GameEngine {
     Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
+  public Map<Integer, ArrayList<Integer>> getCurrentTilePositions() {
+    return gameSet.tilePositionsAllowed(currentTile.tile, false);
+  }
+
   /**
    ** Retourne le Tile.Type du meeple m
    * @param m Meeple
@@ -253,8 +259,6 @@ public class GameEngine {
         ender = t.cityEnder();
       if (type == Tile.Type.ROAD)
         ender = t.roadEnder();
-
-      System.out.println(type.toString() + " -> " + ender);
 
       if (ender) {
         switch (card) {
@@ -326,7 +330,6 @@ public class GameEngine {
 
     for (Meeple m : meeplesOnSet) {
       if (x == m.getY() && y == m.getX()) {
-        System.out.println(m.toString());
         if (!ender) {
           if (projectOf(m) == type)
             return true;
@@ -484,35 +487,23 @@ public class GameEngine {
   }
 
   /**
-   ** Retourne vraie si le meeple est le projet sont de même type
-   * @param p
-   * @param m
-   * @return
-   */
-  boolean equalType(Project p, Meeple m) {
-    return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x,
-        m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
-  }
-
-  /**
-   ** Retourne vraie si le meeple est sur la même tuile que le projet
-   * @param p
-   * @param m
-   * @return
-   */
-  boolean meepleOnProjectTile(Project p, Meeple m) {
-    return p.graph().hasNode(
-        gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
-  }
-
-  /**
    ** Retourne vraie si le meeple est sur le projet
    * @param p
    * @param m
    * @return
    */
   boolean meepleOnProject(Project p, Meeple m) {
-    return equalType(p, m) && meepleOnProject(p, m);
+    Point start = gameSet.getStartTilePoint();
+    for (TileOfProject top : p.list()) {
+      System.out.print("(" + (top.x - start.x) + ", " + (top.y - start.y) + ") : ");
+      for (String card : top.cards) {
+        System.out.print(card + ", ");
+      }
+      System.out.println("\n(" + m.getY() + ", " + m.getX() + ", " + m.getCardinal() + ")\n\n");
+      if (top.x - start.x == m.getY() && top.y - start.y == m.getX() && top.cards.contains(m.getCardinal()))
+        return true;
+    }
+    return false;
   }
 
   /*
@@ -523,26 +514,29 @@ public class GameEngine {
   void projectsEvaluation() {
     List<Project> projects = Project.evaluateProjects(gameSet.cloneSet());
 
-    for (Meeple m : meeplesOnSet) {
-      System.out.println(m.toString());
-    }
+    System.out.println(projects.size());
 
     for (Project project : projects) {
       int[] ownersValue = new int[nbPlayer];
-      Iterator<Meeple> it = meeplesOnSet.iterator();
-      int index = 0;
-      while (it.hasNext()) {
-        Meeple m = it.next();
-        // if (meepleOnProject(project, m)) {
-        // ownersValue[m.player] += 1;
-        // players.get(m.player).meepleRecovery();
-        // meeplesOnSet.remove(index);
-        // ++index;
-        // }
+      List<Meeple> meepleToRemove = new ArrayList<>();
+
+      for (Meeple m : meeplesOnSet) {
+        if (meepleOnProject(project, m)) {
+          ownersValue[m.player] += 1;
+          meepleToRemove.add(m);
+          players.get(m.player).meepleRecovery();
+        }
       }
 
-      int owner = 0, ownerValue = 0;
+      System.out.println("Meeple to remove :");
+      for (Meeple m : meepleToRemove) {
+        System.out.println(m.toString());
+      }
 
+      meeplesOnSet.removeAll(meepleToRemove);
+
+
+      int owner = 0, ownerValue = 0;
       for (int i = 0; i < ownersValue.length; i++) {
         if (ownersValue[i] > ownerValue) {
           ownerValue = ownersValue[i];
@@ -551,8 +545,10 @@ public class GameEngine {
       }
       Configuration.instance().logger()
           .fine(players.get(owner) + " est propiétaire du projet " + project.type() + "à la case");
-      players.get(owner).scorePlus(project.value());
-      projectsEvaluate.add(project);
+      if (ownerValue != 0) {
+        players.get(owner).scorePlus(project.value());
+        projectsEvaluate.add(project);
+      }
     }
   }
 

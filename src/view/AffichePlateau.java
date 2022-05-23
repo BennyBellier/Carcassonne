@@ -3,6 +3,7 @@ package view;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JComponent;
@@ -31,6 +32,7 @@ public class AffichePlateau extends JComponent {
   Graphics2D drawable;
   CurrentTile currentTile;
   Images imgs;
+  Font font;
 
   public AffichePlateau() {
     imgs = new Images();
@@ -42,6 +44,10 @@ public class AffichePlateau extends JComponent {
 
   public void setGameEngine(GameEngine gameEngine) {
     gm = gameEngine;
+  }
+
+  public void setFont(Font font) {
+    this.font = font;
   }
 
   /**
@@ -176,15 +182,15 @@ public class AffichePlateau extends JComponent {
     if (gm != null) {
       drawable = (Graphics2D) g;
       drawable.clearRect(0, 0, getSize().width, getSize().height);
-      drawable.drawImage(imgs.plateauInGame, 0, 0, getSize().width,getSize().height,null);
+      drawable.drawImage(imgs.plateauInGame, 0, 0, getSize().width, getSize().height, null);
       Tile[][] plateau = gm.getSet();
       currentTile = gm.getCurrentTile();
       getTileSize();
 
       for (int i = 0; i < plateau.length; i++) {
-        //drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
+        drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
         for (int j = 0; j < plateau[i].length; j++) {
-          //drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
+          drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
           if (plateau[i][j] != null) {
             drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
                 tileSize, null);
@@ -194,28 +200,41 @@ public class AffichePlateau extends JComponent {
           }
         }
       }
+      if (font != null)
+        drawable.setFont(font.deriveFont((float) 40));
 
       List<Player> players = gm.getListPlayers();
       for (int i = 0; i < gm.getNbPlayer(); i++) {
         if (gm.getPlayerTurn() == i)
-          g.drawString(">", 0, (int) (15 + i * (getSize().height * 0.10)));
+          drawable.drawString(">", 0, (int) (40 + i * (getSize().height * 0.12)));
         drawable.setColor(players.get(i).color());
-        g.drawString(players.get(i).pseudo(), 10, (int) (15 + i * (getSize().height * 0.10)));
-        drawable.drawString(String.valueOf(players.get(i).score()), 100, (int) (15 + i * (getSize().height * 0.10)));
-        drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 80,
-            (int) (15 + i * (getSize().height * 0.10)));
+        drawable.drawString(players.get(i).pseudo(), 40, (int) (40 + i * (getSize().height * 0.12)));
+        drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 40 + players.get(i).pseudo().length() * 16, (int) (40 + i * (getSize().height * 0.12)));
+        drawable.drawString(String.valueOf(players.get(i).score()), 40 + players.get(i).pseudo().length() * 16 + 40, (int) (40 + i * (getSize().height * 0.12)));
         drawable.setColor(Color.BLACK);
       }
 
-      g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 80, getSize().height - 120);
+      g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 120, getSize().height - 120);
 
       if (!currentTile.placed) {
         drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
         if (currentTile.tile.blason()) {
           drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
         }
+
+        Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
+
+        int resize = tileSize / 15;
+
+        for (Integer i : possiblePlacement.keySet()) {
+          for (Integer j : possiblePlacement.get(i)) {
+            if (plateau[i][j] == null)
+              drawable.drawImage(imgs.highlight, (startX + j * tileSize) + (resize), (startY + i * tileSize) + (resize), (tileSize) - (resize*2), (tileSize) - (resize*2), null);
+          }
+        }
+
       } else {
-          meeplePlacementPaint();
+        meeplePlacementPaint();
       }
 
       meeplePaint();

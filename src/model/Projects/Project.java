@@ -1,12 +1,10 @@
 package model.Projects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import global.Configuration;
 import model.Tile;
-import model.Graph.*;
 
 public abstract class Project {
 
@@ -28,25 +26,25 @@ public abstract class Project {
 
   public abstract boolean isFinish();
 
-  // abstract void evaluate(Graph g, Tile[][] set, Tile from, int x, int y, String card);
+  abstract boolean evaluate(List<TileOfProject> tile, Tile[][] set, int x, int y, String card);
 
   public abstract int value();
 
-  public abstract Graph graph();
+  public abstract List<TileOfProject> list();
 
   public boolean equals(Project p) {
     if (type != p.type())
       return false;
 
-    List<Tile> project1 = new ArrayList<>(Arrays.asList(this.graph().getListofNode()));
-    List<Tile> project2 = new ArrayList<>(Arrays.asList(p.graph().getListofNode()));
+    List<TileOfProject> project1 = new ArrayList<>(this.list());
+    List<TileOfProject> project2 = new ArrayList<>(p.list());
 
     if (project1.size() != project2.size())
       return false;
 
     for (int i = 0; i < project1.size(); i++) {
       for (int j = 0; j < project2.size(); j++) {
-        if (project1.get(i).equalsTo(project2.get(j)))
+        if (project1.get(i).equals(project2.get(j)))
           break;
         if (j == project2.size() - 1)
           return false;
