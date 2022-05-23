@@ -24,9 +24,9 @@ public class Frames extends javax.swing.JFrame {
   Images imgs;
   boolean maximized;
   Random r = new Random();
-  Color c, bleu, noir, vert, rouge;
+  Color c, bleu, noir, vert, violet;
   private Color couleurBleu = new Color(7, 45, 249);
-  private Color couleurRouge = new Color(245, 31, 27);
+  private Color couleurViolet = new Color(127, 0, 255);
   private Color couleurNoir = new Color(31, 31, 31);
   private Color couleurVert = new Color(60, 212, 21);
   private Color couleurJaune = new Color(255, 235, 87);
@@ -105,6 +105,7 @@ public class Frames extends javax.swing.JFrame {
     credits.setVisible(false);
     plateauJeu.setVisible(false);
     menuInGame.setVisible(false);
+    regles2.setVisible(false);
   }
 
   public void boutonSupDesactiver() {
@@ -128,8 +129,8 @@ public class Frames extends javax.swing.JFrame {
   private void desactivation() {
     if (c.equals(couleurNoir)) {
       cNoir.setEnabled(false);
-    } else if (c.equals(couleurRouge)) {
-      cRouge.setEnabled(false);
+    } else if (c.equals(couleurViolet)) {
+      cViolet.setEnabled(false);
     } else if (c.equals(couleurVert)) {
       cVert.setEnabled(false);
     } else if (c.equals(couleurJaune)) {
@@ -142,8 +143,8 @@ public class Frames extends javax.swing.JFrame {
   private void activation() {
     if (c.equals(couleurNoir)) {
       cNoir.setEnabled(true);
-    } else if (c.equals(couleurRouge)) {
-      cRouge.setEnabled(true);
+    } else if (c.equals(couleurViolet)) {
+      cViolet.setEnabled(true);
     } else if (c.equals(couleurVert)) {
       cVert.setEnabled(true);
     } else if (c.equals(couleurJaune)) {
@@ -228,7 +229,7 @@ public class Frames extends javax.swing.JFrame {
     switch (cRandom) {
       case 0:
         if (!cBleu.isEnabled()) {
-          if (cRouge.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
+          if (cViolet.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
           c = couleurBleu;
@@ -236,17 +237,17 @@ public class Frames extends javax.swing.JFrame {
         }
         break;
       case 1:
-        if (!cRouge.isEnabled()) {
+        if (!cViolet.isEnabled()) {
           if (cBleu.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
-          c = couleurRouge;
+          c = couleurViolet;
           desactivation();
         }
         break;
       case 2:
         if (!cVert.isEnabled()) {
-          if (cRouge.isEnabled() || cBleu.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
+          if (cViolet.isEnabled() || cBleu.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
           c = couleurVert;
@@ -255,7 +256,7 @@ public class Frames extends javax.swing.JFrame {
         break;
       case 3:
         if (!cNoir.isEnabled()) {
-          if (cRouge.isEnabled() || cVert.isEnabled() || cBleu.isEnabled() || cJaune.isEnabled())
+          if (cViolet.isEnabled() || cVert.isEnabled() || cBleu.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
           c = couleurNoir;
@@ -264,7 +265,7 @@ public class Frames extends javax.swing.JFrame {
         break;
       case 4:
         if (!cJaune.isEnabled()) {
-          if (cRouge.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cBleu.isEnabled())
+          if (cViolet.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cBleu.isEnabled())
             setColor();
         } else {
           c = couleurJaune;
@@ -338,7 +339,7 @@ public class Frames extends javax.swing.JFrame {
     j5.setText("");
     pseudo.setText("");
     cBleu.setEnabled(true);
-    cRouge.setEnabled(true);
+    cViolet.setEnabled(true);
     cVert.setEnabled(true);
     cJaune.setEnabled(true);
     cNoir.setEnabled(true);
@@ -387,7 +388,7 @@ public class Frames extends javax.swing.JFrame {
     lancerLaPartie = new javax.swing.JButton();
     difficulterBox = new javax.swing.JComboBox<>();
     cBleu = new javax.swing.JButton();
-    cRouge = new javax.swing.JButton();
+    cViolet = new javax.swing.JButton();
     cVert = new javax.swing.JButton();
     cJaune = new javax.swing.JButton();
     cNoir = new javax.swing.JButton();
@@ -411,10 +412,15 @@ public class Frames extends javax.swing.JFrame {
     retourInGame = new javax.swing.JButton();
     retourMenuInGame = new javax.swing.JButton();
     menuBoutons = new javax.swing.JPanel();
+    regles2 = new javax.swing.JPanel();
+    retourRegles2 = new javax.swing.JButton();
+    reglesScrollPane2 = new javax.swing.JScrollPane();
+    reglesPane1 = new javax.swing.JTextPane();
+
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
-    setMinimumSize(new java.awt.Dimension(1280, 720));
+    setMinimumSize(new java.awt.Dimension(1920, 1080));
 
     background.setMaximumSize(new java.awt.Dimension(1920, 1080));
     background.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -620,10 +626,15 @@ public class Frames extends javax.swing.JFrame {
     });
     plateauJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1860, 10, 50, 50));
 
-    menuInGame.setBackground(new Color(0, 0, 0, 100));
+    menuInGame.setBackground(new Color(0, 0, 0, 50));
     menuInGame.setMaximumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setMinimumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    menuInGame.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mousePressed(java.awt.event.MouseEvent evt) {
+          menuInGameMousePressed(evt);
+      }
+    });
 
     menuBoutons.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     menuBoutons.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -656,7 +667,7 @@ public class Frames extends javax.swing.JFrame {
     menuBoutons.add(retourInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 198, 200, 45));
 
     retourMenuInGame.setFont(uniFont.deriveFont((float) 26)); // NOI18N
-    retourMenuInGame.setText("Menu Principale");
+    retourMenuInGame.setText("Menu Principal");
     retourMenuInGame.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         retourMenuInGameActionPerformed(evt);
@@ -723,14 +734,14 @@ public class Frames extends javax.swing.JFrame {
     });
     newGame.add(cBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 340, 30, 30));
 
-    cRouge.setBackground(new java.awt.Color(245, 31, 27));
-    cRouge.setBorder(null);
-    cRouge.addActionListener(new java.awt.event.ActionListener() {
+    cViolet.setBackground(new java.awt.Color(127, 0, 255));
+    cViolet.setBorder(null);
+    cViolet.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        cRougeActionPerformed(evt);
+        cVioletActionPerformed(evt);
       }
     });
-    newGame.add(cRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 340, 30, 30));
+    newGame.add(cViolet, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 340, 30, 30));
 
     cVert.setBackground(new java.awt.Color(60, 212, 21));
     cVert.setBorder(null);
@@ -764,7 +775,7 @@ public class Frames extends javax.swing.JFrame {
     joueurs.setText("Joueurs :");
     newGame.add(joueurs, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 265, -1, 36));
 
-    j1.setFont(uniFont.deriveFont((float) 24)); // NOI18N
+    j1.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(j1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 340, 225, 30));
 
     pseudoLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
@@ -772,19 +783,19 @@ public class Frames extends javax.swing.JFrame {
     pseudoLabel.setText("Pseudo:");
     newGame.add(pseudoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 265, -1, 44));
 
-    j2.setFont(uniFont.deriveFont((float) 24)); // NOI18N
+    j2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(j2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 440, 225, 30));
 
-    j3.setFont(uniFont.deriveFont((float) 24)); // NOI18N
+    j3.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(j3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 540, 225, 30));
 
-    j4.setFont(uniFont.deriveFont((float) 24)); // NOI18N
+    j4.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(j4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 640, 225, 30));
 
-    j5.setFont(uniFont.deriveFont((float) 24)); // NOI18N
+    j5.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(j5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 740, 225, 30));
 
-    pseudo.setFont(uniFont.deriveFont((float) 24)); // NOI18N
+    pseudo.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(pseudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 335, 225, 40));
 
     supprimerJ1.setBorder(null);
@@ -843,80 +854,61 @@ public class Frames extends javax.swing.JFrame {
     cJoueurLabel.setText("Couleur du Joueur:");
     newGame.add(cJoueurLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 265, -1, 34));
 
+    regles2.setMaximumSize(new java.awt.Dimension(1920, 1080));
+    regles2.setMinimumSize(new java.awt.Dimension(1920, 1080));
+    regles2.setOpaque(false);
+    regles2.setPreferredSize(new java.awt.Dimension(1920, 1080));
+    regles2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    retourRegles2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourRegles2.setText("Retour Au Jeu");
+    retourRegles2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourRegles2ActionPerformed(evt);
+        }
+    });
+    regles2.add(retourRegles2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 910, 200, 45));
+
+    reglesScrollPane2.setBackground(new Color (0,0,0,0));
+    reglesScrollPane2.setBorder(null);
+    reglesScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    
+    reglesPane1.setEditable(false);
+    reglesPane1.setBackground(new java.awt.Color(201, 152, 104));
+    reglesPane1.setBorder(null);
+    reglesPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    reglesPane1.setText("But :\n\nLes joueurs posent des tuiles tour après tour afin de créer un paysage formé de routes, de villes, d’abbayes. \nVous placerez vos meeples(pions) sur ces tuiles comme voleurs, chevaliers, moines ou paysans afin de marquer des points. \nLe joueur qui aura le plus de points après le décompte final sera déclaré vainqueur.  \n\nDéroulement : \n\tLe joueur dont c’est le tour réalise les actions suivantes dans l’ordre :\n \n\t- Placement d’une tuile : Le joueur doit piocher une tuile Terrain et la placer face visible afin de continuer le paysage. \n\t   La tuile piocher sera visible en bas à droite de l’écran.\n \n\t- Pose d’un meeple : Le joueur peut poser un meeple de sa réserve sur la tuile qu’il vient de placer. \n\t   Ce n’est pas obligatoire. On ne peut pas placer 2 meeples sur 2 cases adjacentes. \n\nLes points : \t\n\tLes routes \t\n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme voleur sur une des\n\t sections de route de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un voleur sur cette route. \n\tVotre adversaire pioche alors une tuile qu’il place pour continuer le paysage. Pour qu’une route soit complétée\n\tet rapporte des points, ses deux extrémités doivent être reliées à un village, une ville ou une abbaye, ou entre elles\n\ten formant une boucle. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre route. \n\tLorsque qu’une route est complète chaque tuile de cette dernière vous rapporte 1 point \n\n\tLes villes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme chevalier sur une des sections de ville\n\t de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un chevalier dans cette ville. Votre adversaire pioche alors \n\tune tuile qu’il place pour continuer le paysage. Pour qu’une ville soit complétée et rapporte des points, elle doit être entourée\n\tde murs sans trou à l’intérieur. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre ville. \n\tLorsque qu’une ville est complète chaque tuile de cette dernière vous rapporte 2 points, de plus, chaque blason dans une ville \n\tcomplétée rapporte 2 points de plus.  \n\n\tLes abbayes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme moine sur une abbayes. \n\tUne abbaye est complétée lorsqu’elle est complètement entourée de tuiles, une abbaye complétée rapporte \n\t1 point par tuile la complétant (incluant celle de l’abbaye).");
+    reglesPane1.setFocusable(false);
+    reglesPane1.setCaretPosition(0);
+    reglesPane1.setMargin(new java.awt.Insets(100, 100, 100, 100));
+    reglesScrollPane2.setViewportView(reglesPane1);
+
+    regles2.add(reglesScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 1285, 640));
+
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-    background.setLayout(backgroundLayout);
-    backgroundLayout.setHorizontalGroup(
-        backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jouerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 169, Short.MAX_VALUE)
-                    .addComponent(regles, javax.swing.GroupLayout.DEFAULT_SIZE, 1641, Short.MAX_VALUE)
-                    .addGap(0, 170, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 339, Short.MAX_VALUE)
-                    .addComponent(credits, javax.swing.GroupLayout.DEFAULT_SIZE, 1302, Short.MAX_VALUE)
-                    .addGap(0, 339, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(menuPrincipale, javax.swing.GroupLayout.DEFAULT_SIZE, 1968, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addComponent(plateauJeu, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(newGame, javax.swing.GroupLayout.DEFAULT_SIZE, 1829, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE))));
-    backgroundLayout.setVerticalGroup(
-        backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jouerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(options, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 174, Short.MAX_VALUE)
-                    .addComponent(regles, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
-                    .addGap(0, 74, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 182, Short.MAX_VALUE)
-                    .addComponent(credits, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
-                    .addGap(0, 181, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(menuPrincipale, javax.swing.GroupLayout.DEFAULT_SIZE, 1068, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addComponent(plateauJeu, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)))
-            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(backgroundLayout.createSequentialGroup()
-                    .addGap(0, 138, Short.MAX_VALUE)
-                    .addComponent(newGame, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
-                    .addGap(0, 137, Short.MAX_VALUE))));
+        background.setLayout(backgroundLayout);
+        backgroundLayout.setHorizontalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        backgroundLayout.setVerticalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -987,13 +979,13 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void retourReglesActionPerformed(java.awt.event.ActionEvent evt) {
-    if (control != null) {
+    /*if (control != null) {
       if (control.isGameRunning()) {
         plateauJeu.setVisible(true);
         regles.setVisible(false);
         menuPlateau.setVisible(true);
       }
-    } else
+    } else*/
       menuPrincipale();
   }
 
@@ -1068,8 +1060,8 @@ public class Frames extends javax.swing.JFrame {
     choixNom();
   }
 
-  private void cRougeActionPerformed(java.awt.event.ActionEvent evt) {
-    c = couleurRouge;
+  private void cVioletActionPerformed(java.awt.event.ActionEvent evt) {
+    c = couleurViolet;
     choixNom();
   }
 
@@ -1131,13 +1123,14 @@ public class Frames extends javax.swing.JFrame {
   private void retourParametreActionPerformed(java.awt.event.ActionEvent evt) {
     newGame.setVisible(false);
     jouerPanel.setVisible(true);
+    background.affichageJouer();
   }
 
   private void menuPlateauActionPerformed(java.awt.event.ActionEvent evt) {
     menuInGame.setVisible(true);
     menuBoutons.setVisible(true);
-    plateauJeu.setFocusable(false);
     menuPlateau.setVisible(false);
+    menuInGame.setFocusable(true);
   }
 
   private void sauvegarderInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1147,7 +1140,7 @@ public class Frames extends javax.swing.JFrame {
   private void reglesInGameActionPerformed(java.awt.event.ActionEvent evt) {
     menuInGame.setVisible(false);
     plateauJeu.setVisible(false);
-    regles.setVisible(true);
+    regles2.setVisible(true);
     menuPlateau.setVisible(true);
     background.affichageRegles();
   }
@@ -1163,6 +1156,16 @@ public class Frames extends javax.swing.JFrame {
     menuPlateau.setVisible(true);
   }
 
+  private void menuInGameMousePressed(java.awt.event.MouseEvent evt) {                                        
+    menuInGame.setBackground(new Color(0, 0, 0, 50));
+  }        
+
+  private void retourRegles2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    plateauJeu.setVisible(true);
+    regles2.setVisible(false);
+    menuPlateau.setVisible(true);
+  } 	 
+
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
   private javax.swing.JButton ajouterJoueur;
@@ -1171,7 +1174,7 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JButton cJaune;
   private javax.swing.JLabel cJoueurLabel;
   private javax.swing.JButton cNoir;
-  private javax.swing.JButton cRouge;
+  private javax.swing.JButton cViolet;
   private javax.swing.JButton cVert;
   public javax.swing.JPanel credits;
   private javax.swing.JTextArea creditsTextArea;
@@ -1221,5 +1224,9 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JButton supprimerJ5;
   private javax.swing.JLabel version;
   private javax.swing.JPanel menuBoutons;
+  public javax.swing.JPanel regles2;
+  private javax.swing.JScrollPane reglesScrollPane2;
+  private javax.swing.JTextPane reglesPane1;
+  private javax.swing.JButton retourRegles2;
   // End of variables declaration
 }
