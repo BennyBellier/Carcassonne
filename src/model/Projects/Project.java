@@ -1,12 +1,10 @@
 package model.Projects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import global.Configuration;
 import model.Tile;
-import model.Graph.*;
 
 public abstract class Project {
 
@@ -28,25 +26,25 @@ public abstract class Project {
 
   public abstract boolean isFinish();
 
-  // abstract void evaluate(Graph g, Tile[][] set, Tile from, int x, int y, String card);
+  abstract boolean evaluate(List<TileOfProject> tile, Tile[][] set, int x, int y, String card);
 
   public abstract int value();
 
-  public abstract Graph graph();
+  public abstract List<TileOfProject> list();
 
   public boolean equals(Project p) {
     if (type != p.type())
       return false;
 
-    List<Tile> project1 = new ArrayList<>(Arrays.asList(this.graph().getListofNode()));
-    List<Tile> project2 = new ArrayList<>(Arrays.asList(p.graph().getListofNode()));
+    List<TileOfProject> project1 = new ArrayList<>(this.list());
+    List<TileOfProject> project2 = new ArrayList<>(p.list());
 
     if (project1.size() != project2.size())
       return false;
 
     for (int i = 0; i < project1.size(); i++) {
       for (int j = 0; j < project2.size(); j++) {
-        if (project1.get(i).equalsTo(project2.get(j)))
+        if (project1.get(i).equals(project2.get(j)))
           break;
         if (j == project2.size() - 1)
           return false;
@@ -61,7 +59,7 @@ public abstract class Project {
    *
    * @return Projects[] liste des projets finie
    */
-  public static List<Project> evaluateProjects(Tile[][] t) {
+  public static List<Project> evaluateProjects(Tile[][] t, boolean endGame) {
     List<Project> projects = new ArrayList<>();
     List<Tile> cityVisit = new ArrayList<>();
     List<Tile> roadVisit = new ArrayList<>();
@@ -73,27 +71,27 @@ public abstract class Project {
           if (t[i][j].hasRoad()) {
             if (t[i][j].center() == Tile.Type.ROAD) {
               ProjectRoad p = new ProjectRoad(t, j, i, "c", roadVisit);
-              if (p.isFinish())
+              if (p.isFinish() || endGame)
                 projects.add(p);
             } else {
               if (t[i][j].south() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "s", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
               if (t[i][j].north() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "n", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
               if (t[i][j].east() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "e", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
               if (t[i][j].west() == Tile.Type.ROAD) {
                 ProjectRoad p = new ProjectRoad(t, j, i, "w", roadVisit);
-                if (p.isFinish())
+                if (p.isFinish() || endGame)
                   projects.add(p);
               }
             }
@@ -103,7 +101,7 @@ public abstract class Project {
           abbeyVisit.add(t[i][j]);
           if (t[i][j].center() == Tile.Type.ABBEY) {
             ProjectAbbey p = new ProjectAbbey(t, j, i);
-            if (p.isFinish())
+            if (p.isFinish() || endGame)
               projects.add(p);
           }
         }
@@ -112,47 +110,47 @@ public abstract class Project {
           if (t[i][j].hasCity()) {
             if (t[i][j].center() == Tile.Type.CITY) {
               ProjectCity p = new ProjectCity(t, j, i, "c", cityVisit);
-              if (p.isFinish())
+              if (p.isFinish() || endGame)
                 projects.add(p);
               break;
             } else {
               if (t[i][j].cityEnder()) {
                 if (t[i][j].south() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "s", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
                 if (t[i][j].north() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "n", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
                 if (t[i][j].east() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "e", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
                 if (t[i][j].west() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "w", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
               } else {
                 if (t[i][j].south() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "s", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 } else if (t[i][j].north() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "n", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 } else if (t[i][j].east() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "e", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 } else if (t[i][j].west() == Tile.Type.CITY) {
                   ProjectCity p = new ProjectCity(t, j, i, "w", cityVisit);
-                  if (p.isFinish())
+                  if (p.isFinish() || endGame)
                     projects.add(p);
                 }
               }

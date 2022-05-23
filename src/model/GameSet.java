@@ -273,29 +273,29 @@ public class GameSet {
   boolean checkAllTileConnection(int x, int y, Tile t) {
     boolean n = false, s = false, e = false, w = false;
 
-    if (y + 1 >= tiles.length || tiles[y + 1][x] == null)
+    if (y + 1 >= tiles.length)
       s = true;
     else {
       if (t.canConnect(tiles[y + 1][x], "s"))
         s = true;
     }
-    if (y - 1 < 0 || tiles[y - 1][x] == null)
+    if (y - 1 < 0)
       n = true;
     else {
       if (t.canConnect(tiles[y - 1][x], "n"))
         n = true;
     }
-    if (x + 1 >= tiles[y].length || tiles[y][x + 1] == null)
-      w = true;
-    else {
-      if (t.canConnect(tiles[y][x + 1], "w"))
-        w = true;
-    }
-    if (x - 1 < 0 || tiles[y][x - 1] == null)
+    if (x + 1 >= tiles[y].length)
       e = true;
     else {
-      if (t.canConnect(tiles[y][x - 1], "e"))
+      if (t.canConnect(tiles[y][x + 1], "e"))
         e = true;
+    }
+    if (x - 1 < 0)
+      w = true;
+    else {
+      if (t.canConnect(tiles[y][x - 1], "w"))
+        w = true;
     }
     return n && s && e && w;
   }
@@ -311,23 +311,25 @@ public class GameSet {
    */
   public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile t, boolean withRota) {
     Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+    int r = 0;
     for (int i = 0; i < tiles.length; i++) {
       for (int j = 0; j < tiles[i].length; j++) {
-        if ((!map.containsKey(i) || (map.containsKey(i) && !map.get(i).contains(j))) && tiles[i][j] == null
-            && !noTilesAround(i, j)) {
-          for (int r = 0; r < 3 && withRota; r++) {
+        if (!(map.containsKey(j) && map.get(j).contains(i) || (tiles[j][i] != null) || noTilesAround(i, j))) {
+          do {
             if (checkAllTileConnection(i, j, t)) {
               ArrayList<Integer> l;
-              if (!map.containsKey(i))
+              if (!map.containsKey(j))
                 l = new ArrayList<>();
               else
-                l = map.get(i);
-              l.add(j);
-              map.put(i, l);
+                l = map.get(j);
+              l.add(i);
+              map.put(j, l);
               break;
             }
-            t.turnClock();
-          }
+            if (withRota)
+              t.turnClock();
+            ++r;
+          } while (r < 3 && withRota);
         }
       }
     }
@@ -383,6 +385,7 @@ public class GameSet {
 
   /**
    ** Retourne le type à la position (x, y card)
+   *
    * @param x
    * @param y
    * @param card

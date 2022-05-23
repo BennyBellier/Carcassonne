@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Images {
 
-  Image blason, meeplePossibility , plateauInGame , croix , menu;
+  Image blason, meeplePossibility , plateauInGame , croix , menu, highlight;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
 
   public Images() {
@@ -30,6 +30,7 @@ public class Images {
       croix = ImageIO.read(Configuration.charge("Images/skip.png"));
       menu = ImageIO.read(Configuration.charge("Images/icon_menu.png"));
       plateauInGame = ImageIO.read(Configuration.charge("Images/bois.jpg"));
+      highlight = ImageIO.read(Configuration.charge("Images/highlight.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();

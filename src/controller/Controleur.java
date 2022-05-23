@@ -7,6 +7,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import global.Configuration;
 import model.GameEngine;
 import view.AffichePlateau;
 
@@ -48,8 +49,6 @@ public class Controleur implements ActionListener {
     x = (x - tab.getOffsetX()) % tab.tailleTuile();
     y = (y - tab.getOffsetY()) % tab.tailleTuile();
     int tileSize = tab.tailleTuile();
-    System.out.println(x + ", " + y);
-    System.out.println(tileSize);
     if (x >= 0 && x < tileSize / 3) {
       if (y >= (tileSize / 3) && y < ((tileSize * 2) / 3))
         return "w";
@@ -130,15 +129,17 @@ public class Controleur implements ActionListener {
     tab.repaint();
   }
 
+  public void finDeGame() {
+    ge.projectsEvaluation();
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
-    System.out.print(e.getActionCommand());
     switch (e.getActionCommand()) {
 
       default:
-        System.out.println("Commande invalide");
+        Configuration.instance().logger().severe("Commande invalide");
         break;
-
     }
   }
 

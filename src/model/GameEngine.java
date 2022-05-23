@@ -1,14 +1,19 @@
 package model;
 
 import java.util.List;
+import java.util.Map;
+
+import controller.Controleur;
+
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.awt.Point;
 
 import controller.IA;
 import global.Configuration;
 import model.Player.Type;
 import model.Projects.Project;
+import model.Projects.TileOfProject;
 
 public class GameEngine {
   private GameSet gameSet;
@@ -19,6 +24,8 @@ public class GameEngine {
   private int playerTurn, nbPlayer;
   private CurrentTile currentTile;
   private IA ia;
+  private boolean gameEnded;
+  private Controleur control;
   
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
@@ -29,17 +36,19 @@ public class GameEngine {
     nbPlayer = playersIn.length;
     players = new ArrayList<>(nbPlayer);
     meeplesOnSet = new ArrayList<>();
+    gameEnded = false;
     for (Player p : playersIn) {
       players.add(p);
     }
     Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
   }
 
+  public void setControleur(Controleur c) {
+    control = c;
+  }
+
   public boolean isGameRunning() {
-    if (pioche != null)
-      return pioche.size() != 0;
-    else
-      return true;
+    return !gameEnded;
   }
 
   /**
@@ -388,16 +397,22 @@ public class GameEngine {
    * remisé est un nouvelle tuile est pioché
    */
   void piocheTuile() {
-    if (!pioche.isEmpty()) {
+    while (!pioche.isEmpty()) {
       currentTile = new CurrentTile(pioche.piocheTuile());
       currentTile.unplaced();
 
-      while (gameSet.tilePositionsAllowed(currentTile.tile, true).size() == 0) {
-        pioche.remiserTuile(currentTile.tile);
-        currentTile.tile = pioche.piocheTuile();
-      }
-      Configuration.instance().logger().fine("Tuile pioché : " + currentTile.toString());
+      if (gameSet.tilePositionsAllowed(currentTile.tile, true).size() == 0)
+        currentTile = null;
+      else
+        break;
     }
+
+    if (currentTile == null) {
+      gameEnded = true;
+      control.finDeGame();
+    }
+
+    Configuration.instance().logger().fine("Tuile pioché : " + currentTile.toString());
   }
 
   /**
@@ -405,7 +420,7 @@ public class GameEngine {
    */
   void nextPlayer() {
     playerTurn = (playerTurn + 1) % nbPlayer;
-    Configuration.instance().logger().info("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+    Configuration.instance().logger().fine("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
   /**
@@ -413,7 +428,7 @@ public class GameEngine {
    */
   void prevPlayer() {
     playerTurn = (playerTurn - 1) % nbPlayer;
-    Configuration.instance().logger().info("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+    Configuration.instance().logger().fine("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
   /**
@@ -425,6 +440,10 @@ public class GameEngine {
     nextPlayer();
     piocheTuile();
     Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+  }
+
+  public Map<Integer, ArrayList<Integer>> getCurrentTilePositions() {
+    return gameSet.tilePositionsAllowed(currentTile.tile, false);
   }
 
   /**
@@ -471,8 +490,6 @@ public class GameEngine {
         ender = t.cityEnder();
       if (type == Tile.Type.ROAD)
         ender = t.roadEnder();
-
-      System.out.println(type.toString() + " -> " + ender);
 
       if (ender) {
         switch (card) {
@@ -544,7 +561,6 @@ public class GameEngine {
 
     for (Meeple m : meeplesOnSet) {
       if (x == m.getY() && y == m.getX()) {
-        System.out.println(m.toString());
         if (!ender) {
           if (projectOf(m) == type)
             return true;
@@ -702,35 +718,18 @@ public class GameEngine {
   }
 
   /**
-   ** Retourne vraie si le meeple est le projet sont de même type
-   * @param p
-   * @param m
-   * @return
-   */
-  boolean equalType(Project p, Meeple m) {
-    return p.type() == gameSet.getProjectType(m.getX() + gameSet.getStartTilePoint().x,
-        m.getY() + gameSet.getStartTilePoint().y, m.getCardinal());
-  }
-
-  /**
-   ** Retourne vraie si le meeple est sur la même tuile que le projet
-   * @param p
-   * @param m
-   * @return
-   */
-  boolean meepleOnProjectTile(Project p, Meeple m) {
-    return p.graph().hasNode(
-        gameSet.getTileFromCoord(m.getX() + gameSet.getStartTilePoint().x, m.getY() + gameSet.getStartTilePoint().y));
-  }
-
-  /**
    ** Retourne vraie si le meeple est sur le projet
    * @param p
    * @param m
    * @return
    */
   boolean meepleOnProject(Project p, Meeple m) {
-    return equalType(p, m) && meepleOnProject(p, m);
+    Point start = gameSet.getStartTilePoint();
+    for (TileOfProject top : p.list()) {
+      if (top.x - start.x == m.getY() && top.y - start.y == m.getX() && top.cards.contains(m.getCardinal()))
+        return true;
+    }
+    return false;
   }
 
   /*
@@ -738,43 +737,37 @@ public class GameEngine {
    * projet,
    * enlève les meeples du plateau et attribut les points au propriétaire
    */
-  void projectsEvaluation() {
-    List<Project> projects = Project.evaluateProjects(gameSet.cloneSet());
-
-    for (Meeple m : meeplesOnSet) {
-      System.out.println(m.toString());
-    }
+  public void projectsEvaluation() {
+    List<Project> projects = Project.evaluateProjects(gameSet.cloneSet(), gameEnded);
 
     for (Project project : projects) {
-      int[] ownersValue = new int[nbPlayer];
-      Iterator<Meeple> it = meeplesOnSet.iterator();
-      int index = 0;
-      while (it.hasNext()) {
-        Meeple m = it.next();
-        // if (meepleOnProject(project, m)) {
-        // ownersValue[m.player] += 1;
-        // players.get(m.player).meepleRecovery();
-        // meeplesOnSet.remove(index);
-        // ++index;
-        // }
-      }
+      List<Integer> ownersValue = new ArrayList<>();
+      List<Meeple> meepleToRemove = new ArrayList<>();
 
-      int owner = 0, ownerValue = 0;
-
-      for (int i = 0; i < ownersValue.length; i++) {
-        if (ownersValue[i] > ownerValue) {
-          ownerValue = ownersValue[i];
-          owner = i;
+      for (Meeple m : meeplesOnSet) {
+        if (meepleOnProject(project, m)) {
+          ownersValue.add(m.player, ownersValue.get(m.player) + 1);
+          meepleToRemove.add(m);
+          players.get(m.player).meepleRecovery();
         }
       }
-      Configuration.instance().logger()
-          .fine(players.get(owner) + " est propiétaire du projet " + project.type() + "à la case");
-      players.get(owner).scorePlus(project.value());
+
+      meeplesOnSet.removeAll(meepleToRemove);
+
+      int i = 1;
+      Collections.sort(ownersValue);
+      if (ownersValue.get(0) != 0) {
+        players.get(0).scorePlus(project.value());
+        while (ownersValue.get(i) == ownersValue.get(0)) {
+          players.get(i).scorePlus(project.value());
+          ++i;
+        }
+      }
       projectsEvaluate.add(project);
     }
   }
 
   /**
-   * $ Gestion des sauvegardes
+   *$ Gestion des sauvegardes
    */
 }

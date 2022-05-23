@@ -1,14 +1,14 @@
 package model.Projects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import global.Configuration;
 import model.Tile;
-import model.Graph.*;
 
 public class ProjectRoad extends Project {
 
-  private Graph g;
+  private List<TileOfProject> list;
   private boolean finish;
   /**
    ** Vérifie si pour la portion de route à la case (x, y), la route qui y
@@ -17,31 +17,21 @@ public class ProjectRoad extends Project {
    * @param set         Plateau de la partie courante
    * @param x           position x de l'abbeye
    * @param y           position y de l'abbeye
-   * @param card        position de la portition de la ville sur la tuile
-   * @param cityVisited liste des tuiles contenant une villes visitées
+   * @param card        position de la portition de la route sur la tuile
+   * @param ROADVisited liste des tuiles contenant une routes visitées
    */
   public ProjectRoad(Tile[][] set, int x, int y, String card, List<Tile> roadVisited) {
-    super(Type.CITY);
-    g = new Graph();
+    super(Type.ROAD);
+    list = new ArrayList<>();
     finish = false;
 
     Configuration
         .instance()
         .logger()
         .info("Évaluation du projet route aux coordonnées (" + x + ", " + y + "), direction : " + card);
-    evaluate(g, set, set[y][x], x, y, card);
+    finish = evaluate(list, set, x, y, card);
 
-    roadVisited.addAll(g.getSetOfNode());
-
-    if (g.isEmpty()) {
-      finish = false;
-    }
-    else {
-      if (isRoadFinish(g, (Tile) g.getListofNode()[0]))
-        finish = true;
-      else
-        finish = false;
-    }
+    roadVisited.addAll(TileOfProject.toTileList(list));
 
     Configuration
         .instance()
@@ -58,148 +48,111 @@ public class ProjectRoad extends Project {
                 " points");
   }
 
-  /**
-   ** Détermine si le projet et fini ou non
-   * <p>
-   * Utilisation de la récurence pour tester si toutes les extrémités
-   * du graph sont des tuiles qui finissent une route
-   * <p>
-   * ! Attention, si il n'y as pas de tuiles alors la route n'est pas finie
-   *
-   * @param g Graph contenant les noeuds du projet
-   * @param t la tuile de départ
-   * @return vraie si la route est complété (toutes les extrémités sont fermés)
-   */
-  boolean isRoadFinish(Graph g, Tile t) {
-    if (g.getNodeCount() == 1)
+  boolean evaluate(List<TileOfProject> visited, Tile[][] set, int x, int y, String card) {
+    Tile t;
+    boolean ender;
+    StringBuilder str = new StringBuilder();
+
+    str.append("Évaluation de la tuile (" + x + ", " + y + ") -> " + card + ", type = " + type.toString() + "\n");
+
+    if ((t = set[y][x]) == null) {
+      str.append("\tLa tuile est null" + "\n");
+      Configuration.instance().logger().fine(str.toString());
       return false;
-    if (g.getVoisins(t).size() == 0 && isEnder(t)) {
-      return true;
     }
-    else if (g.getVoisins(t).size() > 0) {
-      for (Tile v : g.getVoisins(t)) {
-        if (isRoadFinish(g, v) == false)
-          return false;
-      }
-    }
-    return false;
-  }
 
-  /**
-   ** Partie récursive de la fonction d'évaluation
-   *
-   * @param g    Graph contenant les noeuds compasant le projet
-   * @param set  copy du plateau courant
-   * @param source Tile précédente permettant de créer les connexions dans le graphs
-   * @param x    position x de la tuile à tester
-   * @param y    position y de la tuile à tester
-   * @param card cardinalité courante sur la tuile
-   */
-  // @Override
-  void evaluate(Graph g, Tile[][] set, Tile source, int x, int y, String card) {
-    Tile t = set[y][x];
-    if (t != null && !g.hasNode(t)) {
-      g.addNode(t);
-      if (g.getNodeCount() > 1)
-        g.addEdge(source, t);
-      if (isEnder(t) && g.getNodeCount() == 1) {
+    if (t.getCardinalType(card) != Tile.Type.ROAD) {
+      str.append("\tLe cardinal ne correspond pas à un type route" + "\n");
+      Configuration.instance().logger().fine(str.toString());
+      return false;
+    }
+
+    ender = t.roadEnder();
+
+    TileOfProject top = TileOfProject.fromTileCoord(t, x, y, card, ender, Tile.Type.ROAD);
+
+    if (!TileOfProject.contains(visited, top)) {
+      visited.add(top);
+
+      if (ender) {
+        str.append("\tLa tuile est une fin de route" + "\n");
         switch (card) {
           case "n":
-              evaluate(g, set, t, x, y - 1, "s");
+            str.append("\tÉvaluation de la cardinalité nord" + "\n");
+            if (t.north() == Tile.Type.ROAD && evaluate(visited, set, x, y - 1, "s")) {
+              str.append("\tLa tuile est lié à d'autre tuile de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile n'est pas lié à d'autre tuie de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return false;
+            }
           case "s":
-              evaluate(g, set, t, x, y + 1, "n");
-            break;
+            str.append("\tÉvaluation de la cardinalité sud" + "\n");
+            if (t.south() == Tile.Type.ROAD && evaluate(visited, set, x, y + 1, "n")) {
+              str.append("\tLa tuile est lié à d'autre tuile de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile n'est pas lié à d'autre tuie de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return false;
+            }
           case "e":
-              evaluate(g, set, t, x + 1, y, "w");
-            break;
+            str.append("\tÉvaluation de la cardinalité est" + "\n");
+            if (t.east() == Tile.Type.ROAD && evaluate(visited, set, x + 1, y, "w")) {
+              str.append("\tLa tuile est lié à d'autre tuile de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile n'est pas lié à d'autre tuie de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return false;
+            }
           case "w":
-              evaluate(g, set, t, x - 1, y, "e");
-            break;
-          default:
-            break;
+            str.append("\tÉvaluation de la cardinalité ouest" + "\n");
+            if (t.west() == Tile.Type.ROAD && evaluate(visited, set, x - 1, y, "e")) {
+              str.append("\tLa tuile est lié à d'autre tuile de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return true;
+            } else {
+              str.append("\tLa tuile n'est pas lié à d'autre tuie de type route" + "\n");
+              Configuration.instance().logger().fine(str.toString());
+              return false;
+            }
         }
-      } else if (!isEnder(t)) {
-        switch (card) {
-          case "c":
-            if (t.north() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y - 1, "s");
-            }
-            if (t.east() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x + 1, y, "w");
-            }
-            if (t.south() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y + 1, "n");
-            }
-            if (t.west() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x - 1, y, "e");
-            }
-            break;
-          case "n":
-            evaluate(g, set, t, x, y - 1, "s");
-            if (t.east() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x + 1, y, "w");
-            }
-            if (t.south() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y + 1, "n");
-            }
-            if (t.west() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x - 1, y, "e");
-            }
-            break;
-          case "s":
-            evaluate(g, set, t, x, y + 1, "n");
-            if (t.north() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y - 1, "s");
-            }
-            if (t.east() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x + 1, y, "w");
-            }
-            if (t.west() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x - 1, y, "e");
-            }
-            break;
-          case "e":
-            evaluate(g, set, t, x + 1, y, "w");
-            if (t.north() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y - 1, "s");
-            }
-            if (t.south() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y + 1, "n");
-            }
-            if (t.west() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x - 1, y, "e");
-            }
-            break;
-          case "w":
-            evaluate(g, set, t, x - 1, y, "e");
-            if (t.north() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y - 1, "s");
-            }
-            if (t.east() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x + 1, y, "w");
-            }
-            if (t.south() == Tile.Type.ROAD) {
-              evaluate(g, set, t, x, y + 1, "n");
-            }
-            break;
-          default:
-            break;
+      } else {
+        str.append("\tLa tuile n'est pas une fin de route" + "\n");
+        boolean n = true, s = true, e = true, w = true;
+        if (t.north() == Tile.Type.ROAD) {
+          str.append("\tÉvaluation de la cardinalité nord" + "\n");
+          if (t.north() == Tile.Type.ROAD)
+            n = evaluate(visited, set, x, y - 1, "s");
         }
+        if (t.south() == Tile.Type.ROAD) {
+          str.append("\tÉvaluation de la cardinalité sud" + "\n");
+          if (t.south() == Tile.Type.ROAD)
+            s = evaluate(visited, set, x, y + 1, "n");
+        }
+        if (t.east() == Tile.Type.ROAD) {
+          str.append("\tÉvaluation de la cardinalité est" + "\n");
+          if (t.east() == Tile.Type.ROAD)
+            e = evaluate(visited, set, x + 1, y, "w");
+        }
+        if (t.west() == Tile.Type.ROAD) {
+          str.append("\tÉvaluation de la cardinalité ouest" + "\n");
+          if (t.west() == Tile.Type.ROAD)
+            w = evaluate(visited, set, x - 1, y, "e");
+        }
+        str.append("\tRésultat de la tuile (" + x + ", " + y + ") -> " + card + " : nord = " + n + ", sud = " + s
+            + ", est = " + e + ", ouest = " + w + "\n");
+        Configuration.instance().logger().fine(str.toString());
+        return (n && s && e && w);
       }
     }
-  }
-
-  /**
-   ** Retourne vraie si le centre de la tuile n'est pas un élément qui fini une
-   ** route
-   *
-   * @param t Tile à tester
-   * @return vraie si la route se termine au centre de la tuile
-   */
-  public static boolean isEnder(Tile t) {
-    return (t.center() == Tile.Type.ABBEY ||
-        t.center() == Tile.Type.CITY ||
-        t.center() == Tile.Type.TOWN);
+    Configuration.instance().logger().fine(str.toString());
+    return true;
   }
 
   /**
@@ -208,7 +161,7 @@ public class ProjectRoad extends Project {
    */
   @Override
   public int value() {
-    return g.getNodeCount();
+    return list.size();
   }
 
   @Override
@@ -217,7 +170,7 @@ public class ProjectRoad extends Project {
   }
 
   @Override
-  public Graph graph() {
-    return g;
+  public List<TileOfProject> list() {
+    return list;
   }
 }

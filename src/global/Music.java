@@ -1,8 +1,8 @@
 package global;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -15,17 +15,26 @@ public class Music implements Runnable {
   int playlistNumber = 0;
 
   public Music() {
+    loadMusic();
     try {
-      for (File f : new File("assets/audio/music").listFiles()) {
-        playlist.add(AudioSystem.getAudioInputStream(new File(f.toPath().toString())));
-      }
       clip = AudioSystem.getClip();
       clip.open(playlist.get(0));
       clip.loop(Clip.LOOP_CONTINUOUSLY);
       thread = new Thread(this);
     } catch (Exception e) {
-      Configuration.instance().logger().warning("Impossible de charger les fichiers audio");
+      Configuration.instance().logger().warning("Impossible de charger le lecteur audio");
       e.printStackTrace();
+    }
+  }
+
+  /**
+   ** Charge les différentes musics dans la playlist
+   */
+  void loadMusic() {
+    try {
+      playlist.add(AudioSystem.getAudioInputStream(Configuration.charge("audio/music/Enchanted-Emotional_Fantasy_Music.au")));
+    } catch (Exception e) {
+      Configuration.instance().logger().severe("Impossible de charger les musics");
     }
   }
 
