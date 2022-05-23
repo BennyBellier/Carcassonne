@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import controller.Controleur;
+import global.Audio;
 import global.Configuration;
 import model.*;
 import model.Player.Type;
@@ -70,13 +71,7 @@ public class Carcassonne {
     Configuration.instance().logger().finest("Lancement de l'application");
     System.out.println(System.getProperty("os.name").toLowerCase());
     System.out.println(System.getProperty("user.home"));
-    // Audio audioPlayer = new Audio();
-
-    // audioPlayer.music.play();
-    // Thread.sleep(3000);
-    // audioPlayer.music.stop();
-
-    // window();
-    startGame();
+    window();
+    // startGame();
   }
 }

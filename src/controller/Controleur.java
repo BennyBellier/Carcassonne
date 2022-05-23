@@ -31,6 +31,12 @@ public class Controleur implements ActionListener {
     tab = t;
   }
 
+  public boolean isGameRunning() {
+    if (ge == null)
+      return false;
+    return ge.isGameRunning();
+  }
+
   /**
    ** Retourne la cardinalité du clic sur la tuile (x, y)
    *
