@@ -3,6 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import controller.IA;
+import controller.IAEasy;
+
 import java.awt.Color;
 
 public class Player {
@@ -67,6 +71,7 @@ public class Player {
   private Type type;
   private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects;
   private Color color;
+  private IA ia;
 
 
   public Player(String name, Type type, Color color) {
@@ -78,6 +83,8 @@ public class Player {
     curNumberOfProject = 0;
     numberOfProjects = 0;
     this.color = color;
+    if (type == Type.IA_EASY)
+      ia = new IAEasy(meeplesNumber);
   }
 
   public Player(byte[] b, String pseudo) {
@@ -88,6 +95,10 @@ public class Player {
     curNumberOfProject = b[3];
     numberOfProjects = b[4];
     nbTilePlaced = b[5];
+  }
+
+  public IA getIA() {
+    return ia;
   }
 
   /**
@@ -182,6 +193,10 @@ public class Player {
 
   public boolean canUseMeeple() {
     return meeplesNumber > 0;
+  }
+
+  public boolean isIA() {
+    return type != Type.HUMAN;
   }
 
   /**

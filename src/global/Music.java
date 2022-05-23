@@ -15,8 +15,8 @@ public class Music implements Runnable {
   int playlistNumber = 0;
 
   public Music() {
-    loadMusic();
     try {
+      loadMusic();
       clip = AudioSystem.getClip();
       clip.open(playlist.get(0));
       clip.loop(Clip.LOOP_CONTINUOUSLY);

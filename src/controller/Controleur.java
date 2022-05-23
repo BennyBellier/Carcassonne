@@ -95,6 +95,13 @@ public class Controleur implements ActionListener {
         && y <= tab.getHeight() - 15;
   }
 
+  void iaPlay() {
+    while (!ge.IAPlaceTile()) {}
+    tab.repaint();
+    ge.IAPlaceMeeple();
+    tab.repaint();
+  }
+
   /**
    ** Redirige le clic
    * @param x int position x du clic
@@ -113,6 +120,12 @@ public class Controleur implements ActionListener {
       if (ge.canEndTurn())
         ge.endOfTurn();
       ge.turnCurrentTile();
+      tab.repaint();
+    }
+
+    if (ge.isIATurn() && ge.isGameRunning()) {
+      System.out.println("\nIA turn\n");
+      iaPlay();
       tab.repaint();
     }
   }
