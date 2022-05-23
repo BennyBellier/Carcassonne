@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Point;
 
+import controller.IA;
 import global.Configuration;
 import model.Player.Type;
 import model.Projects.Project;
@@ -17,10 +18,12 @@ public class GameEngine {
   private List<Project> projectsEvaluate;
   private int playerTurn, nbPlayer;
   private CurrentTile currentTile;
-
+  private IA ia;
+  
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
     pioche = new Pioche();
+    ia = new IA();
     projectsEvaluate = new ArrayList<>();
     piocheTuile();
     nbPlayer = playersIn.length;
@@ -130,6 +133,221 @@ public class GameEngine {
     }
     return false;
   }
+
+  public boolean clicIA(int x, int y, String card) {
+    if (players.get(playerTurn).type() == Type.IA_EASY) {
+      if (!currentTile.placed) {
+        Point start = gameSet.getStartTilePoint();
+        int[] IAplaced = ia.playEasy(getSet(),gameSet.tilePositionsAllowed(currentTile.tile,true),currentTile.tile);
+        switch(IAplaced[2]){
+          case 90:
+            turnCurrentTile();
+            break;
+          case 180:
+            turnCurrentTile();
+            turnCurrentTile();
+            break;
+          case 270:
+            turnCurrentTile();
+            turnCurrentTile();
+            turnCurrentTile();
+            break;
+        }
+        if (gameSet.addTile(currentTile.tile, IAplaced[0] - start.x, IAplaced[1] - start.y)) {
+          currentTile.x = IAplaced[0] - start.x;
+          currentTile.y = IAplaced[1] - start.y;
+          currentTile.placed();
+
+          if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
+            endOfTurn();
+          }
+          return true;
+        }
+        return false;
+      } else {
+        Point start = gameSet.getStartTilePoint();
+        if (x - start.x == currentTile.x && y - start.y == currentTile.y) { 
+          String IAmeeple= ia.meepleEasy(getSet(),x,y);
+          if (IAmeeple != null){
+            switch(IAmeeple){
+            case "n":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "s":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "e":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "w":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "c":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;  
+            }
+          }
+        }
+      }
+    }
+    else if (players.get(playerTurn).type() == Type.IA_MEDIUM) {
+      if (!currentTile.placed) {
+        Point start = gameSet.getStartTilePoint();
+        int[] IAplaced = ia.playEasy(getSet(),gameSet.tilePositionsAllowed(currentTile.tile,true),currentTile.tile);
+        switch(IAplaced[2]){
+          case 90:
+            turnCurrentTile();
+            break;
+          case 180:
+            turnCurrentTile();
+            turnCurrentTile();
+            break;
+          case 270:
+            turnCurrentTile();
+            turnCurrentTile();
+            turnCurrentTile();
+            break;
+        }
+        if (gameSet.addTile(currentTile.tile, IAplaced[0] - start.x, IAplaced[1] - start.y)) {
+          currentTile.x = IAplaced[0] - start.x;
+          currentTile.y = IAplaced[1] - start.y;
+          currentTile.placed();
+
+          if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
+            endOfTurn();
+          }
+          return true;
+        }
+        return false;
+      } else {
+        Point start = gameSet.getStartTilePoint();
+        if (x - start.x == currentTile.x && y - start.y == currentTile.y) { 
+          String IAmeeple= ia.meepleEasy(getSet(),x,y);
+          if (IAmeeple != null){
+            switch(IAmeeple){
+            case "n":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "s":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "e":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "w":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "c":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;  
+            }
+          }
+        }
+      }
+    }
+    else if (players.get(playerTurn).type() == Type.IA_HARD) {
+      if (!currentTile.placed) {
+        Point start = gameSet.getStartTilePoint();
+        int[] IAplaced = ia.playEasy(getSet(),gameSet.tilePositionsAllowed(currentTile.tile,true),currentTile.tile);
+        switch(IAplaced[2]){
+          case 90:
+            turnCurrentTile();
+            break;
+          case 180:
+            turnCurrentTile();
+            turnCurrentTile();
+            break;
+          case 270:
+            turnCurrentTile();
+            turnCurrentTile();
+            turnCurrentTile();
+            break;
+        }
+        if (gameSet.addTile(currentTile.tile, IAplaced[0] - start.x, IAplaced[1] - start.y)) {
+          currentTile.x = IAplaced[0] - start.x;
+          currentTile.y = IAplaced[1] - start.y;
+          currentTile.placed();
+
+          if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
+            endOfTurn();
+          }
+          return true;
+        }
+        return false;
+      } else {
+        Point start = gameSet.getStartTilePoint();
+        if (x - start.x == currentTile.x && y - start.y == currentTile.y) { 
+          String IAmeeple= ia.meepleEasy(getSet(),x,y);
+          if (IAmeeple != null){
+            switch(IAmeeple){
+            case "n":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "s":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "e":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "w":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;
+            case "c":
+              if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, IAmeeple))) {
+                endOfTurn();
+                return true;
+              }
+              break;  
+            }
+          }
+        }
+      }
+    }  
+    return false;
+  }
+
 
   /**
    ** Renvoie vraie si le joueur peut terminer son tour

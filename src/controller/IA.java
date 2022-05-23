@@ -1,11 +1,11 @@
-package global;
+package controller;
 
 import java.util.Map;
 import java.util.Random;
 import java.util.ArrayList;
 
-import model.GameSet;
 import model.Tile;
+import global.Configuration;
 
 public class IA
 {
@@ -29,7 +29,7 @@ public class IA
     //meeplePositions: Positions où notre meeples sont placés dans le plateau
     ArrayList<Integer> placedMeeples;
 
-    IA()
+    public IA()
     {
         currentConfig = null;
         stack = 0;
