@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -33,7 +34,7 @@ public class Configuration {
       Files.createDirectories(configPath);
       Files.createDirectories(Paths.get(configPath.toString() + File.separator + "logs"));
       Files.createDirectories(Paths.get(configPath.toString() + File.separator + "saves"));
-      Files.copy(Paths.get("assets/default.cfg"), Paths.get(configPath + "/config.cfg"),
+      Files.copy(Configuration.charge("default.cfg"), Paths.get(configPath.toString() + File.separator + "config.cfg"),
           StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       System.err.println("Impossible de créer le dossier de configuration");
@@ -89,6 +90,17 @@ public class Configuration {
     if (res == null)
       throw new NoSuchElementException("Propriété " + key + " non définie");
     return res;
+  }
+
+  public void setProperty(String key, String value) {
+    prop.setProperty(key, value);
+    try {
+      if (configFolder != null) {
+        prop.store(new FileOutputStream(configFolder.toString() + File.separator + "config.cfg"), null);
+      }
+    } catch (IOException e) {
+      logger().severe("Le fichier de configuration n'existe pas");
+    }
   }
 
   String getFileLoggerName() {

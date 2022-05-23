@@ -42,12 +42,12 @@ public class Frames extends javax.swing.JFrame {
     setIcon();
     loadFont();
     imgs = new Images();
-    Audio audioPlayer = new Audio();
+    // Audio audioPlayer = new Audio();
     initComponents();
     setupPanel();
     addKeyListener(keyboard);
     basculeEnPleineEcran();
-    audioPlayer.music.play();
+    // audioPlayer.music.play();
   }
 
   void setIcon() {
@@ -1090,6 +1090,7 @@ public class Frames extends javax.swing.JFrame {
     newGame.setVisible(false);
     plateauJeu.setVisible(true);
     GameEngine gm = new GameEngine(playersToArray());
+    plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm);
     keyboard.setControleur(control);

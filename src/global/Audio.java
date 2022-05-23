@@ -10,9 +10,9 @@ public class Audio {
 
 
   public Audio() {
-    master = Integer.parseInt(Configuration.instance().lis("Volume"));
-    musicVolume = Integer.parseInt(Configuration.instance().lis("Music"));
-    fxVolume = Integer.parseInt(Configuration.instance().lis("FX"));
+    master = Float.parseFloat(Configuration.instance().lis("Volume"));
+    musicVolume = Float.parseFloat(Configuration.instance().lis("Music"));
+    fxVolume = Float.parseFloat(Configuration.instance().lis("FX"));
     music = new Music();
   }
 
