@@ -124,7 +124,6 @@ public class Frames extends javax.swing.JFrame {
     } else {
       ajouterJoueur.setEnabled(true);
     }
-
   }
 
   private void desactivation() {
