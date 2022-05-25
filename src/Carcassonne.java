@@ -42,7 +42,7 @@ public class Carcassonne {
   }
 
   static void startGame() {
-    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, new Color(0x00ff00)), new Player("Benny", Type.HUMAN, new Color(0x101eff)));
+    GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, new Color(7, 45, 249)), new Player("Benny", Type.HUMAN, new Color(60, 212, 21)));
 
     AffichePlateau affPlat = new AffichePlateau();
 
@@ -68,9 +68,7 @@ public class Carcassonne {
 
   public static void main(String[] args) throws Exception {
     Configuration.instance().logger().finest("Lancement de l'application");
-    System.out.println(System.getProperty("os.name").toLowerCase());
-    System.out.println(System.getProperty("user.home"));
-    window();
-    //startGame();
+    // window();
+    startGame();
   }
 }

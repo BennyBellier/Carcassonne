@@ -8,7 +8,8 @@ public class Pioche {
 
   // Un numéro à était attribué pour chacunes des tuiles uniques
   // ci-dessous le tableau stock pour un type de tuiles (index) son nombre d'occurences dans le jeu
-  private int[] numberPerTile = { 4, 2, 1, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 3, 8, 9, 4, 1 };
+  // private int[] numberPerTile = { 4, 2, 1, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 3, 8, 9, 4, 1 };
+  private int[] numberPerTile = { 4, 2, 1, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 3, 8, 9, 4, 0};
   private LinkedList<Tile> pioche;
   private Random r;
 
@@ -31,7 +32,7 @@ public class Pioche {
    */
   void initPioche() {
     int allp = 0;
-    while (allp != 71) {
+    while (allp != 1) {
       int typeTuile = r.nextInt(24);
       if (numberPerTile[typeTuile] != 0) {
         numberPerTile[typeTuile] -= 1;

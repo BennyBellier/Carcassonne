@@ -1,12 +1,12 @@
 package global;
 
+import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
 
 public class Music implements Runnable {
   List<AudioInputStream> playlist = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Music implements Runnable {
    */
   void loadMusic() {
     try {
-      playlist.add(AudioSystem.getAudioInputStream(Configuration.charge("audio/music/Enchanted-Emotional_Fantasy_Music.au")));
+      playlist.add(AudioSystem.getAudioInputStream(new BufferedInputStream(Configuration.charge("audio/music/Enchanted-Emotional_Fantasy_Music.au"))));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les musics");
     }
@@ -65,17 +65,17 @@ public class Music implements Runnable {
   public void run() {
     clip.start();
     // while (thread.isAlive()) {
-    //   if (!clip.isRunning()) {
-    //     clip.close();
-    //     playlistNumber = (playlistNumber + 1) % playlist.size();
-    //     try {
-    //       clip.open(playlist.get(playlistNumber));
-    //       clip.start();
-    //     }
-    //     catch (Exception e) {
-    //       Configuration.instance().logger().severe("Impossible de lire la musique");
-    //     }
-    //   }
+    // if (!clip.isRunning()) {
+    // clip.close();
+    // playlistNumber = (playlistNumber + 1) % playlist.size();
+    // try {
+    // clip.open(playlist.get(playlistNumber));
+    // clip.start();
+    // }
+    // catch (Exception e) {
+    // Configuration.instance().logger().severe("Impossible de lire la musique");
+    // }
+    // }
     // }
   }
 

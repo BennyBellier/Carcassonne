@@ -42,12 +42,12 @@ public class Frames extends javax.swing.JFrame {
     setIcon();
     loadFont();
     imgs = new Images();
-    // Audio audioPlayer = new Audio();
+    Audio audioPlayer = new Audio();
     initComponents();
     setupPanel();
     addKeyListener(keyboard);
     basculeEnPleineEcran();
-    // audioPlayer.music.play();
+    audioPlayer.music.play();
   }
 
   void setIcon() {
@@ -71,7 +71,7 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipale();
     jeuEnReseaux.setEnabled(false);
     lancerLaPartie.setEnabled(false);
-    ajouterIA.setEnabled(false);
+    ajouterIA.setEnabled(true);
     sauvegarderInGame.setEnabled(false);
   }
 
@@ -907,7 +907,7 @@ public class Frames extends javax.swing.JFrame {
     reglesScrollPane2.setBackground(new Color (0,0,0,0));
     reglesScrollPane2.setBorder(null);
     reglesScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    
+
     reglesPane1.setEditable(false);
     reglesPane1.setBackground(new java.awt.Color(201, 152, 104));
     reglesPane1.setBorder(null);
@@ -1192,15 +1192,15 @@ public class Frames extends javax.swing.JFrame {
     menuPlateau.setVisible(true);
   }
 
-  private void menuInGameMousePressed(java.awt.event.MouseEvent evt) {                                        
+  private void menuInGameMousePressed(java.awt.event.MouseEvent evt) {
     menuInGame.setBackground(new Color(0, 0, 0, 50));
-  }        
+  }
 
-  private void retourRegles2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
+  private void retourRegles2ActionPerformed(java.awt.event.ActionEvent evt) {
     plateauJeu.setVisible(true);
     regles2.setVisible(false);
     menuPlateau.setVisible(true);
-  } 	 
+  }
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
