@@ -106,6 +106,7 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setVisible(false);
     menuInGame.setVisible(false);
     regles2.setVisible(false);
+    scoreFin.setVisible(false);
   }
 
   public void boutonSupDesactiver() {
@@ -123,7 +124,6 @@ public class Frames extends javax.swing.JFrame {
     } else {
       ajouterJoueur.setEnabled(true);
     }
-
   }
 
   private void desactivation() {
@@ -416,6 +416,10 @@ public class Frames extends javax.swing.JFrame {
     retourRegles2 = new javax.swing.JButton();
     reglesScrollPane2 = new javax.swing.JScrollPane();
     reglesPane1 = new javax.swing.JTextPane();
+    scoreFin = new javax.swing.JPanel();
+    panelTable = new javax.swing.JPanel();
+    finScrollPane = new javax.swing.JScrollPane();
+    scoreTable = new javax.swing.JTable();
 
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -625,6 +629,37 @@ public class Frames extends javax.swing.JFrame {
       }
     });
     plateauJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1860, 10, 50, 50));
+
+    scoreFin.setBackground(new Color(0,0,0,50));
+    scoreFin.setMaximumSize(new java.awt.Dimension(1920, 1080));
+    scoreFin.setMinimumSize(new java.awt.Dimension(1920, 1080));
+    scoreFin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    panelTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+    panelTable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    scoreTable.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null},
+            {null, null},
+            {null, null},
+            {null, null},
+            {null, null}
+        },
+        new String [] {
+            "Joueurs", "Points"
+        }
+    ));
+    scoreTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+    scoreTable.setAutoscrolls(false);
+    scoreTable.setShowVerticalLines(false);
+    finScrollPane.setViewportView(scoreTable);
+
+    panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 270, 120));
+
+    scoreFin.add(panelTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, 360, 190));
+
+    plateauJeu.add(scoreFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
     menuInGame.setBackground(new Color(0, 0, 0, 50));
     menuInGame.setMaximumSize(new java.awt.Dimension(1920, 1080));
@@ -1229,5 +1264,9 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JScrollPane reglesScrollPane2;
   private javax.swing.JTextPane reglesPane1;
   private javax.swing.JButton retourRegles2;
+  private javax.swing.JPanel scoreFin;
+  private javax.swing.JTable scoreTable;
+  private javax.swing.JPanel panelTable;
+  private javax.swing.JScrollPane finScrollPane;
   // End of variables declaration
 }
