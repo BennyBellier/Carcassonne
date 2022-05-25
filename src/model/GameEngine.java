@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 import java.util.Map;
 
+import org.omg.CORBA.Current;
+
 import controller.Controleur;
 
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ import java.awt.Point;
 
 import controller.IA;
 import global.Configuration;
-import model.Player.Type;
 import model.Projects.Project;
 import model.Projects.TileOfProject;
 
@@ -23,6 +24,7 @@ public class GameEngine {
   private List<Project> projectsEvaluate;
   private int playerTurn, nbPlayer;
   private CurrentTile currentTile;
+  private CurrentMeeple currentMeeple;
   private boolean gameEnded;
   private Controleur control;
 
@@ -86,6 +88,10 @@ public class GameEngine {
     return pioche.size();
   }
 
+  public CurrentMeeple getcurrentMeeple() {
+    return currentMeeple;
+  }
+
   /**
    ** Retourne le nombre de joueur
    *
@@ -108,50 +114,14 @@ public class GameEngine {
     return gameSet;
   }
 
-  /**
-   ** Effectue l'action du clic en fonction de l'état courant du tour du joueur
-   *
-   * @param x    position x de la tuile à placer ou du meeple
-   * @param y    position y de la tuile à placer ou du meeple
-   * @param card cardinalité du meeple à placer
-   * @return boolean vraie si la pose de la tuile ou du meeple a été effectué,
-   *         faux sinon
-   */
-  public boolean clic(int x, int y, String card) {
-    if (players.get(playerTurn).type() == Type.HUMAN) {
-      if (!currentTile.placed) {
-        Point start = gameSet.getStartTilePoint();
-        if (gameSet.addTile(currentTile.tile, x - start.x, y - start.y)) {
-          currentTile.x = x - start.x;
-          currentTile.y = y - start.y;
-          currentTile.placed();
-
-          if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
-            endOfTurn();
-          }
-          return true;
-        }
-        return false;
-      } else {
-        Point start = gameSet.getStartTilePoint();
-        if (x - start.x == currentTile.x && y - start.y == currentTile.y) {
-          if (placeMeeple(new Meeple(playerTurn, y - start.y, x - start.x, card))) {
-            endOfTurn();
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
-
   public boolean IAPlaceTile() {
     IA ia = players.get(playerTurn).getIA();
     Point start = gameSet.getStartTilePoint();
 
     // placement tuile
     int[] pos = ia.placeTile(gameSet, currentTile.tile);
-    Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en (" + (pos[0] - start.y) + ", " + (pos[1] - start.x) + ")");
+    Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en ("
+        + (pos[0] - start.y) + ", " + (pos[1] - start.x) + ")");
     if (gameSet.addTile(currentTile.tile, pos[0] - start.x, pos[1] - start.y)) {
       currentTile.x = pos[0] - start.x;
       currentTile.y = pos[1] - start.y;
@@ -173,7 +143,7 @@ public class GameEngine {
 
     if (card == null)
       endOfTurn();
-    else if (placeMeeple(new Meeple(playerTurn, currentTile.y, currentTile.x, card)))
+    else if (placeMeeple(currentTile.y, currentTile.x, card))
       endOfTurn();
   }
 
@@ -216,25 +186,17 @@ public class GameEngine {
    * remisé est un nouvelle tuile est pioché
    */
   void piocheTuile() {
-    if (pioche.isEmpty()) {
-      currentTile = null;
-      gameEnded = true;
-      control.finDeGame();
-    }
+    currentTile = null;
+    currentMeeple = null;
 
-    while (!pioche.isEmpty()) {
+    do {
       currentTile = new CurrentTile(pioche.piocheTuile());
       currentTile.unplaced();
+    } while (!pioche.isEmpty() && gameSet.tilePositionsAllowed(currentTile.tile, true).size() == 0);
 
-      if (gameSet.tilePositionsAllowed(currentTile.tile, true).size() == 0)
-        currentTile = null;
-      else
-        break;
-    }
-
-    if (currentTile == null) {
+    if (currentTile.tile == null && pioche.isEmpty()) {
       gameEnded = true;
-      control.finDeGame();
+      return;
     }
 
     Configuration.instance().logger().fine("Tuile pioché : " + currentTile.toString());
@@ -269,10 +231,18 @@ public class GameEngine {
    ** et passeage au joueur suivant
    */
   public void endOfTurn() {
-    projectsEvaluation();
-    nextPlayer();
-    piocheTuile();
-    Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+    if (currentTile.placed) {
+      projectsEvaluation();
+      if (pioche.isEmpty()) {
+        System.out.println("Game Engine fin de game");
+        gameEnded = true;
+        control.finDeGame();
+      } else {
+        piocheTuile();
+        nextPlayer();
+      }
+      Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+    }
   }
 
   public Map<Integer, ArrayList<Integer>> getCurrentTilePositions() {
@@ -473,24 +443,30 @@ public class GameEngine {
    * @param m meeple définie à placer
    * @return vraie si le placement à eu lieu
    */
-  boolean placeMeeple(Meeple m) {
-    for (Meeple meep : meeplesOnSet) {
-      if (m.equal(meep))
+  public boolean placeMeeple(int x, int y, String card) {
+    if (currentTile.placed) {
+      Point start = gameSet.getStartTilePoint();
+      Meeple m = new Meeple(playerTurn, y - start.y, x - start.x, card);
+
+      for (Meeple meep : meeplesOnSet) {
+        if (m.equal(meep)) {
+          return false;
+        }
+      }
+
+      if (!meeplePlacementAllowed(m)) {
         return false;
-    }
+      }
 
-    if (!meeplePlacementAllowed(m)) {
-      return false;
-    }
+      if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
+        players.get(playerTurn).meepleUse();
+        meeplesOnSet.add(m);
+        currentMeeple = new CurrentMeeple(x - start.x, y - start.y, card);
+        Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
 
-    if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
-      players.get(playerTurn).meepleUse();
-      meeplesOnSet.add(m);
-      Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
-          + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
-      return true;
+        return true;
+      }
     }
-
     return false;
   }
 
@@ -503,7 +479,11 @@ public class GameEngine {
    * @return vraie si la tuile a pu être poser, faux sinon
    */
   public boolean placeTile(int x, int y) {
-    if (gameSet.addTile(currentTile.tile, x, y)) {
+    Point start = gameSet.getStartTilePoint();
+    if (!currentTile.placed && gameSet.addTile(currentTile.tile, x - start.x, y - start.y)) {
+      currentTile.x = x - start.x;
+      currentTile.y = y - start.y;
+      currentTile.placed();
       Configuration.instance().logger()
           .info(players.get(playerTurn) + " à poser une tuile sur la case (" + x + " ," + y + ")");
       return true;
@@ -517,12 +497,29 @@ public class GameEngine {
    * @return vraie si la tuile à était enlevé, faux sinon
    */
   public boolean removeTile() {
-    if (currentTile.placed) {
+    if (currentTile.placed && gameSet.removeTile(currentTile.x + gameSet.getStartTilePoint().x,
+        currentTile.y + gameSet.getStartTilePoint().y)) {
+      currentTile.unplaced();
       Configuration.instance().logger()
-          .info("La tuile sur la case (" + currentTile.x + " ," + currentTile.y + ") a était enlevé");
-      if (gameSet.removeTile(currentTile.x + gameSet.getStartTilePoint().x,
-          currentTile.y + gameSet.getStartTilePoint().y)) {
-        currentTile.unplaced();
+          .info("La tuile sur la case (" + currentTile.x + " ," + currentTile.y + ") a été enlevé");
+      return true;
+    }
+    return false;
+  }
+
+  public boolean removeMeeple() {
+    if (currentMeeple != null) {
+      Meeple rm = new Meeple(0, currentMeeple.y, currentMeeple.x, currentMeeple.card);
+      int index = -1;
+      for (int i = 0; i < meeplesOnSet.size(); i++) {
+        if (meeplesOnSet.get(i).equal(rm))
+          index = i;
+      }
+
+      if (index != -1) {
+        meeplesOnSet.remove(index);
+        Configuration.instance().logger().info(
+            "Le meeple (" + currentMeeple.x + ", " + currentMeeple.y + ", " + currentMeeple.card + ") a été enlevé");
         return true;
       }
     }
