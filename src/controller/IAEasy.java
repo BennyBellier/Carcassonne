@@ -44,5 +44,4 @@ public class IAEasy extends IA {
 
     return new int[] {j, i};
   }
-
 }

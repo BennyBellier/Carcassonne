@@ -126,68 +126,75 @@ public class AffichePlateau extends JComponent {
    */
   public void meeplePaint() {
     rand = new Random(11000);
-    int meepleSize = tileSize / 8;
+    int meepleSize = tileSize / 5;
     int alea = rand.nextInt(meepleSize / 2);
+
+    int meepleHeight = meepleSize * 100 / 125;
+    int meepleWidth = meepleSize * 100 / 130;
+
     for (Meeple m : gm.getMeeplesOnSet()) {
-      int meepleX = startX, meepleY = startY;
+      int meepleX = startX, meepleY = startY - meepleHeight/2;
       switch (m.getCardinal()) {
         case "c":
-          meepleX += ((tileSize / 2) - (meepleSize / 2)) + alea;
-          meepleY += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
+          meepleY += ((tileSize / 2) - (meepleHeight / 2)) + alea;
           break;
         case "n":
           meepleY += (tileSize * 0.03) + alea;
-          meepleX += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
           break;
         case "e":
-          meepleX += tileSize - (meepleSize + tileSize * 0.01);
-          meepleY += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleX += tileSize - (meepleWidth + tileSize * 0.01);
+          meepleY += ((tileSize / 2) - (meepleHeight / 2)) + alea;
           break;
         case "s":
-          meepleX += ((tileSize / 2) - (meepleSize / 2)) + alea;
-          meepleY += tileSize - (meepleSize + tileSize * 0.01);
+          meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
+          meepleY += tileSize - (meepleHeight + tileSize * 0.01);
           break;
         case "w":
           meepleX += tileSize * 0.03;
-          meepleY += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleY += ((tileSize / 2) - (meepleHeight / 2)) + alea;
           break;
       }
       meepleX += ((m.getY() + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((m.getX() + gm.getStartTilePoint().x) * tileSize);
-      drawable.setColor(gm.getListPlayers().get(m.getOwner()).color());
-      drawable.fillOval(meepleX, meepleY, meepleSize, meepleSize);
+      drawable.drawImage(imgs.Meeple(gm.getListPlayers().get(m.getOwner()).color()), meepleX, meepleY, meepleHeight, meepleWidth, null);
     }
   }
 
   void meeplePlacementPaint() {
-    int meepleSize = tileSize / 8;
+    int meepleSize = tileSize / 2;
+
+    int meepleHeight = meepleSize * 100 / 247;
+    int meepleWidth = meepleSize * 100 / 162;
+
     for (String card : gm.getMeeplePositions()) {
-      int meepleX = startX, meepleY = startY;
+      int meepleX = startX, meepleY = startY - meepleHeight/2;
       switch (card) {
         case "c":
-          meepleX += ((tileSize / 2) - (meepleSize / 2));
-          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          meepleX += ((tileSize / 2) - (meepleWidth / 2));
+          meepleY += ((tileSize / 2) - (meepleHeight / 2));
           break;
         case "n":
           meepleY += (tileSize * 0.03);
-          meepleX += ((tileSize / 2) - (meepleSize / 2));
+          meepleX += ((tileSize / 2) - (meepleWidth / 2));
           break;
         case "e":
-          meepleX += tileSize - (meepleSize + tileSize * 0.01);
-          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          meepleX += tileSize - (meepleWidth + tileSize * 0.01);
+          meepleY += ((tileSize / 2) - (meepleHeight / 2));
           break;
         case "s":
-          meepleX += ((tileSize / 2) - (meepleSize / 2));
-          meepleY += tileSize - (meepleSize + tileSize * 0.01);
+          meepleX += ((tileSize / 2) - (meepleWidth / 2));
+          meepleY += tileSize - (meepleHeight + tileSize * 0.01);
           break;
         case "w":
           meepleX += tileSize * 0.03;
-          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          meepleY += ((tileSize / 2) - (meepleHeight / 2));
           break;
       }
       meepleX += ((currentTile.x + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((currentTile.y + gm.getStartTilePoint().x) * tileSize);
-      drawable.drawImage(meeplePossibility, meepleX, meepleY, meepleSize, meepleSize, null);
+      drawable.drawImage(imgs.hollowMeeple(gm.getListPlayers().get(gm.getPlayerTurn()).color()), meepleX, meepleY, meepleHeight, meepleWidth, null);
     }
   }
 

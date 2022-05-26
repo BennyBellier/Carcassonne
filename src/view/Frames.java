@@ -110,6 +110,7 @@ public class Frames extends javax.swing.JFrame {
     menuInGame.setVisible(false);
     regles2.setVisible(false);
     layoutJeu.setVisible(false);
+    scoreFin.setVisible(false);
   }
 
   public void boutonSupDesactiver() {
@@ -127,7 +128,6 @@ public class Frames extends javax.swing.JFrame {
     } else {
       ajouterJoueur.setEnabled(true);
     }
-
   }
 
   private void desactivation() {
@@ -522,7 +522,10 @@ public class Frames extends javax.swing.JFrame {
     slash = new javax.swing.JLabel();
     nbTuileRestante = new javax.swing.JLabel();
     nbTuileTotal = new javax.swing.JLabel();
-
+    scoreFin = new javax.swing.JPanel();
+    panelTable = new javax.swing.JPanel();
+    finScrollPane = new javax.swing.JScrollPane();
+    scoreTable = new javax.swing.JTable();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
@@ -737,13 +740,44 @@ public class Frames extends javax.swing.JFrame {
     });
     plateauJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1860, 10, 50, 50));
 
+    scoreFin.setBackground(new Color(0, 0, 0, 0));
+    scoreFin.setOpaque(false);
+    scoreFin.setMaximumSize(new java.awt.Dimension(1920, 1080));
+    scoreFin.setMinimumSize(new java.awt.Dimension(1920, 1080));
+    scoreFin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    panelTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+    panelTable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    scoreTable.setModel(new javax.swing.table.DefaultTableModel(
+        new Object[][] {
+            { null, null },
+            { null, null },
+            { null, null },
+            { null, null },
+            { null, null }
+        },
+        new String[] {
+            "Joueurs", "Points"
+        }));
+    scoreTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+    scoreTable.setAutoscrolls(false);
+    scoreTable.setShowVerticalLines(false);
+    finScrollPane.setViewportView(scoreTable);
+
+    panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 270, 120));
+
+    scoreFin.add(panelTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, 360, 190));
+
+    plateauJeu.add(scoreFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
+
     menuInGame.setBackground(new Color(0, 0, 0, 50));
     menuInGame.setMaximumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setMinimumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
     menuInGame.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mousePressed(java.awt.event.MouseEvent evt) {
-          menuInGameMousePressed(evt);
+        menuInGameMousePressed(evt);
       }
     });
 
@@ -974,13 +1008,13 @@ public class Frames extends javax.swing.JFrame {
     retourRegles2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     retourRegles2.setText("Retour Au Jeu");
     retourRegles2.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            retourRegles2ActionPerformed(evt);
-        }
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        retourRegles2ActionPerformed(evt);
+      }
     });
     regles2.add(retourRegles2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 910, 200, 45));
 
-    reglesScrollPane2.setBackground(new Color (0,0,0,0));
+    reglesScrollPane2.setBackground(new Color(0, 0, 0, 0));
     reglesScrollPane2.setBorder(null);
     reglesScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -988,7 +1022,8 @@ public class Frames extends javax.swing.JFrame {
     reglesPane1.setBackground(new java.awt.Color(201, 152, 104));
     reglesPane1.setBorder(null);
     reglesPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-    reglesPane1.setText("But :\n\nLes joueurs posent des tuiles tour après tour afin de créer un paysage formé de routes, de villes, d’abbayes. \nVous placerez vos meeples(pions) sur ces tuiles comme voleurs, chevaliers, moines ou paysans afin de marquer des points. \nLe joueur qui aura le plus de points après le décompte final sera déclaré vainqueur.  \n\nDéroulement : \n\tLe joueur dont c’est le tour réalise les actions suivantes dans l’ordre :\n \n\t- Placement d’une tuile : Le joueur doit piocher une tuile Terrain et la placer face visible afin de continuer le paysage. \n\t   La tuile piocher sera visible en bas à droite de l’écran.\n \n\t- Pose d’un meeple : Le joueur peut poser un meeple de sa réserve sur la tuile qu’il vient de placer. \n\t   Ce n’est pas obligatoire. On ne peut pas placer 2 meeples sur 2 cases adjacentes. \n\nLes points : \t\n\tLes routes \t\n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme voleur sur une des\n\t sections de route de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un voleur sur cette route. \n\tVotre adversaire pioche alors une tuile qu’il place pour continuer le paysage. Pour qu’une route soit complétée\n\tet rapporte des points, ses deux extrémités doivent être reliées à un village, une ville ou une abbaye, ou entre elles\n\ten formant une boucle. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre route. \n\tLorsque qu’une route est complète chaque tuile de cette dernière vous rapporte 1 point \n\n\tLes villes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme chevalier sur une des sections de ville\n\t de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un chevalier dans cette ville. Votre adversaire pioche alors \n\tune tuile qu’il place pour continuer le paysage. Pour qu’une ville soit complétée et rapporte des points, elle doit être entourée\n\tde murs sans trou à l’intérieur. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre ville. \n\tLorsque qu’une ville est complète chaque tuile de cette dernière vous rapporte 2 points, de plus, chaque blason dans une ville \n\tcomplétée rapporte 2 points de plus.  \n\n\tLes abbayes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme moine sur une abbayes. \n\tUne abbaye est complétée lorsqu’elle est complètement entourée de tuiles, une abbaye complétée rapporte \n\t1 point par tuile la complétant (incluant celle de l’abbaye).");
+    reglesPane1.setText(
+        "But :\n\nLes joueurs posent des tuiles tour après tour afin de créer un paysage formé de routes, de villes, d’abbayes. \nVous placerez vos meeples(pions) sur ces tuiles comme voleurs, chevaliers, moines ou paysans afin de marquer des points. \nLe joueur qui aura le plus de points après le décompte final sera déclaré vainqueur.  \n\nDéroulement : \n\tLe joueur dont c’est le tour réalise les actions suivantes dans l’ordre :\n \n\t- Placement d’une tuile : Le joueur doit piocher une tuile Terrain et la placer face visible afin de continuer le paysage. \n\t   La tuile piocher sera visible en bas à droite de l’écran.\n \n\t- Pose d’un meeple : Le joueur peut poser un meeple de sa réserve sur la tuile qu’il vient de placer. \n\t   Ce n’est pas obligatoire. On ne peut pas placer 2 meeples sur 2 cases adjacentes. \n\nLes points : \t\n\tLes routes \t\n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme voleur sur une des\n\t sections de route de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un voleur sur cette route. \n\tVotre adversaire pioche alors une tuile qu’il place pour continuer le paysage. Pour qu’une route soit complétée\n\tet rapporte des points, ses deux extrémités doivent être reliées à un village, une ville ou une abbaye, ou entre elles\n\ten formant une boucle. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre route. \n\tLorsque qu’une route est complète chaque tuile de cette dernière vous rapporte 1 point \n\n\tLes villes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme chevalier sur une des sections de ville\n\t de cette tuile. Attention, cela n’est possible que s’il n’y a pas déjà un chevalier dans cette ville. Votre adversaire pioche alors \n\tune tuile qu’il place pour continuer le paysage. Pour qu’une ville soit complétée et rapporte des points, elle doit être entourée\n\tde murs sans trou à l’intérieur. Même si c’est l’un de vos adversaires qui a placé la tuile, cela complète quand même votre ville. \n\tLorsque qu’une ville est complète chaque tuile de cette dernière vous rapporte 2 points, de plus, chaque blason dans une ville \n\tcomplétée rapporte 2 points de plus.  \n\n\tLes abbayes \n\t\tAprès avoir placé la tuile, vous pouvez placer un meeple comme moine sur une abbayes. \n\tUne abbaye est complétée lorsqu’elle est complètement entourée de tuiles, une abbaye complétée rapporte \n\t1 point par tuile la complétant (incluant celle de l’abbaye).");
     reglesPane1.setFocusable(false);
     reglesPane1.setCaretPosition(0);
     reglesPane1.setMargin(new java.awt.Insets(100, 100, 100, 100));
@@ -1070,29 +1105,43 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.add(layoutJeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+    background.setLayout(backgroundLayout);
+    backgroundLayout.setHorizontalGroup(
+        backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE));
+    backgroundLayout.setVerticalGroup(
+        backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -1252,7 +1301,7 @@ public class Frames extends javax.swing.JFrame {
     GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
-    control = new Controleur(gm);
+    control = new Controleur(gm, scoreFin, scoreTable);
     keyboard.setControleur(control);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
@@ -1422,5 +1471,9 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JLabel nbTuileRestante;
   private javax.swing.JLabel nbTuileTotal;
   private javax.swing.JLabel slash;
+  private javax.swing.JPanel scoreFin;
+  private javax.swing.JTable scoreTable;
+  private javax.swing.JPanel panelTable;
+  private javax.swing.JScrollPane finScrollPane;
   // End of variables declaration
 }

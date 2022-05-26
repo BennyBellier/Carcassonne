@@ -3,7 +3,9 @@ package model.Projects;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.awt.Point;
 
+import model.Meeple;
 import model.Tile;
 
 public class TileOfProject {
@@ -30,6 +32,16 @@ public class TileOfProject {
     }
 
     return true;
+  }
+
+  public boolean containsMeeple(Meeple m, Point start) {
+    if (x - start.x == m.getY() && y - start.y == m.getX()) {
+      for (String string : cards) {
+        if (string == m.getCardinal())
+          return true;
+      }
+    }
+    return false;
   }
 
   /**
