@@ -30,12 +30,14 @@ public class Controleur implements ActionListener {
   GameEngine ge;
   JPanel affichageScoreFin;
   JTable scoreboard;
+  JButton menuBoutons;
 
-  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable) {
+  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable , JButton menuPlateau) {
     ge = gameEngine;
     ge.setControleur(this);
     affichageScoreFin = scoreFin;
     scoreboard = scoreJTable;
+    menuBoutons = menuPlateau;
   }
 
   public void setAfficheur(AffichePlateau t) {
@@ -218,8 +220,10 @@ public class Controleur implements ActionListener {
 
   public void finDeGame() {
     scoreboard.setModel(new javax.swing.table.DefaultTableModel(ge.playersScores(),
-        new String[] { "Joueur", "Nombre de Projets", "Tuiles placées", "Score" }));
+        new String[] { "Joueurs", "Nombre de Projets", "Tuiles placées", "Score" }));
     affichageScoreFin.setVisible(true);
+    menuBoutons.setVisible(false);
+    
   }
 
   @Override
