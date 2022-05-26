@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -333,6 +334,7 @@ public class Frames extends javax.swing.JFrame {
 
   public void reinitialiserParametre() {
     ajouterJoueur.setEnabled(false);
+    ajouterIA.setEnabled(true);
     j1.setText("");
     j2.setText("");
     j3.setText("");
@@ -740,7 +742,7 @@ public class Frames extends javax.swing.JFrame {
     scoreFin.setMinimumSize(new java.awt.Dimension(1920, 1080));
     scoreFin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    
+
     panelTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     panelTable.setMaximumSize(new java.awt.Dimension(1920, 1080));
     panelTable.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -749,6 +751,14 @@ public class Frames extends javax.swing.JFrame {
     panelTable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     scoreTable.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    scoreTable.setOpaque(false);
+    DefaultTableCellRenderer hRenderer = (DefaultTableCellRenderer) scoreTable.getTableHeader().getDefaultRenderer();
+    hRenderer.setHorizontalAlignment(0);
+    hRenderer.setOpaque(false);
+    scoreTable.getTableHeader().setPreferredSize(new Dimension(300, 80));
+    scoreTable.getTableHeader().setDefaultRenderer(hRenderer);
+    scoreTable.getTableHeader().setFont(uniFont.deriveFont((float) 40));
+    scoreTable.setForeground(new Color(255, 255, 255));
     scoreTable.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
             {null, null},
@@ -762,7 +772,7 @@ public class Frames extends javax.swing.JFrame {
         }
     ) {
         boolean[] canEdit = new boolean [] {
-            false, true
+            false, false
         };
 
         public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -772,14 +782,18 @@ public class Frames extends javax.swing.JFrame {
     scoreTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     scoreTable.setAutoscrolls(false);
     scoreTable.setFocusable(false);
-    scoreTable.setRowHeight(84);
+    scoreTable.setRowHeight(75);
     scoreTable.setShowVerticalLines(false);
     scoreTable.getTableHeader().setReorderingAllowed(false);
+    finScrollPane.setOpaque(false);
+    finScrollPane.setBackground(new Color(0, 0, 0, (float) 0.25));
+    finScrollPane.getViewport().setOpaque(false);
     finScrollPane.setViewportView(scoreTable);
     finScrollPane.setFocusable(false);
 
 
-    panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 316, 1285, 449));
+    panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 316, 1285, 465));
+    panelTable.setBackground(new Color(0, 0, 0, (float) 0.50));
 
     scoreContinuer.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     scoreContinuer.setText("->");
@@ -890,7 +904,7 @@ public class Frames extends javax.swing.JFrame {
     newGame.add(lancerLaPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 910, 250, 50));
 
     difficulterBox.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen", "Terminator" }));
+    difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile"/* , "Moyen", "Terminator" */ }));
     newGame.add(difficulterBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 670, 200, 50));
 
     cBleu.setBackground(new java.awt.Color(7, 45, 249));
@@ -1419,10 +1433,10 @@ public class Frames extends javax.swing.JFrame {
     menuPlateau.setVisible(true);
   }
 
-  private void scoreContinuerActionPerformed(java.awt.event.ActionEvent evt) {                                               
+  private void scoreContinuerActionPerformed(java.awt.event.ActionEvent evt) {
       menuPrincipale();
       menuPlateau.setVisible(true);
-  }        
+  }
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;

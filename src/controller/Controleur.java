@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import global.Configuration;
 import model.GameEngine;
@@ -33,7 +34,7 @@ public class Controleur implements ActionListener {
   JButton menuBoutons;
   boolean IAPlaying;
 
-  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable , JButton menuPlateau) {
+  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable, JButton menuPlateau) {
     ge = gameEngine;
     ge.setControleur(this);
     affichageScoreFin = scoreFin;
@@ -232,11 +233,26 @@ public class Controleur implements ActionListener {
   }
 
   public void finDeGame() {
-    scoreboard.setModel(new javax.swing.table.DefaultTableModel(ge.playersScores(),
-        new String[] { "Joueurs", "Nombre de Projets", "Tuiles placées", "Score" }));
+    String[][] playersScores = ge.playersScores();
+    scoreboard.setModel(new javax.swing.table.DefaultTableModel(playersScores,
+        new String[] { "Joueurs", "Nombre de Projets", "Tuiles placées", "Score" }) {
+      @Override
+      public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+      }
+    });
+
+    DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+    render.setHorizontalAlignment(SwingConstants.CENTER);
+    render.setOpaque(false);
+
+    for (int j = 0; j < 4; j++) {
+      scoreboard.getColumnModel().getColumn(j).setCellRenderer(render);
+    }
+
     affichageScoreFin.setVisible(true);
     menuBoutons.setVisible(false);
-    
+
   }
 
   @Override
