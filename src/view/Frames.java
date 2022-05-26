@@ -193,7 +193,6 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void ajouterIA(String text) {
-
     if (j1.getText().isEmpty()) {
       j1.setForeground(c);
       desactivation();
@@ -1336,6 +1335,8 @@ public class Frames extends javax.swing.JFrame {
     control.setAfficheur(plateauJeu);
     cadre();
     sendLabel();
+    plateauJeu.afficherPioche();
+    control.startGame();
   }
 
   private void ajouterIAActionPerformed(java.awt.event.ActionEvent evt) {

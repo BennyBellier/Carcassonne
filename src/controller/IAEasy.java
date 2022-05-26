@@ -17,7 +17,7 @@ public class IAEasy extends IA {
   }
 
   public String placeMeeple(List<String> meeplesPositions) {
-    if (rand.nextInt(4) == 0) {
+    if (rand.nextInt(100) < 95) {
       return meeplesPositions.get(rand.nextInt(meeplesPositions.size()));
     }
     return null;

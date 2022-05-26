@@ -31,6 +31,7 @@ public class Controleur implements ActionListener {
   JPanel affichageScoreFin;
   JTable scoreboard;
   JButton menuBoutons;
+  boolean IAPlaying;
 
   public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable , JButton menuPlateau) {
     ge = gameEngine;
@@ -38,6 +39,7 @@ public class Controleur implements ActionListener {
     affichageScoreFin = scoreFin;
     scoreboard = scoreJTable;
     menuBoutons = menuPlateau;
+    IAPlaying = false;
   }
 
   public void setAfficheur(AffichePlateau t) {
@@ -50,7 +52,7 @@ public class Controleur implements ActionListener {
     return ge.isGameRunning();
   }
 
-  void startGame() {
+  public void startGame() {
     if (ge.isIATurn())
       iaPlay();
   }
@@ -122,11 +124,18 @@ public class Controleur implements ActionListener {
 
   public void iaPlay() {
     if (ge.isGameRunning()) {
+      IAPlaying = true;
       while (!ge.IAPlaceTile()) {
       }
       tab.repaint();
       ge.IAPlaceMeeple();
       tab.repaint();
+      ge.endOfTurn();
+      tab.repaint();
+      IAPlaying = false;
+
+      if (ge.isIATurn())
+        iaPlay();
     }
   }
 
@@ -144,7 +153,7 @@ public class Controleur implements ActionListener {
     float l = (y - tab.getOffsetY()) / tab.tailleTuile();
     if (ge.getCurrentTile().placed && clickOnCurrentTile((int) c, (int) l)) {
       System.out.println("placement du meeple");
-      ge.placeMeeple((int) c, (int) l, cardOfClic(x, y));
+      ge.placeMeeple(cardOfClic(x, y));
       tab.repaint();
     }
     tab.repaint();
@@ -171,20 +180,24 @@ public class Controleur implements ActionListener {
    * @param y int position y du clic
    */
   public void clic(int x, int y) {
-    if (ge.isGameRunning()) {
+    if (ge.isGameRunning() && !IAPlaying) {
       if (clicOnSet(x, y)) {
         if (!ge.getCurrentTile().placed) {
           placeTile(x, y);
           if (ge.getCurrentTile().placed)
             tab.afficherRefaire();
         } else {
-          placeMeeple(x, y);
-          tab.afficherRefaire();
+          if (ge.getcurrentMeeple() == null) {
+            placeMeeple(x, y);
+            tab.afficherRefaire();
+          }
         }
       } else if (clicOnHand(x, y)) {
         if (ge.getCurrentTile().placed) {
           endTurn();
           tab.afficherPioche();
+          if (ge.isIATurn())
+            iaPlay();
         } else if (!ge.getCurrentTile().placed) {
           ge.turnCurrentTile();
           tab.afficherPioche();
