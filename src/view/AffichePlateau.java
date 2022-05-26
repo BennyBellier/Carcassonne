@@ -279,7 +279,6 @@ public class AffichePlateau extends JComponent {
               drawable.drawImage(imgs.highlight, (startX + j * tileSize) + (resize), (startY + i * tileSize) + (resize), (tileSize) - (resize*2), (tileSize) - (resize*2), null);
           }
         }
-
       } else {
         act.setVisible(false);
         meeplePlacementPaint();

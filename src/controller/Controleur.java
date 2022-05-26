@@ -173,7 +173,8 @@ public class Controleur implements ActionListener {
       if (clicOnSet(x, y)) {
         if (!ge.getCurrentTile().placed) {
           placeTile(x, y);
-          tab.afficherRefaire();
+          if (ge.getCurrentTile().placed)
+            tab.afficherRefaire();
         } else {
           placeMeeple(x, y);
           tab.afficherRefaire();
