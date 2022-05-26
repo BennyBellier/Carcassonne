@@ -18,11 +18,13 @@ import java.util.ArrayList;
  * @author ludov
  */
 public class Images {
-  Image blason, meeplePossibility , plateauInGame , croix , menu, highlight , boisB , bleu , jaune ,noir , rouge , vert , pioche , valider , refaire;
-  Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen, meepleYellow;
+  Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisB, bleu, jaune, noir, rouge, vert, pioche,
+      valider, refaire;
+  Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
+      meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
   private final int colorBlue = new Color(7, 45, 249).getRGB();
-  private final int colorRed = 0;
+  private final int colorRed = new Color(240, 0, 32).getRGB();
   private final int colorGreen = new Color(60, 212, 21).getRGB();
   private final int colorYellow = new Color(255, 235, 87).getRGB();
   private final int colorBlack = new Color(31, 31, 31).getRGB();
@@ -51,48 +53,50 @@ public class Images {
     }
   }
 
-  public Image croix(){
+  public Image croix() {
     return croix;
   }
 
-  public Image menu(){
+  public Image menu() {
     return menu;
   }
 
-  public Image boisB(){
+  public Image boisB() {
     return boisB;
   }
 
-  public Image bleu(){
+  public Image bleu() {
     return bleu;
   }
-  
-  public Image rouge(){
+
+  public Image rouge() {
     return rouge;
   }
-  
-  public Image noir(){
+
+  public Image noir() {
     return noir;
   }
-  
-  public Image jaune(){
+
+  public Image jaune() {
     return jaune;
   }
-  
-  public Image vert(){
+
+  public Image vert() {
     return vert;
   }
-  
-  public Image pioche(){
+
+  public Image pioche() {
     return pioche;
   }
-  
-  public Image valider(){
+
+  public Image valider() {
     return valider;
   }
 
-  public Image refaire(){
+  public Image refaire() {
     return refaire;
+  }
+
   void loadMeeples() {
 
     try {

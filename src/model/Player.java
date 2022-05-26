@@ -235,10 +235,13 @@ public class Player {
   }
 
   /**
-   ** Le joueur récupère un meeple, le nombre de projet courant est réduit de 1 puisque le projet est finie
+   ** Le joueur récupère un meeple
    */
   public void meepleRecovery() {
     meeplesNumber += 1;
+  }
+
+  public void minusCurrentNumberProjects() {
     curNumberOfProject -= 1;
   }
 

@@ -35,14 +35,20 @@ public class AffichePlateau extends JComponent {
   Images imgs;
   Font font;
   List<ScoreEntryPlayer> playersScores;
-  JLabel nbTuileRestante;
-  
+  JLabel nbTuileRestante, pioche, refaire, valider;
+  AfficheCurrentTile act;
 
-  public AffichePlateau() {
+
+  public AffichePlateau(JLabel pioche, JLabel refaire, JLabel valider, AfficheCurrentTile act) {
     imgs = new Images();
     images = imgs.list;
     blason = imgs.blason;
     meeplePossibility = imgs.meeplePossibility;
+    this.pioche = pioche;
+    this.refaire = refaire;
+    this.act = act;
+    valider.setVisible(false);
+    afficherPioche();
     repaint();
   }
 
@@ -74,7 +80,6 @@ public class AffichePlateau extends JComponent {
     nbTuileRestante = labelListe[labelListe.length - 1];
   }
 
-
   /**
    ** Retourne la taille courante de la tuile
    *
@@ -100,6 +105,16 @@ public class AffichePlateau extends JComponent {
    */
   public int getOffsetY() {
     return startY;
+  }
+
+  public void afficherPioche() {
+    pioche.setVisible(true);
+    refaire.setVisible(false);
+  }
+
+  public void afficherRefaire() {
+    refaire.setVisible(true);
+    pioche.setVisible(false);
   }
 
   /**
@@ -221,6 +236,7 @@ public class AffichePlateau extends JComponent {
   public void paintComponent(Graphics g) {
     updateScoreBoard();
     nbTuileRestante.setText(String.valueOf(gm.getPiocheSize()));
+    act.repaint();
     if (gm != null) {
       drawable = (Graphics2D) g;
       drawable.clearRect(0, 0, getSize().width, getSize().height);
@@ -228,7 +244,7 @@ public class AffichePlateau extends JComponent {
       Tile[][] plateau = gm.getSet();
       currentTile = gm.getCurrentTile();
       getTileSize();
-      
+
       for (int i = 0; i < plateau.length; i++) {
         //drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
         for (int j = 0; j < plateau[i].length; j++) {
@@ -246,10 +262,12 @@ public class AffichePlateau extends JComponent {
         drawable.setFont(font.deriveFont((float) 40));
 
       if (!currentTile.placed) {
-        drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
+        act.setVisible(true);
+        act.img = getImage(currentTile.tile);
         if (currentTile.tile.blason()) {
-          drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
+          act.blason = blason;
         }
+        act.repaint();
 
         Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
 
@@ -263,6 +281,7 @@ public class AffichePlateau extends JComponent {
         }
 
       } else {
+        act.setVisible(false);
         meeplePlacementPaint();
       }
 

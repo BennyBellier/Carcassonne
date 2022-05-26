@@ -27,13 +27,13 @@ public class Frames extends javax.swing.JFrame {
   Random r = new Random();
   Color c, bleu, noir, vert, violet;
   private Color couleurBleu = new Color(7, 45, 249);
-  private Color couleurRouge = new Color(240,0,32);
+  private Color couleurRouge = new Color(240, 0, 32);
   private Color couleurNoir = new Color(31, 31, 31);
   private Color couleurVert = new Color(60, 212, 21);
   private Color couleurJaune = new Color(255, 235, 87);
   private String textField;
   ArrayList<Player> players = new ArrayList<>();
-  
+
   Keybord keyboard = new Keybord();
   Font uniFont;
 
@@ -68,7 +68,6 @@ public class Frames extends javax.swing.JFrame {
       Configuration.instance().logger().severe("Impossible de charger la police de caractères");
     }
   }
-
 
   private void setupPanel() {
     menuPrincipale();
@@ -370,19 +369,19 @@ public class Frames extends javax.swing.JFrame {
     cmpMeepleJaune.setText("");
   }
 
-  public void cadre(){
+  public void cadre() {
     resetInGameLabel();
-    for (int i = 0 ; i < players.size() ; i++) {
+    for (int i = 0; i < players.size(); i++) {
       ImageIcon imageIcon = null;
-      if (players.get(i).color().equals(couleurRouge)){
+      if (players.get(i).color().equals(couleurRouge)) {
         imageIcon = new ImageIcon(imgs.rouge());
-      } else if (players.get(i).color().equals(couleurVert)){
+      } else if (players.get(i).color().equals(couleurVert)) {
         imageIcon = new ImageIcon(imgs.vert());
-      } else if (players.get(i).color().equals(couleurNoir)){
+      } else if (players.get(i).color().equals(couleurNoir)) {
         imageIcon = new ImageIcon(imgs.noir());
-      } else if (players.get(i).color().equals(couleurJaune)){
+      } else if (players.get(i).color().equals(couleurJaune)) {
         imageIcon = new ImageIcon(imgs.jaune());
-      } else if (players.get(i).color().equals(couleurBleu)){
+      } else if (players.get(i).color().equals(couleurBleu)) {
         imageIcon = new ImageIcon(imgs.bleu());
       }
 
@@ -425,11 +424,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setLabelScore(l.stream().toArray(JLabel[]::new));
   }
 
-  
-
-  
-  
-
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -462,7 +456,6 @@ public class Frames extends javax.swing.JFrame {
     credits = new javax.swing.JPanel();
     retourCredits = new javax.swing.JButton();
     creditsTextArea = new javax.swing.JTextArea();
-    plateauJeu = new AffichePlateau();
     menuPlateau = new javax.swing.JButton();
     newGame = new javax.swing.JPanel();
     retourParametre = new javax.swing.JButton();
@@ -526,6 +519,8 @@ public class Frames extends javax.swing.JFrame {
     panelTable = new javax.swing.JPanel();
     finScrollPane = new javax.swing.JScrollPane();
     scoreTable = new javax.swing.JTable();
+    hand = new AfficheCurrentTile();
+    plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
@@ -549,13 +544,13 @@ public class Frames extends javax.swing.JFrame {
     jouerL.setText("Jouer");
     menuPrincipale.add(jouerL, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 450, 70, 35));
 
-    jouerB.setBackground(new Color(0,0,0,0));
+    jouerB.setBackground(new Color(0, 0, 0, 0));
     jouerB.setIcon(new ImageIcon(imgs.boisB()));
     jouerB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     jouerB.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jouerBActionPerformed(evt);
-        }
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jouerBActionPerformed(evt);
+      }
     });
     menuPrincipale.add(jouerB, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 420, 370, 100));
 
@@ -1031,12 +1026,16 @@ public class Frames extends javax.swing.JFrame {
 
     regles2.add(reglesScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 1285, 640));
 
-    layoutJeu.setBackground(new Color(0,0,0,0));
+    layoutJeu.setBackground(new Color(0, 0, 0, 0));
     layoutJeu.setMaximumSize(new java.awt.Dimension(1920, 1080));
     layoutJeu.setMinimumSize(new java.awt.Dimension(1920, 1080));
     layoutJeu.setPreferredSize(new java.awt.Dimension(1920, 1080));
     layoutJeu.setOpaque(false);
     layoutJeu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    hand.setVisible(true);
+    hand.setFocusable(false);
+    layoutJeu.add(hand, new org.netbeans.lib.awtextra.AbsoluteConstraints(1710, 870, 145, 145));
 
     cmpMeepleBleu.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     cmpMeepleBleu.setForeground(new java.awt.Color(255, 255, 255));
@@ -1045,7 +1044,7 @@ public class Frames extends javax.swing.JFrame {
     ptsBleu.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(ptsBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 125, -1, -1));
     layoutJeu.add(imageBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 55, 260, 150));
-    
+
     cmpMeepleJaune.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     cmpMeepleJaune.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(cmpMeepleJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 282, 40, -1));
@@ -1055,7 +1054,7 @@ public class Frames extends javax.swing.JFrame {
     layoutJeu.add(imageJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 260, 150));
 
     cmpMeepleRouge.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-    cmpMeepleRouge.setForeground(new java.awt.Color(255, 255, 255));  
+    cmpMeepleRouge.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(cmpMeepleRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 688, 30, -1));
     ptsRouge.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     ptsRouge.setForeground(new java.awt.Color(255, 255, 255));
@@ -1066,10 +1065,10 @@ public class Frames extends javax.swing.JFrame {
     cmpMeepleNoire.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(cmpMeepleNoire, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 488, 30, 40));
     ptsNoire.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-    ptsNoire.setForeground(new java.awt.Color(255, 255, 255)); 
+    ptsNoire.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(ptsNoire, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 537, 40, 40));
     layoutJeu.add(imageNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 465, 260, 150));
-    
+
     cmpMeepleVert.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     cmpMeepleVert.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(cmpMeepleVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 892, 30, -1));
@@ -1077,7 +1076,7 @@ public class Frames extends javax.swing.JFrame {
     ptsVert.setForeground(new java.awt.Color(255, 255, 255));
     layoutJeu.add(ptsVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 940, 40, -1));
     layoutJeu.add(imageVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 875, 260, 140));
-   
+
     slash.setFont(uniFont.deriveFont((float) 55)); // NOI18N
     slash.setForeground(new java.awt.Color(255, 255, 255));
     slash.setText("/");
@@ -1100,7 +1099,7 @@ public class Frames extends javax.swing.JFrame {
 
     pioche.setIcon(new ImageIcon(imgs.pioche()));
     pioche.setPreferredSize(new java.awt.Dimension(422, 309));
-    layoutJeu.add(pioche, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 780, -1, -1));
+    layoutJeu.add(pioche, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 783, -1, -1));
 
     plateauJeu.add(layoutJeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1210,7 +1209,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void retourReglesActionPerformed(java.awt.event.ActionEvent evt) {
-      menuPrincipale();
+    menuPrincipale();
   }
 
   private void supprimerJ5ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1475,5 +1474,6 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JTable scoreTable;
   private javax.swing.JPanel panelTable;
   private javax.swing.JScrollPane finScrollPane;
+  private AfficheCurrentTile hand;
   // End of variables declaration
 }

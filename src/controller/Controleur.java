@@ -98,14 +98,17 @@ public class Controleur implements ActionListener {
   }
 
   boolean clicOnCancel(int x, int y) {
-    return false;
+    return x >= 1570
+        && x <= 1700
+        && y >= 770
+        && y <= 910;
   }
 
   boolean clicOnHand(int x, int y) {
-    return x >= tab.getWidth() - 100
-        && x <= tab.getWidth() - 15
-        && y >= tab.getHeight() - 100
-        && y <= tab.getHeight() - 15;
+    return x >= 1685
+        && x <= 1875
+        && y >= 835
+        && y <= 1035;
   }
 
   boolean clickOnCurrentTile(int x, int y) {
@@ -170,25 +173,26 @@ public class Controleur implements ActionListener {
       if (clicOnSet(x, y)) {
         if (!ge.getCurrentTile().placed) {
           placeTile(x, y);
-          System.out.println("Pose tuile");
+          tab.afficherRefaire();
         } else {
           placeMeeple(x, y);
-          System.out.println("Pose meeple");
-        }
-      } else if (clicOnCancel(x, y)) {
-        if (ge.getcurrentMeeple() == null) {
-          undoMeeple();
-          System.out.println("Suppression meeple");
-        } else if (ge.getcurrentMeeple() != null && ge.getCurrentTile().placed) {
-          undoTile();
-          System.out.println("Suppression tuile");
+          tab.afficherRefaire();
         }
       } else if (clicOnHand(x, y)) {
         if (ge.getCurrentTile().placed) {
           endTurn();
+          tab.afficherPioche();
         } else if (!ge.getCurrentTile().placed) {
           ge.turnCurrentTile();
-          System.out.println("Rotation tuile");
+          tab.afficherPioche();
+        }
+      } else if (clicOnCancel(x, y)) {
+        if (ge.getcurrentMeeple() != null) {
+          undoMeeple();
+          tab.afficherRefaire();
+        } else if (ge.getcurrentMeeple() == null && ge.getCurrentTile().placed) {
+          undoTile();
+          tab.afficherPioche();
         }
       }
       tab.repaint();
@@ -212,7 +216,8 @@ public class Controleur implements ActionListener {
   }
 
   public void finDeGame() {
-    scoreboard.setModel(new javax.swing.table.DefaultTableModel( ge.playersScores(), new String[] {"Joueur", "Nombre de Projets", "Tuiles placées", "Score"}));
+    scoreboard.setModel(new javax.swing.table.DefaultTableModel(ge.playersScores(),
+        new String[] { "Joueur", "Nombre de Projets", "Tuiles placées", "Score" }));
     affichageScoreFin.setVisible(true);
   }
 

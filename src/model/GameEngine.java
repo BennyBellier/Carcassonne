@@ -3,18 +3,14 @@ package model;
 import java.util.List;
 import java.util.Map;
 
-import org.omg.CORBA.Current;
-
 import controller.Controleur;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.awt.Point;
 
 import controller.IA;
 import global.Configuration;
 import model.Projects.Project;
-import model.Projects.ProjectAbbey;
 import model.Projects.TileOfProject;
 import model.Projects.Project.Type;
 
@@ -487,6 +483,7 @@ public class GameEngine {
       currentTile.x = x - start.x;
       currentTile.y = y - start.y;
       currentTile.placed();
+      players.get(playerTurn).TileplacedPlus();
       Configuration.instance().logger()
           .info(players.get(playerTurn) + " à poser une tuile sur la case (" + x + " ," + y + ")");
       return true;
@@ -503,6 +500,7 @@ public class GameEngine {
     if (currentTile.placed && gameSet.removeTile(currentTile.x + gameSet.getStartTilePoint().x,
         currentTile.y + gameSet.getStartTilePoint().y)) {
       currentTile.unplaced();
+      players.get(playerTurn).TilePlacedMinus();
       Configuration.instance().logger()
           .info("La tuile sur la case (" + currentTile.x + " ," + currentTile.y + ") a été enlevé");
       return true;
@@ -521,8 +519,10 @@ public class GameEngine {
 
       if (index != -1) {
         meeplesOnSet.remove(index);
+        players.get(playerTurn).meepleRecovery();
         Configuration.instance().logger().info(
             "Le meeple (" + currentMeeple.x + ", " + currentMeeple.y + ", " + currentMeeple.card + ") a été enlevé");
+        currentMeeple = null;
         return true;
       }
     }
@@ -570,7 +570,8 @@ public class GameEngine {
 
   boolean meepleOnAbbey(Project p, Meeple m) {
     Point start = gameSet.getStartTilePoint();
-    return p.list().get(0).x - start.x == m.getY() && p.list().get(0).y - start.y == m.getX() && p.list().get(0).containsMeeple(m, start);
+    return p.list().get(0).x - start.x == m.getY() && p.list().get(0).y - start.y == m.getX()
+        && p.list().get(0).containsMeeple(m, start);
   }
 
   /*
@@ -607,23 +608,24 @@ public class GameEngine {
             players.get(m.player).meepleRecovery();
           }
         }
-        }
+      }
 
-        meeplesOnSet.removeAll(meepleToRemove);
+      meeplesOnSet.removeAll(meepleToRemove);
 
-        int maxValue = 0;
-        for (Integer ownerValue : ownersValue) {
-          if (ownerValue > maxValue)
-            maxValue = ownerValue;
-        }
+      int maxValue = 0;
+      for (Integer ownerValue : ownersValue) {
+        if (ownerValue > maxValue)
+          maxValue = ownerValue;
+      }
 
-        if (maxValue > 0) {
-          for (int i = 0; i < ownersValue.size(); i++) {
-            if (ownersValue.get(i) == maxValue) {
-              players.get(i).scorePlus(project.value());
-            }
+      if (maxValue > 0) {
+        for (int i = 0; i < ownersValue.size(); i++) {
+          if (ownersValue.get(i) == maxValue) {
+            players.get(i).scorePlus(project.value());
+            players.get(i).minusCurrentNumberProjects();
           }
         }
+      }
       projectsEvaluate.add(project);
     }
   }
@@ -644,7 +646,7 @@ public class GameEngine {
         sort.add(i, p);
 
       while (sort.size() > players.size()) {
-        sort.remove(sort.size()-1);
+        sort.remove(sort.size() - 1);
       }
     }
     return sort;
