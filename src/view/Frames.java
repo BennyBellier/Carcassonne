@@ -333,7 +333,6 @@ public class Frames extends javax.swing.JFrame {
 
   public void reinitialiserParametre() {
     ajouterJoueur.setEnabled(false);
-    ajouterIA.setEnabled(false);
     j1.setText("");
     j2.setText("");
     j3.setText("");
@@ -518,6 +517,7 @@ public class Frames extends javax.swing.JFrame {
     panelTable = new javax.swing.JPanel();
     finScrollPane = new javax.swing.JScrollPane();
     scoreTable = new javax.swing.JTable();
+    scoreContinuer = new javax.swing.JButton();
     hand = new AfficheCurrentTile();
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -734,34 +734,63 @@ public class Frames extends javax.swing.JFrame {
     });
     plateauJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1860, 10, 50, 50));
 
-    scoreFin.setBackground(new Color(0, 0, 0, 0));
+    scoreFin.setBackground(new Color(0, 0, 0, 50));
     scoreFin.setOpaque(false);
     scoreFin.setMaximumSize(new java.awt.Dimension(1920, 1080));
     scoreFin.setMinimumSize(new java.awt.Dimension(1920, 1080));
     scoreFin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+    
     panelTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+    panelTable.setMaximumSize(new java.awt.Dimension(1920, 1080));
+    panelTable.setMinimumSize(new java.awt.Dimension(1920, 1080));
+    panelTable.setPreferredSize(new java.awt.Dimension(1920, 1080));
+    panelTable.setBackground(new Color(0,0,0,50));
     panelTable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+    scoreTable.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     scoreTable.setModel(new javax.swing.table.DefaultTableModel(
-        new Object[][] {
-            { null, null },
-            { null, null },
-            { null, null },
-            { null, null },
-            { null, null }
+        new Object [][] {
+            {null, null},
+            {null, null},
+            {null, null},
+            {null, null},
+            {null, null}
         },
-        new String[] {
+        new String [] {
             "Joueurs", "Points"
-        }));
+        }
+    ) {
+        boolean[] canEdit = new boolean [] {
+            false, true
+        };
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+    });
     scoreTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     scoreTable.setAutoscrolls(false);
+    scoreTable.setFocusable(false);
+    scoreTable.setRowHeight(84);
     scoreTable.setShowVerticalLines(false);
+    scoreTable.getTableHeader().setReorderingAllowed(false);
     finScrollPane.setViewportView(scoreTable);
+    finScrollPane.setFocusable(false);
 
-    panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 270, 120));
 
-    scoreFin.add(panelTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 350, 360, 190));
+    panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 316, 1285, 449));
+
+    scoreContinuer.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    scoreContinuer.setText("->");
+    scoreContinuer.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            scoreContinuerActionPerformed(evt);
+        }
+    });
+    panelTable.add(scoreContinuer, new org.netbeans.lib.awtextra.AbsoluteConstraints(1560, 790, 110, 45));
+
+    scoreFin.add(panelTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
     plateauJeu.add(scoreFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
@@ -1299,8 +1328,9 @@ public class Frames extends javax.swing.JFrame {
     GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
-    control = new Controleur(gm, scoreFin, scoreTable);
+    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau);
     keyboard.setControleur(control);
+    this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
     cadre();
@@ -1315,16 +1345,19 @@ public class Frames extends javax.swing.JFrame {
         setColor();
         ajouterIA("IA Facile");
         players.add(new Player("IA Facile", Player.Type.IA_EASY, c));
+        ajouterJoueur.setEnabled(false);
         break;
       case 1:
         setColor();
         ajouterIA("IA Moyen");
         players.add(new Player("IA Moyen", Player.Type.IA_MEDIUM, c));
+        ajouterJoueur.setEnabled(false);
         break;
       case 2:
         setColor();
         ajouterIA("Terminator");
         players.add(new Player("Terminator", Player.Type.IA_HARD, c));
+        ajouterJoueur.setEnabled(false);
         break;
     }
 
@@ -1385,6 +1418,11 @@ public class Frames extends javax.swing.JFrame {
     regles2.setVisible(false);
     menuPlateau.setVisible(true);
   }
+
+  private void scoreContinuerActionPerformed(java.awt.event.ActionEvent evt) {                                               
+      menuPrincipale();
+      menuPlateau.setVisible(true);
+  }        
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
@@ -1476,5 +1514,6 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JPanel panelTable;
   private javax.swing.JScrollPane finScrollPane;
   private AfficheCurrentTile hand;
+  private javax.swing.JButton scoreContinuer;
   // End of variables declaration
 }
