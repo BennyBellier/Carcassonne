@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 import java.awt.*;
 
@@ -33,6 +34,9 @@ public class AffichePlateau extends JComponent {
   CurrentTile currentTile;
   Images imgs;
   Font font;
+  List<ScoreEntryPlayer> playersScores;
+  JLabel nbTuileRestante;
+  
 
   public AffichePlateau() {
     imgs = new Images();
@@ -49,6 +53,27 @@ public class AffichePlateau extends JComponent {
   public void setFont(Font font) {
     this.font = font;
   }
+
+  public void setLabelScore(JLabel... labelListe){
+    playersScores = new ArrayList<>();
+    int nbLabel = (labelListe.length - 1) / 2;
+    System.out.println(labelListe.length + " | " + nbLabel + "\n");
+    if (nbLabel >= 2) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[0], labelListe[1]));
+      playersScores.add(new ScoreEntryPlayer(labelListe[2], labelListe[3]));
+    }
+    if (nbLabel >= 3) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[4], labelListe[5]));
+    }
+    if (nbLabel >= 4) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[6], labelListe[7]));
+    }
+    if (nbLabel >= 5) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[8], labelListe[9]));
+    }
+    nbTuileRestante = labelListe[labelListe.length - 1];
+  }
+
 
   /**
    ** Retourne la taille courante de la tuile
@@ -177,8 +202,18 @@ public class AffichePlateau extends JComponent {
     drawable.drawImage(blason, x, y, (int) (0.29 * blasonSize), (int) (0.39 * blasonSize), null);
   }
 
+  void updateScoreBoard(){
+    List<Player> players = gm.getListPlayers();
+    for (int i = 0; i < playersScores.size(); i++) {
+      playersScores.get(i).score.setText(String.valueOf(players.get(i).score()));
+      playersScores.get(i).nbMeeple.setText(String.valueOf(players.get(i).nbMeeplesRestant()));
+    }
+  }
+
   @Override
   public void paintComponent(Graphics g) {
+    updateScoreBoard();
+    nbTuileRestante.setText(String.valueOf(gm.getPiocheSize()));
     if (gm != null) {
       drawable = (Graphics2D) g;
       drawable.clearRect(0, 0, getSize().width, getSize().height);
@@ -186,11 +221,11 @@ public class AffichePlateau extends JComponent {
       Tile[][] plateau = gm.getSet();
       currentTile = gm.getCurrentTile();
       getTileSize();
-
+      
       for (int i = 0; i < plateau.length; i++) {
-        drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
+        //drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
         for (int j = 0; j < plateau[i].length; j++) {
-          drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
+          //drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
           if (plateau[i][j] != null) {
             drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
                 tileSize, null);
@@ -202,19 +237,6 @@ public class AffichePlateau extends JComponent {
       }
       if (font != null)
         drawable.setFont(font.deriveFont((float) 40));
-
-      List<Player> players = gm.getListPlayers();
-      for (int i = 0; i < gm.getNbPlayer(); i++) {
-        if (gm.getPlayerTurn() == i)
-          drawable.drawString(">", 0, (int) (40 + i * (getSize().height * 0.12)));
-        drawable.setColor(players.get(i).color());
-        drawable.drawString(players.get(i).pseudo(), 40, (int) (40 + i * (getSize().height * 0.12)));
-        drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 40 + players.get(i).pseudo().length() * 16, (int) (40 + i * (getSize().height * 0.12)));
-        drawable.drawString(String.valueOf(players.get(i).score()), 40 + players.get(i).pseudo().length() * 16 + 40, (int) (40 + i * (getSize().height * 0.12)));
-        drawable.setColor(Color.BLACK);
-      }
-
-      g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 120, getSize().height - 120);
 
       if (!currentTile.placed) {
         drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
