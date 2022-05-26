@@ -1306,6 +1306,8 @@ public class Frames extends javax.swing.JFrame {
     control.setAfficheur(plateauJeu);
     cadre();
     sendLabel();
+    plateauJeu.afficherPioche();
+    control.startGame();
   }
 
   private void ajouterIAActionPerformed(java.awt.event.ActionEvent evt) {

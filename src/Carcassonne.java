@@ -1,20 +1,5 @@
-
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
-import controller.Controleur;
 import global.Configuration;
-import model.*;
-import model.Player.Type;
-import view.AffichePlateau;
 import view.Frames;
-import view.Keybord;
-import view.Mouse;
-
-
 
 public class Carcassonne {
   public static void window() {
@@ -40,31 +25,6 @@ public class Carcassonne {
       }
     });
   }
-
-  // static void startGame() {
-  //   GameEngine gm = new GameEngine(new Player("Grizondox", Type.HUMAN, new Color(7, 45, 249)), new Player("Benny", Type.HUMAN, new Color(60, 212, 21)));
-
-  //   AffichePlateau affPlat = new AffichePlateau();
-
-  //   affPlat.setGameEngine(gm);
-
-  //   Controleur c = new Controleur(gm);
-  //   c.setAfficheur(affPlat);
-  //   affPlat.addMouseListener(new Mouse(affPlat, c));
-
-  //   JFrame frame = new JFrame();
-  //   frame.setMinimumSize(new Dimension(853, 480));
-  //   frame.setMaximumSize(new Dimension(1920, 1080));
-  //   frame.add(affPlat);
-  //   Keybord keys = new Keybord();
-  //   frame.addKeyListener(keys);
-  //   keys.setControleur(c);
-  //   frame.setSize(new Dimension(1080, 720));
-  //   frame.setVisible(true);
-  //   frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-  // }
-
-
 
   public static void main(String[] args) throws Exception {
     Configuration.instance().logger().finest("Lancement de l'application");

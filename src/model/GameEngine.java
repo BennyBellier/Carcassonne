@@ -120,18 +120,11 @@ public class GameEngine {
     int[] pos = ia.placeTile(gameSet, currentTile.tile);
     Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en ("
         + (pos[0] - start.y) + ", " + (pos[1] - start.x) + ")");
-    if (gameSet.addTile(currentTile.tile, pos[0] - start.x, pos[1] - start.y)) {
-      currentTile.x = pos[0] - start.x;
-      currentTile.y = pos[1] - start.y;
-      currentTile.placed();
-      return true;
-    }
-    return false;
+    return placeTile(pos[0], pos[1]);
   }
 
   public void IAPlaceMeeple() {
     if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
-      endOfTurn();
       return;
     }
 
@@ -139,10 +132,8 @@ public class GameEngine {
     // placement du meeple
     String card = ia.placeMeeple(currentTile.tile.getMeeplesPosition());
 
-    if (card == null)
-      endOfTurn();
-    else if (placeMeeple(currentTile.y, currentTile.x, card))
-      endOfTurn();
+    if (card != null)
+      placeMeeple(card);
   }
 
   /**
@@ -284,14 +275,14 @@ public class GameEngine {
     if (!visited.contains(t)) {
       visited.add(t);
 
+      if (type == Tile.Type.CITY)
+      ender = t.cityEnder();
+      if (type == Tile.Type.ROAD)
+      ender = t.roadEnder();
+
       if (isMeepleOnTile(x, y, card, ender, type, start)) {
         return false;
       }
-
-      if (type == Tile.Type.CITY)
-        ender = t.cityEnder();
-      if (type == Tile.Type.ROAD)
-        ender = t.roadEnder();
 
       if (ender) {
         switch (card) {
@@ -406,6 +397,10 @@ public class GameEngine {
    */
   public List<String> getMeeplePositions() {
     List<String> res = new ArrayList<>();
+
+    if (currentMeeple != null)
+      return res;
+
     if (meeplesOnSet.size() == 0) {
       res.addAll(currentTile.tile.getMeeplesPosition());
       return res;
@@ -441,10 +436,9 @@ public class GameEngine {
    * @param m meeple définie à placer
    * @return vraie si le placement à eu lieu
    */
-  public boolean placeMeeple(int x, int y, String card) {
+  public boolean placeMeeple(String card) {
     if (currentTile.placed) {
-      Point start = gameSet.getStartTilePoint();
-      Meeple m = new Meeple(playerTurn, y - start.y, x - start.x, card);
+      Meeple m = new Meeple(playerTurn, currentTile.y, currentTile.x, card);
 
       for (Meeple meep : meeplesOnSet) {
         if (m.equal(meep)) {
@@ -452,14 +446,14 @@ public class GameEngine {
         }
       }
 
-      if (!meeplePlacementAllowed(m)) {
+      if (!meeplePlacementAllowed(m) || currentMeeple != null) {
         return false;
       }
 
       if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
         players.get(playerTurn).meepleUse();
         meeplesOnSet.add(m);
-        currentMeeple = new CurrentMeeple(x - start.x, y - start.y, card);
+        currentMeeple = new CurrentMeeple(currentTile.y, currentTile.x, card);
         Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
             + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
 
@@ -645,9 +639,9 @@ public class GameEngine {
       else
         sort.add(i, p);
 
+      }
       while (sort.size() > players.size()) {
         sort.remove(sort.size() - 1);
-      }
     }
     return sort;
   }

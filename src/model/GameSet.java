@@ -343,7 +343,9 @@ public class GameSet {
    * @return vraie si le meeple peut être placé, faux sinon
    */
   public boolean meeplePlacementAllowed(Meeple m) {
-    Tile t = tiles[m.getX() + getStartTilePoint().x][m.getY() + getStartTilePoint().y];
+    // Tile t = tiles[m.getX() + getStartTilePoint().x][m.getY() + getStartTilePoint().y];
+    System.out.println(m.getY() + getStartTilePoint().x + ", " + m.getX() + getStartTilePoint().y);
+    Tile t = getTileFromCoord(m.getY() + getStartTilePoint().x, m.getX() + getStartTilePoint().y);
     if (t != null) {
       System.out.println(t.toString());
       switch (m.getCardinal()) {
