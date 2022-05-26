@@ -14,7 +14,9 @@ import java.awt.Point;
 import controller.IA;
 import global.Configuration;
 import model.Projects.Project;
+import model.Projects.ProjectAbbey;
 import model.Projects.TileOfProject;
+import model.Projects.Project.Type;
 
 public class GameEngine {
   private GameSet gameSet;
@@ -462,7 +464,8 @@ public class GameEngine {
         players.get(playerTurn).meepleUse();
         meeplesOnSet.add(m);
         currentMeeple = new CurrentMeeple(x - start.x, y - start.y, card);
-        Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case (" + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
+        Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
+            + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
 
         return true;
       }
@@ -559,10 +562,15 @@ public class GameEngine {
   boolean meepleOnProject(Project p, Meeple m) {
     Point start = gameSet.getStartTilePoint();
     for (TileOfProject top : p.list()) {
-      if (top.x - start.x == m.getY() && top.y - start.y == m.getX() && top.cards.contains(m.getCardinal()))
+      if (top.x - start.x == m.getY() && top.y - start.y == m.getX() && top.containsMeeple(m, start))
         return true;
     }
     return false;
+  }
+
+  boolean meepleOnAbbey(Project p, Meeple m) {
+    Point start = gameSet.getStartTilePoint();
+    return p.list().get(0).x - start.x == m.getY() && p.list().get(0).y - start.y == m.getX() && p.list().get(0).containsMeeple(m, start);
   }
 
   /*
@@ -580,27 +588,78 @@ public class GameEngine {
       }
       List<Meeple> meepleToRemove = new ArrayList<>();
 
-      for (Meeple m : meeplesOnSet) {
-        if (meepleOnProject(project, m)) {
-          ownersValue.add(m.player, ownersValue.get(m.player) + 1);
-          meepleToRemove.add(m);
-          players.get(m.player).meepleRecovery();
-        }
-      }
+      System.out.println(project.type().toString());
 
-      meeplesOnSet.removeAll(meepleToRemove);
-
-      int i = 1;
-      Collections.sort(ownersValue, Collections.reverseOrder());
-      if (ownersValue.get(0) != 0) {
-        players.get(0).scorePlus(project.value());
-        while (ownersValue.get(i) == ownersValue.get(0)) {
-          players.get(i).scorePlus(project.value());
-          ++i;
+      if (project.type() == Type.ABBEY) {
+        for (Meeple m : meeplesOnSet) {
+          if (meepleOnAbbey(project, m)) {
+            ownersValue.add(m.player, ownersValue.get(m.player) + 1);
+            meepleToRemove.add(m);
+            players.get(m.player).meepleRecovery();
+          }
         }
-      }
+
+      } else {
+        for (Meeple m : meeplesOnSet) {
+          if (meepleOnProject(project, m)) {
+            ownersValue.add(m.player, ownersValue.get(m.player) + 1);
+            meepleToRemove.add(m);
+            players.get(m.player).meepleRecovery();
+          }
+        }
+        }
+
+        meeplesOnSet.removeAll(meepleToRemove);
+
+        int maxValue = 0;
+        for (Integer ownerValue : ownersValue) {
+          if (ownerValue > maxValue)
+            maxValue = ownerValue;
+        }
+
+        if (maxValue > 0) {
+          for (int i = 0; i < ownersValue.size(); i++) {
+            if (ownersValue.get(i) == maxValue) {
+              players.get(i).scorePlus(project.value());
+            }
+          }
+        }
       projectsEvaluate.add(project);
     }
+  }
+
+  List<Player> resGame() {
+    List<Player> sort = new ArrayList<>();
+    for (Player p : players) {
+      if (sort.isEmpty())
+        sort.add(p);
+
+      int i = 0;
+      while (i < players.size() && sort.get(i).score() > p.score()) {
+        i++;
+      }
+      if (i >= sort.size())
+        sort.add(p);
+      else
+        sort.add(i, p);
+
+      while (sort.size() > players.size()) {
+        sort.remove(sort.size()-1);
+      }
+    }
+    return sort;
+  }
+
+  public String[][] playersScores() {
+    List<Player> res = resGame();
+    String[][] scores = new String[res.size()][4];
+    for (int i = 0; i < res.size(); i++) {
+      scores[i][0] = res.get(i).pseudo();
+      scores[i][1] = String.valueOf(res.get(i).numberOfProjects());
+      scores[i][2] = String.valueOf(res.get(i).nbTilePlaced());
+      scores[i][3] = String.valueOf(res.get(i).score());
+    }
+    return scores;
   }
 
   /**

@@ -22,6 +22,12 @@ public class Keybord extends KeyAdapter {
         case KeyEvent.VK_DELETE:
           c.command(Command.RemoveTile);
           break;
+        case KeyEvent.VK_SPACE:
+          c.command(Command.EndTurn);
+          break;
+        case KeyEvent.VK_ESCAPE:
+          c.command(Command.MenuInGame);
+          break;
 
         default:
           break;

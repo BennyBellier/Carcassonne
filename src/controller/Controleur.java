@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+
 import global.Configuration;
 import model.GameEngine;
 import view.AffichePlateau;
@@ -19,15 +21,21 @@ import view.AffichePlateau;
 public class Controleur implements ActionListener {
 
   public enum Command {
-    RemoveTile;
+    RemoveTile,
+    EndTurn,
+    MenuInGame;
   }
 
   AffichePlateau tab;
   GameEngine ge;
+  JPanel affichageScoreFin;
+  JTable scoreboard;
 
-  public Controleur(GameEngine gameEngine) {
+  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable) {
     ge = gameEngine;
     ge.setControleur(this);
+    affichageScoreFin = scoreFin;
+    scoreboard = scoreJTable;
   }
 
   public void setAfficheur(AffichePlateau t) {
@@ -134,6 +142,7 @@ public class Controleur implements ActionListener {
       ge.placeMeeple((int) c, (int) l, cardOfClic(x, y));
       tab.repaint();
     }
+    tab.repaint();
   }
 
   void undoTile() {
@@ -191,6 +200,10 @@ public class Controleur implements ActionListener {
       case RemoveTile:
         ge.removeTile();
         break;
+      case EndTurn:
+        if (ge.getCurrentTile().placed)
+          ge.endOfTurn();
+        break;
 
       default:
         break;
@@ -199,7 +212,8 @@ public class Controleur implements ActionListener {
   }
 
   public void finDeGame() {
-    System.out.println("Fin de Game");
+    scoreboard.setModel(new javax.swing.table.DefaultTableModel( ge.playersScores(), new String[] {"Joueur", "Nombre de Projets", "Tuiles placées", "Score"}));
+    affichageScoreFin.setVisible(true);
   }
 
   @Override

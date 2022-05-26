@@ -11,6 +11,7 @@ import global.Configuration;
 public class ProjectAbbey extends Project {
 
   private List<TileOfProject> list;
+  private TileOfProject start;
   private boolean finish;
   /**
    ** Vérifie si pour l'abbeye à la case (x, y), est finie
@@ -39,6 +40,10 @@ public class ProjectAbbey extends Project {
                 ", il compte " +
                 value() +
                 " points");
+  }
+
+  public TileOfProject startTile() {
+    return start;
   }
 
   /**
