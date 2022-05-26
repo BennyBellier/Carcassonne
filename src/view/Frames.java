@@ -193,7 +193,6 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void ajouterIA(String text) {
-
     if (j1.getText().isEmpty()) {
       j1.setForeground(c);
       desactivation();

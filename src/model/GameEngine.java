@@ -6,6 +6,7 @@ import java.util.Map;
 import controller.Controleur;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.awt.Point;
 
 import controller.IA;
@@ -276,9 +277,9 @@ public class GameEngine {
       visited.add(t);
 
       if (type == Tile.Type.CITY)
-      ender = t.cityEnder();
+        ender = t.cityEnder();
       if (type == Tile.Type.ROAD)
-      ender = t.roadEnder();
+        ender = t.roadEnder();
 
       if (isMeepleOnTile(x, y, card, ender, type, start)) {
         return false;
@@ -437,20 +438,24 @@ public class GameEngine {
    * @return vraie si le placement à eu lieu
    */
   public boolean placeMeeple(String card) {
-    if (currentTile.placed) {
+    if (currentTile.placed && players.get(playerTurn).canUseMeeple()) {
       Meeple m = new Meeple(playerTurn, currentTile.y, currentTile.x, card);
 
       for (Meeple meep : meeplesOnSet) {
         if (m.equal(meep)) {
+          Configuration.instance().logger().info(
+              "Il existe déjà un meeple à cette endroit (" + currentTile.x + ", " + currentTile.y + ", " + card + ")");
           return false;
         }
       }
 
       if (!meeplePlacementAllowed(m) || currentMeeple != null) {
+        Configuration.instance().logger()
+            .info("Impossible de poser de meeple ici :\n(" + currentTile.x + ", " + currentTile.y + ", " + card + ")");
         return false;
       }
 
-      if (players.get(playerTurn).canUseMeeple() && gameSet.meeplePlacementAllowed(m)) {
+      if (gameSet.meeplePlacementAllowed(m)) {
         players.get(playerTurn).meepleUse();
         meeplesOnSet.add(m);
         currentMeeple = new CurrentMeeple(currentTile.y, currentTile.x, card);
@@ -625,23 +630,22 @@ public class GameEngine {
   }
 
   List<Player> resGame() {
-    List<Player> sort = new ArrayList<>();
+    List<Player> sort = new LinkedList<>();
     for (Player p : players) {
       if (sort.isEmpty())
         sort.add(p);
-
-      int i = 0;
-      while (i < players.size() && sort.get(i).score() > p.score()) {
-        i++;
+      else {
+        for (int j = 0; j < players.size(); j++) {
+          if (j == sort.size() - 1) {
+            sort.add(p);
+            break;
+          }
+          if (sort.get(j).score() < p.score()) {
+            sort.add(j, p);
+            break;
+          }
+        }
       }
-      if (i >= sort.size())
-        sort.add(p);
-      else
-        sort.add(i, p);
-
-      }
-      while (sort.size() > players.size()) {
-        sort.remove(sort.size() - 1);
     }
     return sort;
   }

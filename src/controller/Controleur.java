@@ -30,12 +30,14 @@ public class Controleur implements ActionListener {
   GameEngine ge;
   JPanel affichageScoreFin;
   JTable scoreboard;
+  boolean IAPlaying;
 
   public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable) {
     ge = gameEngine;
     ge.setControleur(this);
     affichageScoreFin = scoreFin;
     scoreboard = scoreJTable;
+    IAPlaying = false;
   }
 
   public void setAfficheur(AffichePlateau t) {
@@ -120,6 +122,7 @@ public class Controleur implements ActionListener {
 
   public void iaPlay() {
     if (ge.isGameRunning()) {
+      IAPlaying = true;
       while (!ge.IAPlaceTile()) {
       }
       tab.repaint();
@@ -127,6 +130,7 @@ public class Controleur implements ActionListener {
       tab.repaint();
       ge.endOfTurn();
       tab.repaint();
+      IAPlaying = false;
 
       if (ge.isIATurn())
         iaPlay();
@@ -174,7 +178,7 @@ public class Controleur implements ActionListener {
    * @param y int position y du clic
    */
   public void clic(int x, int y) {
-    if (ge.isGameRunning()) {
+    if (ge.isGameRunning() && !IAPlaying) {
       if (clicOnSet(x, y)) {
         if (!ge.getCurrentTile().placed) {
           placeTile(x, y);
