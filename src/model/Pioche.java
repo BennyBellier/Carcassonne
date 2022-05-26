@@ -31,11 +31,11 @@ public class Pioche {
    */
   void initPioche() {
     int allp = 0;
-    while (allp != 12) {
+    while (allp != 71) {
       int typeTuile = r.nextInt(24);
       if (numberPerTile[typeTuile] != 0) {
         numberPerTile[typeTuile] -= 1;
-        pioche.add(allp, Tile.getTileFromInt(0));
+        pioche.add(allp, Tile.getTileFromInt(typeTuile));
         ++allp;
       }
     }
