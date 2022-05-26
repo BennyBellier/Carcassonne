@@ -18,8 +18,7 @@ import java.util.ArrayList;
  * @author ludov
  */
 public class Images {
-
-  Image blason, meeplePossibility , plateauInGame , croix , menu, highlight;
+  Image blason, meeplePossibility , plateauInGame , croix , menu, highlight , boisB , bleu , jaune ,noir , rouge , vert , pioche , valider , refaire;
   Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen, meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
   private final int colorBlue = new Color(7, 45, 249).getRGB();
@@ -37,6 +36,15 @@ public class Images {
       menu = ImageIO.read(Configuration.charge("Images/icon_menu.png"));
       plateauInGame = ImageIO.read(Configuration.charge("Images/bois.jpg"));
       highlight = ImageIO.read(Configuration.charge("Images/highlight.png"));
+      boisB = ImageIO.read(Configuration.charge("Images/boisBoutons.png"));
+      bleu = ImageIO.read(Configuration.charge("Images/Bleu.png"));
+      rouge = ImageIO.read(Configuration.charge("Images/Rouge.png"));
+      noir = ImageIO.read(Configuration.charge("Images/Noir.png"));
+      vert = ImageIO.read(Configuration.charge("Images/Vert.png"));
+      jaune = ImageIO.read(Configuration.charge("Images/Jaune.png"));
+      pioche = ImageIO.read(Configuration.charge("Images/Pioche.png"));
+      valider = ImageIO.read(Configuration.charge("Images/validate.png"));
+      refaire = ImageIO.read(Configuration.charge("Images/validate_undo.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -51,6 +59,40 @@ public class Images {
     return menu;
   }
 
+  public Image boisB(){
+    return boisB;
+  }
+
+  public Image bleu(){
+    return bleu;
+  }
+  
+  public Image rouge(){
+    return rouge;
+  }
+  
+  public Image noir(){
+    return noir;
+  }
+  
+  public Image jaune(){
+    return jaune;
+  }
+  
+  public Image vert(){
+    return vert;
+  }
+  
+  public Image pioche(){
+    return pioche;
+  }
+  
+  public Image valider(){
+    return valider;
+  }
+
+  public Image refaire(){
+    return refaire;
   void loadMeeples() {
 
     try {

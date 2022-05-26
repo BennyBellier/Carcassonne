@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,12 +27,13 @@ public class Frames extends javax.swing.JFrame {
   Random r = new Random();
   Color c, bleu, noir, vert, violet;
   private Color couleurBleu = new Color(7, 45, 249);
-  private Color couleurViolet = new Color(127, 0, 255);
+  private Color couleurRouge = new Color(240,0,32);
   private Color couleurNoir = new Color(31, 31, 31);
   private Color couleurVert = new Color(60, 212, 21);
   private Color couleurJaune = new Color(255, 235, 87);
   private String textField;
   ArrayList<Player> players = new ArrayList<>();
+  
   Keybord keyboard = new Keybord();
   Font uniFont;
 
@@ -66,6 +68,7 @@ public class Frames extends javax.swing.JFrame {
       Configuration.instance().logger().severe("Impossible de charger la police de caractères");
     }
   }
+
 
   private void setupPanel() {
     menuPrincipale();
@@ -106,6 +109,7 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setVisible(false);
     menuInGame.setVisible(false);
     regles2.setVisible(false);
+    layoutJeu.setVisible(false);
     scoreFin.setVisible(false);
   }
 
@@ -129,8 +133,8 @@ public class Frames extends javax.swing.JFrame {
   private void desactivation() {
     if (c.equals(couleurNoir)) {
       cNoir.setEnabled(false);
-    } else if (c.equals(couleurViolet)) {
-      cViolet.setEnabled(false);
+    } else if (c.equals(couleurRouge)) {
+      cRouge.setEnabled(false);
     } else if (c.equals(couleurVert)) {
       cVert.setEnabled(false);
     } else if (c.equals(couleurJaune)) {
@@ -143,8 +147,8 @@ public class Frames extends javax.swing.JFrame {
   private void activation() {
     if (c.equals(couleurNoir)) {
       cNoir.setEnabled(true);
-    } else if (c.equals(couleurViolet)) {
-      cViolet.setEnabled(true);
+    } else if (c.equals(couleurRouge)) {
+      cRouge.setEnabled(true);
     } else if (c.equals(couleurVert)) {
       cVert.setEnabled(true);
     } else if (c.equals(couleurJaune)) {
@@ -229,7 +233,7 @@ public class Frames extends javax.swing.JFrame {
     switch (cRandom) {
       case 0:
         if (!cBleu.isEnabled()) {
-          if (cViolet.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
+          if (cRouge.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
           c = couleurBleu;
@@ -237,17 +241,17 @@ public class Frames extends javax.swing.JFrame {
         }
         break;
       case 1:
-        if (!cViolet.isEnabled()) {
+        if (!cRouge.isEnabled()) {
           if (cBleu.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
-          c = couleurViolet;
+          c = couleurRouge;
           desactivation();
         }
         break;
       case 2:
         if (!cVert.isEnabled()) {
-          if (cViolet.isEnabled() || cBleu.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
+          if (cRouge.isEnabled() || cBleu.isEnabled() || cNoir.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
           c = couleurVert;
@@ -256,7 +260,7 @@ public class Frames extends javax.swing.JFrame {
         break;
       case 3:
         if (!cNoir.isEnabled()) {
-          if (cViolet.isEnabled() || cVert.isEnabled() || cBleu.isEnabled() || cJaune.isEnabled())
+          if (cRouge.isEnabled() || cVert.isEnabled() || cBleu.isEnabled() || cJaune.isEnabled())
             setColor();
         } else {
           c = couleurNoir;
@@ -265,7 +269,7 @@ public class Frames extends javax.swing.JFrame {
         break;
       case 4:
         if (!cJaune.isEnabled()) {
-          if (cViolet.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cBleu.isEnabled())
+          if (cRouge.isEnabled() || cVert.isEnabled() || cNoir.isEnabled() || cBleu.isEnabled())
             setColor();
         } else {
           c = couleurJaune;
@@ -339,13 +343,92 @@ public class Frames extends javax.swing.JFrame {
     j5.setText("");
     pseudo.setText("");
     cBleu.setEnabled(true);
-    cViolet.setEnabled(true);
+    cRouge.setEnabled(true);
     cVert.setEnabled(true);
     cJaune.setEnabled(true);
     cNoir.setEnabled(true);
     boutonSupDesactiver();
     players.clear();
+
   }
+
+  void resetInGameLabel() {
+    imageBleu.setIcon(null);
+    imageJaune.setIcon(null);
+    imageRouge.setIcon(null);
+    imageNoir.setIcon(null);
+    imageVert.setIcon(null);
+    ptsBleu.setText("");
+    ptsRouge.setText("");
+    ptsNoire.setText("");
+    ptsVert.setText("");
+    ptsJaune.setText("");
+    cmpMeepleBleu.setText("");
+    cmpMeepleRouge.setText("");
+    cmpMeepleNoire.setText("");
+    cmpMeepleVert.setText("");
+    cmpMeepleJaune.setText("");
+  }
+
+  public void cadre(){
+    resetInGameLabel();
+    for (int i = 0 ; i < players.size() ; i++) {
+      ImageIcon imageIcon = null;
+      if (players.get(i).color().equals(couleurRouge)){
+        imageIcon = new ImageIcon(imgs.rouge());
+      } else if (players.get(i).color().equals(couleurVert)){
+        imageIcon = new ImageIcon(imgs.vert());
+      } else if (players.get(i).color().equals(couleurNoir)){
+        imageIcon = new ImageIcon(imgs.noir());
+      } else if (players.get(i).color().equals(couleurJaune)){
+        imageIcon = new ImageIcon(imgs.jaune());
+      } else if (players.get(i).color().equals(couleurBleu)){
+        imageIcon = new ImageIcon(imgs.bleu());
+      }
+
+      if (imageBleu.getIcon() == null)
+        imageBleu.setIcon(imageIcon);
+      else if (imageJaune.getIcon() == null)
+        imageJaune.setIcon(imageIcon);
+      else if (imageNoir.getIcon() == null)
+        imageNoir.setIcon(imageIcon);
+      else if (imageRouge.getIcon() == null)
+        imageRouge.setIcon(imageIcon);
+      else if (imageVert.getIcon() == null)
+        imageVert.setIcon(imageIcon);
+    }
+  }
+
+  void sendLabel() {
+    List<JLabel> l = new ArrayList<>();
+    if (imageBleu.getIcon() != null) {
+      l.add(ptsBleu);
+      l.add(cmpMeepleBleu);
+    }
+    if (imageRouge.getIcon() != null) {
+      l.add(ptsRouge);
+      l.add(cmpMeepleRouge);
+    }
+    if (imageVert.getIcon() != null) {
+      l.add(ptsVert);
+      l.add(cmpMeepleVert);
+    }
+    if (imageJaune.getIcon() != null) {
+      l.add(ptsJaune);
+      l.add(cmpMeepleJaune);
+    }
+    if (imageNoir.getIcon() != null) {
+      l.add(ptsNoire);
+      l.add(cmpMeepleNoire);
+    }
+    l.add(nbTuileRestante);
+    plateauJeu.setLabelScore(l.stream().toArray(JLabel[]::new));
+  }
+
+  
+
+  
+  
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -358,7 +441,7 @@ public class Frames extends javax.swing.JFrame {
     quitterOptionPane = new javax.swing.JOptionPane();
     background = new Background();
     menuPrincipale = new javax.swing.JPanel();
-    jouer = new javax.swing.JButton();
+    jouerB = new javax.swing.JButton();
     version = new javax.swing.JLabel();
     quitter = new javax.swing.JButton();
     menuCredits = new javax.swing.JButton();
@@ -388,7 +471,7 @@ public class Frames extends javax.swing.JFrame {
     lancerLaPartie = new javax.swing.JButton();
     difficulterBox = new javax.swing.JComboBox<>();
     cBleu = new javax.swing.JButton();
-    cViolet = new javax.swing.JButton();
+    cRouge = new javax.swing.JButton();
     cVert = new javax.swing.JButton();
     cJaune = new javax.swing.JButton();
     cNoir = new javax.swing.JButton();
@@ -416,6 +499,29 @@ public class Frames extends javax.swing.JFrame {
     retourRegles2 = new javax.swing.JButton();
     reglesScrollPane2 = new javax.swing.JScrollPane();
     reglesPane1 = new javax.swing.JTextPane();
+    jouerL = new javax.swing.JLabel();
+    layoutJeu = new javax.swing.JPanel();
+    cmpMeepleBleu = new javax.swing.JLabel();
+    ptsBleu = new javax.swing.JLabel();
+    imageBleu = new javax.swing.JLabel();
+    cmpMeepleJaune = new javax.swing.JLabel();
+    ptsJaune = new javax.swing.JLabel();
+    imageJaune = new javax.swing.JLabel();
+    cmpMeepleNoire = new javax.swing.JLabel();
+    ptsNoire = new javax.swing.JLabel();
+    imageNoir = new javax.swing.JLabel();
+    cmpMeepleRouge = new javax.swing.JLabel();
+    ptsRouge = new javax.swing.JLabel();
+    imageRouge = new javax.swing.JLabel();
+    cmpMeepleVert = new javax.swing.JLabel();
+    ptsVert = new javax.swing.JLabel();
+    imageVert = new javax.swing.JLabel();
+    valider = new javax.swing.JLabel();
+    refaire = new javax.swing.JLabel();
+    pioche = new javax.swing.JLabel();
+    slash = new javax.swing.JLabel();
+    nbTuileRestante = new javax.swing.JLabel();
+    nbTuileTotal = new javax.swing.JLabel();
     scoreFin = new javax.swing.JPanel();
     panelTable = new javax.swing.JPanel();
     finScrollPane = new javax.swing.JScrollPane();
@@ -439,14 +545,19 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipale.setPreferredSize(new java.awt.Dimension(1920, 1080));
     menuPrincipale.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jouer.setFont(uniFont.deriveFont((float) 34)); // NOI18N
-    jouer.setText("Jouer");
-    jouer.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jouerActionPerformed(evt);
-      }
+    jouerL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    jouerL.setText("Jouer");
+    menuPrincipale.add(jouerL, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 450, 70, 35));
+
+    jouerB.setBackground(new Color(0,0,0,0));
+    jouerB.setIcon(new ImageIcon(imgs.boisB()));
+    jouerB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    jouerB.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jouerBActionPerformed(evt);
+        }
     });
-    menuPrincipale.add(jouer, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 450, 300, 50));
+    menuPrincipale.add(jouerB, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 420, 370, 100));
 
     version.setFont(uniFont.deriveFont((float) 16)); // NOI18N
     version.setForeground(new java.awt.Color(0xffffff));
@@ -768,14 +879,14 @@ public class Frames extends javax.swing.JFrame {
     });
     newGame.add(cBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 340, 30, 30));
 
-    cViolet.setBackground(new java.awt.Color(127, 0, 255));
-    cViolet.setBorder(null);
-    cViolet.addActionListener(new java.awt.event.ActionListener() {
+    cRouge.setBackground(new java.awt.Color(240, 0, 32));
+    cRouge.setBorder(null);
+    cRouge.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        cVioletActionPerformed(evt);
+        cRougeActionPerformed(evt);
       }
     });
-    newGame.add(cViolet, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 340, 30, 30));
+    newGame.add(cRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 340, 30, 30));
 
     cVert.setBackground(new java.awt.Color(60, 212, 21));
     cVert.setBorder(null);
@@ -920,6 +1031,79 @@ public class Frames extends javax.swing.JFrame {
 
     regles2.add(reglesScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 1285, 640));
 
+    layoutJeu.setBackground(new Color(0,0,0,0));
+    layoutJeu.setMaximumSize(new java.awt.Dimension(1920, 1080));
+    layoutJeu.setMinimumSize(new java.awt.Dimension(1920, 1080));
+    layoutJeu.setPreferredSize(new java.awt.Dimension(1920, 1080));
+    layoutJeu.setOpaque(false);
+    layoutJeu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    cmpMeepleBleu.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    cmpMeepleBleu.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(cmpMeepleBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 82, 40, 30));
+    ptsBleu.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    ptsBleu.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(ptsBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 125, -1, -1));
+    layoutJeu.add(imageBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 55, 260, 150));
+    
+    cmpMeepleJaune.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    cmpMeepleJaune.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(cmpMeepleJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 282, 40, -1));
+    ptsJaune.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    ptsJaune.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(ptsJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 331, 40, 40));
+    layoutJeu.add(imageJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 260, 150));
+
+    cmpMeepleRouge.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    cmpMeepleRouge.setForeground(new java.awt.Color(255, 255, 255));  
+    layoutJeu.add(cmpMeepleRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 688, 30, -1));
+    ptsRouge.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    ptsRouge.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(ptsRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 735, -1, -1));
+    layoutJeu.add(imageRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 260, 140));
+
+    cmpMeepleNoire.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    cmpMeepleNoire.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(cmpMeepleNoire, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 488, 30, 40));
+    ptsNoire.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    ptsNoire.setForeground(new java.awt.Color(255, 255, 255)); 
+    layoutJeu.add(ptsNoire, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 537, 40, 40));
+    layoutJeu.add(imageNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 465, 260, 150));
+    
+    cmpMeepleVert.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    cmpMeepleVert.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(cmpMeepleVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 892, 30, -1));
+    ptsVert.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    ptsVert.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(ptsVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 940, 40, -1));
+    layoutJeu.add(imageVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 875, 260, 140));
+   
+    slash.setFont(uniFont.deriveFont((float) 55)); // NOI18N
+    slash.setForeground(new java.awt.Color(255, 255, 255));
+    slash.setText("/");
+    layoutJeu.add(slash, new org.netbeans.lib.awtextra.AbsoluteConstraints(1600, 960, 30, 50));
+
+    nbTuileRestante.setFont(uniFont.deriveFont((float) 55)); // NOI18N
+    nbTuileRestante.setForeground(new java.awt.Color(255, 255, 255));
+    layoutJeu.add(nbTuileRestante, new org.netbeans.lib.awtextra.AbsoluteConstraints(1550, 940, 50, 50));
+
+    nbTuileTotal.setFont(uniFont.deriveFont((float) 55)); // NOI18N
+    nbTuileTotal.setForeground(new java.awt.Color(255, 255, 255));
+    nbTuileTotal.setText("72");
+    layoutJeu.add(nbTuileTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1620, 980, 70, 50));
+
+    valider.setIcon(new ImageIcon(imgs.valider()));
+    layoutJeu.add(valider, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 760, -1, -1));
+
+    refaire.setIcon(new ImageIcon(imgs.refaire()));
+    layoutJeu.add(refaire, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 760, -1, -1));
+
+    pioche.setIcon(new ImageIcon(imgs.pioche()));
+    pioche.setPreferredSize(new java.awt.Dimension(422, 309));
+    layoutJeu.add(pioche, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 780, -1, -1));
+
+    plateauJeu.add(layoutJeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
     background.setLayout(backgroundLayout);
     backgroundLayout.setHorizontalGroup(
@@ -964,12 +1148,10 @@ public class Frames extends javax.swing.JFrame {
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-
                 .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)));
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-
                 .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)));
     pack();
   }// </editor-fold>
@@ -978,7 +1160,7 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipale();
   }
 
-  private void jouerActionPerformed(java.awt.event.ActionEvent evt) {
+  private void jouerBActionPerformed(java.awt.event.ActionEvent evt) {
     jouerPanel.setVisible(true);
     menuPrincipale.setVisible(false);
     boutonSupDesactiver();
@@ -1028,16 +1210,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void retourReglesActionPerformed(java.awt.event.ActionEvent evt) {
-    /*
-     * if (control != null) {
-     * if (control.isGameRunning()) {
-     * plateauJeu.setVisible(true);
-     * regles.setVisible(false);
-     * menuPlateau.setVisible(true);
-     * }
-     * } else
-     */
-    menuPrincipale();
+      menuPrincipale();
   }
 
   private void supprimerJ5ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1111,8 +1284,8 @@ public class Frames extends javax.swing.JFrame {
     choixNom();
   }
 
-  private void cVioletActionPerformed(java.awt.event.ActionEvent evt) {
-    c = couleurViolet;
+  private void cRougeActionPerformed(java.awt.event.ActionEvent evt) {
+    c = couleurRouge;
     choixNom();
   }
 
@@ -1121,24 +1294,19 @@ public class Frames extends javax.swing.JFrame {
     choixNom();
   }
 
-  Player[] playersToArray() {
-    Player[] list = new Player[players.size()];
-    for (int i = 0; i < players.size(); i++) {
-      list[i] = players.get(i);
-    }
-    return list;
-  }
-
   private void lancerLaPartieActionPerformed(java.awt.event.ActionEvent evt) {
     newGame.setVisible(false);
     plateauJeu.setVisible(true);
-    GameEngine gm = new GameEngine(playersToArray());
+    layoutJeu.setVisible(true);
+    GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable);
     keyboard.setControleur(control);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
+    cadre();
+    sendLabel();
   }
 
   private void ajouterIAActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1226,7 +1394,7 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JButton cJaune;
   private javax.swing.JLabel cJoueurLabel;
   private javax.swing.JButton cNoir;
-  private javax.swing.JButton cViolet;
+  private javax.swing.JButton cRouge;
   private javax.swing.JButton cVert;
   public javax.swing.JPanel credits;
   private javax.swing.JTextArea creditsTextArea;
@@ -1237,7 +1405,6 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JLabel j4;
   private javax.swing.JLabel j5;
   private javax.swing.JButton jeuEnReseaux;
-  private javax.swing.JButton jouer;
   public javax.swing.JPanel jouerPanel;
   private javax.swing.JLabel joueurs;
   private javax.swing.JButton lancerLaPartie;
@@ -1280,6 +1447,30 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JScrollPane reglesScrollPane2;
   private javax.swing.JTextPane reglesPane1;
   private javax.swing.JButton retourRegles2;
+  private javax.swing.JButton jouerB;
+  private javax.swing.JLabel jouerL;
+  private javax.swing.JPanel layoutJeu;
+  private javax.swing.JLabel valider;
+  private javax.swing.JLabel ptsBleu;
+  private javax.swing.JLabel ptsJaune;
+  private javax.swing.JLabel ptsNoire;
+  private javax.swing.JLabel ptsRouge;
+  private javax.swing.JLabel ptsVert;
+  private javax.swing.JLabel refaire;
+  private javax.swing.JLabel pioche;
+  private javax.swing.JLabel imageBleu;
+  private javax.swing.JLabel imageJaune;
+  private javax.swing.JLabel imageNoir;
+  private javax.swing.JLabel imageRouge;
+  private javax.swing.JLabel imageVert;
+  private javax.swing.JLabel cmpMeepleBleu;
+  private javax.swing.JLabel cmpMeepleJaune;
+  private javax.swing.JLabel cmpMeepleNoire;
+  private javax.swing.JLabel cmpMeepleRouge;
+  private javax.swing.JLabel cmpMeepleVert;
+  private javax.swing.JLabel nbTuileRestante;
+  private javax.swing.JLabel nbTuileTotal;
+  private javax.swing.JLabel slash;
   private javax.swing.JPanel scoreFin;
   private javax.swing.JTable scoreTable;
   private javax.swing.JPanel panelTable;
