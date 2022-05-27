@@ -76,6 +76,10 @@ public class Frames extends javax.swing.JFrame {
     lancerLaPartie.setEnabled(false);
     ajouterIA.setEnabled(true);
     sauvegarderInGame.setEnabled(false);
+    tourJ2.setVisible(false);
+    tourJ3.setVisible(false);
+    tourJ4.setVisible(false);
+    tourJ5.setVisible(false);
   }
 
   public void basculeEnPleineEcran() {
@@ -521,6 +525,20 @@ public class Frames extends javax.swing.JFrame {
     scoreTable = new javax.swing.JTable();
     scoreContinuer = new javax.swing.JButton();
     hand = new AfficheCurrentTile();
+    tourJ1 = new javax.swing.JLabel();
+    tourJ2 = new javax.swing.JLabel();
+    tourJ3 = new javax.swing.JLabel();
+    tourJ4 = new javax.swing.JLabel();
+    tourJ5 = new javax.swing.JLabel();
+    hint = new javax.swing.JButton();
+    aideCheck = new javax.swing.JCheckBox();
+    titreVolume = new javax.swing.JLabel();
+    acVolume = new javax.swing.JLabel();
+    vitesseIA = new javax.swing.JLabel();
+    sliderIA = new javax.swing.JSlider();
+    aideOption = new javax.swing.JLabel();
+    acAide = new javax.swing.JLabel();
+    volumeCheck = new javax.swing.JCheckBox();
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -654,7 +672,41 @@ public class Frames extends javax.swing.JFrame {
         retourOptionsActionPerformed(evt);
       }
     });
-    options.add(retourOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
+    options.add(retourOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 920, 110, 45));
+
+    aideCheck.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+          aideCheckActionPerformed(evt);
+      }
+    });
+    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 666, -1, 20));
+
+    titreVolume.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    titreVolume.setText("Volume :");
+    options.add(titreVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 120, 40));
+
+    acVolume.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    acVolume.setText("Activer ");
+    options.add(acVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
+
+    vitesseIA.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    vitesseIA.setText("Vitesse IA :");
+    options.add(vitesseIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 440, 200, 45));
+    options.add(sliderIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 500, -1, -1));
+
+    aideOption.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    aideOption.setText("Aide :");
+    options.add(aideOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 600, 200, 45));
+
+    acAide.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    acAide.setText("Activer ");
+    options.add(acAide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, 160, 40));
+    volumeCheck.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            volumeCheckActionPerformed(evt);
+        }
+    });
+    options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 322, -1, 20));
 
     regles.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -726,15 +778,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setOpaque(true);
     plateauJeu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    menuPlateau.setBackground(new Color(0, 0, 0, 0));
-    menuPlateau.setIcon(new ImageIcon(imgs.menu()));
-    menuPlateau.setBorder(null);
-    menuPlateau.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuPlateauActionPerformed(evt);
-      }
-    });
-    plateauJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1860, 10, 50, 50));
 
     scoreFin.setBackground(new Color(0, 0, 0, 50));
     scoreFin.setOpaque(false);
@@ -1078,6 +1121,21 @@ public class Frames extends javax.swing.JFrame {
     hand.setVisible(true);
     hand.setFocusable(false);
     layoutJeu.add(hand, new org.netbeans.lib.awtextra.AbsoluteConstraints(1710, 870, 145, 145));
+    
+    tourJ1.setIcon(new ImageIcon(imgs.lueur()));
+    layoutJeu.add(tourJ1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 41, 310, 179));
+
+    tourJ2.setIcon(new ImageIcon(imgs.lueur()));
+    layoutJeu.add(tourJ2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 241, 310, 190));
+
+    tourJ3.setIcon(new ImageIcon(imgs.lueur()));
+    layoutJeu.add(tourJ3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 441, 310, 190));
+
+    tourJ4.setIcon(new ImageIcon(imgs.lueur()));
+    layoutJeu.add(tourJ4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 641, 310, 200));
+
+    tourJ5.setIcon(new ImageIcon(imgs.lueur()));
+    layoutJeu.add(tourJ5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 841, 310, 200));
 
     cmpMeepleBleu.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     cmpMeepleBleu.setForeground(new java.awt.Color(255, 255, 255));
@@ -1144,6 +1202,27 @@ public class Frames extends javax.swing.JFrame {
     layoutJeu.add(pioche, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 783, -1, -1));
 
     plateauJeu.add(layoutJeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+    
+    hint.setBorder(null);
+    hint.setBackground(new Color(0,0,0,0));
+    hint.setIcon(new ImageIcon(imgs.hint()));
+    hint.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+          hintActionPerformed(evt);
+      }
+    });
+    layoutJeu.add(hint, new org.netbeans.lib.awtextra.AbsoluteConstraints(1770, 670, 150, 130));
+
+    menuPlateau.setBackground(new Color(0,0,0,0));
+    menuPlateau.setIcon(new ImageIcon(imgs.menu()));
+    menuPlateau.setBorder(null);
+    menuPlateau.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            menuPlateauActionPerformed(evt);
+        }
+    });
+    layoutJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 10, 110, 120));
 
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
     background.setLayout(backgroundLayout);
@@ -1396,7 +1475,7 @@ public class Frames extends javax.swing.JFrame {
   private void menuPlateauActionPerformed(java.awt.event.ActionEvent evt) {
     menuInGame.setVisible(true);
     menuBoutons.setVisible(true);
-    menuPlateau.setVisible(false);
+    menuPlateau.setVisible(true);
     menuInGame.setFocusable(true);
   }
 
@@ -1437,6 +1516,18 @@ public class Frames extends javax.swing.JFrame {
       menuPrincipale();
       menuPlateau.setVisible(true);
   }
+
+  private void hintActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    // TODO add your handling code here:
+  }  
+
+  private void volumeCheckActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    // TODO add your handling code here:
+  }                                           
+
+  private void aideCheckActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    // TODO add your handling code here:
+  }              
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
@@ -1529,5 +1620,19 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JScrollPane finScrollPane;
   private AfficheCurrentTile hand;
   private javax.swing.JButton scoreContinuer;
+  private javax.swing.JLabel tourJ1;
+  private javax.swing.JLabel tourJ2;
+  private javax.swing.JLabel tourJ3;
+  private javax.swing.JLabel tourJ4;
+  private javax.swing.JLabel tourJ5;
+  private javax.swing.JButton hint;
+  private javax.swing.JLabel acAide;
+  private javax.swing.JLabel acVolume;
+  private javax.swing.JCheckBox aideCheck;
+  private javax.swing.JLabel aideOption;
+  private javax.swing.JLabel titreVolume;
+  private javax.swing.JSlider sliderIA;
+  private javax.swing.JLabel vitesseIA;
+  private javax.swing.JCheckBox volumeCheck;
   // End of variables declaration
 }

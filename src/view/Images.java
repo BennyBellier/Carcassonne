@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Images {
   Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisB, bleu, jaune, noir, rouge, vert, pioche,
-      valider, refaire;
+      valider, refaire , lueur , hint;
   Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
       meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Images {
       loadMeeples();
       blason = ImageIO.read(Configuration.charge("Images/blason.png"));
       croix = ImageIO.read(Configuration.charge("Images/skip.png"));
-      menu = ImageIO.read(Configuration.charge("Images/icon_menu.png"));
+      menu = ImageIO.read(Configuration.charge("Images/MenuInGame2.png"));
       plateauInGame = ImageIO.read(Configuration.charge("Images/bois.jpg"));
       highlight = ImageIO.read(Configuration.charge("Images/highlight.png"));
       boisB = ImageIO.read(Configuration.charge("Images/boisBoutons.png"));
@@ -47,6 +47,8 @@ public class Images {
       pioche = ImageIO.read(Configuration.charge("Images/Pioche.png"));
       valider = ImageIO.read(Configuration.charge("Images/validate.png"));
       refaire = ImageIO.read(Configuration.charge("Images/validate_undo.png"));
+      lueur = ImageIO.read(Configuration.charge("Images/lueur-cards.png"));
+      hint = ImageIO.read(Configuration.charge("Images/hint.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -95,6 +97,14 @@ public class Images {
 
   public Image refaire() {
     return refaire;
+  }
+
+  public Image lueur() {
+    return lueur;
+  }
+
+  public Image hint() {
+    return hint;
   }
 
   void loadMeeples() {
