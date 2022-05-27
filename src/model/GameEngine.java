@@ -461,7 +461,6 @@ public class GameEngine {
         currentMeeple = new CurrentMeeple(currentTile.y, currentTile.x, card);
         Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " à poser un meeple sur la case ("
             + m.getX() + ", " + m.getY() + ") " + m.getCardinal());
-
         return true;
       }
     }
@@ -509,20 +508,16 @@ public class GameEngine {
 
   public boolean removeMeeple() {
     if (currentMeeple != null) {
-      Meeple rm = new Meeple(0, currentMeeple.y, currentMeeple.x, currentMeeple.card);
-      int index = -1;
+      Meeple rm = new Meeple(0, currentMeeple.x, currentMeeple.y, currentMeeple.card);
       for (int i = 0; i < meeplesOnSet.size(); i++) {
-        if (meeplesOnSet.get(i).equal(rm))
-          index = i;
-      }
-
-      if (index != -1) {
-        meeplesOnSet.remove(index);
-        players.get(playerTurn).meepleRecovery();
-        Configuration.instance().logger().info(
-            "Le meeple (" + currentMeeple.x + ", " + currentMeeple.y + ", " + currentMeeple.card + ") a été enlevé");
-        currentMeeple = null;
-        return true;
+        if (meeplesOnSet.get(i).equal(rm)) {
+          meeplesOnSet.remove(i);
+          players.get(playerTurn).meepleRecovery();
+          Configuration.instance().logger().info(
+              "Le meeple (" + currentMeeple.x + ", " + currentMeeple.y + ", " + currentMeeple.card + ") a été enlevé");
+          currentMeeple = null;
+          return true;
+        }
       }
     }
     return false;
