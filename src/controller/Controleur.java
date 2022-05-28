@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import global.Configuration;
 import model.GameEngine;
 import view.AffichePlateau;
 
@@ -33,6 +32,9 @@ public class Controleur implements ActionListener {
   JTable scoreboard;
   JButton menuBoutons;
   boolean IAPlaying;
+  Animation animIA;
+  Timer timer;
+
 
   public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable, JButton menuPlateau) {
     ge = gameEngine;
@@ -41,6 +43,8 @@ public class Controleur implements ActionListener {
     scoreboard = scoreJTable;
     menuBoutons = menuPlateau;
     IAPlaying = false;
+    timer = new Timer(500, this);
+    timer.start();
   }
 
   public void setAfficheur(AffichePlateau t) {
@@ -53,10 +57,10 @@ public class Controleur implements ActionListener {
     return ge.isGameRunning();
   }
 
-  public void startGame() {
-    if (ge.isIATurn())
-      iaPlay();
-  }
+  // public void startGame() {
+  //   if (ge.isIATurn())
+  //     iaPlay();
+  // }
 
   /**
    ** Retourne la cardinalité du clic sur la tuile (x, y)
@@ -123,23 +127,6 @@ public class Controleur implements ActionListener {
     return x - start.x == ge.getCurrentTile().x && y - start.y == ge.getCurrentTile().y;
   }
 
-  public void iaPlay() {
-    if (ge.isGameRunning()) {
-      IAPlaying = true;
-      while (!ge.IAPlaceTile()) {
-      }
-      tab.repaint();
-      ge.IAPlaceMeeple();
-      tab.repaint();
-      ge.endOfTurn();
-      tab.repaint();
-      IAPlaying = false;
-
-      if (ge.isIATurn())
-        iaPlay();
-    }
-  }
-
   void placeTile(int x, int y) {
     float c = (x - tab.getOffsetX()) / tab.tailleTuile();
     float l = (y - tab.getOffsetY()) / tab.tailleTuile();
@@ -181,7 +168,7 @@ public class Controleur implements ActionListener {
    * @param y int position y du clic
    */
   public void clic(int x, int y) {
-    if (ge.isGameRunning() && !IAPlaying) {
+    if (ge.isGameRunning() && !ge.isIATurn()) {
       if (clicOnSet(x, y)) {
         if (!ge.getCurrentTile().placed) {
           placeTile(x, y);
@@ -197,8 +184,6 @@ public class Controleur implements ActionListener {
         if (ge.getCurrentTile().placed) {
           endTurn();
           tab.afficherPioche();
-          if (ge.isIATurn())
-            iaPlay();
         } else if (!ge.getCurrentTile().placed) {
           ge.turnCurrentTile();
           tab.afficherPioche();
@@ -257,11 +242,20 @@ public class Controleur implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    switch (e.getActionCommand()) {
-
-      default:
-        Configuration.instance().logger().severe("Commande invalide");
-        break;
+    if (ge.isGameRunning() && ge.isIATurn()) {
+      IAPlaying = true;
+      if (!ge.getCurrentTile().placed) {
+        while (!ge.IAPlaceTile()) {
+        }
+        tab.repaint();
+      }
+      else if (ge.getCurrentTile().placed) {
+        ge.IAPlaceMeeple();
+        tab.repaint();
+        ge.endOfTurn();
+        tab.repaint();
+        IAPlaying = false;
+      }
     }
   }
 
