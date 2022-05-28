@@ -680,25 +680,30 @@ public class Frames extends javax.swing.JFrame {
       }
     });
     options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 666, -1, 20));
-
+    
     titreVolume.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    titreVolume.setForeground(Color.WHITE);
     titreVolume.setText("Volume :");
     options.add(titreVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 120, 40));
 
     acVolume.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    acVolume.setForeground(Color.WHITE);
     acVolume.setText("Activer ");
     options.add(acVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
 
     vitesseIA.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    vitesseIA.setForeground(Color.WHITE);
     vitesseIA.setText("Vitesse IA :");
     options.add(vitesseIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 440, 200, 45));
     options.add(sliderIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 500, -1, -1));
 
     aideOption.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    aideOption.setForeground(Color.WHITE);
     aideOption.setText("Aide :");
     options.add(aideOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 600, 200, 45));
 
     acAide.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    acAide.setForeground(Color.WHITE);
     acAide.setText("Activer ");
     options.add(acAide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, 160, 40));
     volumeCheck.addActionListener(new java.awt.event.ActionListener() {
