@@ -34,19 +34,19 @@ public class Controleur implements ActionListener {
   JTable scoreboard;
   JButton menuBoutons;
   boolean IAPlaying;
-  //JLabel lueurJ1 , lueurJ2 , lueurJ3 , lueurJ4 , lueurJ5;  
+  JLabel lueurJ1 , lueurJ2 , lueurJ3 , lueurJ4 , lueurJ5;  
 
-  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable, JButton menuPlateau  /*JLabel tourJ1 ,JLabel tourJ2 ,JLabel tourJ3 ,JLabel tourJ4 ,JLabel tourJ5*/) {
+  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable, JButton menuPlateau , JLabel tourJ1 , JLabel tourJ2 , JLabel tourJ3 , JLabel tourJ4 , JLabel tourJ5 ) {
     ge = gameEngine;
     ge.setControleur(this);
     affichageScoreFin = scoreFin;
     scoreboard = scoreJTable;
     menuBoutons = menuPlateau;
-    /*tourJ1 = lueurJ1;
-    tourJ2 = lueurJ2;
-    tourJ3 = lueurJ3;
-    tourJ4 = lueurJ4;
-    tourJ5 = lueurJ5;*/
+    lueurJ1 = tourJ1;
+    lueurJ2 = tourJ2;
+    lueurJ3 = tourJ3;
+    lueurJ4 = tourJ4;
+    lueurJ5 = tourJ5;
     IAPlaying = false;
   }
 
@@ -65,15 +65,102 @@ public class Controleur implements ActionListener {
       iaPlay();
   }
 
-  /*public void lueur2J(){
+  public void lueur2J(){
     if (!lueurJ2.isVisible()){
-      lueurJ2.setVisible(true);
-      lueurJ1.setVisible(false);
+        lueurJ2.setVisible(true);
+        lueurJ1.setVisible(false);
     } else {
-      lueurJ2.setVisible(false);
-      lueurJ1.setVisible(true);
+        lueurJ2.setVisible(false);
+        lueurJ1.setVisible(true);
     }
-  }*/
+  }
+
+  public void lueur3J(){
+    if (!lueurJ2.isVisible() && !lueurJ3.isVisible()){
+        lueurJ2.setVisible(true);
+        lueurJ1.setVisible(false);
+        lueurJ3.setVisible(false);
+    } else if (!lueurJ3.isVisible() && !lueurJ1.isVisible()){
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(true);
+        lueurJ1.setVisible(false);
+    } else {
+        lueurJ1.setVisible(true);
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(false);
+    }
+  }
+
+  public void lueur4J(){
+    if (!lueurJ2.isVisible() && !lueurJ3.isVisible() && !lueurJ4.isVisible()){
+        lueurJ2.setVisible(true);
+        lueurJ1.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(false);
+    } else if (!lueurJ3.isVisible() && !lueurJ1.isVisible() && !lueurJ4.isVisible()){
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(true);
+        lueurJ1.setVisible(false);
+        lueurJ4.setVisible(false);
+    } else if (!lueurJ4.isVisible() && !lueurJ1.isVisible() && !lueurJ2.isVisible()){
+        lueurJ1.setVisible(false);
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(true);
+    } else {
+        lueurJ1.setVisible(true);
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(false);
+    }
+  }
+
+  public void lueur5J(){
+    if (!lueurJ2.isVisible() && !lueurJ3.isVisible() && !lueurJ4.isVisible() && !lueurJ5.isVisible()){
+        lueurJ2.setVisible(true);
+        lueurJ1.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(false);
+        lueurJ5.setVisible(false);
+    } else if (!lueurJ3.isVisible() && !lueurJ1.isVisible() && !lueurJ4.isVisible() && !lueurJ5.isVisible()){
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(true);
+        lueurJ1.setVisible(false);
+        lueurJ4.setVisible(false);
+        lueurJ5.setVisible(false);
+    } else if (!lueurJ4.isVisible() && !lueurJ1.isVisible() && !lueurJ2.isVisible() && !lueurJ5.isVisible()){
+        lueurJ1.setVisible(false);
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(true);
+        lueurJ5.setVisible(false);
+    } else if (!lueurJ5.isVisible() && !lueurJ1.isVisible() && !lueurJ2.isVisible() && !lueurJ3.isVisible()){
+        lueurJ1.setVisible(false);
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(false);
+        lueurJ5.setVisible(true);
+    } else {
+        lueurJ1.setVisible(true);
+        lueurJ2.setVisible(false);
+        lueurJ3.setVisible(false);
+        lueurJ4.setVisible(false);
+        lueurJ5.setVisible(false);
+    }
+  }
+
+  public void switchLueur(){
+    if (ge.getListPlayers().size() == 2){
+      lueur2J();
+    } else if (ge.getListPlayers().size() == 3) {
+      lueur3J(); 
+    } else if (ge.getListPlayers().size() == 4) {
+      lueur4J(); 
+    } else { 
+      lueur5J();
+    }
+  }
+  
 
   /**
    ** Retourne la cardinalité du clic sur la tuile (x, y)
@@ -189,6 +276,7 @@ public class Controleur implements ActionListener {
 
   void endTurn() {
     ge.endOfTurn();
+    switchLueur();
   }
 
   /**

@@ -628,6 +628,8 @@ public class Frames extends javax.swing.JFrame {
     sliderIA = new javax.swing.JSlider();
     aideOption = new javax.swing.JLabel();
     acAide = new javax.swing.JLabel();
+    nomPartieLabel = new javax.swing.JLabel();
+    nomPartie = new javax.swing.JTextField();
     
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
     
@@ -1027,7 +1029,7 @@ public class Frames extends javax.swing.JFrame {
         ajouterJoueurActionPerformed(evt);
       }
     });
-    newGame.add(ajouterJoueur, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 330, 250, 50));
+    newGame.add(ajouterJoueur, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 505, 250, 50));
 
     ajouterIA.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     ajouterIA.setText("Ajouter IA");
@@ -1058,7 +1060,7 @@ public class Frames extends javax.swing.JFrame {
         cBleuActionPerformed(evt);
       }
     });
-    newGame.add(cBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 340, 30, 30));
+    newGame.add(cBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 515, 30, 30));
 
     cRouge.setBackground(new java.awt.Color(240, 0, 32));
     cRouge.setBorder(null);
@@ -1067,7 +1069,7 @@ public class Frames extends javax.swing.JFrame {
         cRougeActionPerformed(evt);
       }
     });
-    newGame.add(cRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 340, 30, 30));
+    newGame.add(cRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 515, 30, 30));
 
     cVert.setBackground(new java.awt.Color(60, 212, 21));
     cVert.setBorder(null);
@@ -1076,7 +1078,7 @@ public class Frames extends javax.swing.JFrame {
         cVertActionPerformed(evt);
       }
     });
-    newGame.add(cVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 340, 30, 30));
+    newGame.add(cVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 515, 30, 30));
 
     cJaune.setBackground(new java.awt.Color(255, 235, 87));
     cJaune.setBorder(null);
@@ -1085,7 +1087,7 @@ public class Frames extends javax.swing.JFrame {
         cJauneActionPerformed(evt);
       }
     });
-    newGame.add(cJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(785, 340, 30, 30));
+    newGame.add(cJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(785, 515, 30, 30));
 
     cNoir.setBackground(new java.awt.Color(31, 31, 31));
     cNoir.setBorder(null);
@@ -1094,7 +1096,7 @@ public class Frames extends javax.swing.JFrame {
         cNoirActionPerformed(evt);
       }
     });
-    newGame.add(cNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 340, 30, 30));
+    newGame.add(cNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 515, 30, 30));
 
     joueurs.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     joueurs.setForeground(new java.awt.Color(255, 255, 255));
@@ -1107,7 +1109,7 @@ public class Frames extends javax.swing.JFrame {
     pseudoLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     pseudoLabel.setForeground(new java.awt.Color(255, 255, 255));
     pseudoLabel.setText("Pseudo:");
-    newGame.add(pseudoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 265, -1, 44));
+    newGame.add(pseudoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 440, -1, 44));
 
     j2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(j2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 440, 225, 30));
@@ -1122,7 +1124,7 @@ public class Frames extends javax.swing.JFrame {
     newGame.add(j5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 740, 225, 30));
 
     pseudo.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    newGame.add(pseudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 335, 225, 40));
+    newGame.add(pseudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 510, 225, 40));
 
     supprimerJ1.setBorder(null);
     supprimerJ1.setBackground(new Color(0, 0, 0, 0));
@@ -1174,11 +1176,19 @@ public class Frames extends javax.swing.JFrame {
       }
     });
     newGame.add(supprimerJ5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 740, 30, 30));
+    
 
     cJoueurLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     cJoueurLabel.setForeground(new java.awt.Color(255, 255, 255));
     cJoueurLabel.setText("Couleur du Joueur:");
-    newGame.add(cJoueurLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 265, -1, 34));
+    newGame.add(cJoueurLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 440, -1, 34));
+
+    nomPartieLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    nomPartieLabel.setForeground(new java.awt.Color(255, 255, 255));
+    nomPartieLabel.setText("Nom de la partie :");
+    nomPartie.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    newGame.add(nomPartieLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 265, 250, 36));
+    newGame.add(nomPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 335, 800, 40));
 
     regles2.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles2.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -1522,7 +1532,7 @@ public class Frames extends javax.swing.JFrame {
     GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
-    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau );
+    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau , tourJ1 , tourJ2 , tourJ3 , tourJ4 , tourJ5);
     keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
@@ -1619,15 +1629,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void hintActionPerformed(java.awt.event.ActionEvent evt) {                                     
-    if (players.size() == 2){
-      lueur2J();
-    } else if (players.size() == 3) {
-      lueur3J(); 
-    } else if (players.size() == 4) {
-      lueur4J(); 
-    } else { 
-      lueur5J();
-    }
+    
   }  
 
   private void volumeCheckActionPerformed(java.awt.event.ActionEvent evt) {                                            
@@ -1751,5 +1753,7 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JSlider sliderIA;
   private javax.swing.JLabel vitesseIA;
   private javax.swing.JCheckBox volumeCheck;
+  private javax.swing.JTextField nomPartie;
+  private javax.swing.JLabel nomPartieLabel;
   // End of variables declaration
 }
