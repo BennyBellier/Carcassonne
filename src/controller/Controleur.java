@@ -15,6 +15,7 @@ import global.Configuration;
 import model.GameEngine;
 import view.AffichePlateau;
 
+
 /**
  *
  * @author ludov
@@ -33,13 +34,19 @@ public class Controleur implements ActionListener {
   JTable scoreboard;
   JButton menuBoutons;
   boolean IAPlaying;
+  //JLabel lueurJ1 , lueurJ2 , lueurJ3 , lueurJ4 , lueurJ5;  
 
-  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable, JButton menuPlateau) {
+  public Controleur(GameEngine gameEngine, JPanel scoreFin, JTable scoreJTable, JButton menuPlateau  /*JLabel tourJ1 ,JLabel tourJ2 ,JLabel tourJ3 ,JLabel tourJ4 ,JLabel tourJ5*/) {
     ge = gameEngine;
     ge.setControleur(this);
     affichageScoreFin = scoreFin;
     scoreboard = scoreJTable;
     menuBoutons = menuPlateau;
+    /*tourJ1 = lueurJ1;
+    tourJ2 = lueurJ2;
+    tourJ3 = lueurJ3;
+    tourJ4 = lueurJ4;
+    tourJ5 = lueurJ5;*/
     IAPlaying = false;
   }
 
@@ -57,6 +64,16 @@ public class Controleur implements ActionListener {
     if (ge.isIATurn())
       iaPlay();
   }
+
+  /*public void lueur2J(){
+    if (!lueurJ2.isVisible()){
+      lueurJ2.setVisible(true);
+      lueurJ1.setVisible(false);
+    } else {
+      lueurJ2.setVisible(false);
+      lueurJ1.setVisible(true);
+    }
+  }*/
 
   /**
    ** Retourne la cardinalité du clic sur la tuile (x, y)

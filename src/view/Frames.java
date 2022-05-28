@@ -34,7 +34,7 @@ public class Frames extends javax.swing.JFrame {
   private Color couleurJaune = new Color(255, 235, 87);
   private String textField;
   ArrayList<Player> players = new ArrayList<>();
-
+  Audio audioPlayer;
   Keybord keyboard = new Keybord();
   Font uniFont;
 
@@ -45,12 +45,15 @@ public class Frames extends javax.swing.JFrame {
     setIcon();
     loadFont();
     imgs = new Images();
-    Audio audioPlayer = new Audio();
+    audioPlayer = new Audio();
     initComponents();
     setupPanel();
     addKeyListener(keyboard);
     basculeEnPleineEcran();
-    audioPlayer.music.play();
+    if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))){
+      audioPlayer.music.play();
+    }
+    
   }
 
   void setIcon() {
@@ -428,6 +431,93 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setLabelScore(l.stream().toArray(JLabel[]::new));
   }
 
+ 
+  public void lueur2J(){
+    if (!tourJ2.isVisible()){
+        tourJ2.setVisible(true);
+        tourJ1.setVisible(false);
+    } else {
+        tourJ2.setVisible(false);
+        tourJ1.setVisible(true);
+    }
+  }
+
+  public void lueur3J(){
+    if (!tourJ2.isVisible() && !tourJ3.isVisible()){
+        tourJ2.setVisible(true);
+        tourJ1.setVisible(false);
+        tourJ3.setVisible(false);
+    } else if (!tourJ3.isVisible() && !tourJ1.isVisible()){
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(true);
+        tourJ1.setVisible(false);
+    } else {
+        tourJ1.setVisible(true);
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(false);
+    }
+  }
+
+  public void lueur4J(){
+    if (!tourJ2.isVisible() && !tourJ3.isVisible() && !tourJ4.isVisible()){
+        tourJ2.setVisible(true);
+        tourJ1.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(false);
+    } else if (!tourJ3.isVisible() && !tourJ1.isVisible() && !tourJ4.isVisible()){
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(true);
+        tourJ1.setVisible(false);
+        tourJ4.setVisible(false);
+    } else if (!tourJ4.isVisible() && !tourJ1.isVisible() && !tourJ2.isVisible()){
+        tourJ1.setVisible(false);
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(true);
+    } else {
+        tourJ1.setVisible(true);
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(false);
+    }
+  }
+
+  public void lueur5J(){
+    if (!tourJ2.isVisible() && !tourJ3.isVisible() && !tourJ4.isVisible() && !tourJ5.isVisible()){
+        tourJ2.setVisible(true);
+        tourJ1.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(false);
+        tourJ5.setVisible(false);
+    } else if (!tourJ3.isVisible() && !tourJ1.isVisible() && !tourJ4.isVisible() && !tourJ5.isVisible()){
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(true);
+        tourJ1.setVisible(false);
+        tourJ4.setVisible(false);
+        tourJ5.setVisible(false);
+    } else if (!tourJ4.isVisible() && !tourJ1.isVisible() && !tourJ2.isVisible() && !tourJ5.isVisible()){
+        tourJ1.setVisible(false);
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(true);
+        tourJ5.setVisible(false);
+    } else if (!tourJ5.isVisible() && !tourJ1.isVisible() && !tourJ2.isVisible() && !tourJ3.isVisible()){
+        tourJ1.setVisible(false);
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(false);
+        tourJ5.setVisible(true);
+    } else {
+        tourJ1.setVisible(true);
+        tourJ2.setVisible(false);
+        tourJ3.setVisible(false);
+        tourJ4.setVisible(false);
+        tourJ5.setVisible(false);
+    }
+  }
+
+
+
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -538,8 +628,14 @@ public class Frames extends javax.swing.JFrame {
     sliderIA = new javax.swing.JSlider();
     aideOption = new javax.swing.JLabel();
     acAide = new javax.swing.JLabel();
-    volumeCheck = new javax.swing.JCheckBox();
+    
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
+    
+    if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))){
+      volumeCheck = new javax.swing.JCheckBox("", true);
+    } else {
+      volumeCheck = new javax.swing.JCheckBox("", false);
+    }
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
@@ -683,12 +779,12 @@ public class Frames extends javax.swing.JFrame {
     
     titreVolume.setFont(uniFont.deriveFont((float) 35)); // NOI18N
     titreVolume.setForeground(Color.WHITE);
-    titreVolume.setText("Volume :");
-    options.add(titreVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 120, 40));
+    titreVolume.setText("Musique :");
+    options.add(titreVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 150, 40));
 
     acVolume.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     acVolume.setForeground(Color.WHITE);
-    acVolume.setText("Activer ");
+    acVolume.setText("Activé ");
     options.add(acVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
 
     vitesseIA.setFont(uniFont.deriveFont((float) 35)); // NOI18N
@@ -704,7 +800,7 @@ public class Frames extends javax.swing.JFrame {
 
     acAide.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     acAide.setForeground(Color.WHITE);
-    acAide.setText("Activer ");
+    acAide.setText("Activé ");
     options.add(acAide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, 160, 40));
     volumeCheck.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1426,7 +1522,7 @@ public class Frames extends javax.swing.JFrame {
     GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
-    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau);
+    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau );
     keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
@@ -1523,12 +1619,28 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void hintActionPerformed(java.awt.event.ActionEvent evt) {                                     
-    // TODO add your handling code here:
+    if (players.size() == 2){
+      lueur2J();
+    } else if (players.size() == 3) {
+      lueur3J(); 
+    } else if (players.size() == 4) {
+      lueur4J(); 
+    } else { 
+      lueur5J();
+    }
   }  
 
   private void volumeCheckActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    // TODO add your handling code here:
-  }                                           
+      if (!volumeCheck.isSelected()){
+        System.out.println("Music stop");
+        audioPlayer.music.stop();
+        Configuration.instance().setProperty("MusicState", "false");
+      } else {
+        System.out.println("Music start");
+        audioPlayer.music.play();
+        Configuration.instance().setProperty("MusicState", "true");
+      }
+  }
 
   private void aideCheckActionPerformed(java.awt.event.ActionEvent evt) {                                          
     // TODO add your handling code here:

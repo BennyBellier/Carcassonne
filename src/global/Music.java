@@ -13,6 +13,7 @@ public class Music implements Runnable {
   Clip clip;
   Thread thread;
   int playlistNumber = 0;
+  int stop;
 
   public Music() {
     loadMusic();
@@ -53,9 +54,8 @@ public class Music implements Runnable {
       clip.stop();
       clip.close();
     }
-    if (thread.isAlive())
-      thread.interrupt();
-
+    //thread.interrupt();ad.interrupt();
+    thread = new Thread(this);
   }
 
   /**
@@ -64,19 +64,6 @@ public class Music implements Runnable {
   @Override
   public void run() {
     clip.start();
-    // while (thread.isAlive()) {
-    // if (!clip.isRunning()) {
-    // clip.close();
-    // playlistNumber = (playlistNumber + 1) % playlist.size();
-    // try {
-    // clip.open(playlist.get(playlistNumber));
-    // clip.start();
-    // }
-    // catch (Exception e) {
-    // Configuration.instance().logger().severe("Impossible de lire la musique");
-    // }
-    // }
-    // }
   }
 
 }
