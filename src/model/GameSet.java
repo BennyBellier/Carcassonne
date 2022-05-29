@@ -332,6 +332,8 @@ public class GameSet {
             }
             if (withRota)
               t.turnClock();
+            else
+              break;
             ++r;
           } while (r < 3 && withRota);
         }

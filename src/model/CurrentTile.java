@@ -20,14 +20,14 @@ public class CurrentTile {
     else
       placed = true;
 
-    byte[] tb = new byte[8];
-    for (int i = 1; i < 9; i++) {
+    byte[] tb = new byte[9];
+    for (int i = 1; i < 10; i++) {
       tb[i-1] = b[i];
     }
     tile = new Tile(tb);
 
-    x = b[9];
-    y = b[10];
+    x = b[10];
+    y = b[11];
   }
 
   public void placed() {

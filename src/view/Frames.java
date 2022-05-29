@@ -437,7 +437,7 @@ public class Frames extends javax.swing.JFrame {
     }
     String[][] filenames = new String[fList.size()][1];
     for (int i = 0; i < fList.size(); i++) {
-      filenames[i][0] = fList.get(i);
+      filenames[i][0] = fList.get(i).replaceAll(".dat", "");
     }
 
     sauvegardeTable.setModel(new javax.swing.table.DefaultTableModel(filenames, new String[] { "Sauvegarde" }) {
@@ -1242,7 +1242,7 @@ public class Frames extends javax.swing.JFrame {
     jouerPanel.setVisible(false);
     plateauJeu.setVisible(true);
     layoutJeu.setVisible(true);
-    GameEngine gm = new GameEngine(Saver.load(Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + file));
+    GameEngine gm = new GameEngine(Saver.load(Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + file + ".dat"));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable, menuPlateau);

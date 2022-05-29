@@ -95,6 +95,7 @@ public class Player {
     curNumberOfProject = b[3];
     numberOfProjects = b[4];
     nbTilePlaced = b[5];
+    color = new Color(b[6], b[7], b[8]);
   }
 
   public IA getIA() {
@@ -250,6 +251,6 @@ public class Player {
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {
-    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) 0));
+    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue()));
   }
 }

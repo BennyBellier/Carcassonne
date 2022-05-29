@@ -33,17 +33,24 @@ public class Saver {
   }
 
   public void saveGame(String file) {
+    File f = null;
     try {
-      FileOutputStream outputStream = new FileOutputStream(new File(formatFileString(file)));
+      f = new File(formatFileString(file));
+      FileOutputStream outputStream = new FileOutputStream(f);
 
       byte[] bytes = history.get(0).toArray();
 
       outputStream.write(bytes, 0, bytes.length);
 
       outputStream.close();
-    } catch (Exception e) {
+    } catch (IOException e) {
       Configuration.instance().logger().severe("Erreur, impossible d'enregistrer la partie");
       e.printStackTrace();
+    } catch (IndexOutOfBoundsException iOfBoundsException) {
+      Configuration.instance().logger().severe("Auncune sauvegardes disponible");
+      if (f != null)
+        f.delete();
+      iOfBoundsException.printStackTrace();
     }
   }
 

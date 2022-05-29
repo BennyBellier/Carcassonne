@@ -52,6 +52,8 @@ public class GameEngine {
     playerTurn = s.playerTurn;
     meeplesOnSet = s.meeples;
     gameEnded = false;
+    currentTile = s.currentTile;
+    currentMeeple = s.currentMeeple;
   }
 
   public void setControleur(Controleur c) {
@@ -671,6 +673,8 @@ public class GameEngine {
   }
 
   public void saveGame(String file) {
+    if (save.history.size() == 0)
+      save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
     save.saveGame(file);
   }
 }

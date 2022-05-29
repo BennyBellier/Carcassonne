@@ -139,8 +139,9 @@ public class Tile {
     w =  Type.fromByte(b[4]);
     this.b =  (b[5] == 1 ? true : false);
     cityEnder = (b[6] == 1 ? true : false);
+    roadEnder = (b[7] == 1 ? true : false);
 
-    if (b[7] == 1)
+    if (b[8] == 1)
       isStart = true;
   }
 
@@ -401,9 +402,9 @@ public class Tile {
    *
    * @return la valeur de retour est de type :
    *         $ +-------+
-   *         $ | C |
+   *         $ |   C   |
    *         $ | R S R |
-   *         $ | L |
+   *         $ |   L   |
    *         $ +-------+
    */
   public String[] toStringArray() {
@@ -467,7 +468,7 @@ public class Tile {
    */
   public List<Byte> toByteArray() {
     return Arrays.asList(c.toByte(), n.toByte(), e.toByte(), s.toByte(), w.toByte(),
-        (byte) (b ? 1 : 0), (byte) (cityEnder ? 1 : 0), (byte) (isStart ? 1 : 0));
+        (byte) (b ? 1 : 0), (byte) (cityEnder ? 1 : 0), (byte) (roadEnder ? 1 : 0), (byte) (isStart ? 1 : 0));
   }
 
   /**

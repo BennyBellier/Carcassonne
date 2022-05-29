@@ -16,7 +16,7 @@ public class CurrentMeeple {
   public CurrentMeeple(byte[] b) {
     x = b[0];
     y = b[1];
-    card = String.valueOf(b[3]);
+    card = String.valueOf(b[2]);
   }
 
   public List<Byte> toByteArray() {
