@@ -354,6 +354,7 @@ public class Frames extends javax.swing.JFrame {
     cJaune.setEnabled(true);
     cNoir.setEnabled(true);
     boutonSupDesactiver();
+    reinitialiserLueur();
     players.clear();
 
   }
@@ -431,92 +432,13 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setLabelScore(l.stream().toArray(JLabel[]::new));
   }
 
- 
-  public void lueur2J(){
-    if (!tourJ2.isVisible()){
-        tourJ2.setVisible(true);
-        tourJ1.setVisible(false);
-    } else {
-        tourJ2.setVisible(false);
-        tourJ1.setVisible(true);
-    }
+  public void reinitialiserLueur(){
+    tourJ1.setVisible(true);
+    tourJ2.setVisible(false);
+    tourJ3.setVisible(false);
+    tourJ4.setVisible(false);
+    tourJ5.setVisible(false);
   }
-
-  public void lueur3J(){
-    if (!tourJ2.isVisible() && !tourJ3.isVisible()){
-        tourJ2.setVisible(true);
-        tourJ1.setVisible(false);
-        tourJ3.setVisible(false);
-    } else if (!tourJ3.isVisible() && !tourJ1.isVisible()){
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(true);
-        tourJ1.setVisible(false);
-    } else {
-        tourJ1.setVisible(true);
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(false);
-    }
-  }
-
-  public void lueur4J(){
-    if (!tourJ2.isVisible() && !tourJ3.isVisible() && !tourJ4.isVisible()){
-        tourJ2.setVisible(true);
-        tourJ1.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(false);
-    } else if (!tourJ3.isVisible() && !tourJ1.isVisible() && !tourJ4.isVisible()){
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(true);
-        tourJ1.setVisible(false);
-        tourJ4.setVisible(false);
-    } else if (!tourJ4.isVisible() && !tourJ1.isVisible() && !tourJ2.isVisible()){
-        tourJ1.setVisible(false);
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(true);
-    } else {
-        tourJ1.setVisible(true);
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(false);
-    }
-  }
-
-  public void lueur5J(){
-    if (!tourJ2.isVisible() && !tourJ3.isVisible() && !tourJ4.isVisible() && !tourJ5.isVisible()){
-        tourJ2.setVisible(true);
-        tourJ1.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(false);
-        tourJ5.setVisible(false);
-    } else if (!tourJ3.isVisible() && !tourJ1.isVisible() && !tourJ4.isVisible() && !tourJ5.isVisible()){
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(true);
-        tourJ1.setVisible(false);
-        tourJ4.setVisible(false);
-        tourJ5.setVisible(false);
-    } else if (!tourJ4.isVisible() && !tourJ1.isVisible() && !tourJ2.isVisible() && !tourJ5.isVisible()){
-        tourJ1.setVisible(false);
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(true);
-        tourJ5.setVisible(false);
-    } else if (!tourJ5.isVisible() && !tourJ1.isVisible() && !tourJ2.isVisible() && !tourJ3.isVisible()){
-        tourJ1.setVisible(false);
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(false);
-        tourJ5.setVisible(true);
-    } else {
-        tourJ1.setVisible(true);
-        tourJ2.setVisible(false);
-        tourJ3.setVisible(false);
-        tourJ4.setVisible(false);
-        tourJ5.setVisible(false);
-    }
-  }
-
-
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -630,6 +552,7 @@ public class Frames extends javax.swing.JFrame {
     acAide = new javax.swing.JLabel();
     nomPartieLabel = new javax.swing.JLabel();
     nomPartie = new javax.swing.JTextField();
+    rewind = new javax.swing.JButton();
     
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
     
@@ -1335,6 +1258,15 @@ public class Frames extends javax.swing.JFrame {
     });
     layoutJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 10, 110, 120));
 
+    rewind.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    rewind.setText("Rewind");
+    rewind.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            rewindActionPerformed(evt);
+        }
+    });
+    layoutJeu.add(rewind, new org.netbeans.lib.awtextra.AbsoluteConstraints(1630, 50, 120, 40));
+
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
     background.setLayout(backgroundLayout);
     backgroundLayout.setHorizontalGroup(
@@ -1646,7 +1578,11 @@ public class Frames extends javax.swing.JFrame {
 
   private void aideCheckActionPerformed(java.awt.event.ActionEvent evt) {                                          
     // TODO add your handling code here:
-  }              
+  }      
+
+  private void rewindActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // TODO add your handling code here:
+  }                   
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
@@ -1755,5 +1691,6 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JCheckBox volumeCheck;
   private javax.swing.JTextField nomPartie;
   private javax.swing.JLabel nomPartieLabel;
+  private javax.swing.JButton rewind;
   // End of variables declaration
 }
