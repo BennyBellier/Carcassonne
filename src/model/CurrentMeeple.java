@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CurrentMeeple {
   public int x, y;
   public String card;
@@ -8,5 +11,15 @@ public class CurrentMeeple {
     this.x = x;
     this.y = y;
     this.card = card;
+  }
+
+  public CurrentMeeple(byte[] b) {
+    x = b[0];
+    y = b[1];
+    card = String.valueOf(b[3]);
+  }
+
+  public List<Byte> toByteArray() {
+    return Arrays.asList((byte) x, (byte) y, (byte) card.charAt(0));
   }
 }

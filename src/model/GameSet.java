@@ -22,6 +22,10 @@ public class GameSet {
     tiles[1][1] = start;
   }
 
+  public GameSet (Tile[][] set) {
+    tiles = set;
+  }
+
   /**
    ** Retourne les coordonnées courante de la tuile de départ dans la matrice
    *

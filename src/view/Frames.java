@@ -5,16 +5,22 @@ import global.Audio;
 import global.Configuration;
 import model.GameEngine;
 import model.Player;
+import model.Saver;
+
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+
 
 /**
  *
@@ -32,7 +38,7 @@ public class Frames extends javax.swing.JFrame {
   private Color couleurNoir = new Color(31, 31, 31);
   private Color couleurVert = new Color(60, 212, 21);
   private Color couleurJaune = new Color(255, 235, 87);
-  private String textField;
+  private String textField, gameName;
   ArrayList<Player> players = new ArrayList<>();
 
   Keybord keyboard = new Keybord();
@@ -75,7 +81,7 @@ public class Frames extends javax.swing.JFrame {
     jeuEnReseaux.setEnabled(false);
     lancerLaPartie.setEnabled(false);
     ajouterIA.setEnabled(true);
-    sauvegarderInGame.setEnabled(false);
+    sauvegarderInGame.setEnabled(true);
   }
 
   public void basculeEnPleineEcran() {
@@ -424,6 +430,24 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setLabelScore(l.stream().toArray(JLabel[]::new));
   }
 
+  void loadSaveDisplayFile() {
+    List<String> fList = new ArrayList<>();
+    for (String f : new File(Configuration.instance().getConfigFolderPath() + File.separator + "saves").list()) {
+      fList.add(f);
+    }
+    String[][] filenames = new String[fList.size()][1];
+    for (int i = 0; i < fList.size(); i++) {
+      filenames[i][0] = fList.get(i);
+    }
+
+    sauvegardeTable.setModel(new javax.swing.table.DefaultTableModel(filenames, new String[] { "Sauvegarde" }) {
+      @Override
+      public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+      }
+    });
+  }
+
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -616,16 +640,12 @@ public class Frames extends javax.swing.JFrame {
     });
     jouerPanel.add(nouvellePartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 420, 250, 60));
 
-    sauvegardeTable.setModel(new javax.swing.table.DefaultTableModel(
-        new Object[][] {
-            { null, null, null, null },
-            { null, null, null, null },
-            { null, null, null, null },
-            { null, null, null, null }
-        },
-        new String[] {
-            "Title 1", "Title 2", "Title 3", "Title 4"
-        }));
+    sauvegardeTable.setFont(uniFont.deriveFont((float) 30));
+    sauvegardeTable.getTableHeader().setVisible(false);
+    sauvegardeTable.setRowHeight(50);
+    sauvegardeTable.setFocusable(false);
+
+    sauvegardeTable.addMouseListener(new JTableMouse(sauvegardeTable, this));
     sauvegardeScroll.setViewportView(sauvegardeTable);
 
     jouerPanel.add(sauvegardeScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 617, 337));
@@ -742,12 +762,11 @@ public class Frames extends javax.swing.JFrame {
     scoreFin.setMinimumSize(new java.awt.Dimension(1920, 1080));
     scoreFin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-
     panelTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     panelTable.setMaximumSize(new java.awt.Dimension(1920, 1080));
     panelTable.setMinimumSize(new java.awt.Dimension(1920, 1080));
     panelTable.setPreferredSize(new java.awt.Dimension(1920, 1080));
-    panelTable.setBackground(new Color(0,0,0,50));
+    panelTable.setBackground(new Color(0, 0, 0, 50));
     panelTable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     scoreTable.setFont(uniFont.deriveFont((float) 30)); // NOI18N
@@ -759,26 +778,6 @@ public class Frames extends javax.swing.JFrame {
     scoreTable.getTableHeader().setDefaultRenderer(hRenderer);
     scoreTable.getTableHeader().setFont(uniFont.deriveFont((float) 40));
     scoreTable.setForeground(new Color(255, 255, 255));
-    scoreTable.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null},
-            {null, null},
-            {null, null},
-            {null, null},
-            {null, null}
-        },
-        new String [] {
-            "Joueurs", "Points"
-        }
-    ) {
-        boolean[] canEdit = new boolean [] {
-            false, false
-        };
-
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
-        }
-    });
     scoreTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
     scoreTable.setAutoscrolls(false);
     scoreTable.setFocusable(false);
@@ -791,16 +790,15 @@ public class Frames extends javax.swing.JFrame {
     finScrollPane.setViewportView(scoreTable);
     finScrollPane.setFocusable(false);
 
-
     panelTable.add(finScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 316, 1285, 465));
     panelTable.setBackground(new Color(0, 0, 0, (float) 0.50));
 
     scoreContinuer.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     scoreContinuer.setText("->");
     scoreContinuer.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            scoreContinuerActionPerformed(evt);
-        }
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        scoreContinuerActionPerformed(evt);
+      }
     });
     panelTable.add(scoreContinuer, new org.netbeans.lib.awtextra.AbsoluteConstraints(1560, 790, 110, 45));
 
@@ -904,7 +902,8 @@ public class Frames extends javax.swing.JFrame {
     newGame.add(lancerLaPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 910, 250, 50));
 
     difficulterBox.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile"/* , "Moyen", "Terminator" */ }));
+    difficulterBox
+        .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile"/* , "Moyen", "Terminator" */ }));
     newGame.add(difficulterBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 670, 200, 50));
 
     cBleu.setBackground(new java.awt.Color(7, 45, 249));
@@ -1206,6 +1205,7 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipale.setVisible(false);
     boutonSupDesactiver();
     background.affichageJouer();
+    loadSaveDisplayFile();
   }
 
   private void nouvellePartieActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1236,6 +1236,23 @@ public class Frames extends javax.swing.JFrame {
      */
     System.exit(0);
     // }
+  }
+
+  void selectedSaveActionPerformed(String file) {
+    jouerPanel.setVisible(false);
+    plateauJeu.setVisible(true);
+    layoutJeu.setVisible(true);
+    GameEngine gm = new GameEngine(Saver.load(Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + file));
+    plateauJeu.setFont(uniFont);
+    plateauJeu.setGameEngine(gm);
+    control = new Controleur(gm, scoreFin, scoreTable, menuPlateau);
+    keyboard.setControleur(control);
+    this.setFocusable(true);
+    plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
+    control.setAfficheur(plateauJeu);
+    cadre();
+    sendLabel();
+    plateauJeu.afficherPioche();
   }
 
   private void menuReglesActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1342,7 +1359,7 @@ public class Frames extends javax.swing.JFrame {
     GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
-    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau);
+    control = new Controleur(gm, scoreFin, scoreTable, menuPlateau);
     keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
@@ -1350,7 +1367,6 @@ public class Frames extends javax.swing.JFrame {
     cadre();
     sendLabel();
     plateauJeu.afficherPioche();
-    // control.startGame();
   }
 
   private void ajouterIAActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1401,7 +1417,12 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void sauvegarderInGameActionPerformed(java.awt.event.ActionEvent evt) {
-
+    if (gameName == null) {
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
+      Date date = new Date();
+      gameName = formatter.format(date);
+    }
+    control.saveGame(gameName);
   }
 
   private void reglesInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1434,8 +1455,8 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void scoreContinuerActionPerformed(java.awt.event.ActionEvent evt) {
-      menuPrincipale();
-      menuPlateau.setVisible(true);
+    menuPrincipale();
+    menuPlateau.setVisible(true);
   }
 
   // Variables declaration - do not modify

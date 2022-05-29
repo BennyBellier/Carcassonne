@@ -19,11 +19,11 @@ public class Saver {
   }
 
   public void addSave(Save s) {
-    history.add(s);
+    history.add(0, s);
   }
 
   public Save getLastSave() {
-    return history.remove(history.size() - 1);
+    return history.remove(0);
   }
 
   public static String formatFileString(String s) {
@@ -36,7 +36,7 @@ public class Saver {
     try {
       FileOutputStream outputStream = new FileOutputStream(new File(formatFileString(file)));
 
-      byte[] bytes = history.get(history.size() - 1).toArray();
+      byte[] bytes = history.get(0).toArray();
 
       outputStream.write(bytes, 0, bytes.length);
 
@@ -49,14 +49,17 @@ public class Saver {
 
   public static Save load(String file) {
     try {
-      FileInputStream inputStream = new FileInputStream(formatFileString(file));
+      Configuration.instance().logger().info("Chargement de la sauvegarde : " + file);
+      FileInputStream inputStream = new FileInputStream(file);
       Save s = Save.fromFile(inputStream);
       inputStream.close();
       return s;
     } catch (FileNotFoundException fe) {
-      Configuration.instance().logger().severe("Ficheier de sauvegarde inexistant");
+      Configuration.instance().logger().severe("Fichier de sauvegarde inexistant");
+      fe.printStackTrace();
     } catch (IOException ioe) {
       Configuration.instance().logger().severe("Fichier de sauvegarde corrompu");
+      ioe.printStackTrace();
     }
     return null;
   }

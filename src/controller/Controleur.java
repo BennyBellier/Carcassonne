@@ -57,11 +57,6 @@ public class Controleur implements ActionListener {
     return ge.isGameRunning();
   }
 
-  // public void startGame() {
-  //   if (ge.isIATurn())
-  //     iaPlay();
-  // }
-
   /**
    ** Retourne la cardinalité du clic sur la tuile (x, y)
    *
@@ -159,6 +154,10 @@ public class Controleur implements ActionListener {
 
   void endTurn() {
     ge.endOfTurn();
+  }
+
+  public void saveGame(String file) {
+    ge.saveGame(file);
   }
 
   /**

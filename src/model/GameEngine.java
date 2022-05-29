@@ -26,6 +26,7 @@ public class GameEngine {
   private CurrentMeeple currentMeeple;
   private boolean gameEnded;
   private Controleur control;
+  private Saver save;
 
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
@@ -36,10 +37,21 @@ public class GameEngine {
     players = new ArrayList<>(nbPlayer);
     meeplesOnSet = new ArrayList<>();
     gameEnded = false;
+    save = new Saver();
     for (Player p : playersIn) {
       players.add(p);
     }
     Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
+  }
+
+  public GameEngine(Save s) {
+    gameSet = new GameSet(s.set);
+    pioche = s.p;
+    nbPlayer = s.nbPlayer;
+    players = s.players;
+    playerTurn = s.playerTurn;
+    meeplesOnSet = s.meeples;
+    gameEnded = false;
   }
 
   public void setControleur(Controleur c) {
@@ -232,6 +244,7 @@ public class GameEngine {
         nextPlayer();
       }
       Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+      save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
     }
   }
 
@@ -657,7 +670,7 @@ public class GameEngine {
     return scores;
   }
 
-  /**
-   * $ Gestion des sauvegardes
-   */
+  public void saveGame(String file) {
+    save.saveGame(file);
+  }
 }

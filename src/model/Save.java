@@ -8,23 +8,23 @@ import java.util.List;
 import global.Configuration;
 
 public class Save {
-  int nbPlayer, playerTurn, x, y;
+  int nbPlayer, playerTurn;
   List<Player> players;
-  Tile currentTile;
+  CurrentTile currentTile;
+  CurrentMeeple currentMeeple;
   Tile[][] set;
   Pioche p;
   List<Meeple> meeples;
 
-  public Save(int playerTurn, int currentTileX, int currentTileY, Tile currentTile, Tile[][] set,
-      Pioche p, List<Player> players, List<Meeple> meeples) {
+  public Save(int playerTurn, CurrentTile currentTile, CurrentMeeple currentMeeple, Tile[][] set, Pioche p, List<Player> players, List<Meeple> meeples) {
     this.players = players;
     this.currentTile = currentTile;
+    this.currentMeeple = currentMeeple;
     this.set = set;
     this.p = p;
     this.meeples = meeples;
     this.playerTurn = playerTurn;
-    x = currentTileX;
-    y = currentTileY;
+    nbPlayer = players.size();
   }
 
   public byte[] toArray() {
@@ -36,7 +36,7 @@ public class Save {
     }
 
     bytes.addAll(Arrays.asList((byte) players.size(), (byte) playerTurn, (byte) set.length, (byte) set[0].length,
-        (byte) meeples.size(), (byte) p.size(), (byte) x, (byte) y));
+        (byte) meeples.size(), (byte) p.size()));
 
     // Joueurs (7 octets par joueur + 1 octet pour sa position dans la liste)
     for (int i = 0; i < players.size(); i++) {
@@ -44,12 +44,19 @@ public class Save {
       bytes.addAll(players.get(i).toByteArray());
     }
 
-    // Tuile courante (8 octets)
+    // Tuile courante (11 octets)
     if (currentTile == null)
       bytes.addAll(
-          Arrays.asList((byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1));
+          Arrays.asList((byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1,
+              (byte) -1, (byte) -1, (byte) -1));
     else
       bytes.addAll(currentTile.toByteArray());
+
+    // Meeple courant (3 octets)
+    if (currentMeeple == null)
+      Arrays.asList((byte) -1, (byte) -1, (byte) -1);
+    else
+      bytes.addAll(currentMeeple.toByteArray());
 
     // Plateau (8 octets 1 tuile)
     for (int i = 0; i < set.length; i++) {
@@ -70,7 +77,7 @@ public class Save {
       bytes.add((byte) 0);
     }
 
-    // Meeples (4 octets 1 meeple)
+    // Meeples sur le palteau (4 octets 1 meeple)
     for (Meeple m : meeples) {
       bytes.addAll(m.toByteArray());
     }
@@ -93,44 +100,62 @@ public class Save {
 
   public static Save fromFile(FileInputStream inputStream) {
     try {
-      int nbPlayer, playerTurn, setLength, set0Length, currentTileX, currentTileY, nbMeeplesOnSet, piocheSize;
+      int nbPlayer, playerTurn, setLength, set0Length, nbMeeplesOnSet, piocheSize;
 
       Tile[][] set;
       Pioche p;
       List<Player> players = new ArrayList<>();
       List<Meeple> meeples = new ArrayList<>();
-      Tile currentTile;
+      CurrentTile currentTile;
+      CurrentMeeple currentMeeple;
 
-      byte[] bytes = new byte[8];
 
-      inputStream.read(bytes, 16, 8);
+      inputStream.skip(16);
+
+      byte[] bytes = new byte[6];
+      inputStream.read(bytes);
       nbPlayer = bytes[0];
       playerTurn = bytes[1];
       setLength = bytes[2];
       set0Length = bytes[3];
       nbMeeplesOnSet = bytes[4];
       piocheSize = bytes[5];
-      currentTileX = bytes[6];
-      currentTileY = bytes[7];
 
       // lecture des paramètre des joueur
       byte[][] playerByte = new byte[nbPlayer][8];
       for (int i = 0; i < nbPlayer; i++) {
-        inputStream.read(playerByte[i], 0, 8);
+        inputStream.read(playerByte[i]);
       }
 
+      bytes = new byte[11];
+
       // lecture de la tuile courante
-      inputStream.read(bytes, 0, 8);
+      inputStream.read(bytes);
       if (bytes[0] == -1)
         currentTile = null;
       else
-        currentTile = new Tile(bytes);
+        currentTile = new CurrentTile(bytes);
+
+      bytes = new byte[3];
+
+      inputStream.read(bytes);
+      if (bytes[0] == -1)
+        currentMeeple = null;
+      else
+        currentMeeple = new CurrentMeeple(bytes);
+
+
+      bytes = new byte[8];
 
       // lecture du plateau
       set = new Tile[setLength][set0Length];
       for (int i = 0; i < set.length; i++) {
         for (int j = 0; j < set[i].length; j++) {
-          inputStream.read(bytes, 0, 8);
+          inputStream.read(bytes);
+          for (byte b : bytes) {
+            System.out.print(b);
+          }
+          System.out.println();
           if (bytes[0] == -1)
             set[i][j] = null;
           else
@@ -141,14 +166,14 @@ public class Save {
       // lecture de la pioche
       byte[][] pBytes = new byte[piocheSize][8];
       for (int i = 0; i < piocheSize; i++) {
-        inputStream.read(pBytes[i], 0, 8);
+        inputStream.read(pBytes[i]);
       }
       p = new Pioche(pBytes);
 
       // lecture des meeples sur le plateau
       bytes = new byte[4];
       for (int i = 0; i < nbMeeplesOnSet; i++) {
-        inputStream.read(bytes, 0, 4);
+        inputStream.read(bytes);
         meeples.add(new Meeple(bytes));
       }
 
@@ -165,9 +190,10 @@ public class Save {
         inputStream.skip(1);
       }
 
-      return new Save(playerTurn, currentTileX, currentTileY, currentTile, set, p, players, meeples);
+      return new Save(playerTurn, currentTile, currentMeeple, set, p, players, meeples);
     } catch (Exception e) {
       Configuration.instance().logger().severe("Fichier de sauvegarde corrompu");
+      e.printStackTrace();
     }
     return null;
   }

@@ -21,9 +21,9 @@ public class Pioche {
   public Pioche(byte[][] b) {
     pioche = new LinkedList<>();
     for (int i = 0; i < b.length; i++) {
-      pioche.add(i, new Tile(b[i]));
+      pioche.add(0, new Tile(b[i]));
     }
-    r = new Random(5);
+    r = new Random();
   }
 
   /**
