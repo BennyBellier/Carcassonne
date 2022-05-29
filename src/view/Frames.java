@@ -700,7 +700,7 @@ public class Frames extends javax.swing.JFrame {
           aideCheckActionPerformed(evt);
       }
     });
-    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 666, -1, 20));
+    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 666, -1, 20));
     
     titreVolume.setFont(uniFont.deriveFont((float) 35)); // NOI18N
     titreVolume.setForeground(Color.WHITE);
@@ -709,7 +709,7 @@ public class Frames extends javax.swing.JFrame {
 
     acVolume.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     acVolume.setForeground(Color.WHITE);
-    acVolume.setText("Activé ");
+    acVolume.setText("On / Off ");
     options.add(acVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
 
     vitesseIA.setFont(uniFont.deriveFont((float) 35)); // NOI18N
@@ -732,7 +732,7 @@ public class Frames extends javax.swing.JFrame {
             volumeCheckActionPerformed(evt);
         }
     });
-    options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 322, -1, 20));
+    options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 322, -1, 20));
 
     regles.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles.setMinimumSize(new java.awt.Dimension(1920, 1080));

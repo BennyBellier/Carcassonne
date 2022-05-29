@@ -21,7 +21,6 @@ public class Music implements Runnable {
       clip = AudioSystem.getClip();
       clip.open(playlist.get(0));
       clip.loop(Clip.LOOP_CONTINUOUSLY);
-      thread = new Thread(this);
     } catch (Exception e) {
       Configuration.instance().logger().warning("Impossible de charger le lecteur audio");
       e.printStackTrace();
@@ -39,23 +38,22 @@ public class Music implements Runnable {
     }
   }
 
+  public 
+  {
+  }
+
   /**
    * Lance le thread permettant de joué la music
    */
   public void play() {
-    thread.start();
+    clip.start();
   }
 
   /**
    * Stop les
    */
   public void stop() {
-    if (clip.isRunning()) {
-      clip.stop();
-      clip.close();
-    }
-    //thread.interrupt();ad.interrupt();
-    thread = new Thread(this);
+    clip.stop();
   }
 
   /**
@@ -63,7 +61,7 @@ public class Music implements Runnable {
    */
   @Override
   public void run() {
-    clip.start();
+
   }
 
 }
