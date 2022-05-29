@@ -79,4 +79,8 @@ public class Meeple {
   public String toString() {
     return player + " (" + x + ", " + y + ") " + card;
   }
+
+  public Meeple clone() {
+    return new Meeple(player, x, y, card);
+  }
 }

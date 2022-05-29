@@ -26,6 +26,7 @@ public class GameEngine {
   private CurrentMeeple currentMeeple;
   private boolean gameEnded;
   private Controleur control;
+  private Saver save;
 
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
@@ -36,10 +37,23 @@ public class GameEngine {
     players = new ArrayList<>(nbPlayer);
     meeplesOnSet = new ArrayList<>();
     gameEnded = false;
+    save = new Saver();
     for (Player p : playersIn) {
       players.add(p);
     }
     Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
+  }
+
+  public GameEngine(Save s) {
+    gameSet = new GameSet(s.set);
+    pioche = s.p;
+    nbPlayer = s.nbPlayer;
+    players = s.players;
+    playerTurn = s.playerTurn;
+    meeplesOnSet = s.meeples;
+    gameEnded = false;
+    currentTile = s.currentTile;
+    currentMeeple = s.currentMeeple;
   }
 
   public void setControleur(Controleur c) {
@@ -113,12 +127,20 @@ public class GameEngine {
     return gameSet;
   }
 
+  List<Meeple> cloneMeeplesList() {
+    List<Meeple> meeples = new ArrayList<>();
+    for (Meeple m : meeplesOnSet) {
+      meeples.add(m.clone());
+    }
+    return meeples;
+  }
+
   public boolean IAPlaceTile() {
     IA ia = players.get(playerTurn).getIA();
     Point start = gameSet.getStartTilePoint();
 
     // placement tuile
-    int[] pos = ia.placeTile(gameSet, currentTile.tile);
+    int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
     Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en ("
         + (pos[0] - start.y) + ", " + (pos[1] - start.x) + ")");
     return placeTile(pos[0], pos[1]);
@@ -232,6 +254,7 @@ public class GameEngine {
         nextPlayer();
       }
       Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
+      save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
     }
   }
 
@@ -583,8 +606,6 @@ public class GameEngine {
       }
       List<Meeple> meepleToRemove = new ArrayList<>();
 
-      System.out.println(project.type().toString());
-
       if (project.type() == Type.ABBEY) {
         for (Meeple m : meeplesOnSet) {
           if (meepleOnAbbey(project, m)) {
@@ -657,7 +678,9 @@ public class GameEngine {
     return scores;
   }
 
-  /**
-   * $ Gestion des sauvegardes
-   */
+  public void saveGame(String file) {
+    if (save.history.size() == 0)
+      save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
+    save.saveGame(file);
+  }
 }

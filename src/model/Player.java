@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.IA;
-import controller.IAEasy;
+import controller.*;
 
 import java.awt.Color;
 
@@ -84,7 +83,9 @@ public class Player {
     numberOfProjects = 0;
     this.color = color;
     if (type == Type.IA_EASY)
-      ia = new IAEasy(meeplesNumber);
+      ia = new IAEasy();
+    else if (type == Type.IA_MEDIUM)
+      ia = new IAMoyen();
   }
 
   public Player(byte[] b, String pseudo) {
@@ -95,6 +96,7 @@ public class Player {
     curNumberOfProject = b[3];
     numberOfProjects = b[4];
     nbTilePlaced = b[5];
+    color = new Color(b[6], b[7], b[8]);
   }
 
   public IA getIA() {
@@ -250,6 +252,6 @@ public class Player {
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {
-    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) 0));
+    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue()));
   }
 }

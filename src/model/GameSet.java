@@ -22,6 +22,10 @@ public class GameSet {
     tiles[1][1] = start;
   }
 
+  public GameSet (Tile[][] set) {
+    tiles = set;
+  }
+
   /**
    ** Retourne les coordonnées courante de la tuile de départ dans la matrice
    *
@@ -300,6 +304,12 @@ public class GameSet {
     return n && s && e && w;
   }
 
+  public GameSet clone() {
+    GameSet res = new GameSet();
+    res.tiles = cloneSet();
+    return res;
+  }
+
   /**
    ** Retourne la liste de tous les emplacements possibles pour la tuile t (avec
    ** les rotations ou non)
@@ -328,6 +338,8 @@ public class GameSet {
             }
             if (withRota)
               t.turnClock();
+            else
+              break;
             ++r;
           } while (r < 3 && withRota);
         }

@@ -42,20 +42,21 @@ public class Music implements Runnable {
    * Lance le thread permettant de joué la music
    */
   public void play() {
-    thread.start();
+    // thread.start();
+    clip.start();
   }
 
   /**
    * Stop les
    */
   public void stop() {
-    if (clip.isRunning()) {
-      clip.stop();
-      clip.close();
-    }
-    if (thread.isAlive())
-      thread.interrupt();
-
+    clip.stop();
+    // if (clip.isRunning()) {
+    //   clip.stop();
+    //   clip.close();
+    // }
+    // if (thread.isAlive())
+    //   thread.interrupt();
   }
 
   /**
