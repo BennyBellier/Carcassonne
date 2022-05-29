@@ -83,6 +83,7 @@ public class Frames extends javax.swing.JFrame {
     tourJ3.setVisible(false);
     tourJ4.setVisible(false);
     tourJ5.setVisible(false);
+    rewind.setVisible(false);
   }
 
   public void basculeEnPleineEcran() {
@@ -438,6 +439,20 @@ public class Frames extends javax.swing.JFrame {
     tourJ3.setVisible(false);
     tourJ4.setVisible(false);
     tourJ5.setVisible(false);
+  }
+
+  public void affRewind(){
+    int nbHumain=0;
+    for (Player p : players){
+      if (!p.isIA()){
+        nbHumain++;
+      }
+    }
+    if (nbHumain == 1 ){
+      rewind.setVisible(true);
+    } else {
+      rewind.setVisible(false);
+    }
   }
 
   /**
@@ -1470,7 +1485,9 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
     cadre();
+    affRewind();
     sendLabel();
+
     plateauJeu.afficherPioche();
     control.startGame();
   }
@@ -1577,7 +1594,11 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void aideCheckActionPerformed(java.awt.event.ActionEvent evt) {                                          
-    // TODO add your handling code here:
+    if(plateauJeu.aide){
+      plateauJeu.aide = false;
+    } else {
+      plateauJeu.aide = true;
+    }
   }      
 
   private void rewindActionPerformed(java.awt.event.ActionEvent evt) {                                       

@@ -37,6 +37,7 @@ public class AffichePlateau extends JComponent {
   List<ScoreEntryPlayer> playersScores;
   JLabel nbTuileRestante, pioche, refaire, valider;
   AfficheCurrentTile act;
+  boolean aide;
 
 
   public AffichePlateau(JLabel pioche, JLabel refaire, JLabel valider, AfficheCurrentTile act) {
@@ -48,6 +49,7 @@ public class AffichePlateau extends JComponent {
     this.refaire = refaire;
     this.act = act;
     valider.setVisible(false);
+    aide = true;
     afficherPioche();
     repaint();
   }
@@ -268,17 +270,18 @@ public class AffichePlateau extends JComponent {
           act.blason = blason;
         }
         act.repaint();
-
+      if (aide){
         Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
 
         int resize = tileSize / 15;
-
+        
         for (Integer i : possiblePlacement.keySet()) {
           for (Integer j : possiblePlacement.get(i)) {
             if (plateau[i][j] == null)
               drawable.drawImage(imgs.highlight, (startX + j * tileSize) + (resize), (startY + i * tileSize) + (resize), (tileSize) - (resize*2), (tileSize) - (resize*2), null);
           }
         }
+      }
       } else {
         act.setVisible(false);
         meeplePlacementPaint();
@@ -287,6 +290,7 @@ public class AffichePlateau extends JComponent {
       meeplePaint();
     }
   }
+
 
   /**
    ** Retourne l'image correspondant à la tuile t
