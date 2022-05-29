@@ -23,7 +23,6 @@ public class Pioche {
     for (int i = 0; i < b.length; i++) {
       pioche.add(0, new Tile(b[i]));
     }
-    r = new Random();
   }
 
   /**
@@ -89,19 +88,6 @@ public class Pioche {
     pioche.remove(0);
     Configuration.instance().logger().info("Piochage de la tuile " + t.toString());
     return t;
-  }
-
-  /**
-   ** Remet une tuile dans la pioche
-   * @param t Tile à remiser
-   */
-  public void remiserTuile(Tile t) {
-    if (t != null) {
-      pioche.add(r.nextInt(pioche.size()), t);
-      Configuration.instance().logger().info("Tuile : " + t.toString() + " remiser");
-    } else {
-      Configuration.instance().logger().severe("Impossible de remiser une tuile inexistante");
-    }
   }
 
   /**

@@ -127,12 +127,20 @@ public class GameEngine {
     return gameSet;
   }
 
+  List<Meeple> cloneMeeplesList() {
+    List<Meeple> meeples = new ArrayList<>();
+    for (Meeple m : meeplesOnSet) {
+      meeples.add(m.clone());
+    }
+    return meeples;
+  }
+
   public boolean IAPlaceTile() {
     IA ia = players.get(playerTurn).getIA();
     Point start = gameSet.getStartTilePoint();
 
     // placement tuile
-    int[] pos = ia.placeTile(gameSet, currentTile.tile);
+    int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
     Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en ("
         + (pos[0] - start.y) + ", " + (pos[1] - start.x) + ")");
     return placeTile(pos[0], pos[1]);
@@ -597,8 +605,6 @@ public class GameEngine {
         ownersValue.add(0);
       }
       List<Meeple> meepleToRemove = new ArrayList<>();
-
-      System.out.println(project.type().toString());
 
       if (project.type() == Type.ABBEY) {
         for (Meeple m : meeplesOnSet) {

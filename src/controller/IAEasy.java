@@ -1,29 +1,23 @@
 package controller;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import model.GameSet;
+import model.Meeple;
 import model.Tile;
 
-public class IAEasy extends IA {
-
+public class IAEasy implements IA {
   private Random rand;
 
-  public IAEasy(int nbMeeples) {
+  public IAEasy() {
     rand = new Random();
   }
 
-  public String placeMeeple(List<String> meeplesPositions) {
-    if (rand.nextInt(100) < 95) {
-      return meeplesPositions.get(rand.nextInt(meeplesPositions.size()));
-    }
-    return null;
-  }
-
-  public int[] placeTile(GameSet gs, Tile currentTile) {
+  public int[] placeTile(int id, GameSet gs, Tile currentTile, List<Meeple> meeples) {
     int rota = rand.nextInt(3);
 
     for (int i = 0; i < rota; i++) {
@@ -42,6 +36,13 @@ public class IAEasy extends IA {
     List<Integer> jList = pos.get(i);
     int j = jList.get(rand.nextInt(jList.size()));
 
-    return new int[] {j, i};
+    return new int[] { j, i };
+  }
+
+  public String placeMeeple(List<String> meeplesPositions) {
+    if (rand.nextInt(100) < 95) {
+      return meeplesPositions.get(rand.nextInt(meeplesPositions.size()));
+    }
+    return null;
   }
 }

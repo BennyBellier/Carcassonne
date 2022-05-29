@@ -57,7 +57,6 @@ public class Music implements Runnable {
     // }
     // if (thread.isAlive())
     //   thread.interrupt();
-
   }
 
   /**

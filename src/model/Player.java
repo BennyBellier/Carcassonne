@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import controller.IA;
-import controller.IAEasy;
+import controller.*;
 
 import java.awt.Color;
 
@@ -84,7 +83,9 @@ public class Player {
     numberOfProjects = 0;
     this.color = color;
     if (type == Type.IA_EASY)
-      ia = new IAEasy(meeplesNumber);
+      ia = new IAEasy();
+    else if (type == Type.IA_MEDIUM)
+      ia = new IAMoyen();
   }
 
   public Player(byte[] b, String pseudo) {

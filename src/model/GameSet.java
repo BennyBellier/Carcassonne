@@ -304,6 +304,12 @@ public class GameSet {
     return n && s && e && w;
   }
 
+  public GameSet clone() {
+    GameSet res = new GameSet();
+    res.tiles = cloneSet();
+    return res;
+  }
+
   /**
    ** Retourne la liste de tous les emplacements possibles pour la tuile t (avec
    ** les rotations ou non)
