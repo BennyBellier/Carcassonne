@@ -20,7 +20,7 @@ public class Music implements Runnable {
     try {
       clip = AudioSystem.getClip();
       clip.open(playlist.get(0));
-      clip.loop(Clip.LOOP_CONTINUOUSLY);
+      // clip.loop(Clip.LOOP_CONTINUOUSLY);
     } catch (Exception e) {
       Configuration.instance().logger().warning("Impossible de charger le lecteur audio");
       e.printStackTrace();
@@ -33,15 +33,14 @@ public class Music implements Runnable {
   void loadMusic() {
     try {
       playlist.add(AudioSystem.getAudioInputStream(new BufferedInputStream(Configuration.charge("audio/music/Enchanted-Emotional_Fantasy_Music.au"))));
+      playlist.add(AudioSystem.getAudioInputStream(new BufferedInputStream(Configuration.charge("audio/music/Minstrel_s-Song-Medieval-Fantasy-Music.au"))));
+      playlist.add(AudioSystem.getAudioInputStream(new BufferedInputStream(Configuration.charge("audio/music/Magic-Lights-Calm-Classical-Music.au"))));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les musics");
     }
   }
-
-  public 
-  {
-  }
-
+    
+  
   /**
    * Lance le thread permettant de joué la music
    */
@@ -61,7 +60,18 @@ public class Music implements Runnable {
    */
   @Override
   public void run() {
+    while(clip.isRunning());
 
+    try {
+    if(playlistNumber == 2){
+      playlistNumber=0;
+    }
+    else{
+      playlistNumber += 1;
+    }
+    clip.open(playlist.get(playlistNumber));
+    } catch (Exception e) {}
+    play();
   }
 
 }

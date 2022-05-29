@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author ludov
  */
 public class Frames extends javax.swing.JFrame {
+  
   Player p;
   Controleur control;
   Images imgs;
@@ -1577,7 +1578,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void aideCheckActionPerformed(java.awt.event.ActionEvent evt) {                                          
-    // TODO add your handling code here:
+      
   }      
 
   private void rewindActionPerformed(java.awt.event.ActionEvent evt) {                                       
