@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Images {
   Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisB, bleu, jaune, noir, rouge, vert, pioche,
-      valider, refaire , lueur , hint;
+      valider, refaire , lueur , hint , reculer , reculerDesactiver;
   Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
       meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
@@ -49,6 +49,8 @@ public class Images {
       refaire = ImageIO.read(Configuration.charge("Images/validate_undo.png"));
       lueur = ImageIO.read(Configuration.charge("Images/lueur-cards.png"));
       hint = ImageIO.read(Configuration.charge("Images/hint.png"));
+      reculer = ImageIO.read(Configuration.charge("Images/reculer.png"));
+      reculerDesactiver = ImageIO.read(Configuration.charge("Images/reculerDesactiver.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -105,6 +107,14 @@ public class Images {
 
   public Image hint() {
     return hint;
+  }
+
+  public Image reculer() {
+    return reculer;
+  }
+
+  public Image reculerDesactiver() {
+    return reculerDesactiver;
   }
 
   void loadMeeples() {
