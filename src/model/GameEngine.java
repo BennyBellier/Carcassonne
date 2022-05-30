@@ -20,7 +20,6 @@ public class GameEngine {
   private Pioche pioche;
   private List<Player> players;
   private List<Meeple> meeplesOnSet;
-  private List<Project> projectsEvaluate;
   private int playerTurn, nbPlayer;
   private CurrentTile currentTile;
   private CurrentMeeple currentMeeple;
@@ -31,7 +30,6 @@ public class GameEngine {
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
     pioche = new Pioche();
-    projectsEvaluate = new ArrayList<>();
     piocheTuile();
     nbPlayer = playersIn.length;
     players = new ArrayList<>(nbPlayer);
@@ -127,6 +125,13 @@ public class GameEngine {
 
   public GameSet getGameSet() {
     return gameSet;
+  }
+
+  public GameEngine rewind() {
+    if (save.history.size() > 1) {
+      return new GameEngine(save.getLastSave());
+    }
+    return this;
   }
 
   List<Meeple> cloneMeeplesList() {
@@ -558,20 +563,6 @@ public class GameEngine {
   }
 
   /**
-   ** Retourne vraie si le projet à déjà était évalué
-   *
-   * @param p
-   * @return
-   */
-  boolean projectAlreadyEvaluate(Project p) {
-    for (Project project : projectsEvaluate) {
-      if (project.equals(p))
-        return true;
-    }
-    return false;
-  }
-
-  /**
    ** Retourne vraie si le meeple est sur le projet
    *
    * @param p
@@ -643,7 +634,6 @@ public class GameEngine {
           }
         }
       }
-      projectsEvaluate.add(project);
     }
   }
 

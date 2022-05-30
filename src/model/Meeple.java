@@ -29,7 +29,7 @@ public class Meeple {
     player = b[0];
     x = b[1];
     y = b[2];
-    card = Byte.toString(b[3]);
+    card = String.valueOf((char) b[3]);
   }
 
   /**

@@ -19,11 +19,11 @@ public class Saver {
   }
 
   public void addSave(Save s) {
-    history.add(0, s);
+    history.add(s);
   }
 
   public Save getLastSave() {
-    return history.remove(0);
+    return history.remove(history.size()-1);
   }
 
   public static String formatFileString(String s) {

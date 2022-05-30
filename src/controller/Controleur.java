@@ -264,6 +264,12 @@ public class Controleur implements ActionListener {
     ge.saveGame(file);
   }
 
+  public GameEngine rewind() {
+    GameEngine newGe = ge.rewind();
+    ge = newGe;
+    return newGe;
+  }
+
   /**
    ** Redirige le clic
    *
@@ -272,32 +278,25 @@ public class Controleur implements ActionListener {
    */
   public void clic(int x, int y) {
     if (ge.isGameRunning() && !ge.isIATurn()) {
-      if (clicOnSet(x, y)) {
-        if (!ge.getCurrentTile().placed) {
-          placeTile(x, y);
-          if (ge.getCurrentTile().placed)
-            tab.afficherRefaire();
-        } else {
-          if (ge.getcurrentMeeple() == null) {
-            placeMeeple(x, y);
-            tab.afficherRefaire();
-          }
-        }
-      } else if (clicOnHand(x, y)) {
+       if (clicOnHand(x, y)) {
         if (ge.getCurrentTile().placed) {
           endTurn();
-          tab.afficherPioche();
         } else if (!ge.getCurrentTile().placed) {
           ge.turnCurrentTile();
-          tab.afficherPioche();
         }
       } else if (clicOnCancel(x, y)) {
         if (ge.getcurrentMeeple() != null) {
           undoMeeple();
-          tab.afficherRefaire();
         } else if (ge.getcurrentMeeple() == null && ge.getCurrentTile().placed) {
           undoTile();
-          tab.afficherPioche();
+        }
+      } else if (clicOnSet(x, y)) {
+        if (!ge.getCurrentTile().placed) {
+          placeTile(x, y);
+        } else {
+          if (ge.getcurrentMeeple() == null) {
+            placeMeeple(x, y);
+          }
         }
       }
       tab.repaint();

@@ -38,8 +38,8 @@ public class Frames extends javax.swing.JFrame {
   private Color couleurNoir = new Color(31, 31, 31);
   private Color couleurVert = new Color(60, 212, 21);
   private Color couleurJaune = new Color(255, 235, 87);
-  private String textField, gameName;
-  ArrayList<Player> players = new ArrayList<>();
+  private String textField;
+  List<Player> players = new ArrayList<>();
   Audio audioPlayer;
   Keybord keyboard = new Keybord();
   Font uniFont;
@@ -85,7 +85,7 @@ public class Frames extends javax.swing.JFrame {
     lancerLaPartie.setEnabled(false);
     ajouterIA.setEnabled(true);
     sauvegarderInGame.setEnabled(true);
-    sauvegarderInGame.setEnabled(false);
+    sauvegarderInGame.setEnabled(true);
     tourJ2.setVisible(false);
     tourJ3.setVisible(false);
     tourJ4.setVisible(false);
@@ -364,7 +364,7 @@ public class Frames extends javax.swing.JFrame {
     boutonSupDesactiver();
     reinitialiserLueur();
     players.clear();
-
+    nomPartie.setText("");
   }
 
   void resetInGameLabel() {
@@ -460,6 +460,24 @@ public class Frames extends javax.swing.JFrame {
     } else {
       rewind.setVisible(false);
     }
+  }
+
+  void loadSaveDisplayFile() {
+    List<String> fList = new ArrayList<>();
+    for (String f : new File(Configuration.instance().getConfigFolderPath() + File.separator + "saves").list()) {
+      fList.add(f);
+    }
+    String[][] filenames = new String[fList.size()][1];
+    for (int i = 0; i < fList.size(); i++) {
+      filenames[i][0] = fList.get(i).replaceAll(".dat", "");
+    }
+
+    sauvegardeTable.setModel(new javax.swing.table.DefaultTableModel(filenames, new String[] { "Sauvegarde" }) {
+      @Override
+      public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+      }
+    });
   }
 
   /**
@@ -1358,24 +1376,6 @@ public class Frames extends javax.swing.JFrame {
     // }
   }
 
-  void selectedSaveActionPerformed(String file) {
-    nomPartie.setText(file);
-    jouerPanel.setVisible(false);
-    plateauJeu.setVisible(true);
-    layoutJeu.setVisible(true);
-    GameEngine gm = new GameEngine(Saver.load(Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + file + ".dat"));
-    plateauJeu.setFont(uniFont);
-    plateauJeu.setGameEngine(gm);
-    control = new Controleur(gm, scoreFin, scoreTable, menuPlateau, tourJ1, tourJ2, tourJ3, tourJ4, tourJ5);
-    keyboard.setControleur(control);
-    this.setFocusable(true);
-    plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
-    control.setAfficheur(plateauJeu);
-    cadre();
-    sendLabel();
-    plateauJeu.afficherPioche();
-  }
-
   private void menuReglesActionPerformed(java.awt.event.ActionEvent evt) {
     regles.setVisible(true);
     menuPrincipale.setVisible(false);
@@ -1474,7 +1474,6 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void lancerLaPartieActionPerformed(java.awt.event.ActionEvent evt) {
-    nomPartie.setText("");
     newGame.setVisible(false);
     plateauJeu.setVisible(true);
     layoutJeu.setVisible(true);
@@ -1490,6 +1489,26 @@ public class Frames extends javax.swing.JFrame {
     affRewind();
     sendLabel();
 
+    plateauJeu.afficherPioche();
+  }
+
+  void selectedSaveActionPerformed(String file) {
+    nomPartie.setText(file);
+    jouerPanel.setVisible(false);
+    plateauJeu.setVisible(true);
+    layoutJeu.setVisible(true);
+    GameEngine gm = new GameEngine(Saver.load(Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + file + ".dat"));
+    plateauJeu.setFont(uniFont);
+    plateauJeu.setGameEngine(gm);
+    control = new Controleur(gm, scoreFin, scoreTable, menuPlateau, tourJ1, tourJ2, tourJ3, tourJ4, tourJ5);
+    keyboard.setControleur(control);
+    this.setFocusable(true);
+    plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
+    control.setAfficheur(plateauJeu);
+    players = gm.getListPlayers();
+    cadre();
+    affRewind();
+    sendLabel();
     plateauJeu.afficherPioche();
   }
 
@@ -1609,7 +1628,10 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void rewindActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    System.out.println("rewind");
+    GameEngine gm = control.rewind();
+    plateauJeu.setGameEngine(gm);
+    plateauJeu.repaint();
   }
 
   // Variables declaration - do not modify

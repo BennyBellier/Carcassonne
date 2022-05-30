@@ -246,11 +246,10 @@ public class AffichePlateau extends JComponent {
       Tile[][] plateau = gm.getSet();
       currentTile = gm.getCurrentTile();
       getTileSize();
+      afficherPioche();
 
       for (int i = 0; i < plateau.length; i++) {
-        //drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
         for (int j = 0; j < plateau[i].length; j++) {
-          //drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
           if (plateau[i][j] != null) {
             drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
                 tileSize, null);
@@ -274,7 +273,7 @@ public class AffichePlateau extends JComponent {
         Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
 
         int resize = tileSize / 15;
-        
+
         for (Integer i : possiblePlacement.keySet()) {
           for (Integer j : possiblePlacement.get(i)) {
             if (plateau[i][j] == null)
@@ -283,10 +282,10 @@ public class AffichePlateau extends JComponent {
         }
       }
       } else {
+        afficherRefaire();
         act.setVisible(false);
         meeplePlacementPaint();
       }
-
       meeplePaint();
     }
   }
