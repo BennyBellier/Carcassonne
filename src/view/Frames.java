@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author ludov
  */
 public class Frames extends javax.swing.JFrame {
+  
   Player p;
   Controleur control;
   Images imgs;
@@ -81,10 +82,9 @@ public class Frames extends javax.swing.JFrame {
 
   private void setupPanel() {
     menuPrincipale();
-    jeuEnReseaux.setEnabled(false);
+    partieRapide.setEnabled(true);
     lancerLaPartie.setEnabled(false);
     ajouterIA.setEnabled(true);
-    sauvegarderInGame.setEnabled(true);
     sauvegarderInGame.setEnabled(true);
     tourJ2.setVisible(false);
     tourJ3.setVisible(false);
@@ -363,7 +363,6 @@ public class Frames extends javax.swing.JFrame {
     cNoir.setEnabled(true);
     boutonSupDesactiver();
     reinitialiserLueur();
-    players.clear();
     nomPartie.setText("");
   }
 
@@ -457,8 +456,10 @@ public class Frames extends javax.swing.JFrame {
     }
     if (nbHumain == 1 ){
       rewind.setVisible(true);
+      reculerDesactiver.setVisible(true);
     } else {
       rewind.setVisible(false);
+      reculerDesactiver.setVisible(false);
     }
   }
 
@@ -480,6 +481,21 @@ public class Frames extends javax.swing.JFrame {
     });
   }
 
+  void partieRapide(){
+    players.add(new Player("Joueur1",Player.Type.HUMAN ,couleurBleu ));
+    switch (diffIAPartieRapide.getSelectedIndex()) {
+      case 0:
+        players.add(new Player("IA Facile", Player.Type.IA_EASY, couleurRouge));
+        break;
+      case 1:
+        players.add(new Player("IA Moyen", Player.Type.IA_MEDIUM, couleurRouge));
+        break;
+      case 2:
+        players.add(new Player("Terminator", Player.Type.IA_HARD, couleurRouge));
+        break;
+    }
+  }
+
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -498,7 +514,7 @@ public class Frames extends javax.swing.JFrame {
     menuOptions = new javax.swing.JButton();
     menuRegles = new javax.swing.JButton();
     jouerPanel = new javax.swing.JPanel();
-    jeuEnReseaux = new javax.swing.JButton();
+    partieRapide = new javax.swing.JButton();
     nouvellePartie = new javax.swing.JButton();
     sauvegardeScroll = new javax.swing.JScrollPane();
     sauvegardeTable = new javax.swing.JTable();
@@ -586,13 +602,16 @@ public class Frames extends javax.swing.JFrame {
     aideCheck = new javax.swing.JCheckBox("", true);
     titreVolume = new javax.swing.JLabel();
     acVolume = new javax.swing.JLabel();
-    vitesseIA = new javax.swing.JLabel();
-    sliderIA = new javax.swing.JSlider();
     aideOption = new javax.swing.JLabel();
     acAide = new javax.swing.JLabel();
     nomPartieLabel = new javax.swing.JLabel();
     nomPartie = new javax.swing.JTextField();
     rewind = new javax.swing.JButton();
+    reculerDesactiver = new javax.swing.JButton();
+    supprimerSauvegarde = new javax.swing.JButton();
+    sauvegardeLabel = new javax.swing.JLabel();
+    partieRIA = new javax.swing.JLabel();
+    diffIAPartieRapide = new javax.swing.JComboBox<>();
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -682,9 +701,14 @@ public class Frames extends javax.swing.JFrame {
     jouerPanel.setPreferredSize(new java.awt.Dimension(1920, 1080));
     jouerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jeuEnReseaux.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    jeuEnReseaux.setText("Jeu en réseaux");
-    jouerPanel.add(jeuEnReseaux, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 590, 250, 60));
+    partieRapide.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    partieRapide.setText("Partie Rapide");
+    partieRapide.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        partieRapideActionPerformed(evt);
+      }
+    });
+    jouerPanel.add(partieRapide, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 590, 250, 60));
 
     nouvellePartie.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     nouvellePartie.setText("Nouvelle Partie");
@@ -712,7 +736,22 @@ public class Frames extends javax.swing.JFrame {
         retourPartiesActionPerformed(evt);
       }
     });
+
     jouerPanel.add(retourParties, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
+
+    sauvegardeLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    sauvegardeLabel.setForeground(Color.WHITE);
+    sauvegardeLabel.setText("Sauvegarde :");
+    jouerPanel.add(sauvegardeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 170, 70));
+
+    supprimerSauvegarde.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    supprimerSauvegarde.setText("Supprimer ");
+    supprimerSauvegarde.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            supprimerSauvegardeActionPerformed(evt);
+        }
+    });
+    jouerPanel.add(supprimerSauvegarde, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 740, 250, 60));
 
     options.setMaximumSize(new java.awt.Dimension(1920, 1080));
     options.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -736,7 +775,7 @@ public class Frames extends javax.swing.JFrame {
           aideCheckActionPerformed(evt);
       }
     });
-    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 666, -1, 20));
+    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 506, -1, 20));
 
     titreVolume.setFont(uniFont.deriveFont((float) 35)); // NOI18N
     titreVolume.setForeground(Color.WHITE);
@@ -748,28 +787,31 @@ public class Frames extends javax.swing.JFrame {
     acVolume.setText("Activé ");
     options.add(acVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
 
-    vitesseIA.setFont(uniFont.deriveFont((float) 35)); // NOI18N
-    vitesseIA.setForeground(Color.WHITE);
-    vitesseIA.setText("Vitesse IA :");
-    options.add(vitesseIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 440, 200, 45));
-    options.add(sliderIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 500, -1, -1));
-
     aideOption.setFont(uniFont.deriveFont((float) 35)); // NOI18N
     aideOption.setForeground(Color.WHITE);
-    aideOption.setText("Aide :");
-    options.add(aideOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 600, 200, 45));
+    aideOption.setText("Aide tuiles :");
+    options.add(aideOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 440, 200, 45));
 
     acAide.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     acAide.setForeground(Color.WHITE);
     acAide.setText("Activé ");
-    options.add(acAide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, 160, 40));
+    options.add(acAide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, 160, 40));
     volumeCheck.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             volumeCheckActionPerformed(evt);
         }
     });
     options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 322, -1, 20));
+    
+    partieRIA.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    partieRIA.setForeground(Color.WHITE);
+    partieRIA.setText("IA Partie Rapide :");
+    options.add(partieRIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 630, 220, 40));
 
+    diffIAPartieRapide.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    diffIAPartieRapide.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IA Facile", "IA Moyen"/*, "Terminator"*/ }));
+    options.add(diffIAPartieRapide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 700, 190, 45));
+    
     regles.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles.setMinimumSize(new java.awt.Dimension(1920, 1080));
     regles.setOpaque(false);
@@ -891,7 +933,8 @@ public class Frames extends javax.swing.JFrame {
 
     plateauJeu.add(scoreFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
-    menuInGame.setBackground(new Color(0, 0, 0, 50));
+    //menuInGame.setBackground(new Color(0, 0, 0, 50));
+    menuInGame.setOpaque(false);
     menuInGame.setMaximumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setMinimumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -987,8 +1030,7 @@ public class Frames extends javax.swing.JFrame {
     newGame.add(lancerLaPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 910, 250, 50));
 
     difficulterBox.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    difficulterBox
-        .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen"/*, "Terminator" */ }));
+    difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen"/*, "Terminator" */ }));
     newGame.add(difficulterBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 670, 200, 50));
 
     cBleu.setBackground(new java.awt.Color(7, 45, 249));
@@ -1124,9 +1166,9 @@ public class Frames extends javax.swing.JFrame {
     nomPartieLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     nomPartieLabel.setForeground(new java.awt.Color(255, 255, 255));
     nomPartieLabel.setText("Nom de la partie :");
-    nomPartie.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+    nomPartie.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     newGame.add(nomPartieLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 265, 250, 36));
-    newGame.add(nomPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 335, 800, 40));
+    newGame.add(nomPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 335, 800, 45));
 
     regles2.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles2.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -1273,14 +1315,24 @@ public class Frames extends javax.swing.JFrame {
     });
     layoutJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 10, 110, 120));
 
-    rewind.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    rewind.setText("Rewind");
+    
+    rewind.setIcon(new ImageIcon(imgs.reculer()));
+    rewind.setBorder(null);
     rewind.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             rewindActionPerformed(evt);
         }
     });
-    layoutJeu.add(rewind, new org.netbeans.lib.awtextra.AbsoluteConstraints(1630, 50, 120, 40));
+    layoutJeu.add(rewind, new org.netbeans.lib.awtextra.AbsoluteConstraints(1640, 40, 130, 71));
+
+    reculerDesactiver.setIcon(new ImageIcon(imgs.reculerDesactiver()));
+    reculerDesactiver.setBorder(null);
+    reculerDesactiver.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            reculerDesactiverActionPerformed(evt);
+        }
+    });
+    layoutJeu.add(reculerDesactiver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1640, 40, 130, 71));
 
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
     background.setLayout(backgroundLayout);
@@ -1343,6 +1395,7 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipale.setVisible(false);
     boutonSupDesactiver();
     background.affichageJouer();
+    players.clear();
     loadSaveDisplayFile();
   }
 
@@ -1556,7 +1609,9 @@ public class Frames extends javax.swing.JFrame {
     menuInGame.setVisible(true);
     menuBoutons.setVisible(true);
     menuPlateau.setVisible(true);
+    layoutJeu.setVisible(false);
     menuInGame.setFocusable(true);
+    
   }
 
   private void sauvegarderInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1581,6 +1636,7 @@ public class Frames extends javax.swing.JFrame {
     menuInGame.setVisible(false);
     plateauJeu.setFocusable(true);
     menuPlateau.setVisible(true);
+    layoutJeu.setVisible(true);
   }
 
   private void retourMenuInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1596,6 +1652,7 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setVisible(true);
     regles2.setVisible(false);
     menuPlateau.setVisible(true);
+    layoutJeu.setVisible(true);
   }
 
   private void scoreContinuerActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1634,6 +1691,34 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.repaint();
   }
 
+  private void partieRapideActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    jouerPanel.setVisible(false);
+    plateauJeu.setVisible(true);
+    layoutJeu.setVisible(true);
+    partieRapide();
+    reinitialiserLueur();
+    GameEngine gm = new GameEngine(players.stream().toArray(Player[]::new));
+    plateauJeu.setFont(uniFont);
+    plateauJeu.setGameEngine(gm);
+    control = new Controleur(gm, scoreFin, scoreTable , menuPlateau , tourJ1 , tourJ2 , tourJ3 , tourJ4 , tourJ5);
+    keyboard.setControleur(control);
+    this.setFocusable(true);
+    plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
+    control.setAfficheur(plateauJeu);
+    cadre();
+    affRewind();
+    sendLabel();
+    plateauJeu.afficherPioche();
+  }   
+
+  private void supprimerSauvegardeActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+    // TODO add your handling code here:
+  }                                                   
+
+private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    // TODO add your handling code here:
+  }
+
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
   private javax.swing.JButton ajouterJoueur;
@@ -1652,7 +1737,7 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JLabel j3;
   private javax.swing.JLabel j4;
   private javax.swing.JLabel j5;
-  private javax.swing.JButton jeuEnReseaux;
+  private javax.swing.JButton partieRapide;
   public javax.swing.JPanel jouerPanel;
   private javax.swing.JLabel joueurs;
   private javax.swing.JButton lancerLaPartie;
@@ -1736,11 +1821,14 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JCheckBox aideCheck;
   private javax.swing.JLabel aideOption;
   private javax.swing.JLabel titreVolume;
-  private javax.swing.JSlider sliderIA;
-  private javax.swing.JLabel vitesseIA;
   private javax.swing.JCheckBox volumeCheck;
   private javax.swing.JTextField nomPartie;
   private javax.swing.JLabel nomPartieLabel;
   private javax.swing.JButton rewind;
+  private javax.swing.JButton supprimerSauvegarde;
+  private javax.swing.JLabel sauvegardeLabel;
+  private javax.swing.JButton reculerDesactiver;
+  private javax.swing.JComboBox<String> diffIAPartieRapide;
+  private javax.swing.JLabel partieRIA;
   // End of variables declaration
 }
