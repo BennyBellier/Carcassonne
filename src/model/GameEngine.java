@@ -54,6 +54,8 @@ public class GameEngine {
     gameEnded = false;
     currentTile = s.currentTile;
     currentMeeple = s.currentMeeple;
+    save = new Saver();
+    save.addSave(s);
   }
 
   public void setControleur(Controleur c) {
