@@ -126,6 +126,7 @@ public class Frames extends javax.swing.JFrame {
     regles2.setVisible(false);
     layoutJeu.setVisible(false);
     scoreFin.setVisible(false);
+    options2.setVisible(false);
   }
 
   public void boutonSupDesactiver() {
@@ -599,7 +600,7 @@ public class Frames extends javax.swing.JFrame {
     tourJ4 = new javax.swing.JLabel();
     tourJ5 = new javax.swing.JLabel();
     hint = new javax.swing.JButton();
-    aideCheck = new javax.swing.JCheckBox("", true);
+    aideCheck = new javax.swing.JCheckBox();
     titreVolume = new javax.swing.JLabel();
     acVolume = new javax.swing.JLabel();
     aideOption = new javax.swing.JLabel();
@@ -612,6 +613,17 @@ public class Frames extends javax.swing.JFrame {
     sauvegardeLabel = new javax.swing.JLabel();
     partieRIA = new javax.swing.JLabel();
     diffIAPartieRapide = new javax.swing.JComboBox<>();
+    optionsInGame = new javax.swing.JButton();
+    options2 = new javax.swing.JPanel();
+    retourOptions2 = new javax.swing.JButton();
+    aideCheck2 = new javax.swing.JCheckBox();
+    titreVolume2 = new javax.swing.JLabel();
+    acVolume2 = new javax.swing.JLabel();
+    aideOption2 = new javax.swing.JLabel();
+    acAide2 = new javax.swing.JLabel();
+    volumeCheck2 = new javax.swing.JCheckBox();
+    partieRIA2 = new javax.swing.JLabel();
+    diffIAPartieRapide2 = new javax.swing.JComboBox<>();
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -739,10 +751,10 @@ public class Frames extends javax.swing.JFrame {
 
     jouerPanel.add(retourParties, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
 
-    sauvegardeLabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    sauvegardeLabel.setFont(uniFont.deriveFont((float) 40)); // NOI18N
     sauvegardeLabel.setForeground(Color.WHITE);
     sauvegardeLabel.setText("Sauvegarde :");
-    jouerPanel.add(sauvegardeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 170, 70));
+    jouerPanel.add(sauvegardeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 250, 70));
 
     supprimerSauvegarde.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     supprimerSauvegarde.setText("Supprimer ");
@@ -775,7 +787,7 @@ public class Frames extends javax.swing.JFrame {
           aideCheckActionPerformed(evt);
       }
     });
-    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 506, -1, 20));
+    options.add(aideCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 506, -1, 20));
 
     titreVolume.setFont(uniFont.deriveFont((float) 35)); // NOI18N
     titreVolume.setForeground(Color.WHITE);
@@ -784,7 +796,7 @@ public class Frames extends javax.swing.JFrame {
 
     acVolume.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     acVolume.setForeground(Color.WHITE);
-    acVolume.setText("Activé ");
+    acVolume.setText("On / Off ");
     options.add(acVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
 
     aideOption.setFont(uniFont.deriveFont((float) 35)); // NOI18N
@@ -794,14 +806,14 @@ public class Frames extends javax.swing.JFrame {
 
     acAide.setFont(uniFont.deriveFont((float) 28)); // NOI18N
     acAide.setForeground(Color.WHITE);
-    acAide.setText("Activé ");
+    acAide.setText("Désactivé ");
     options.add(acAide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, 160, 40));
     volumeCheck.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             volumeCheckActionPerformed(evt);
         }
     });
-    options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 322, -1, 20));
+    options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 322, -1, 20));
     
     partieRIA.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     partieRIA.setForeground(Color.WHITE);
@@ -811,6 +823,65 @@ public class Frames extends javax.swing.JFrame {
     diffIAPartieRapide.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     diffIAPartieRapide.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IA Facile", "IA Moyen"/*, "Terminator"*/ }));
     options.add(diffIAPartieRapide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 700, 190, 45));
+
+    options2.setMaximumSize(new java.awt.Dimension(1920, 1080));
+    options2.setMinimumSize(new java.awt.Dimension(1920, 1080));
+    options2.setName(""); // NOI18N
+    options2.setOpaque(false);
+    options2.setPreferredSize(new java.awt.Dimension(1920, 1080));
+    options2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    retourOptions2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourOptions2.setText("Retour au jeu");
+    retourOptions2.setAlignmentX(0.5F);
+    retourOptions2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        retourOptions2ActionPerformed(evt);
+      }
+    });
+    options2.add(retourOptions2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 920, 200, 45));
+
+    aideCheck2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+          aideCheck2ActionPerformed(evt);
+      }
+    });
+    options2.add(aideCheck2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 506, -1, 20));
+
+    titreVolume2.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    titreVolume2.setForeground(Color.WHITE);
+    titreVolume2.setText("Musique :");
+    options2.add(titreVolume2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 150, 40));
+
+    acVolume2.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    acVolume2.setForeground(Color.WHITE);
+    acVolume2.setText("On / Off ");
+    options2.add(acVolume2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 150, 30));
+
+    aideOption2.setFont(uniFont.deriveFont((float) 35)); // NOI18N
+    aideOption2.setForeground(Color.WHITE);
+    aideOption2.setText("Aide tuiles :");
+    options2.add(aideOption2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 440, 200, 45));
+
+    acAide2.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    acAide2.setForeground(Color.WHITE);
+    acAide2.setText("Désactivé ");
+    options2.add(acAide2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, 160, 40));
+    volumeCheck2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            volumeCheck2ActionPerformed(evt);
+        }
+    });
+    options2.add(volumeCheck2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 322, -1, 20));
+    
+    partieRIA2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    partieRIA2.setForeground(Color.WHITE);
+    partieRIA2.setText("IA Partie Rapide :");
+    options2.add(partieRIA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 630, 220, 40));
+
+    diffIAPartieRapide2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    diffIAPartieRapide2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IA Facile", "IA Moyen"/*, "Terminator"*/ }));
+    options2.add(diffIAPartieRapide2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 700, 190, 45));
     
     regles.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -972,7 +1043,7 @@ public class Frames extends javax.swing.JFrame {
         retourInGameActionPerformed(evt);
       }
     });
-    menuBoutons.add(retourInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 198, 200, 45));
+    menuBoutons.add(retourInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 279, 200, 45));
 
     retourMenuInGame.setFont(uniFont.deriveFont((float) 26)); // NOI18N
     retourMenuInGame.setText("Menu Principal");
@@ -981,9 +1052,18 @@ public class Frames extends javax.swing.JFrame {
         retourMenuInGameActionPerformed(evt);
       }
     });
-    menuBoutons.add(retourMenuInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 279, 200, 45));
+    menuBoutons.add(retourMenuInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 200, 45));
 
-    menuInGame.add(menuBoutons, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 240, 360));
+    optionsInGame.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    optionsInGame.setText("Options");
+    optionsInGame.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+          optionsInGameActionPerformed(evt);
+      }
+    });
+    menuBoutons.add(optionsInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 198, 200, 45));
+
+    menuInGame.add(menuBoutons, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 320, 240, 441));
 
     plateauJeu.add(menuInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
@@ -1315,7 +1395,7 @@ public class Frames extends javax.swing.JFrame {
     });
     layoutJeu.add(menuPlateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 10, 110, 120));
 
-    
+    rewind.setBackground(new Color(0,0,0,0));
     rewind.setIcon(new ImageIcon(imgs.reculer()));
     rewind.setBorder(null);
     rewind.addActionListener(new java.awt.event.ActionListener() {
@@ -1325,6 +1405,7 @@ public class Frames extends javax.swing.JFrame {
     });
     layoutJeu.add(rewind, new org.netbeans.lib.awtextra.AbsoluteConstraints(1640, 40, 130, 71));
 
+    reculerDesactiver.setBackground(new Color(0,0,0,0));
     reculerDesactiver.setIcon(new ImageIcon(imgs.reculerDesactiver()));
     reculerDesactiver.setBorder(null);
     reculerDesactiver.addActionListener(new java.awt.event.ActionListener() {
@@ -1338,41 +1419,36 @@ public class Frames extends javax.swing.JFrame {
     background.setLayout(backgroundLayout);
     backgroundLayout.setHorizontalGroup(
         backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE));
+        .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(options2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()))
+    );
     backgroundLayout.setVerticalGroup(
         backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE));
-
+        .addComponent(regles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(regles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jouerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(menuPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(newGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(plateauJeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(credits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(options2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()))
+    );
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -1388,6 +1464,16 @@ public class Frames extends javax.swing.JFrame {
 
   private void retourOptionsActionPerformed(java.awt.event.ActionEvent evt) {
     menuPrincipale();
+    if (aideCheck.isSelected()){
+      aideCheck2.setSelected(true);
+    } else {
+      aideCheck2.setSelected(false);
+    }
+    if (volumeCheck.isSelected()){
+      volumeCheck2.setSelected(true);
+    } else {
+      volumeCheck2.setSelected(false);
+    }
   }
 
   private void jouerBActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1719,6 +1805,51 @@ private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
   }
 
+  private void optionsInGameActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    menuInGame.setVisible(false);
+    plateauJeu.setVisible(false);
+    options2.setVisible(true);
+    menuPlateau.setVisible(true);
+    background.affichageOptions();
+  } 
+  
+  private void retourOptions2ActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    plateauJeu.setVisible(true);
+    options2.setVisible(false);
+    menuPlateau.setVisible(true);
+    layoutJeu.setVisible(true);
+    if (aideCheck2.isSelected()){
+      aideCheck.setSelected(true);
+    } else {
+      aideCheck.setSelected(false);
+    }
+    if (volumeCheck2.isSelected()){
+      volumeCheck.setSelected(true);
+    } else {
+      volumeCheck.setSelected(false);
+    }
+  }    
+  
+  private void aideCheck2ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    if(plateauJeu.aide){
+      plateauJeu.aide = false;
+    } else {
+      plateauJeu.aide = true;
+    }
+  }                                      
+
+  private void volumeCheck2ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    if (!volumeCheck.isSelected()){
+      System.out.println("Music stop");
+      audioPlayer.music.stop();
+      Configuration.instance().setProperty("MusicState", "false");
+    } else {
+      System.out.println("Music start");
+      audioPlayer.music.play();
+      Configuration.instance().setProperty("MusicState", "true");
+    }
+  }                                   
+
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
   private javax.swing.JButton ajouterJoueur;
@@ -1830,5 +1961,16 @@ private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
   private javax.swing.JButton reculerDesactiver;
   private javax.swing.JComboBox<String> diffIAPartieRapide;
   private javax.swing.JLabel partieRIA;
+  private javax.swing.JButton optionsInGame;
+  private javax.swing.JLabel acAide2;
+  private javax.swing.JLabel acVolume2;
+  private javax.swing.JCheckBox aideCheck2;
+  private javax.swing.JLabel aideOption2;
+  private javax.swing.JComboBox<String> diffIAPartieRapide2;
+  public javax.swing.JPanel options2;
+  private javax.swing.JLabel titreVolume2;
+  private javax.swing.JCheckBox volumeCheck2;
+  private javax.swing.JButton retourOptions2;
+  private javax.swing.JLabel partieRIA2;
   // End of variables declaration
 }
