@@ -541,7 +541,27 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  public void reinitialiserLueur() {
+    tourJ1.setVisible(true);
+    tourJ2.setVisible(false);
+    tourJ3.setVisible(false);
+    tourJ4.setVisible(false);
+    tourJ5.setVisible(false);
+  }
 
+  public void affRewind() {
+    int nbHumain = 0;
+    for (Player p : players) {
+      if (!p.isIA()) {
+        nbHumain++;
+      }
+    }
+    if (nbHumain == 1) {
+      rewind.setVisible(true);
+    } else {
+      rewind.setVisible(false);
+    }
+  }
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -646,7 +666,7 @@ public class Frames extends javax.swing.JFrame {
     tourJ4 = new javax.swing.JLabel();
     tourJ5 = new javax.swing.JLabel();
     hint = new javax.swing.JButton();
-    aideCheck = new javax.swing.JCheckBox();
+    aideCheck = new javax.swing.JCheckBox("", true);
     titreVolume = new javax.swing.JLabel();
     acVolume = new javax.swing.JLabel();
     vitesseIA = new javax.swing.JLabel();
@@ -1430,6 +1450,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   void selectedSaveActionPerformed(String file) {
+    nomPartie.setText(file);
     jouerPanel.setVisible(false);
     plateauJeu.setVisible(true);
     layoutJeu.setVisible(true);
@@ -1544,6 +1565,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void lancerLaPartieActionPerformed(java.awt.event.ActionEvent evt) {
+    nomPartie.setText("");
     newGame.setVisible(false);
     plateauJeu.setVisible(true);
     layoutJeu.setVisible(true);
@@ -1608,7 +1630,8 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void sauvegarderInGameActionPerformed(java.awt.event.ActionEvent evt) {
-    if (gameName == null) {
+    String gameName = nomPartie.getText();
+    if (gameName.isEmpty()) {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
       Date date = new Date();
       gameName = formatter.format(date);

@@ -357,6 +357,7 @@ public class Controleur implements ActionListener {
         ge.IAPlaceMeeple();
         tab.repaint();
         ge.endOfTurn();
+        switchLueur();
         tab.repaint();
         IAPlaying = false;
       }
