@@ -988,7 +988,7 @@ public class Frames extends javax.swing.JFrame {
 
     difficulterBox.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     difficulterBox
-        .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile"/* , "Moyen", "Terminator" */ }));
+        .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen"/*, "Terminator" */ }));
     newGame.add(difficulterBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 670, 200, 50));
 
     cBleu.setBackground(new java.awt.Color(7, 45, 249));

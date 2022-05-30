@@ -27,8 +27,13 @@ public class IAMoyen implements IA {
 
   List<Integer> valeurs(List<Project> list) {
     List<Integer> retour = new ArrayList<>();
-    for (Project element : list) {
-      retour.add(element.value());
+    if (list.size() == 0) {
+      retour.add(0);
+    }
+    else {
+      for (Project element : list) {
+        retour.add(element.value());
+      }
     }
     return retour;
   }
@@ -40,12 +45,13 @@ public class IAMoyen implements IA {
   // complete notre projet ou en démarrer un nouveau 2
   // termine notre projet valeur du projet
   {
-    List<Integer> ptsProjetsIA, ptsProjetsAdversaire, ptsIACour, ptsAdversaireCour;
-    ptsProjetsIA = valeurs(projetsIA);
-    ptsProjetsAdversaire = valeurs(projetsAdversaire);
+    List<Integer> ptsProjetsIA = new ArrayList<>(), ptsProjetsAdversaire = new ArrayList<>(), ptsIACour, ptsAdversaireCour;
+    if (projetsIA.size() > 0)
+      ptsProjetsIA = valeurs(projetsIA);
+    if (projetsAdversaire.size() > 0)
+      ptsProjetsAdversaire = valeurs(projetsAdversaire);
 
-    Point start = gs.getStartTilePoint();
-    boolean placed = gs.addTile(currentTile, i + start.x, j + start.y);
+    boolean placed = gs.addTile(currentTile, j, i);
     boolean completed = false;
     assignProject(gs);
 
@@ -54,7 +60,7 @@ public class IAMoyen implements IA {
       ptsAdversaireCour = valeurs(projetsAdversaire);
 
       for (int k = 0; k < projetsAdversaire.size(); k++) {
-        if (projetsAdversaire.get(k).isFinish()) {
+        if (ptsProjetsAdversaire.size() > 0 && projetsAdversaire.get(k).isFinish()) {
           return -1;
         } else if (ptsProjetsAdversaire.get(k) != ptsAdversaireCour.get(k)) {
           completed = true;
@@ -63,7 +69,7 @@ public class IAMoyen implements IA {
       for (int k = 0; k < projetsIA.size(); k++) {
         if (projetsIA.get(k).isFinish()) {
           return projetsIA.get(k).value();
-        } else if (ptsProjetsIA.get(k) != ptsIACour.get(k)) {
+        } else if (ptsProjetsIA.size() > 0 && ptsProjetsIA.get(k) != ptsIACour.get(k)) {
           if (completed) {
             return 1;
           } else {
@@ -95,9 +101,6 @@ public class IAMoyen implements IA {
   }
 
   void assignProject(GameSet gs) {
-    projetsIA = new ArrayList<>();
-    projetsAdversaire = new ArrayList<>();
-
     List<Project> all = Project.evaluateProjects(gs.cloneSet(), true);
     for (Project project : all) {
       List<Integer> ownersValue = new ArrayList<>();
@@ -149,6 +152,9 @@ public class IAMoyen implements IA {
     this.meeples = meeples;
     this.id = id;
 
+    projetsIA = new ArrayList<>();
+    projetsAdversaire = new ArrayList<>();
+
     Map<Integer, ArrayList<Integer>> pos = gs.tilePositionsAllowed(currentTile, false);
 
     List<Integer> iList = new ArrayList<>(pos.keySet());
@@ -160,8 +166,8 @@ public class IAMoyen implements IA {
       for (int j : pos.get(i)) {
         if ((m = calcul(i, j, currentTile, gs)) >= maxpts) {
           maxpts = m;
-          x = i;
-          y = j;
+          x = j;
+          y = i;
         }
       }
     }

@@ -144,12 +144,10 @@ public class GameEngine {
 
   public boolean IAPlaceTile() {
     IA ia = players.get(playerTurn).getIA();
-    Point start = gameSet.getStartTilePoint();
 
     // placement tuile
     int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
-    Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en ("
-        + (pos[0] - start.y) + ", " + (pos[1] - start.x) + ")");
+    Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en (" + (pos[0]) + ", " + (pos[1]) + ")");
     return placeTile(pos[0], pos[1]);
   }
 
