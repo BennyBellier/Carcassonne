@@ -55,7 +55,7 @@ public class Frames extends javax.swing.JFrame {
     initComponents();
     setupPanel();
     addKeyListener(keyboard);
-    basculeEnPleineEcran();
+    // basculeEnPleineEcran();
     if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))){
       audioPlayer.music.play();
     }

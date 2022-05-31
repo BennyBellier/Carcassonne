@@ -29,8 +29,7 @@ public class IAMoyen implements IA {
     List<Integer> retour = new ArrayList<>();
     if (list.size() == 0) {
       retour.add(0);
-    }
-    else {
+    } else {
       for (Project element : list) {
         retour.add(element.value());
       }
@@ -38,51 +37,63 @@ public class IAMoyen implements IA {
     return retour;
   }
 
-  int calcul(int i, int j, Tile currentTile, GameSet gs)
+  int calcul(GameSet gs)
+  //
   // finir le projet de l'adversaire -1
   // complete un projet de l'adversaire 0
   // complete notre projet et celui de l'adversaire 1
   // complete notre projet ou en démarrer un nouveau 2
   // termine notre projet valeur du projet
   {
-    List<Integer> ptsProjetsIA = new ArrayList<>(), ptsProjetsAdversaire = new ArrayList<>(), ptsIACour, ptsAdversaireCour;
+
+    List<Integer> ptsProjetsIA = new ArrayList<>(), ptsProjetsAdversaire = new ArrayList<>(), ptsIACour,
+        ptsAdversaireCour;
     if (projetsIA.size() > 0)
       ptsProjetsIA = valeurs(projetsIA);
     if (projetsAdversaire.size() > 0)
       ptsProjetsAdversaire = valeurs(projetsAdversaire);
 
-    boolean placed = gs.addTile(currentTile, j, i);
     boolean completed = false;
     assignProject(gs);
 
-    if (placed) {
-      ptsIACour = valeurs(projetsIA);
-      ptsAdversaireCour = valeurs(projetsAdversaire);
+    ptsIACour = valeurs(projetsIA);
+    ptsAdversaireCour = valeurs(projetsAdversaire);
 
-      for (int k = 0; k < projetsAdversaire.size(); k++) {
-        if (ptsProjetsAdversaire.size() > 0 && projetsAdversaire.get(k).isFinish()) {
+    if (ptsAdversaireCour.size() > 0) {
+      for (Project elt : projetsAdversaire) {
+        int a = projetsAdversaire.indexOf(elt);
+        if (elt.isFinish()) {
           return -1;
-        } else if (ptsProjetsAdversaire.get(k) != ptsAdversaireCour.get(k)) {
+        } else if (ptsProjetsAdversaire.size() < ptsAdversaireCour.size()) {
+          completed = true;
+        } else if (ptsProjetsAdversaire.get(a) != ptsAdversaireCour.get(a)) {
           completed = true;
         }
       }
-      for (int k = 0; k < projetsIA.size(); k++) {
-        if (projetsIA.get(k).isFinish()) {
-          return projetsIA.get(k).value();
-        } else if (ptsProjetsIA.size() > 0 && ptsProjetsIA.get(k) != ptsIACour.get(k)) {
-          if (completed) {
-            return 1;
+
+    } else {
+      if (ptsIACour.size() == 0) {
+        return 2;
+      } else {
+        for (Project elt : projetsIA) {
+          if (elt.isFinish()) {
+            return elt.value();
+          } else if (ptsProjetsIA.get(projetsIA.indexOf(elt)) != ptsIACour.get(projetsIA.indexOf(elt))) {
+
+            if (completed) {
+              return 1;
+            } else {
+              return 2;
+            }
           } else {
-            return 2;
-          }
-        } else {
-          if (completed) {
-            return 0;
+            if (completed) {
+              return 0;
+            }
           }
         }
       }
     }
-    return 2;
+    return -1;
   }
 
   boolean meepleOnAbbey(GameSet gameSet, Project p, Meeple m) {
@@ -148,6 +159,24 @@ public class IAMoyen implements IA {
     }
   }
 
+  Tile rotateTileFromCoord(Tile t, GameSet gs, int i, int j) {
+    Map<Integer, ArrayList<Integer>> pos;
+    boolean correctRota = false;
+
+    while (!correctRota) {
+      pos = gs.tilePositionsAllowed(t, false);
+      if (pos.size() == 0)
+        t.turnClock();
+      else if (!pos.containsKey(i))
+        t.turnClock();
+      else if (!pos.get(i).contains(j))
+        t.turnClock();
+      else
+        correctRota = true;
+    }
+    return t;
+  }
+
   public int[] placeTile(int id, GameSet gs, Tile currentTile, List<Meeple> meeples) {
     this.meeples = meeples;
     this.id = id;
@@ -155,24 +184,43 @@ public class IAMoyen implements IA {
     projetsIA = new ArrayList<>();
     projetsAdversaire = new ArrayList<>();
 
-    Map<Integer, ArrayList<Integer>> pos = gs.tilePositionsAllowed(currentTile, false);
+    // Liste des mauvais placements
+    List<Point> badPlacement = new ArrayList<>();
 
-    List<Integer> iList = new ArrayList<>(pos.keySet());
+    Map<Integer, ArrayList<Integer>> pos = gs.tilePositionsAllowed(currentTile, true);
+    Tile testTile;
+    GameSet testGameSet;
+    Point start = gs.getStartTilePoint();
+    System.out.println("all : " + pos);
+
     int maxpts = -1;
     int x = 0;
     int y = 0;
     int m;
-    for (int i : iList) {
+    for (int i : pos.keySet()) {
       for (int j : pos.get(i)) {
-        if ((m = calcul(i, j, currentTile, gs)) >= maxpts) {
+        testGameSet = gs.clone();
+        testTile = currentTile.clone();
+        testTile = rotateTileFromCoord(testTile, testGameSet, i, j);
+        if (testGameSet.addTile(testTile, j - start.x, i - start.y) && (m = calcul(testGameSet)) >= maxpts) {
           maxpts = m;
           x = j;
           y = i;
+          if (maxpts == -1) {
+            badPlacement.add(new Point(x, y));
+          }
         }
       }
     }
 
-    return new int[] { y, x };
+    if (maxpts == -1) {
+      Point placement = badPlacement.get(rand.nextInt(badPlacement.size()));
+      x = placement.x;
+      y = placement.y;
+    }
+
+    rotateTileFromCoord(currentTile, gs, y, x);
+    return new int[] { x, y };
   }
 
   public String placeMeeple(List<String> meeplesPositions) {
