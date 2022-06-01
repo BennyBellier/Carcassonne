@@ -35,7 +35,7 @@ public class Images {
       loadMeeples();
       blason = ImageIO.read(Configuration.charge("Images/blason.png"));
       croix = ImageIO.read(Configuration.charge("Images/skip.png"));
-      menu = ImageIO.read(Configuration.charge("Images/MenuInGame2.png"));
+      menu = ImageIO.read(Configuration.charge("Images/MenuInGame.png"));
       plateauInGame = ImageIO.read(Configuration.charge("Images/bois.jpg"));
       highlight = ImageIO.read(Configuration.charge("Images/highlight.png"));
       boisBoutons = ImageIO.read(Configuration.charge("Images/boisBoutons.png"));

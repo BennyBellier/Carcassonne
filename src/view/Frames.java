@@ -780,6 +780,10 @@ public class Frames extends javax.swing.JFrame {
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
+    setMaximumSize(new java.awt.Dimension(1920, 1080));
+    setMinimumSize(new java.awt.Dimension(1920, 1080));
+    setPreferredSize(new java.awt.Dimension(1920, 1080));
+
     if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))) {
       volumeCheck = new javax.swing.JCheckBox("", true);
     } else {
@@ -791,7 +795,6 @@ public class Frames extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
-    setMinimumSize(new java.awt.Dimension(1920, 1080));
 
     background.setMaximumSize(new java.awt.Dimension(1920, 1080));
     background.setMinimumSize(new java.awt.Dimension(1920, 1080));
