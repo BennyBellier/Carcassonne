@@ -409,6 +409,16 @@ public class Frames extends javax.swing.JFrame {
     imageRouge.setIcon(null);
     imageNoir.setIcon(null);
     imageVert.setIcon(null);
+    //banderolleBleu.setVisible(false);
+    //banderolleRouge.setVisible(false);
+    //banderolleVert.setVisible(false);
+    //banderolleNoir.setVisible(false);
+    //banderolleJaune.setVisible(false);
+    //pseudoBleu.setVisible(false);
+    //pseudoRouge.setVisible(false);
+    //pseudoVert.setVisible(false);
+    //pseudoNoir.setVisible(false);
+    //pseudoJaune.setVisible(false);
     ptsBleu.setText("");
     ptsRouge.setText("");
     ptsNoire.setText("");
@@ -451,20 +461,35 @@ public class Frames extends javax.swing.JFrame {
       } else if (players.get(i).color().equals(couleurBleu)) {
         if (players.get(i).isIA())
           imageIcon = new ImageIcon(imgs.rBleu());
-        else 
+        else
           imageIcon = new ImageIcon(imgs.bleu());
       }
 
-      if (imageBleu.getIcon() == null)
+      if (imageBleu.getIcon() == null) {
         imageBleu.setIcon(imageIcon);
-      else if (imageJaune.getIcon() == null)
-        imageJaune.setIcon(imageIcon);
-      else if (imageNoir.getIcon() == null)
-        imageNoir.setIcon(imageIcon);
-      else if (imageRouge.getIcon() == null)
-        imageRouge.setIcon(imageIcon);
-      else if (imageVert.getIcon() == null)
-        imageVert.setIcon(imageIcon);
+        //banderolleBleu.setVisible(true);
+        //pseudoBleu.setText(players.get(i).pseudo());
+      }
+        else if (imageJaune.getIcon() == null) {
+          imageJaune.setIcon(imageIcon);
+          //banderolleJaune.setVisible(true);
+          //pseudoJaune.setText(players.get(i).pseudo());
+        }
+        else if (imageNoir.getIcon() == null) {
+          imageNoir.setIcon(imageIcon);
+          //banderolleNoir.setVisible(true);
+          //pseudo.setText(players.get(i).pseudo());
+        }
+        else if (imageRouge.getIcon() == null) {
+          imageRouge.setIcon(imageIcon);
+          //banderolleRouge.setVisible(true);
+          //pseudo.setText(players.get(i).pseudo());
+        }
+        else if (imageVert.getIcon() == null) {
+          imageVert.setIcon(imageIcon);
+          //banderolleVert.setVisible(true);
+          //pseudoVert.setText(players.get(i).pseudo());
+        }
     }
   }
 

@@ -21,7 +21,7 @@ public class Images {
   Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisBoutons , bleu, jaune, noir, rouge, vert, pioche,
       valider, refaire , lueur , hint , reculer , reculerDesactiver , boisBoutonsMini , boisBoutonsMedium , rBleu , rJaune , rRouge , rNoir , rVert;
   Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
-      meepleYellow;
+      meepleYellow, banderolle;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
   private final int colorBlue = new Color(7, 45, 249).getRGB();
   private final int colorRed = new Color(240, 0, 32).getRGB();
@@ -58,6 +58,7 @@ public class Images {
       rNoir = ImageIO.read(Configuration.charge("Images/RobotNoir.png"));
       rBleu = ImageIO.read(Configuration.charge("Images/RobotBleu.png"));
       rJaune = ImageIO.read(Configuration.charge("Images/RobotJaune.png"));
+      banderolle = ImageIO.read(Configuration.charge("Images/BanderollePseudo.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -150,6 +151,10 @@ public class Images {
 
   public Image rVert() {
     return rVert;
+  }
+
+  public Image banderolle() {
+    return banderolle;
   }
 
   void loadMeeples() {
