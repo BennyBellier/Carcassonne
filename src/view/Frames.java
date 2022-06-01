@@ -224,6 +224,7 @@ public class Frames extends javax.swing.JFrame {
       ajouterIA.setEnabled(false);
       ajouterJoueur.setEnabled(false);
     }
+    System.out.println(text);
     p = new Player(text, Player.Type.HUMAN, c);
     players.add(p);
   }
@@ -409,16 +410,16 @@ public class Frames extends javax.swing.JFrame {
     imageRouge.setIcon(null);
     imageNoir.setIcon(null);
     imageVert.setIcon(null);
-    //banderolleBleu.setVisible(false);
-    //banderolleRouge.setVisible(false);
-    //banderolleVert.setVisible(false);
-    //banderolleNoir.setVisible(false);
-    //banderolleJaune.setVisible(false);
-    //pseudoBleu.setVisible(false);
-    //pseudoRouge.setVisible(false);
-    //pseudoVert.setVisible(false);
-    //pseudoNoir.setVisible(false);
-    //pseudoJaune.setVisible(false);
+    banderolleBleu.setVisible(false);
+    banderolleRouge.setVisible(false);
+    banderolleVert.setVisible(false);
+    banderolleNoir.setVisible(false);
+    banderolleJaune.setVisible(false);
+    pseudoBleu.setVisible(false);
+    pseudoRouge.setVisible(false);
+    pseudoVert.setVisible(false);
+    pseudoNoir.setVisible(false);
+    pseudoJaune.setVisible(false);
     ptsBleu.setText("");
     ptsRouge.setText("");
     ptsNoire.setText("");
@@ -465,30 +466,37 @@ public class Frames extends javax.swing.JFrame {
           imageIcon = new ImageIcon(imgs.bleu());
       }
 
+      System.out.println("set label : " + players.get(i).pseudo());
+
       if (imageBleu.getIcon() == null) {
         imageBleu.setIcon(imageIcon);
-        //banderolleBleu.setVisible(true);
-        //pseudoBleu.setText(players.get(i).pseudo());
+        banderolleBleu.setVisible(true);
+        pseudoBleu.setText(players.get(i).pseudo());
+        pseudoBleu.setVisible(true);
       }
         else if (imageJaune.getIcon() == null) {
           imageJaune.setIcon(imageIcon);
-          //banderolleJaune.setVisible(true);
-          //pseudoJaune.setText(players.get(i).pseudo());
+          banderolleRouge.setVisible(true);
+          pseudoRouge.setText(players.get(i).pseudo());
+          pseudoRouge.setVisible(true);
         }
         else if (imageNoir.getIcon() == null) {
           imageNoir.setIcon(imageIcon);
-          //banderolleNoir.setVisible(true);
-          //pseudo.setText(players.get(i).pseudo());
+          banderolleVert.setVisible(true);
+          pseudoVert.setText(players.get(i).pseudo());
+          pseudoVert.setVisible(true);
         }
         else if (imageRouge.getIcon() == null) {
           imageRouge.setIcon(imageIcon);
-          //banderolleRouge.setVisible(true);
-          //pseudo.setText(players.get(i).pseudo());
+          banderolleJaune.setVisible(true);
+          pseudoJaune.setText(players.get(i).pseudo());
+          pseudoJaune.setVisible(true);
         }
         else if (imageVert.getIcon() == null) {
           imageVert.setIcon(imageIcon);
-          //banderolleVert.setVisible(true);
-          //pseudoVert.setText(players.get(i).pseudo());
+          banderolleNoir.setVisible(true);
+          pseudoNoir.setText(players.get(i).pseudo());
+          pseudoNoir.setVisible(true);
         }
     }
   }
@@ -768,7 +776,7 @@ public class Frames extends javax.swing.JFrame {
     banderolleVert = new javax.swing.JLabel();
     banderolleJaune = new javax.swing.JLabel();
     banderolleBleu = new javax.swing.JLabel();
-    
+
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -1607,20 +1615,25 @@ public class Frames extends javax.swing.JFrame {
     hand.setFocusable(false);
     layoutJeu.add(hand, new org.netbeans.lib.awtextra.AbsoluteConstraints(1710, 870, 145, 145));
 
-    pseudoBleu.setFont(uniFont.deriveFont((float) 25)); // NOI18N
-    layoutJeu.add(pseudoBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 212, 160, -1));
+    pseudoBleu.setFont(uniFont.deriveFont(1, (float) 20)); // NOI18N
+    pseudoBleu.setForeground(new Color(0, 0, 0));
+    layoutJeu.add(pseudoBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 207, 160, 25));
 
-    pseudoRouge.setFont(uniFont.deriveFont((float) 25)); // NOI18N
-    layoutJeu.add(pseudoRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 420, 160, -1));
+    pseudoRouge.setFont(uniFont.deriveFont(1, (float) 20)); // NOI18N
+    pseudoRouge.setForeground(new Color(0, 0, 0));
+    layoutJeu.add(pseudoRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 415, 160, 25));
 
-    pseudoVert.setFont(uniFont.deriveFont((float) 25)); // NOI18N
-    layoutJeu.add(pseudoVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 618, 160, -1));
+    pseudoVert.setFont(uniFont.deriveFont(1, (float) 20)); // NOI18N
+    pseudoVert.setForeground(new Color(0, 0, 0));
+    layoutJeu.add(pseudoVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 613, 160, 25));
 
-    pseudoJaune.setFont(uniFont.deriveFont((float) 25)); // NOI18N
-    layoutJeu.add(pseudoJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 822, 160, -1));
+    pseudoJaune.setFont(uniFont.deriveFont(1, (float) 20)); // NOI18N
+    pseudoJaune.setForeground(new Color(0, 0, 0));
+    layoutJeu.add(pseudoJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 817, 160, 25));
 
-    pseudoNoir.setFont(uniFont.deriveFont((float) 25)); // NOI18N
-    layoutJeu.add(pseudoNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 1022, 160, -1));
+    pseudoNoir.setFont(uniFont.deriveFont(1, (float) 20)); // NOI18N
+    pseudoNoir.setForeground(new Color(0, 0, 0));
+    layoutJeu.add(pseudoNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 1017, 160, 25));
 
     tourJ1.setIcon(new ImageIcon(imgs.lueur()));
     layoutJeu.add(tourJ1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 41, 310, 179));
@@ -1639,23 +1652,23 @@ public class Frames extends javax.swing.JFrame {
 
     banderolleRouge.setBackground(new Color(0, 0, 0, 0));
     banderolleRouge.setIcon(new ImageIcon(imgs.banderolle()));
-    layoutJeu.add(banderolleRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 388, -1, -1));
+    layoutJeu.add(banderolleRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 383, -1, -1));
 
     banderolleVert.setBackground(new Color(0, 0, 0, 0));
     banderolleVert.setIcon(new ImageIcon(imgs.banderolle()));
-    layoutJeu.add(banderolleVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 585, -1, -1));
+    layoutJeu.add(banderolleVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 580, -1, -1));
 
     banderolleJaune.setBackground(new Color(0, 0, 0, 0));
     banderolleJaune.setIcon(new ImageIcon(imgs.banderolle()));
-    layoutJeu.add(banderolleJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 790, -1, -1));
+    layoutJeu.add(banderolleJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 785, -1, -1));
 
     banderolleNoir.setBackground(new Color(0, 0, 0, 0));
     banderolleNoir.setIcon(new ImageIcon(imgs.banderolle()));
-    layoutJeu.add(banderolleNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 990, -1, -1));
+    layoutJeu.add(banderolleNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 985, -1, -1));
 
     banderolleBleu.setBackground(new Color(0, 0, 0, 0));
     banderolleBleu.setIcon(new ImageIcon(imgs.banderolle()));
-    layoutJeu.add(banderolleBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
+    layoutJeu.add(banderolleBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 175, -1, -1));
 
     cmpMeepleBleu.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     cmpMeepleBleu.setForeground(new java.awt.Color(255, 255, 255));
