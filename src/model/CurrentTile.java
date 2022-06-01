@@ -50,4 +50,13 @@ public class CurrentTile {
     l.addAll(Arrays.asList((byte) x, (byte) y));
     return l;
   }
+
+  @Override
+  public CurrentTile clone() {
+    CurrentTile c = new CurrentTile(tile.clone());
+    c.placed = placed;
+    c.x = x;
+    c.y = y;
+    return c;
+  }
 }

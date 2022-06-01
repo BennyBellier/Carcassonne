@@ -80,6 +80,7 @@ public class Meeple {
     return player + " (" + x + ", " + y + ") " + card;
   }
 
+  @Override
   public Meeple clone() {
     return new Meeple(player, x, y, card);
   }

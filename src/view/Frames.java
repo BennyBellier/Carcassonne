@@ -1435,11 +1435,6 @@ public class Frames extends javax.swing.JFrame {
     reculerDesactiver.setBackground(new Color(0,0,0,0));
     reculerDesactiver.setIcon(new ImageIcon(imgs.reculerDesactiver()));
     reculerDesactiver.setBorder(null);
-    reculerDesactiver.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            reculerDesactiverActionPerformed(evt);
-        }
-    });
     layoutJeu.add(reculerDesactiver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1640, 40, 130, 71));
 
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -1725,7 +1720,7 @@ public class Frames extends javax.swing.JFrame {
     menuPlateau.setVisible(true);
     layoutJeu.setVisible(false);
     menuInGame.setFocusable(true);
-
+    control.pauseGame();
   }
 
   private void sauvegarderInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1751,6 +1746,7 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFocusable(true);
     menuPlateau.setVisible(true);
     layoutJeu.setVisible(true);
+    control.resumeGame();
   }
 
   private void retourMenuInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1775,7 +1771,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void hintActionPerformed(java.awt.event.ActionEvent evt) {
-
+    control.activateAideIA();
   }
 
   private void volumeCheckActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1799,9 +1795,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void rewindActionPerformed(java.awt.event.ActionEvent evt) {
-    System.out.println("rewind");
-    GameEngine gm = control.rewind();
-    plateauJeu.setGameEngine(gm);
+    control.rewind();
     plateauJeu.repaint();
   }
 
@@ -1834,10 +1828,6 @@ public class Frames extends javax.swing.JFrame {
       }
     }
     loadSaveDisplayFile();
-  }
-
-private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
-    // TODO add your handling code here:
   }
 
   private void optionsInGameActionPerformed(java.awt.event.ActionEvent evt) {

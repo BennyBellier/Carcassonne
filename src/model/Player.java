@@ -104,6 +104,22 @@ public class Player {
       ia = new IAMoyen();
   }
 
+  @Override
+  public Player clone() {
+    Player nwPlayer = new Player(pseudo, type, new Color(color.getRGB()));
+    nwPlayer.setCurNbProject(curNumberOfProject);
+    nwPlayer.setMeeplesNumber(meeplesNumber);
+    nwPlayer.setNbProject(numberOfProjects);
+    nwPlayer.setNbTilePlaced(nbTilePlaced);
+    nwPlayer.setScore(score);
+    return nwPlayer;
+  }
+
+  @Override
+  public String toString() {
+    return type.toString();
+  }
+
   public IA getIA() {
     return ia;
   }

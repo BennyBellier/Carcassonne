@@ -22,4 +22,9 @@ public class CurrentMeeple {
   public List<Byte> toByteArray() {
     return Arrays.asList((byte) x, (byte) y, (byte) card.charAt(0));
   }
+
+  @Override
+  public CurrentMeeple clone() {
+    return new CurrentMeeple(x, y, card);
+  }
 }

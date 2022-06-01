@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.awt.Point;
 
 import controller.IA;
+import controller.IAEasy;
+import controller.IAMoyen;
 import global.Configuration;
 import model.Projects.Project;
 import model.Projects.TileOfProject;
@@ -29,7 +31,7 @@ public class GameEngine {
 
   public GameEngine(Player... playersIn) {
     gameSet = new GameSet();
-    pioche = new Pioche();
+    pioche = new Pioche().initPioche();
     piocheTuile();
     nbPlayer = playersIn.length;
     players = new ArrayList<>(nbPlayer);
@@ -40,6 +42,7 @@ public class GameEngine {
       players.add(p);
     }
     Configuration.instance().logger().fine("Création de l'objet GameEngine avec " + playersIn.length + " joueurs");
+    save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
   }
 
   public GameEngine(Save s) {
@@ -62,16 +65,6 @@ public class GameEngine {
 
   public boolean isGameRunning() {
     return !gameEnded;
-  }
-
-  /**
-   ** Renvoie un reset de la partie en cours
-   *
-   * @return GameEngine
-   */
-  public GameEngine reset() {
-    Configuration.instance().logger().info("Remise à zéro de la partie en cours");
-    return new GameEngine(players.stream().toArray(Player[]::new));
   }
 
   /**
@@ -120,15 +113,19 @@ public class GameEngine {
    * @return List<Players>
    */
   public List<Player> getListPlayers() {
-    return players;
+    List<Player> plList = new ArrayList<>();
+    for (Player player : players) {
+      plList.add(player.clone());
+    }
+    return plList;
   }
 
   public GameSet getGameSet() {
-    return gameSet;
+    return gameSet.clone();
   }
 
   public GameEngine rewind() {
-    if (save.history.size() > 1) {
+    if (save.history.size() >= 1) {
       return new GameEngine(save.getLastSave());
     }
     return this;
@@ -149,6 +146,12 @@ public class GameEngine {
     int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
     Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en (" + (pos[0]) + ", " + (pos[1]) + ")");
     return placeTile(pos[0], pos[1]);
+  }
+
+  public Point IAPreferedPlay() {
+    IA ia = new IAMoyen();
+    int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
+    return new Point(pos[1], pos[0]);
   }
 
   public void IAPlaceMeeple() {
@@ -243,6 +246,21 @@ public class GameEngine {
     return players.get(playerTurn).getIA();
   }
 
+  public void saveTurn() {
+    if (isIATurn())
+      return;
+
+    CurrentTile cpCurrentTile = null;
+    CurrentMeeple cpCurrentMeeple = null;
+
+    if (currentTile != null)
+      cpCurrentTile = currentTile.clone();
+    if (currentMeeple != null)
+      cpCurrentMeeple = currentMeeple.clone();
+
+    save.addSave(new Save(playerTurn, cpCurrentTile, cpCurrentMeeple, gameSet.cloneSet(), pioche.clone(), getListPlayers(), getMeeplesOnSet()));
+  }
+
   /**
    ** Remise à zéro des valeurs, récupération d'une nouvelle tuile,
    ** et passeage au joueur suivant
@@ -255,11 +273,11 @@ public class GameEngine {
         gameEnded = true;
         control.finDeGame();
       } else {
+        currentMeeple = null;
         piocheTuile();
         nextPlayer();
       }
       Configuration.instance().logger().finer("Fin du tour du joueur " + playerTurn + " : " + players.get(playerTurn));
-      save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
     }
   }
 
@@ -557,6 +575,14 @@ public class GameEngine {
    * @return List<Meeple>
    */
   public List<Meeple> getMeeplesOnSet() {
+    List<Meeple> mpList = new ArrayList<>();
+    for (Meeple meeple : meeplesOnSet) {
+      mpList.add(meeple.clone());
+    }
+    return mpList;
+  }
+
+  public List<Meeple> meeplesDisplay() {
     return meeplesOnSet;
   }
 
@@ -669,8 +695,6 @@ public class GameEngine {
   }
 
   public void saveGame(String file) {
-    if (save.history.size() == 0)
-      save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
     save.saveGame(file);
   }
 }

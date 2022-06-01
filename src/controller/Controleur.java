@@ -34,6 +34,7 @@ public class Controleur implements ActionListener {
   boolean IAPlaying;
   Animation animIA;
   Timer timer;
+  boolean turnSaved;
 
   JLabel lueurJ1, lueurJ2, lueurJ3, lueurJ4, lueurJ5;
 
@@ -50,7 +51,8 @@ public class Controleur implements ActionListener {
     lueurJ4 = tourJ4;
     lueurJ5 = tourJ5;
     IAPlaying = false;
-    timer = new Timer(500, this);
+    turnSaved = false;
+    timer = new Timer(50, this);
     timer.start();
   }
 
@@ -62,6 +64,14 @@ public class Controleur implements ActionListener {
     if (ge == null)
       return false;
     return ge.isGameRunning();
+  }
+
+  public void pauseGame() {
+    timer.stop();
+  }
+
+  public void resumeGame() {
+    timer.start();
   }
 
   public void lueur2J() {
@@ -257,6 +267,7 @@ public class Controleur implements ActionListener {
 
   void endTurn() {
     ge.endOfTurn();
+    ge.saveTurn();
     switchLueur();
   }
 
@@ -264,10 +275,14 @@ public class Controleur implements ActionListener {
     ge.saveGame(file);
   }
 
-  public GameEngine rewind() {
-    GameEngine newGe = ge.rewind();
-    ge = newGe;
-    return newGe;
+  public void rewind() {
+    ge = ge.rewind();
+    tab.setGameEngine(ge);
+  }
+
+  public void activateAideIA() {
+    tab.activateAideIA(ge.IAPreferedPlay());
+    tab.repaint();
   }
 
   /**
@@ -278,6 +293,12 @@ public class Controleur implements ActionListener {
    */
   public void clic(int x, int y) {
     if (ge.isGameRunning() && !ge.isIATurn()) {
+
+      if (!turnSaved && !ge.getCurrentTile().placed && ge.getcurrentMeeple() == null) {
+        ge.saveTurn();
+        turnSaved = false;
+      }
+
        if (clicOnHand(x, y)) {
         if (ge.getCurrentTile().placed) {
           endTurn();
@@ -293,6 +314,7 @@ public class Controleur implements ActionListener {
       } else if (clicOnSet(x, y)) {
         if (!ge.getCurrentTile().placed) {
           placeTile(x, y);
+          tab.desactivateAideIA();
         } else {
           if (ge.getcurrentMeeple() == null) {
             placeMeeple(x, y);
@@ -356,10 +378,8 @@ public class Controleur implements ActionListener {
         tab.repaint();
         ge.endOfTurn();
         switchLueur();
-        tab.repaint();
         IAPlaying = false;
       }
-
     }
   }
 }

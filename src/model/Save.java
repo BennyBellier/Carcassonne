@@ -202,4 +202,28 @@ public class Save {
     }
     return null;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    str.append(String.valueOf(playerTurn) + " : \n");
+
+    for (Player p : players) {
+      str.append("\t" + p.toString() + "\n");
+    }
+
+    if (currentTile != null)
+      str.append(currentTile.toString() + "\n");
+
+    if (currentMeeple != null)
+      str.append(currentMeeple.toString() + "\n");
+
+    for (Meeple meeple : meeples) {
+      str.append("\t" + meeple.toString() + "\n");
+    }
+
+    str.append(new GameSet(set).toString());
+
+    return str.toString();
+  }
 }

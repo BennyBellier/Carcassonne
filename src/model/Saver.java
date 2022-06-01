@@ -20,11 +20,14 @@ public class Saver {
   }
 
   public void addSave(Save s) {
+    System.out.println(s.toString());
     history.push(s);
   }
 
   public Save getLastSave() {
-    return history.pop();
+    Save s = history.pop();
+    System.out.println(s.toString());
+    return s;
   }
 
   public static String formatFileString(String s) {

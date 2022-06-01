@@ -244,7 +244,7 @@ public class GameSet {
     }
 
     if (x == 0 || x == tiles[y].length - 1 || y == 0 || y == tiles.length - 1) {
-      redimTiles();
+    redimTiles();
       x += 1;
       y += 1;
     }
