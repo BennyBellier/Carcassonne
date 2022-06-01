@@ -17,7 +17,13 @@ public class JTableMouse extends MouseAdapter {
 
   @Override
   public void mouseClicked(MouseEvent me) {
-    if (me.getClickCount() == 2) {
+    if (me.getClickCount() == 1) {
+      JTable target = (JTable) me.getSource();
+      int row = target.getSelectedRow();
+      filename = (String) table.getValueAt(row, 0);
+      frame.setSelectedSave(filename);
+    }
+    else if (me.getClickCount() == 2) {
       JTable target = (JTable) me.getSource();
       int row = target.getSelectedRow();
       filename = (String) table.getValueAt(row, 0);
