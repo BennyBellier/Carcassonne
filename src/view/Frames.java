@@ -624,6 +624,33 @@ public class Frames extends javax.swing.JFrame {
     volumeCheck2 = new javax.swing.JCheckBox();
     partieRIA2 = new javax.swing.JLabel();
     diffIAPartieRapide2 = new javax.swing.JComboBox<>();
+    sliderIA2 = new javax.swing.JSlider();
+    vitesseIALabel2 = new javax.swing.JLabel();
+    sliderIA = new javax.swing.JSlider();
+    vitesseIALabel = new javax.swing.JLabel();
+    quitterL = new javax.swing.JLabel();
+    creditsL = new javax.swing.JLabel();
+    optionsL = new javax.swing.JLabel();
+    reglesL = new javax.swing.JLabel();
+    partieRapideL = new javax.swing.JLabel();
+    nouvellePartieL = new javax.swing.JLabel();
+    retourPartiesL = new javax.swing.JLabel();
+    supprimerL = new javax.swing.JLabel();
+    retourOptionsL = new javax.swing.JLabel();
+    retourOptionsL2 = new javax.swing.JLabel();
+    retourReglesL2 = new javax.swing.JLabel();
+    retourCreditsL = new javax.swing.JLabel();
+    retourReglesL = new javax.swing.JLabel();
+    retourParametreL = new javax.swing.JLabel();
+    lancerLaPartieL = new javax.swing.JLabel();
+    sauvgardeInGameL = new javax.swing.JLabel();
+    reglesInGameL = new javax.swing.JLabel();
+    optionsInGameL = new javax.swing.JLabel();
+    retourAuJeuInGameL = new javax.swing.JLabel();
+    menuPrincipaleInGameL = new javax.swing.JLabel();
+    vitesseIALabel = new javax.swing.JLabel();
+    vitesseIALabel2 = new javax.swing.JLabel();
+
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -641,71 +668,93 @@ public class Frames extends javax.swing.JFrame {
     background.setMinimumSize(new java.awt.Dimension(1920, 1080));
     background.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-    background.setMaximumSize(new java.awt.Dimension(1920, 1080));
-    background.setMinimumSize(new java.awt.Dimension(1920, 1080));
-    background.setPreferredSize(new java.awt.Dimension(1920, 1080));
-
     menuPrincipale.setMaximumSize(new java.awt.Dimension(1920, 1080));
     menuPrincipale.setMinimumSize(new java.awt.Dimension(1920, 1080));
     menuPrincipale.setOpaque(false);
     menuPrincipale.setPreferredSize(new java.awt.Dimension(1920, 1080));
     menuPrincipale.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jouerL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    jouerL.setFont(uniFont.deriveFont(1,(float) 36)); // NOI18N
+    jouerL.setForeground(new java.awt.Color(73, 50, 31));
     jouerL.setText("Jouer");
-    menuPrincipale.add(jouerL, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 450, 70, 35));
+    menuPrincipale.add(jouerL, new org.netbeans.lib.awtextra.AbsoluteConstraints(925, 410, 100, 45));
 
-    jouerB.setBackground(new Color(0, 0, 0, 0));
-    jouerB.setIcon(new ImageIcon(imgs.boisB()));
-    jouerB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    jouerB.setBackground(new Color(0,0,0,0));
+    jouerB.setIcon(new ImageIcon(imgs.boisBoutons()));
+    jouerB.setToolTipText("");
+    jouerB.setBorder(null);
+    jouerB.setBorderPainted(false);
     jouerB.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jouerBActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jouerBActionPerformed(evt);
+        }
     });
-    menuPrincipale.add(jouerB, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 420, 370, 100));
+    menuPrincipale.add(jouerB, new org.netbeans.lib.awtextra.AbsoluteConstraints(775, 380, 370, 100));
 
-    version.setFont(uniFont.deriveFont((float) 16)); // NOI18N
-    version.setForeground(new java.awt.Color(0xffffff));
     version.setText(Configuration.instance().lis("Version"));
+    version.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
     version.setForeground(new java.awt.Color(255, 255, 255));
     menuPrincipale.add(version, new org.netbeans.lib.awtextra.AbsoluteConstraints(1761, 1040, 150, 30));
 
-    quitter.setFont(uniFont.deriveFont((float) 26)); // NOI18N
-    quitter.setText("Quitter");
+    quitterL.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    quitterL.setForeground(new java.awt.Color(73, 50, 31));
+    quitterL.setText("Quitter");
+    menuPrincipale.add(quitterL, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 780, 80, 40));
+
+    quitter.setBackground(new Color(0,0,0,0));
+    quitter.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    quitter.setBorder(null);
     quitter.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        quitterActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            quitterActionPerformed(evt);
+        }
     });
-    menuPrincipale.add(quitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 750, 100, 35));
+    menuPrincipale.add(quitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 770, 165, 70));
 
-    menuCredits.setFont(uniFont.deriveFont((float) 28)); // NOI18N
-    menuCredits.setText("Crédits");
+    creditsL.setFont(uniFont.deriveFont((float) 28)); // NOI18N
+    creditsL.setForeground(new java.awt.Color(73, 50, 31));
+    creditsL.setText("Crédits");
+    menuPrincipale.add(creditsL, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 780, 80, 40));
+
+    menuCredits.setBackground(new Color(0,0,0,0));
+    menuCredits.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    menuCredits.setBorder(null);
     menuCredits.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuCreditsActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            menuCreditsActionPerformed(evt);
+        }
     });
-    menuPrincipale.add(menuCredits, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 750, 104, 35));
+    menuPrincipale.add(menuCredits, new org.netbeans.lib.awtextra.AbsoluteConstraints(765, 770, 165, 70));
 
-    menuOptions.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    menuOptions.setText("Options");
+    optionsL.setFont(uniFont.deriveFont(1,(float) 30)); // NOI18N
+    optionsL.setForeground(new java.awt.Color(73, 50, 31));
+    optionsL.setText("Options");
+    menuPrincipale.add(optionsL, new org.netbeans.lib.awtextra.AbsoluteConstraints(915, 670, 100, 40));
+
+    menuOptions.setBackground(new Color(0,0,0,0));
+    menuOptions.setIcon(new ImageIcon(imgs.boisBoutons()));
+    menuOptions.setBorder(null);
     menuOptions.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuOptionsActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            menuOptionsActionPerformed(evt);
+        }
     });
-    menuPrincipale.add(menuOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 650, 300, 50));
+    menuPrincipale.add(menuOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 640, 370, 100));
 
-    menuRegles.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    menuRegles.setText("Règles");
+    reglesL.setFont(uniFont.deriveFont(1,(float) 30)); // NOI18N
+    reglesL.setForeground(new java.awt.Color(73, 50, 31));
+    reglesL.setText("Règles");
+    menuPrincipale.add(reglesL, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 540, 100, 40));
+
+    menuRegles.setBackground(new Color(0,0,0,0));
+    menuRegles.setIcon(new ImageIcon(imgs.boisBoutons()));
+    menuRegles.setBorder(null);
     menuRegles.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuReglesActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            menuReglesActionPerformed(evt);
+        }
     });
-    menuPrincipale.add(menuRegles, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 550, 300, 50));
+    menuPrincipale.add(menuRegles, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 510, 370, 100));
 
     jouerPanel.setMaximumSize(new java.awt.Dimension(1920, 1080));
     jouerPanel.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -713,23 +762,35 @@ public class Frames extends javax.swing.JFrame {
     jouerPanel.setPreferredSize(new java.awt.Dimension(1920, 1080));
     jouerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    partieRapide.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    partieRapide.setText("Partie Rapide");
-    partieRapide.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        partieRapideActionPerformed(evt);
-      }
-    });
-    jouerPanel.add(partieRapide, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 590, 250, 60));
+    partieRapideL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    partieRapideL.setForeground(new Color(73,50,31));
+    partieRapideL.setText("Partie Rapide");
+    jouerPanel.add(partieRapideL, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 602, -1, 40));
 
-    nouvellePartie.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    nouvellePartie.setText("Nouvelle Partie");
-    nouvellePartie.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        nouvellePartieActionPerformed(evt);
-      }
+    partieRapide.setBackground(new Color(0,0,0,0));
+    partieRapide.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
+    partieRapide.setBorder(null);
+    partieRapide.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            partieRapideActionPerformed(evt);
+        }
     });
-    jouerPanel.add(nouvellePartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 420, 250, 60));
+    jouerPanel.add(partieRapide, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 580, 300, 85));
+
+    nouvellePartieL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    nouvellePartieL.setForeground(new Color(73,50,31));
+    nouvellePartieL.setText("Nouvelle Partie");
+    jouerPanel.add(nouvellePartieL, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 432, -1, 40));
+
+    nouvellePartie.setBackground(new Color(0,0,0,0));
+    nouvellePartie.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
+    nouvellePartie.setBorder(null);
+    nouvellePartie.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            nouvellePartieActionPerformed(evt);
+        }
+    });
+    jouerPanel.add(nouvellePartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 410, 300, 85));
 
     sauvegardeTable.setFont(uniFont.deriveFont((float) 30));
     sauvegardeTable.getTableHeader().setVisible(false);
@@ -741,29 +802,40 @@ public class Frames extends javax.swing.JFrame {
 
     jouerPanel.add(sauvegardeScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 617, 337));
 
-    retourParties.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourParties.setText("Retour");
-    retourParties.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourPartiesActionPerformed(evt);
-      }
-    });
+    retourPartiesL.setFont(uniFont.deriveFont((float) 30));
+    retourPartiesL.setForeground(new Color(73,50,31));
+    retourPartiesL.setText("Retour");
+    jouerPanel.add(retourPartiesL, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 930, 80, 30));
 
-    jouerPanel.add(retourParties, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
+    retourParties.setBackground(new Color(0,0,0,0));
+    retourParties.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    retourParties.setBorder(null);
+    retourParties.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourPartiesActionPerformed(evt);
+        }
+    });
+    jouerPanel.add(retourParties, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 165, 70));
 
     sauvegardeLabel.setFont(uniFont.deriveFont((float) 40)); // NOI18N
     sauvegardeLabel.setForeground(Color.WHITE);
     sauvegardeLabel.setText("Sauvegarde :");
     jouerPanel.add(sauvegardeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 250, 70));
 
-    supprimerSauvegarde.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    supprimerSauvegarde.setText("Supprimer ");
+    supprimerL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    supprimerL.setForeground(new Color(73,50,31));
+    supprimerL.setText("Supprimer");
+    jouerPanel.add(supprimerL, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 752, -1, 40));
+
+    supprimerSauvegarde.setBackground(new Color(0,0,0,0));
+    supprimerSauvegarde.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
+    supprimerSauvegarde.setBorder(null);
     supprimerSauvegarde.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             supprimerSauvegardeActionPerformed(evt);
         }
     });
-    jouerPanel.add(supprimerSauvegarde, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 740, 250, 60));
+    jouerPanel.add(supprimerSauvegarde, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 730, 300, 85));
 
     options.setMaximumSize(new java.awt.Dimension(1920, 1080));
     options.setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -771,16 +843,6 @@ public class Frames extends javax.swing.JFrame {
     options.setOpaque(false);
     options.setPreferredSize(new java.awt.Dimension(1920, 1080));
     options.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    retourOptions.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourOptions.setText("Retour");
-    retourOptions.setAlignmentX(0.5F);
-    retourOptions.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourOptionsActionPerformed(evt);
-      }
-    });
-    options.add(retourOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 920, 110, 45));
 
     aideCheck.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -824,22 +886,49 @@ public class Frames extends javax.swing.JFrame {
     diffIAPartieRapide.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IA Facile", "IA Moyen"/*, "Terminator"*/ }));
     options.add(diffIAPartieRapide, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 700, 190, 45));
 
+    sliderIA.setMaximum(1000);
+    sliderIA.setMinimum(250);
+    sliderIA.setValue(500);
+    sliderIA.addInputMethodListener(new java.awt.event.InputMethodListener() {
+      public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+          sliderIACaretPositionChanged(evt);
+      }
+      public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+      }
+    });
+    options.add(sliderIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, -1, -1));
+    
+    vitesseIALabel.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+    vitesseIALabel.setForeground(Color.WHITE);
+    vitesseIALabel.setText("Vitesse IA :");
+    options.add(vitesseIALabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 250, 150, 40));
+
+    vitesseIALabel.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    vitesseIALabel.setForeground(Color.WHITE);
+    vitesseIALabel.setText("Vitesse IA :");
+    options.add(vitesseIALabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 250, 150, 40));
+
+    retourOptionsL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourOptionsL.setForeground(new Color(73,50,31));
+    retourOptionsL.setText("Retour");
+    options.add(retourOptionsL, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 930, 80, 30));
+
+    retourOptions.setBackground(new Color(0,0,0,0));
+    retourOptions.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    retourOptions.setBorder(null);
+    retourOptions.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourOptionsActionPerformed(evt);
+        }
+    });
+    options.add(retourOptions, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 165, 70));
+
     options2.setMaximumSize(new java.awt.Dimension(1920, 1080));
     options2.setMinimumSize(new java.awt.Dimension(1920, 1080));
     options2.setName(""); // NOI18N
     options2.setOpaque(false);
     options2.setPreferredSize(new java.awt.Dimension(1920, 1080));
     options2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-    retourOptions2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourOptions2.setText("Retour au jeu");
-    retourOptions2.setAlignmentX(0.5F);
-    retourOptions2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourOptions2ActionPerformed(evt);
-      }
-    });
-    options2.add(retourOptions2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 920, 200, 45));
 
     aideCheck2.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -883,20 +972,63 @@ public class Frames extends javax.swing.JFrame {
     diffIAPartieRapide2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IA Facile", "IA Moyen"/*, "Terminator"*/ }));
     options2.add(diffIAPartieRapide2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 700, 190, 45));
     
+    sliderIA2.setMaximum(1000);
+    sliderIA2.setMinimum(250);
+    sliderIA2.setValue(500);
+    sliderIA2.addInputMethodListener(new java.awt.event.InputMethodListener() {
+      public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+          sliderIA2CaretPositionChanged(evt);
+      }
+      public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+      }
+    });
+    options2.add(sliderIA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, -1, -1));
+
+    vitesseIALabel2.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
+    vitesseIALabel2.setForeground(Color.WHITE);
+    vitesseIALabel2.setText("Vitesse IA :");
+    options2.add(vitesseIALabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 250, 150, 40));
+
+    vitesseIALabel2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    vitesseIALabel2.setForeground(Color.WHITE);
+    vitesseIALabel2.setText("Vitesse IA :");
+    options2.add(vitesseIALabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 250, 150, 40));
+
+    retourOptionsL2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourOptionsL2.setForeground(new Color(73,50,31));
+    retourOptionsL2.setText("Retour au Jeu");
+    options2.add(retourOptionsL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 912, 200, 45));
+
+    retourOptions2.setBackground(new Color(0,0,0,0));
+    retourOptions2.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
+    retourOptions2.setBorder(null);
+    retourOptions2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourOptions2ActionPerformed(evt);
+        }
+    });
+    options2.add(retourOptions2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 890, 290, 90));
+    
     regles.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles.setMinimumSize(new java.awt.Dimension(1920, 1080));
     regles.setOpaque(false);
     regles.setPreferredSize(new java.awt.Dimension(1920, 1080));
     regles.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    retourRegles.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourRegles.setText("Retour");
+    retourReglesL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourReglesL.setForeground(new Color(73,50,31));
+    retourReglesL.setText("Retour");
+    regles.add(retourReglesL, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 930, 80, 30));
+
+    retourRegles.setBackground(new Color(0,0,0,0));
+    retourRegles.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    retourRegles.setBorder(null);
     retourRegles.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourReglesActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourReglesActionPerformed(evt);
+        }
     });
-    regles.add(retourRegles, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
+    regles.add(retourRegles, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 165, 70));
 
     reglesScrollPane.setBackground(new Color(0, 0, 0, 0));
     reglesScrollPane.setBorder(null);
@@ -923,16 +1055,20 @@ public class Frames extends javax.swing.JFrame {
     credits.setPreferredSize(new java.awt.Dimension(1920, 1080));
     credits.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    retourCredits.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourCredits.setText("Retour");
-    retourCredits.setAlignmentX(1.0F);
-    retourCredits.setAlignmentY(1.0F);
+    retourCreditsL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourCreditsL.setForeground(new Color(73,50,31));
+    retourCreditsL.setText("Retour");
+    credits.add(retourCreditsL, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 930, 80, 30));
+
+    retourCredits.setBackground(new Color(0,0,0,0));
+    retourCredits.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    retourCredits.setBorder(null);
     retourCredits.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourCreditsActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourCreditsActionPerformed(evt);
+        }
     });
-    credits.add(retourCredits, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
+    credits.add(retourCredits, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 165, 70));
 
     creditsTextArea.setEditable(false);
     creditsTextArea.setBackground(new Color(0, 0, 0, 0));
@@ -1004,66 +1140,91 @@ public class Frames extends javax.swing.JFrame {
 
     plateauJeu.add(scoreFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
-    //menuInGame.setBackground(new Color(0, 0, 0, 50));
     menuInGame.setOpaque(false);
     menuInGame.setMaximumSize(new java.awt.Dimension(1920, 1080));
     menuInGame.setMinimumSize(new java.awt.Dimension(1920, 1080));
-    menuInGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    menuInGame.setPreferredSize(new java.awt.Dimension(1920, 1080));
     menuInGame.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mousePressed(java.awt.event.MouseEvent evt) {
-        menuInGameMousePressed(evt);
-      }
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            menuInGameMousePressed(evt);
+        }
     });
+    menuInGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     menuBoutons.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     menuBoutons.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    sauvegarderInGame.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    sauvegarderInGame.setText("Sauvegarder");
+    menuPrincipaleInGameL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    menuPrincipaleInGameL.setForeground(new Color(73,50,31));
+    menuPrincipaleInGameL.setText("Menu Principal");
+    menuBoutons.add(menuPrincipaleInGameL, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, -1, 45));
+
+    retourAuJeuInGameL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourAuJeuInGameL.setForeground(new Color(73,50,31));
+    retourAuJeuInGameL.setText("Retour au Jeu");
+    menuBoutons.add(retourAuJeuInGameL, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 355, 170, 45));
+
+    sauvgardeInGameL.setFont(uniFont.deriveFont((float) 26)); // NOI18N
+    sauvgardeInGameL.setForeground(new Color(73,50,31));
+    sauvgardeInGameL.setText("Sauvegarder et Quitter");
+    menuBoutons.add(sauvgardeInGameL, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 42, 240, 45));
+
+    sauvegarderInGame.setBackground(new Color(0, 0, 0, 0));
+    sauvegarderInGame.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
     sauvegarderInGame.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        sauvegarderInGameActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            sauvegarderInGameActionPerformed(evt);
+        }
     });
-    menuBoutons.add(sauvegarderInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 36, 200, 45));
+    menuBoutons.add(sauvegarderInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 300, 85));
 
-    reglesInGame.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    reglesInGame.setText("Règles");
+    reglesInGameL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    reglesInGameL.setForeground(new Color(73,50,31));
+    reglesInGameL.setText("Règles");
+    menuBoutons.add(reglesInGameL, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 145, 90, 45));
+
+    reglesInGame.setBackground(new Color(0, 0, 0, 0));
+    reglesInGame.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
     reglesInGame.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        reglesInGameActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            reglesInGameActionPerformed(evt);
+        }
     });
-    menuBoutons.add(reglesInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 117, 200, 45));
+    menuBoutons.add(reglesInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 125, 300, 85));
 
-    retourInGame.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourInGame.setText("Retour au Jeu");
+    optionsInGameL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    optionsInGameL.setForeground(new Color(73,50,31));
+    optionsInGameL.setText("Options");
+    menuBoutons.add(optionsInGameL, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 90, 45));
+
+    retourInGame.setBackground(new Color(0, 0, 0, 0));
+    retourInGame.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
     retourInGame.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourInGameActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourInGameActionPerformed(evt);
+        }
     });
-    menuBoutons.add(retourInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 279, 200, 45));
+    menuBoutons.add(retourInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 335, 300, 85));
 
-    retourMenuInGame.setFont(uniFont.deriveFont((float) 26)); // NOI18N
-    retourMenuInGame.setText("Menu Principal");
+    retourMenuInGame.setBackground(new Color(0, 0, 0, 0));
+    retourMenuInGame.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
     retourMenuInGame.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourMenuInGameActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourMenuInGameActionPerformed(evt);
+        }
     });
-    menuBoutons.add(retourMenuInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 200, 45));
+    menuBoutons.add(retourMenuInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 300, 85));
 
-    optionsInGame.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    optionsInGame.setText("Options");
+    optionsInGame.setBackground(new Color(0, 0, 0, 0));
+    optionsInGame.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
     optionsInGame.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-          optionsInGameActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            optionsInGameActionPerformed(evt);
+        }
     });
-    menuBoutons.add(optionsInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 198, 200, 45));
+    menuBoutons.add(optionsInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 300, 85));
 
-    menuInGame.add(menuBoutons, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 320, 240, 441));
+    menuInGame.add(menuBoutons, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 273, 320, 535));
 
     plateauJeu.add(menuInGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
@@ -1073,14 +1234,20 @@ public class Frames extends javax.swing.JFrame {
     newGame.setPreferredSize(new java.awt.Dimension(1920, 1080));
     newGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    retourParametre.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourParametre.setText("Retour");
+    retourParametreL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourParametreL.setForeground(new Color(73,50,31));
+    retourParametreL.setText("Retour");
+    newGame.add(retourParametreL, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 947, 80, 30));
+
+    retourParametre.setBackground(new Color(0,0,0,0));
+    retourParametre.setIcon(new ImageIcon(imgs.boisBoutonsMini()));
+    retourParametre.setBorder(null);
     retourParametre.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourParametreActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourParametreActionPerformed(evt);
+        }
     });
-    newGame.add(retourParametre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 910, 110, 45));
+    newGame.add(retourParametre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 930, 165, 70));
 
     ajouterJoueur.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     ajouterJoueur.setText("Ajouter un joueur");
@@ -1100,14 +1267,20 @@ public class Frames extends javax.swing.JFrame {
     });
     newGame.add(ajouterIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 670, 250, 50));
 
-    lancerLaPartie.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    lancerLaPartie.setText("Lancer la partie");
+    lancerLaPartieL.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    lancerLaPartieL.setForeground(new Color(73,50,31));
+    lancerLaPartieL.setText("Lancer la partie");
+    newGame.add(lancerLaPartieL, new org.netbeans.lib.awtextra.AbsoluteConstraints(1570, 932, -1, 40));
+
+    lancerLaPartie.setBackground(new Color(0,0,0,0));
+    lancerLaPartie.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
+    lancerLaPartie.setBorder(null);
     lancerLaPartie.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        lancerLaPartieActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+          lancerLaPartieActionPerformed(evt);
+        }
     });
-    newGame.add(lancerLaPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 910, 250, 50));
+    newGame.add(lancerLaPartie, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 910, 300, 85));
 
     difficulterBox.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     difficulterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Moyen"/*, "Terminator" */ }));
@@ -1256,14 +1429,20 @@ public class Frames extends javax.swing.JFrame {
     regles2.setPreferredSize(new java.awt.Dimension(1920, 1080));
     regles2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    retourRegles2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
-    retourRegles2.setText("Retour Au Jeu");
+    retourReglesL2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
+    retourReglesL2.setForeground(new Color(73,50,31));
+    retourReglesL2.setText("Retour au Jeu");
+    regles2.add(retourReglesL2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 913, 200, 45));
+
+    retourRegles2.setBackground(new Color(0,0,0,0));
+    retourRegles2.setIcon(new ImageIcon(imgs.boisBoutonsMedium()));
+    retourRegles2.setBorder(null);
     retourRegles2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        retourRegles2ActionPerformed(evt);
-      }
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            retourRegles2ActionPerformed(evt);
+        }
     });
-    regles2.add(retourRegles2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 910, 200, 45));
+    regles2.add(retourRegles2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 890, 290, 90));
 
     reglesScrollPane2.setBackground(new Color(0, 0, 0, 0));
     reglesScrollPane2.setBorder(null);
@@ -1770,9 +1949,7 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
-  private void rewindActionPerformed(java.awt.event.ActionEvent evt) {
-    System.out.println("rewind");
-    GameEngine gm = control.rewind();
+  private void rewindActionPerformed(java.awt.event.ActionEvent evt) { GameEngine gm = control.rewind();
     plateauJeu.setGameEngine(gm);
     plateauJeu.repaint();
   }
@@ -1848,7 +2025,15 @@ private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
       audioPlayer.music.play();
       Configuration.instance().setProperty("MusicState", "true");
     }
-  }                                   
+  }     
+  
+  private void sliderIACaretPositionChanged(java.awt.event.InputMethodEvent evt) {                                              
+      // TODO add your handling code here:
+  }  
+
+  private void sliderIA2CaretPositionChanged(java.awt.event.InputMethodEvent evt) {                                              
+    // TODO add your handling code here:
+  }  
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
@@ -1972,5 +2157,30 @@ private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
   private javax.swing.JCheckBox volumeCheck2;
   private javax.swing.JButton retourOptions2;
   private javax.swing.JLabel partieRIA2;
+  private javax.swing.JSlider sliderIA;
+  private javax.swing.JSlider sliderIA2;
+  private javax.swing.JLabel vitesseIALabel;
+  private javax.swing.JLabel vitesseIALabel2;
+  private javax.swing.JLabel creditsL;
+  private javax.swing.JLabel optionsL;
+  private javax.swing.JLabel quitterL;
+  private javax.swing.JLabel reglesL;
+  private javax.swing.JLabel partieRapideL;
+  private javax.swing.JLabel nouvellePartieL;
+  private javax.swing.JLabel supprimerL;
+  private javax.swing.JLabel retourPartiesL;
+  private javax.swing.JLabel retourOptionsL;
+  private javax.swing.JLabel retourOptionsL2;
+  private javax.swing.JLabel retourReglesL;
+  private javax.swing.JLabel retourCreditsL;
+  private javax.swing.JLabel retourReglesL2;
+  private javax.swing.JLabel retourParametreL;
+  private javax.swing.JLabel lancerLaPartieL;
+  private javax.swing.JLabel sauvgardeInGameL;
+  private javax.swing.JLabel reglesInGameL;
+  private javax.swing.JLabel optionsInGameL;
+  private javax.swing.JLabel retourAuJeuInGameL;
+  private javax.swing.JLabel menuPrincipaleInGameL;
+  
   // End of variables declaration
 }
