@@ -57,7 +57,7 @@ public class Frames extends javax.swing.JFrame {
     audioPlayer = new Audio();
     initComponents();
     setupPanel();
-    // basculeEnPleineEcran();
+    basculeEnPleineEcran();
     if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))){
       audioPlayer.music.play();
     }
@@ -81,6 +81,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+
+  */
   private void setupPanel() {
     menuPrincipale();
     partieRapide.setEnabled(true);
@@ -670,6 +673,9 @@ public class Frames extends javax.swing.JFrame {
       volumeCheck = new javax.swing.JCheckBox("", false);
     }
 
+    sliderIA.setValue(Integer.parseInt(Configuration.instance().lis("IASpeed")));
+    sliderIA2.setValue(Integer.parseInt(Configuration.instance().lis("IASpeed")));
+
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Carcassonne");
     setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -899,15 +905,17 @@ public class Frames extends javax.swing.JFrame {
     sliderIA.setMaximum(1000);
     sliderIA.setMinimum(250);
     sliderIA.setValue(500);
-    sliderIA.addInputMethodListener(new java.awt.event.InputMethodListener() {
-      public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-          sliderIACaretPositionChanged(evt);
-      }
-      public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-      }
-    });
+    sliderIA.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                sliderIAAncestorMoved(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
     options.add(sliderIA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, -1, -1));
-    
+
     vitesseIALabel.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
     vitesseIALabel.setForeground(Color.WHITE);
     vitesseIALabel.setText("Vitesse IA :");
@@ -981,17 +989,19 @@ public class Frames extends javax.swing.JFrame {
     diffIAPartieRapide2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     diffIAPartieRapide2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IA Facile", "IA Moyen"/*, "Terminator"*/ }));
     options2.add(diffIAPartieRapide2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 700, 190, 45));
-    
+
     sliderIA2.setMaximum(1000);
     sliderIA2.setMinimum(250);
     sliderIA2.setValue(500);
-    sliderIA2.addInputMethodListener(new java.awt.event.InputMethodListener() {
-      public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-          sliderIA2CaretPositionChanged(evt);
-      }
-      public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-      }
-    });
+    sliderIA2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                sliderIA2AncestorMoved(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
     options2.add(sliderIA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, -1, -1));
 
     vitesseIALabel2.setFont(new java.awt.Font("Old London", 0, 30)); // NOI18N
@@ -1018,7 +1028,7 @@ public class Frames extends javax.swing.JFrame {
         }
     });
     options2.add(retourOptions2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 890, 290, 90));
-    
+
     regles.setMaximumSize(new java.awt.Dimension(1920, 1080));
     regles.setMinimumSize(new java.awt.Dimension(1920, 1080));
     regles.setOpaque(false);
@@ -2015,6 +2025,7 @@ public class Frames extends javax.swing.JFrame {
     } else {
       volumeCheck.setSelected(false);
     }
+    control.resumeGame();
   }
 
   private void aideCheck2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2035,15 +2046,21 @@ public class Frames extends javax.swing.JFrame {
       audioPlayer.music.play();
       Configuration.instance().setProperty("MusicState", "true");
     }
-  }     
-  
-  private void sliderIACaretPositionChanged(java.awt.event.InputMethodEvent evt) {                                              
-      // TODO add your handling code here:
-  }  
+  }
 
-  private void sliderIA2CaretPositionChanged(java.awt.event.InputMethodEvent evt) {                                              
-    // TODO add your handling code here:
-  }  
+  private void sliderIAAncestorMoved(javax.swing.event.AncestorEvent evt) {
+    if (control != null)
+      control.setIASpeed(sliderIA.getValue());
+    sliderIA2.setValue(sliderIA.getValue());
+    Configuration.instance().setProperty("AISpeed", String.valueOf(sliderIA.getValue()));
+  }
+
+  private void sliderIA2AncestorMoved(javax.swing.event.AncestorEvent evt) {
+    if (control != null)
+      control.setIASpeed(sliderIA2.getValue());
+    sliderIA.setValue(sliderIA2.getValue());
+    Configuration.instance().setProperty("AISpeed", String.valueOf(sliderIA2.getValue()));
+  }
 
   // Variables declaration - do not modify
   private javax.swing.JButton ajouterIA;
