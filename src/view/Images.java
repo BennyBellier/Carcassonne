@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Images {
   Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisBoutons , bleu, jaune, noir, rouge, vert, pioche,
-      valider, refaire , lueur , hint , reculer , reculerDesactiver , boisBoutonsMini , boisBoutonsMedium;
+      valider, refaire , lueur , hint , reculer , reculerDesactiver , boisBoutonsMini , boisBoutonsMedium , rBleu , rJaune , rRouge , rNoir , rVert;
   Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
       meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
@@ -53,6 +53,11 @@ public class Images {
       hint = ImageIO.read(Configuration.charge("Images/hint.png"));
       reculer = ImageIO.read(Configuration.charge("Images/reculer.png"));
       reculerDesactiver = ImageIO.read(Configuration.charge("Images/reculerDesactiver.png"));
+      rRouge = ImageIO.read(Configuration.charge("Images/RobotRouge.png"));
+      rVert = ImageIO.read(Configuration.charge("Images/RobotVert.png"));
+      rNoir = ImageIO.read(Configuration.charge("Images/RobotNoir.png"));
+      rBleu = ImageIO.read(Configuration.charge("Images/RobotBleu.png"));
+      rJaune = ImageIO.read(Configuration.charge("Images/RobotJaune.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
@@ -125,6 +130,26 @@ public class Images {
 
   public Image reculerDesactiver() {
     return reculerDesactiver;
+  }
+
+  public Image rBleu() {
+    return rBleu;
+  }
+
+  public Image rRouge() {
+    return rRouge;
+  }
+
+  public Image rJaune() {
+    return rJaune;
+  }
+
+  public Image rNoir() {
+    return rNoir;
+  }
+
+  public Image rVert() {
+    return rVert;
   }
 
   void loadMeeples() {

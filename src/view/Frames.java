@@ -429,15 +429,30 @@ public class Frames extends javax.swing.JFrame {
     for (int i = 0; i < players.size(); i++) {
       ImageIcon imageIcon = null;
       if (players.get(i).color().equals(couleurRouge)) {
-        imageIcon = new ImageIcon(imgs.rouge());
+        if (players.get(i).isIA())
+          imageIcon = new ImageIcon(imgs.rRouge());
+        else
+          imageIcon = new ImageIcon(imgs.rouge());
       } else if (players.get(i).color().equals(couleurVert)) {
-        imageIcon = new ImageIcon(imgs.vert());
+        if (players.get(i).isIA())
+          imageIcon = new ImageIcon(imgs.rVert());
+        else
+          imageIcon = new ImageIcon(imgs.vert());
       } else if (players.get(i).color().equals(couleurNoir)) {
-        imageIcon = new ImageIcon(imgs.noir());
+        if (players.get(i).isIA())
+          imageIcon = new ImageIcon(imgs.rNoir());
+        else
+          imageIcon = new ImageIcon(imgs.noir());
       } else if (players.get(i).color().equals(couleurJaune)) {
-        imageIcon = new ImageIcon(imgs.jaune());
+        if (players.get(i).isIA())
+          imageIcon = new ImageIcon(imgs.rJaune());
+        else
+          imageIcon = new ImageIcon(imgs.jaune());
       } else if (players.get(i).color().equals(couleurBleu)) {
-        imageIcon = new ImageIcon(imgs.bleu());
+        if (players.get(i).isIA())
+          imageIcon = new ImageIcon(imgs.rBleu());
+        else 
+          imageIcon = new ImageIcon(imgs.bleu());
       }
 
       if (imageBleu.getIcon() == null)
