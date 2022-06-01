@@ -28,6 +28,10 @@ public class Save {
     nbPlayer = players.size();
   }
 
+  /**
+   ** Transforme l'objet en save en un tableau de byte pour être sauvegardé dans un fichier
+   * @return
+   */
   public byte[] toArray() {
     List<Byte> bytes = new ArrayList<>();
 
@@ -93,6 +97,11 @@ public class Save {
     return res;
   }
 
+  /**
+   ** Génére un objet save depuis un fichier de sauvegarde binaire
+   * @param inputStream
+   * @return
+   */
   public static Save fromFile(FileInputStream inputStream) {
     try {
       int nbPlayer, playerTurn, setLength, set0Length, nbMeeplesOnSet, piocheSize;

@@ -102,6 +102,10 @@ public class Pioche {
     return bytes;
   }
 
+  /**
+   ** Set la pioche avec la liste de tuile list
+   * @param list
+   */
   private void setList(List<Tile> list) {
     pioche = list;
   }

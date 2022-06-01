@@ -7,9 +7,13 @@ package controller;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import model.GameEngine;
 import view.AffichePlateau;
@@ -32,7 +36,6 @@ public class Controleur implements ActionListener {
   JTable scoreboard;
   JButton menuBoutons;
   boolean IAPlaying;
-  Animation animIA;
   Timer timer;
   boolean turnSaved;
 
@@ -56,22 +59,42 @@ public class Controleur implements ActionListener {
     timer.start();
   }
 
+  /**
+   ** Initialise l'afficheur de jeu
+   * @param t
+   */
   public void setAfficheur(AffichePlateau t) {
     tab = t;
   }
 
+  /**
+   ** Retourne un vraie si une partie est en cours
+   */
   public boolean isGameRunning() {
     if (ge == null)
       return false;
     return ge.isGameRunning();
   }
 
+  /**
+   ** Met en pause le jeu des IA
+   */
   public void pauseGame() {
     timer.stop();
   }
 
+  /**
+   ** Redémarre le jeu des IA
+   */
   public void resumeGame() {
     timer.start();
+  }
+
+  /**
+   ** Change la vitesse de jeu d'une IA
+   */
+  public void setIASpeed(int speed) {
+    timer = new Timer(speed, this);
   }
 
   public void lueur2J() {
@@ -158,6 +181,9 @@ public class Controleur implements ActionListener {
     }
   }
 
+  /**
+   ** Change l'indicateur qui permet à l'utilisateur de savoir qui doit jouer
+   */
   public void switchLueur() {
     if (ge.getListPlayers().size() == 2) {
       lueur2J();
@@ -214,6 +240,12 @@ public class Controleur implements ActionListener {
         && y - tab.getOffsetY() <= tab.tailleTuile() * ge.getSet().length;
   }
 
+  /**
+   ** Retourne vraie si le clic est sur le bouton cancel
+   * @param x
+   * @param y
+   * @return
+   */
   boolean clicOnCancel(int x, int y) {
     return x >= 1570
         && x <= 1700
@@ -221,6 +253,12 @@ public class Controleur implements ActionListener {
         && y <= 910;
   }
 
+  /**
+   ** Retourne vraie si le clic est sur la tuile dans la main
+   * @param x
+   * @param y
+   * @return
+   */
   boolean clicOnHand(int x, int y) {
     return x >= 1685
         && x <= 1875
@@ -228,6 +266,12 @@ public class Controleur implements ActionListener {
         && y <= 1035;
   }
 
+  /**
+   ** Retourne vraie si le clic est sur la tuile courante du joueur posé sur le plateau
+   * @param x
+   * @param y
+   * @return
+   */
   boolean clickOnCurrentTile(int x, int y) {
     Point start = ge.getStartTilePoint();
     if (!ge.getCurrentTile().placed)
@@ -235,6 +279,11 @@ public class Controleur implements ActionListener {
     return x - start.x == ge.getCurrentTile().x && y - start.y == ge.getCurrentTile().y;
   }
 
+  /**
+   ** Place la tuile
+   * @param x
+   * @param y
+   */
   void placeTile(int x, int y) {
     float c = (x - tab.getOffsetX()) / tab.tailleTuile();
     float l = (y - tab.getOffsetY()) / tab.tailleTuile();
@@ -244,6 +293,11 @@ public class Controleur implements ActionListener {
     }
   }
 
+  /**
+   ** Place le meeple
+   * @param x
+   * @param y
+   */
   void placeMeeple(int x, int y) {
     float c = (x - tab.getOffsetX()) / tab.tailleTuile();
     float l = (y - tab.getOffsetY()) / tab.tailleTuile();
@@ -255,31 +309,50 @@ public class Controleur implements ActionListener {
     tab.repaint();
   }
 
+  /**
+   ** Annule le palcement de la tuile
+   */
   void undoTile() {
     ge.removeTile();
     tab.repaint();
   }
 
+  /**
+   ** Annule le placement du meeple
+   */
   void undoMeeple() {
     ge.removeMeeple();
     tab.repaint();
   }
 
+  /**
+   ** Met fin au tour d'un joueur
+   */
   void endTurn() {
     ge.endOfTurn();
     ge.saveTurn();
     switchLueur();
   }
 
+  /**
+   ** Sauvegarde la partie
+   * @param file
+   */
   public void saveGame(String file) {
     ge.saveGame(file);
   }
 
+  /**
+   ** Annule les coups des IA
+   */
   public void rewind() {
     ge = ge.rewind();
     tab.setGameEngine(ge);
   }
 
+  /**
+   ** Active la suggestion de l'IA
+   */
   public void activateAideIA() {
     tab.activateAideIA(ge.IAPreferedPlay());
     tab.repaint();
@@ -325,22 +398,9 @@ public class Controleur implements ActionListener {
     }
   }
 
-  public void command(Command cmd) {
-    switch (cmd) {
-      case RemoveTile:
-        ge.removeTile();
-        break;
-      case EndTurn:
-        if (ge.getCurrentTile().placed)
-          ge.endOfTurn();
-        break;
-
-      default:
-        break;
-    }
-    tab.repaint();
-  }
-
+  /**
+   ** Affiche le tableau des scores à la fin de la partie trié en fonction du score
+   */
   public void finDeGame() {
     String[][] playersScores = ge.playersScores();
     scoreboard.setModel(new javax.swing.table.DefaultTableModel(playersScores,
@@ -350,6 +410,13 @@ public class Controleur implements ActionListener {
         return false;
       }
     });
+
+    TableRowSorter<TableModel> sorter = new TableRowSorter<>(scoreboard.getModel());
+    scoreboard.setRowSorter(sorter);
+    List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+    sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
+    sorter.setSortKeys(sortKeys);
+    sorter.sort();
 
     DefaultTableCellRenderer render = new DefaultTableCellRenderer();
     render.setHorizontalAlignment(SwingConstants.CENTER);
@@ -364,6 +431,9 @@ public class Controleur implements ActionListener {
 
   }
 
+  /**
+   ** Jeu automatique des IA
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     if (ge.isGameRunning() && ge.isIATurn()) {

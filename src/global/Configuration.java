@@ -92,6 +92,9 @@ public class Configuration {
     return res;
   }
 
+  /**
+   ** CHange le fichier de property
+   */
   public void setProperty(String key, String value) {
     prop.setProperty(key, value);
     try {
@@ -103,6 +106,10 @@ public class Configuration {
     }
   }
 
+  /**
+   ** Génére le nom de fichier pour les logs
+   * @return
+   */
   String getFileLoggerName() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
     Date date = new Date();

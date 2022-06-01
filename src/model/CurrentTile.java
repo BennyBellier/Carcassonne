@@ -14,6 +14,10 @@ public class CurrentTile {
     placed = false;
   }
 
+  /**
+   ** Génére un objet tuile depuis un tableau de bytes
+   * @param b
+   */
   public CurrentTile(byte[] b) {
     if (b[0] == 0)
       placed = false;
@@ -30,18 +34,31 @@ public class CurrentTile {
     y = b[11];
   }
 
+  /**
+   ** Met le boolean placed à vraie
+   */
   public void placed() {
     placed = true;
   }
 
+  /**
+   ** Met le boolean de placed à faux
+   */
   public void unplaced() {
     placed = false;
   }
 
+  /**
+   ** Retourne l'égalité entre 2 tuiles
+   */
   public boolean equalsTo(CurrentTile t) {
     return tile.equalsTo(t.tile);
   }
 
+  /**
+   ** Retourne le tableau de byte pour la sauvegarde
+   * @return
+   */
   public List<Byte> toByteArray() {
     List<Byte> l = new ArrayList<>();
     Byte p = (placed) ? (byte) 1 : (byte) 0;

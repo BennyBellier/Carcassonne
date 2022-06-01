@@ -19,23 +19,39 @@ public class Saver {
     history = new Stack<>();
   }
 
+  /**
+   ** Ajoute une save dans l'historique
+   * @param s
+   */
   public void addSave(Save s) {
     System.out.println(s.toString());
     history.push(s);
   }
 
+  /**
+   ** Récupère la dernière save sauvegarder
+   * @return
+   */
   public Save getLastSave() {
     Save s = history.pop();
     System.out.println(s.toString());
     return s;
   }
 
+  /**
+   ** Format le nom du fichier
+   * @param s
+   * @return
+   */
   public static String formatFileString(String s) {
     if (!s.endsWith(".dat"))
       s = s.concat(".dat");
     return Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + s;
   }
 
+  /**
+   ** Sauvegarde la partie en cours
+   */
   public void saveGame(String file) {
     File f = null;
     try {
@@ -66,6 +82,10 @@ public class Saver {
     }
   }
 
+  /**
+   ** Charge une partie depuis le fichier
+   * @param file
+   */
   public static Save load(String file) {
     try {
       Configuration.instance().logger().info("Chargement de la sauvegarde : " + file);

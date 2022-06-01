@@ -44,7 +44,6 @@ public class Frames extends javax.swing.JFrame {
   private String textField;
   List<Player> players = new ArrayList<>();
   Audio audioPlayer;
-  Keybord keyboard = new Keybord();
   Font uniFont;
   String selectedSave;
 
@@ -58,7 +57,6 @@ public class Frames extends javax.swing.JFrame {
     audioPlayer = new Audio();
     initComponents();
     setupPanel();
-    addKeyListener(keyboard);
     // basculeEnPleineEcran();
     if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))){
       audioPlayer.music.play();
@@ -1643,7 +1641,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable , menuPlateau , tourJ1 , tourJ2 , tourJ3 , tourJ4 , tourJ5);
-    keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
@@ -1663,7 +1660,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable, menuPlateau, tourJ1, tourJ2, tourJ3, tourJ4, tourJ5);
-    keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
@@ -1809,7 +1805,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable , menuPlateau , tourJ1 , tourJ2 , tourJ3 , tourJ4 , tourJ5);
-    keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);

@@ -15,6 +15,9 @@ public class JTableMouse extends MouseAdapter {
     this.frame = frame;
   }
 
+  /**
+   ** Détecte les clic sur le tableau des sauvegarde
+   */
   @Override
   public void mouseClicked(MouseEvent me) {
     if (me.getClickCount() == 1) {

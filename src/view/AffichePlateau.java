@@ -121,11 +121,17 @@ public class AffichePlateau extends JComponent {
     pioche.setVisible(false);
   }
 
+  /**
+   ** Active la suggestion
+   */
   public void activateAideIA(Point p) {
     aideIA = true;
     suggestIA = p;
   }
 
+  /**
+   ** Désactive la suggestion
+   */
   public void desactivateAideIA() {
     aideIA = false;
   }
@@ -191,6 +197,9 @@ public class AffichePlateau extends JComponent {
     }
   }
 
+  /**
+   ** Affiche les placements possibles des meeples sur la tuile courante
+   */
   void meeplePlacementPaint() {
     int meepleSize = tileSize / 2;
 
@@ -239,6 +248,9 @@ public class AffichePlateau extends JComponent {
     drawable.drawImage(blason, x, y, (int) (0.29 * blasonSize), (int) (0.39 * blasonSize), null);
   }
 
+  /**
+   ** Met à jour le score des joueurs sur l'overlay
+   */
   void updateScoreBoard() {
     List<Player> players = gm.getListPlayers();
     for (int i = 0; i < playersScores.size(); i++) {

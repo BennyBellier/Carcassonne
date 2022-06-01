@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.awt.Point;
 
 import controller.IA;
-import controller.IAEasy;
 import controller.IAMoyen;
 import global.Configuration;
 import model.Projects.Project;
@@ -45,6 +44,10 @@ public class GameEngine {
     save.addSave(new Save(playerTurn, currentTile, currentMeeple, gameSet.cloneSet(), pioche, players, meeplesOnSet));
   }
 
+  /**
+   ** Génére un objet GameEngine depuis une sauvegarde
+   * @param s
+   */
   public GameEngine(Save s) {
     gameSet = new GameSet(s.set);
     pioche = s.p;
@@ -63,6 +66,10 @@ public class GameEngine {
     control = c;
   }
 
+  /**
+   ** Retourne vraie si une game est en cours
+   * @return
+   */
   public boolean isGameRunning() {
     return !gameEnded;
   }
@@ -120,10 +127,18 @@ public class GameEngine {
     return plList;
   }
 
+  /**
+   ** Retourne une copy d'une GameSet
+   * @return
+   */
   public GameSet getGameSet() {
     return gameSet.clone();
   }
 
+  /**
+   ** Annule le dernier coups des IA(s)
+   * @return
+   */
   public GameEngine rewind() {
     if (save.history.size() >= 1) {
       return new GameEngine(save.getLastSave());
@@ -131,6 +146,10 @@ public class GameEngine {
     return this;
   }
 
+  /**
+   ** Retourne un clone des meeples sur le plateau
+   * @return
+   */
   List<Meeple> cloneMeeplesList() {
     List<Meeple> meeples = new ArrayList<>();
     for (Meeple m : meeplesOnSet) {
@@ -139,6 +158,10 @@ public class GameEngine {
     return meeples;
   }
 
+  /**
+   ** Appel l'IA pour placer la tuile
+   * @return
+   */
   public boolean IAPlaceTile() {
     IA ia = players.get(playerTurn).getIA();
 
@@ -148,12 +171,18 @@ public class GameEngine {
     return placeTile(pos[0], pos[1]);
   }
 
+  /**
+   ** Retourne un point (x, y) lors de la demande de l'utilisateur d'une suggestion de l'IA
+   */
   public Point IAPreferedPlay() {
     IA ia = new IAMoyen();
     int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
     return new Point(pos[1], pos[0]);
   }
 
+  /**
+   ** Appel l'IA pour qu'elle place une tuile
+   */
   public void IAPlaceMeeple() {
     if (players.get(playerTurn).nbMeeplesRestant() == 0 || getMeeplePositions().size() == 0) {
       return;
@@ -238,14 +267,24 @@ public class GameEngine {
     Configuration.instance().logger().fine("Au tour du joueur " + playerTurn + " : " + players.get(playerTurn));
   }
 
+  /**
+   ** Retourne vraie si c'est au tour d'une des IA(s) à joué
+   * @return
+   */
   public boolean isIATurn() {
     return players.get(playerTurn).isIA();
   }
 
+  /**
+   ** Retourne l'IA qui doit jouer
+   */
   public IA getIATurn() {
     return players.get(playerTurn).getIA();
   }
 
+  /**
+   ** Sauvegarde le tour pour les rewind
+   */
   public void saveTurn() {
     if (isIATurn())
       return;
@@ -281,6 +320,10 @@ public class GameEngine {
     }
   }
 
+  /**
+   ** Retourne la lsite des positions possible de la tuile courrante dans la main du joueur
+   * @return
+   */
   public Map<Integer, ArrayList<Integer>> getCurrentTilePositions() {
     return gameSet.tilePositionsAllowed(currentTile.tile, false);
   }
@@ -582,6 +625,10 @@ public class GameEngine {
     return mpList;
   }
 
+  /**
+   ** Reotune la liste de smeeples sur le palteau pour l'affichage
+   * @return
+   */
   public List<Meeple> meeplesDisplay() {
     return meeplesOnSet;
   }
@@ -602,6 +649,12 @@ public class GameEngine {
     return false;
   }
 
+  /**
+   ** Retourne vraie si le meeple m est sur l'Abbey de Project p
+   * @param p
+   * @param m
+   * @return
+   */
   boolean meepleOnAbbey(Project p, Meeple m) {
     Point start = gameSet.getStartTilePoint();
     return p.list().get(0).x - start.x == m.getY() && p.list().get(0).y - start.y == m.getX()
@@ -661,29 +714,12 @@ public class GameEngine {
     }
   }
 
-  List<Player> resGame() {
-    List<Player> sort = new LinkedList<>();
-    for (Player p : players) {
-      if (sort.isEmpty())
-        sort.add(p);
-      else {
-        for (int j = 0; j < players.size(); j++) {
-          if (j == sort.size() - 1) {
-            sort.add(p);
-            break;
-          }
-          if (sort.get(j).score() < p.score()) {
-            sort.add(j, p);
-            break;
-          }
-        }
-      }
-    }
-    return sort;
-  }
-
+  /**
+   ** Retourne un tableau de tebleau pour l'affichage dans le scoreboard
+   * @return
+   */
   public String[][] playersScores() {
-    List<Player> res = resGame();
+    List<Player> res =  getListPlayers();
     String[][] scores = new String[res.size()][4];
     for (int i = 0; i < res.size(); i++) {
       scores[i][0] = res.get(i).pseudo();

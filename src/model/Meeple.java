@@ -76,6 +76,7 @@ public class Meeple {
     return Arrays.asList((byte) player, (byte) x, (byte) y, (byte) card.charAt(0));
   }
 
+  @Override
   public String toString() {
     return player + " (" + x + ", " + y + ") " + card;
   }
