@@ -29,7 +29,9 @@ public class Save {
   }
 
   /**
-   ** Transforme l'objet en save en un tableau de byte pour être sauvegardé dans un fichier
+   ** Transforme l'objet en save en un tableau de byte pour être sauvegardé dans un
+   * fichier
+   *
    * @return
    */
   public byte[] toArray() {
@@ -40,7 +42,8 @@ public class Save {
       bytes.add((byte) 0);
     }
 
-    bytes.addAll(Arrays.asList((byte) players.size(), (byte) playerTurn, (byte) set.length, (byte) set[0].length, (byte) meeples.size(), (byte) p.size()));
+    bytes.addAll(Arrays.asList((byte) players.size(), (byte) playerTurn, (byte) set.length, (byte) set[0].length,
+        (byte) meeples.size(), (byte) p.size()));
 
     // Joueurs (6 octets par joueur)
     for (int i = 0; i < players.size(); i++) {
@@ -68,7 +71,8 @@ public class Save {
           bytes.addAll(set[i][j].toByteArray());
         } else {
           bytes.addAll(
-              Arrays.asList((byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1));
+              Arrays.asList((byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1, (byte) -1,
+                  (byte) -1));
         }
       }
     }
@@ -99,14 +103,13 @@ public class Save {
 
   /**
    ** Génére un objet save depuis un fichier de sauvegarde binaire
+   *
    * @param inputStream
    * @return
    */
   public static Save fromFile(FileInputStream inputStream) {
     try {
       int nbPlayer, playerTurn, setLength, set0Length, nbMeeplesOnSet, piocheSize;
-
-      int size = inputStream.available();
 
       Tile[][] set;
       Pioche p;
@@ -117,7 +120,6 @@ public class Save {
 
       inputStream.skip(16);
 
-
       byte[] bytes = new byte[6];
       inputStream.read(bytes);
       nbPlayer = bytes[0];
@@ -127,7 +129,6 @@ public class Save {
       nbMeeplesOnSet = bytes[4];
       piocheSize = bytes[5];
 
-
       // lecture des paramètre des joueurs
       byte[][] playerByte = new byte[nbPlayer][9];
       for (int i = 0; i < nbPlayer; i++) {
@@ -135,7 +136,6 @@ public class Save {
       }
 
       bytes = new byte[12];
-
 
       // lecture de la tuile courante
       inputStream.read(bytes);
@@ -171,7 +171,6 @@ public class Save {
         inputStream.read(pBytes[i]);
       }
       p = new Pioche(pBytes);
-      
 
       // lecture des meeples sur le plateau
       bytes = new byte[4];
@@ -179,7 +178,6 @@ public class Save {
         inputStream.read(bytes);
         meeples.add(new Meeple(bytes));
       }
-      
 
       // lecture des pseudo
       bytes = new byte[1];
@@ -194,7 +192,6 @@ public class Save {
         players.add(i, new Player(playerByte[i], pseudo));
         inputStream.skip(1);
       }
-      
 
       return new Save(playerTurn, currentTile, currentMeeple, set, p, players, meeples);
     } catch (

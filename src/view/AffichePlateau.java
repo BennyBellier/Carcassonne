@@ -303,7 +303,8 @@ public class AffichePlateau extends JComponent {
           int resize = tileSize / 15;
           if (aideIA) {
             drawable.drawImage(imgs.highlight, (startX + suggestIA.y * tileSize) + (resize),
-                (startY + suggestIA.x * tileSize) + (resize), (tileSize) - (resize * 2), (tileSize) - (resize * 2), null);
+                (startY + suggestIA.x * tileSize) + (resize), (tileSize) - (resize * 2), (tileSize) - (resize * 2),
+                null);
           } else if (aide) {
             Map<Integer, ArrayList<Integer>> allPossiblePlacement = gm.getGameSet().tilePositionsAllowed(
                 currentTile.tile,

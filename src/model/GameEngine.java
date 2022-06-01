@@ -2,10 +2,12 @@ package model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import controller.Controleur;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.awt.Point;
 
 import controller.IA;
@@ -45,6 +47,7 @@ public class GameEngine {
 
   /**
    ** Génére un objet GameEngine depuis une sauvegarde
+   *
    * @param s
    */
   public GameEngine(Save s) {
@@ -67,6 +70,7 @@ public class GameEngine {
 
   /**
    ** Retourne vraie si une game est en cours
+   *
    * @return
    */
   public boolean isGameRunning() {
@@ -128,6 +132,7 @@ public class GameEngine {
 
   /**
    ** Retourne une copy d'une GameSet
+   *
    * @return
    */
   public GameSet getGameSet() {
@@ -136,6 +141,7 @@ public class GameEngine {
 
   /**
    ** Annule le dernier coups des IA(s)
+   *
    * @return
    */
   public GameEngine rewind() {
@@ -147,6 +153,7 @@ public class GameEngine {
 
   /**
    ** Retourne un clone des meeples sur le plateau
+   *
    * @return
    */
   List<Meeple> cloneMeeplesList() {
@@ -159,6 +166,7 @@ public class GameEngine {
 
   /**
    ** Appel l'IA pour placer la tuile
+   *
    * @return
    */
   public boolean IAPlaceTile() {
@@ -166,12 +174,14 @@ public class GameEngine {
 
     // placement tuile
     int[] pos = ia.placeTile(playerTurn, gameSet.clone(), currentTile.tile, cloneMeeplesList());
-    Configuration.instance().logger().info(players.get(playerTurn).pseudo() + " place la tuile en (" + (pos[0]) + ", " + (pos[1]) + ")");
+    Configuration.instance().logger()
+        .info(players.get(playerTurn).pseudo() + " place la tuile en (" + (pos[0]) + ", " + (pos[1]) + ")");
     return placeTile(pos[0], pos[1]);
   }
 
   /**
-   ** Retourne un point (x, y) lors de la demande de l'utilisateur d'une suggestion de l'IA
+   ** Retourne un point (x, y) lors de la demande de l'utilisateur d'une suggestion
+   * de l'IA
    */
   public Point IAPreferedPlay() {
     IA ia = new IAMoyen();
@@ -268,6 +278,7 @@ public class GameEngine {
 
   /**
    ** Retourne vraie si c'est au tour d'une des IA(s) à joué
+   *
    * @return
    */
   public boolean isIATurn() {
@@ -296,7 +307,8 @@ public class GameEngine {
     if (currentMeeple != null)
       cpCurrentMeeple = currentMeeple.clone();
 
-    save.addSave(new Save(playerTurn, cpCurrentTile, cpCurrentMeeple, gameSet.cloneSet(), pioche.clone(), getListPlayers(), getMeeplesOnSet()));
+    save.addSave(new Save(playerTurn, cpCurrentTile, cpCurrentMeeple, gameSet.cloneSet(), pioche.clone(),
+        getListPlayers(), getMeeplesOnSet()));
   }
 
   /**
@@ -319,7 +331,9 @@ public class GameEngine {
   }
 
   /**
-   ** Retourne la lsite des positions possible de la tuile courrante dans la main du joueur
+   ** Retourne la lsite des positions possible de la tuile courrante dans la main
+   * du joueur
+   *
    * @return
    */
   public Map<Integer, ArrayList<Integer>> getCurrentTilePositions() {
@@ -625,6 +639,7 @@ public class GameEngine {
 
   /**
    ** Reotune la liste de smeeples sur le palteau pour l'affichage
+   *
    * @return
    */
   public List<Meeple> meeplesDisplay() {
@@ -649,6 +664,7 @@ public class GameEngine {
 
   /**
    ** Retourne vraie si le meeple m est sur l'Abbey de Project p
+   *
    * @param p
    * @param m
    * @return
@@ -668,25 +684,25 @@ public class GameEngine {
     List<Project> projects = Project.evaluateProjects(gameSet.cloneSet(), gameEnded);
 
     for (Project project : projects) {
-      List<Integer> ownersValue = new ArrayList<>();
-      for (int i = 0; i < players.size(); i++) {
-        ownersValue.add(0);
-      }
+      List<AtomicInteger> ownersValue = new LinkedList<>();
       List<Meeple> meepleToRemove = new ArrayList<>();
+
+      for (int i = 0; i < players.size(); i++) {
+        ownersValue.add(new AtomicInteger(0));
+      }
 
       if (project.type() == Type.ABBEY) {
         for (Meeple m : meeplesOnSet) {
           if (meepleOnAbbey(project, m)) {
-            ownersValue.add(m.player, ownersValue.get(m.player) + 1);
+            ownersValue.get(m.player).incrementAndGet();
             meepleToRemove.add(m);
             players.get(m.player).meepleRecovery();
           }
         }
-
       } else {
         for (Meeple m : meeplesOnSet) {
           if (meepleOnProject(project, m)) {
-            ownersValue.add(m.player, ownersValue.get(m.player) + 1);
+            ownersValue.get(m.player).incrementAndGet();
             meepleToRemove.add(m);
             players.get(m.player).meepleRecovery();
           }
@@ -696,14 +712,14 @@ public class GameEngine {
       meeplesOnSet.removeAll(meepleToRemove);
 
       int maxValue = 0;
-      for (Integer ownerValue : ownersValue) {
-        if (ownerValue > maxValue)
-          maxValue = ownerValue;
+      for (AtomicInteger ownerValue : ownersValue) {
+        if (ownerValue.get() > maxValue)
+          maxValue = ownerValue.get();
       }
 
       if (maxValue > 0) {
-        for (int i = 0; i < ownersValue.size(); i++) {
-          if (ownersValue.get(i) == maxValue) {
+        for (int i = 0; i < players.size(); i++) {
+          if (ownersValue.get(i).get() == maxValue) {
             players.get(i).scorePlus(project.value());
             players.get(i).minusCurrentNumberProjects();
           }
@@ -714,10 +730,11 @@ public class GameEngine {
 
   /**
    ** Retourne un tableau de tebleau pour l'affichage dans le scoreboard
+   *
    * @return
    */
   public String[][] playersScores() {
-    List<Player> res =  getListPlayers();
+    List<Player> res = getListPlayers();
     String[][] scores = new String[res.size()][4];
     for (int i = 0; i < res.size(); i++) {
       scores[i][0] = res.get(i).pseudo();

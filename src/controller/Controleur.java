@@ -62,6 +62,7 @@ public class Controleur implements ActionListener {
 
   /**
    ** Initialise l'afficheur de jeu
+   *
    * @param t
    */
   public void setAfficheur(AffichePlateau t) {
@@ -243,6 +244,7 @@ public class Controleur implements ActionListener {
 
   /**
    ** Retourne vraie si le clic est sur le bouton cancel
+   *
    * @param x
    * @param y
    * @return
@@ -256,6 +258,7 @@ public class Controleur implements ActionListener {
 
   /**
    ** Retourne vraie si le clic est sur la tuile dans la main
+   *
    * @param x
    * @param y
    * @return
@@ -268,7 +271,9 @@ public class Controleur implements ActionListener {
   }
 
   /**
-   ** Retourne vraie si le clic est sur la tuile courante du joueur posé sur le plateau
+   ** Retourne vraie si le clic est sur la tuile courante du joueur posé sur le
+   * plateau
+   *
    * @param x
    * @param y
    * @return
@@ -282,6 +287,7 @@ public class Controleur implements ActionListener {
 
   /**
    ** Place la tuile
+   *
    * @param x
    * @param y
    */
@@ -296,6 +302,7 @@ public class Controleur implements ActionListener {
 
   /**
    ** Place le meeple
+   *
    * @param x
    * @param y
    */
@@ -336,6 +343,7 @@ public class Controleur implements ActionListener {
 
   /**
    ** Sauvegarde la partie
+   *
    * @param file
    */
   public void saveGame(String file) {
@@ -373,11 +381,11 @@ public class Controleur implements ActionListener {
         turnSaved = false;
       }
 
-       if (clicOnHand(x, y)) {
-         if (tab.getStateAideIA()) {
-           tab.desactivateAideIA();
-           tab.repaint();
-         }
+      if (clicOnHand(x, y)) {
+        if (tab.getStateAideIA()) {
+          tab.desactivateAideIA();
+          tab.repaint();
+        }
         if (ge.getCurrentTile().placed) {
           endTurn();
         } else if (!ge.getCurrentTile().placed) {
@@ -447,8 +455,7 @@ public class Controleur implements ActionListener {
         while (!ge.IAPlaceTile()) {
         }
         tab.repaint();
-      }
-      else if (ge.getCurrentTile().placed) {
+      } else if (ge.getCurrentTile().placed) {
         ge.IAPlaceMeeple();
         tab.repaint();
         ge.endOfTurn();
