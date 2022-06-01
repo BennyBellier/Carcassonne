@@ -733,6 +733,17 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipaleInGameL = new javax.swing.JLabel();
     vitesseIALabel = new javax.swing.JLabel();
     vitesseIALabel2 = new javax.swing.JLabel();
+    pseudoBleu = new javax.swing.JLabel();
+    pseudoRouge = new javax.swing.JLabel();
+    pseudoVert = new javax.swing.JLabel();
+    pseudoJaune = new javax.swing.JLabel();
+    pseudoNoir = new javax.swing.JLabel();
+    banderolleRouge = new javax.swing.JLabel();
+    banderolleNoir = new javax.swing.JLabel();
+    banderolleVert = new javax.swing.JLabel();
+    banderolleJaune = new javax.swing.JLabel();
+    banderolleBleu = new javax.swing.JLabel();
+    
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -1571,6 +1582,21 @@ public class Frames extends javax.swing.JFrame {
     hand.setFocusable(false);
     layoutJeu.add(hand, new org.netbeans.lib.awtextra.AbsoluteConstraints(1710, 870, 145, 145));
 
+    pseudoBleu.setFont(uniFont.deriveFont((float) 25)); // NOI18N
+    layoutJeu.add(pseudoBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 212, 160, -1));
+
+    pseudoRouge.setFont(uniFont.deriveFont((float) 25)); // NOI18N
+    layoutJeu.add(pseudoRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 420, 160, -1));
+
+    pseudoVert.setFont(uniFont.deriveFont((float) 25)); // NOI18N
+    layoutJeu.add(pseudoVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 618, 160, -1));
+
+    pseudoJaune.setFont(uniFont.deriveFont((float) 25)); // NOI18N
+    layoutJeu.add(pseudoJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 822, 160, -1));
+
+    pseudoNoir.setFont(uniFont.deriveFont((float) 25)); // NOI18N
+    layoutJeu.add(pseudoNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 1022, 160, -1));
+
     tourJ1.setIcon(new ImageIcon(imgs.lueur()));
     layoutJeu.add(tourJ1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 41, 310, 179));
 
@@ -1585,6 +1611,26 @@ public class Frames extends javax.swing.JFrame {
 
     tourJ5.setIcon(new ImageIcon(imgs.lueur()));
     layoutJeu.add(tourJ5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 841, 310, 200));
+
+    banderolleRouge.setBackground(new Color(0, 0, 0, 0));
+    banderolleRouge.setIcon(new ImageIcon(imgs.banderolle()));
+    layoutJeu.add(banderolleRouge, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 388, -1, -1));
+
+    banderolleVert.setBackground(new Color(0, 0, 0, 0));
+    banderolleVert.setIcon(new ImageIcon(imgs.banderolle()));
+    layoutJeu.add(banderolleVert, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 585, -1, -1));
+
+    banderolleJaune.setBackground(new Color(0, 0, 0, 0));
+    banderolleJaune.setIcon(new ImageIcon(imgs.banderolle()));
+    layoutJeu.add(banderolleJaune, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 790, -1, -1));
+
+    banderolleNoir.setBackground(new Color(0, 0, 0, 0));
+    banderolleNoir.setIcon(new ImageIcon(imgs.banderolle()));
+    layoutJeu.add(banderolleNoir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 990, -1, -1));
+
+    banderolleBleu.setBackground(new Color(0, 0, 0, 0));
+    banderolleBleu.setIcon(new ImageIcon(imgs.banderolle()));
+    layoutJeu.add(banderolleBleu, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
     cmpMeepleBleu.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
     cmpMeepleBleu.setForeground(new java.awt.Color(255, 255, 255));
@@ -2291,5 +2337,15 @@ public class Frames extends javax.swing.JFrame {
   private javax.swing.JLabel optionsInGameL;
   private javax.swing.JLabel retourAuJeuInGameL;
   private javax.swing.JLabel menuPrincipaleInGameL;
+  private javax.swing.JLabel pseudoBleu;
+  private javax.swing.JLabel pseudoJaune;
+  private javax.swing.JLabel pseudoNoir;
+  private javax.swing.JLabel pseudoRouge;
+  private javax.swing.JLabel pseudoVert;
+  private javax.swing.JLabel banderolleBleu;
+  private javax.swing.JLabel banderolleJaune;
+  private javax.swing.JLabel banderolleNoir;
+  private javax.swing.JLabel banderolleRouge;
+  private javax.swing.JLabel banderolleVert;
   // End of variables declaration
 }
