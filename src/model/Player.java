@@ -104,6 +104,26 @@ public class Player {
       ia = new IAMoyen();
   }
 
+  @Override
+  public Player clone() {
+    Player nwPlayer = new Player(pseudo, type, new Color(color.getRGB()));
+    nwPlayer.setCurNbProject(curNumberOfProject);
+    nwPlayer.setMeeplesNumber(meeplesNumber);
+    nwPlayer.setNbProject(numberOfProjects);
+    nwPlayer.setNbTilePlaced(nbTilePlaced);
+    nwPlayer.setScore(score);
+    return nwPlayer;
+  }
+
+  @Override
+  public String toString() {
+    return type.toString();
+  }
+
+  /**
+   ** Retourne l'object IA du Player
+   * @return
+   */
   public IA getIA() {
     return ia;
   }
@@ -116,6 +136,10 @@ public class Player {
     return pseudo;
   }
 
+  /**
+   ** Retourne la couleur du player
+   * @return
+   */
   public Color color() {
     return color;
   }
@@ -198,10 +222,18 @@ public class Player {
     return numberOfProjects;
   }
 
+  /**
+   ** Retourne vraie si le player peut utiliser une IA
+   * @return
+   */
   public boolean canUseMeeple() {
     return meeplesNumber > 0;
   }
 
+  /**
+   ** Retourne vraie si le Player est une IA
+   * @return
+   */
   public boolean isIA() {
     return type != Type.HUMAN;
   }
@@ -221,22 +253,42 @@ public class Player {
     }
   }
 
+  /**
+   ** Met à jour le nombre de meeple disponible du Player
+   * @param nb
+   */
   public void setMeeplesNumber(int nb) {
     meeplesNumber = nb;
   }
 
+  /**
+   ** Met à jour le score disponible du Player
+   * @param nb
+   */
   public void setScore(int score) {
     this.score = score;
   }
 
+  /**
+   ** Met à jour le nombre courant de projet disponible du Player
+   * @param nb
+   */
   public void setCurNbProject(int nb) {
     curNumberOfProject = nb;
   }
 
+  /**
+   ** Met à jour le nombre de projet total disponible du Player
+   * @param nb
+   */
   public void setNbProject(int nb) {
     numberOfProjects = nb;
   }
 
+  /**
+   ** Met à jour le nombre de tuiles placé disponible du Player
+   * @param nb
+   */
   public void setNbTilePlaced(int nb) {
     nbTilePlaced = nb;
   }
@@ -248,6 +300,9 @@ public class Player {
     meeplesNumber += 1;
   }
 
+  /**
+   ** Le nombre courant de projet du joueur est réduit de 1
+   */
   public void minusCurrentNumberProjects() {
     curNumberOfProject -= 1;
   }

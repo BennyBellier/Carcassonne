@@ -38,7 +38,8 @@ public class AffichePlateau extends JComponent {
   JLabel nbTuileRestante, pioche, refaire, valider;
   AfficheCurrentTile act;
   boolean aide;
-
+  boolean aideIA;
+  Point suggestIA;
 
   public AffichePlateau(JLabel pioche, JLabel refaire, JLabel valider, AfficheCurrentTile act) {
     imgs = new Images();
@@ -50,6 +51,7 @@ public class AffichePlateau extends JComponent {
     this.act = act;
     valider.setVisible(false);
     aide = true;
+    aideIA = false;
     afficherPioche();
     repaint();
   }
@@ -62,7 +64,7 @@ public class AffichePlateau extends JComponent {
     this.font = font;
   }
 
-  public void setLabelScore(JLabel... labelListe){
+  public void setLabelScore(JLabel... labelListe) {
     playersScores = new ArrayList<>();
     int nbLabel = (labelListe.length - 1) / 2;
     System.out.println(labelListe.length + " | " + nbLabel + "\n");
@@ -120,6 +122,21 @@ public class AffichePlateau extends JComponent {
   }
 
   /**
+   ** Active la suggestion
+   */
+  public void activateAideIA(Point p) {
+    aideIA = true;
+    suggestIA = p;
+  }
+
+  /**
+   ** Désactive la suggestion
+   */
+  public void desactivateAideIA() {
+    aideIA = false;
+  }
+
+  /**
    ** Définie la taille de la tuile
    */
   void getTileSize() {
@@ -149,8 +166,8 @@ public class AffichePlateau extends JComponent {
     int meepleHeight = meepleSize * 100 / 125;
     int meepleWidth = meepleSize * 100 / 130;
 
-    for (Meeple m : gm.getMeeplesOnSet()) {
-      int meepleX = startX, meepleY = startY - meepleHeight/2;
+    for (Meeple m : gm.meeplesDisplay()) {
+      int meepleX = startX, meepleY = startY - meepleHeight / 2;
       switch (m.getCardinal()) {
         case "c":
           meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
@@ -175,10 +192,14 @@ public class AffichePlateau extends JComponent {
       }
       meepleX += ((m.getY() + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((m.getX() + gm.getStartTilePoint().x) * tileSize);
-      drawable.drawImage(imgs.Meeple(gm.getListPlayers().get(m.getOwner()).color()), meepleX, meepleY, meepleHeight, meepleWidth, null);
+      drawable.drawImage(imgs.Meeple(gm.getListPlayers().get(m.getOwner()).color()), meepleX, meepleY, meepleHeight,
+          meepleWidth, null);
     }
   }
 
+  /**
+   ** Affiche les placements possibles des meeples sur la tuile courante
+   */
   void meeplePlacementPaint() {
     int meepleSize = tileSize / 2;
 
@@ -186,7 +207,7 @@ public class AffichePlateau extends JComponent {
     int meepleWidth = meepleSize * 100 / 162;
 
     for (String card : gm.getMeeplePositions()) {
-      int meepleX = startX, meepleY = startY - meepleHeight/2;
+      int meepleX = startX, meepleY = startY - meepleHeight / 2;
       switch (card) {
         case "c":
           meepleX += ((tileSize / 2) - (meepleWidth / 2));
@@ -211,7 +232,8 @@ public class AffichePlateau extends JComponent {
       }
       meepleX += ((currentTile.x + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((currentTile.y + gm.getStartTilePoint().x) * tileSize);
-      drawable.drawImage(imgs.hollowMeeple(gm.getListPlayers().get(gm.getPlayerTurn()).color()), meepleX, meepleY, meepleHeight, meepleWidth, null);
+      drawable.drawImage(imgs.hollowMeeple(gm.getListPlayers().get(gm.getPlayerTurn()).color()), meepleX, meepleY,
+          meepleHeight, meepleWidth, null);
     }
   }
 
@@ -226,7 +248,10 @@ public class AffichePlateau extends JComponent {
     drawable.drawImage(blason, x, y, (int) (0.29 * blasonSize), (int) (0.39 * blasonSize), null);
   }
 
-  void updateScoreBoard(){
+  /**
+   ** Met à jour le score des joueurs sur l'overlay
+   */
+  void updateScoreBoard() {
     List<Player> players = gm.getListPlayers();
     for (int i = 0; i < playersScores.size(); i++) {
       playersScores.get(i).score.setText(String.valueOf(players.get(i).score()));
@@ -262,34 +287,43 @@ public class AffichePlateau extends JComponent {
       if (font != null)
         drawable.setFont(font.deriveFont((float) 40));
 
-      if (!currentTile.placed) {
-        act.setVisible(true);
-        act.img = getImage(currentTile.tile);
-        if (currentTile.tile.blason()) {
-          act.blason = blason;
-        }
-        act.repaint();
-      if (aide){
-        Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
-
-        int resize = tileSize / 15;
-
-        for (Integer i : possiblePlacement.keySet()) {
-          for (Integer j : possiblePlacement.get(i)) {
-            if (plateau[i][j] == null)
-              drawable.drawImage(imgs.highlight, (startX + j * tileSize) + (resize), (startY + i * tileSize) + (resize), (tileSize) - (resize*2), (tileSize) - (resize*2), null);
-          }
-        }
-      }
-      } else {
-        afficherRefaire();
+      if (gm.isIATurn() || currentTile.tile == null) {
         act.setVisible(false);
-        meeplePlacementPaint();
+      } else {
+        if (!currentTile.placed) {
+          act.setVisible(true);
+          act.img = getImage(currentTile.tile);
+          if (currentTile.tile.blason()) {
+            act.blason = blason;
+          }
+          act.repaint();
+          int resize = tileSize / 15;
+          if (aideIA) {
+            drawable.drawImage(imgs.highlight, (startX + suggestIA.y * tileSize) + (resize),
+                (startY + suggestIA.x * tileSize) + (resize), (tileSize) - (resize * 2), (tileSize) - (resize * 2), null);
+          } else if (aide) {
+            Map<Integer, ArrayList<Integer>> allPossiblePlacement = gm.getGameSet().tilePositionsAllowed(
+                currentTile.tile,
+                true);
+            Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
+
+            for (Integer i : allPossiblePlacement.keySet()) {
+              for (Integer j : allPossiblePlacement.get(i)) {
+                if (possiblePlacement.containsKey(i) && possiblePlacement.get(i).contains(j))
+                  drawable.drawImage(imgs.highlight, (startX + j * tileSize) + (resize),
+                      (startY + i * tileSize) + (resize), (tileSize) - (resize * 2), (tileSize) - (resize * 2), null);
+              }
+            }
+          }
+        } else {
+          afficherRefaire();
+          act.setVisible(false);
+          meeplePlacementPaint();
+        }
       }
       meeplePaint();
     }
   }
-
 
   /**
    ** Retourne l'image correspondant à la tuile t

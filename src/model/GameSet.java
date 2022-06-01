@@ -22,7 +22,7 @@ public class GameSet {
     tiles[1][1] = start;
   }
 
-  public GameSet (Tile[][] set) {
+  public GameSet(Tile[][] set) {
     tiles = set;
   }
 
@@ -101,7 +101,7 @@ public class GameSet {
    * @return boolean
    */
   boolean isTiles(int x, int y) {
-    if (y >= 0 && y < tiles.length && x >= 0 && x < tiles[y].length)
+    if (y >= 0 && y < tiles.length && x >= 0 && x < tiles.length)
       return (tiles[y][x] != null);
     else
       return false;
@@ -244,7 +244,7 @@ public class GameSet {
     }
 
     if (x == 0 || x == tiles[y].length - 1 || y == 0 || y == tiles.length - 1) {
-      redimTiles();
+    redimTiles();
       x += 1;
       y += 1;
     }
@@ -279,27 +279,23 @@ public class GameSet {
 
     if (y + 1 >= tiles.length)
       s = true;
-    else {
-      if (t.canConnect(tiles[y + 1][x], "s"))
-        s = true;
+    else if (t.canConnect(tiles[y + 1][x], "s")) {
+      s = true;
     }
     if (y - 1 < 0)
       n = true;
-    else {
-      if (t.canConnect(tiles[y - 1][x], "n"))
-        n = true;
+    else if (t.canConnect(tiles[y - 1][x], "n")) {
+      n = true;
     }
     if (x + 1 >= tiles[y].length)
       e = true;
-    else {
-      if (t.canConnect(tiles[y][x + 1], "e"))
-        e = true;
+    else if (t.canConnect(tiles[y][x + 1], "e")) {
+      e = true;
     }
     if (x - 1 < 0)
       w = true;
-    else {
-      if (t.canConnect(tiles[y][x - 1], "w"))
-        w = true;
+    else if (t.canConnect(tiles[y][x - 1], "w")) {
+      w = true;
     }
     return n && s && e && w;
   }
@@ -319,12 +315,14 @@ public class GameSet {
    *                 sinon calcul sans les rotations
    * @return Map<Integer, ArrayList<Integer>>
    */
-  public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile t, boolean withRota) {
+  public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile tile, boolean withRota) {
+    Tile t = tile.clone();
     Map<Integer, ArrayList<Integer>> map = new HashMap<>();
-    int r = 0;
+    int r;
     for (int i = 0; i < tiles.length; i++) {
-      for (int j = 0; j < tiles[i].length; j++) {
-        if (!(map.containsKey(j) && map.get(j).contains(i) || (tiles[j][i] != null) || noTilesAround(i, j))) {
+      for (int j = 0; j < tiles.length; j++) {
+        if (tiles[j][i] == null && !noTilesAround(i, j)) {
+          r = 0;
           do {
             if (checkAllTileConnection(i, j, t)) {
               ArrayList<Integer> l;
@@ -338,10 +336,8 @@ public class GameSet {
             }
             if (withRota)
               t.turnClock();
-            else
-              break;
             ++r;
-          } while (r < 3 && withRota);
+          } while (r < 5 && withRota);
         }
       }
     }

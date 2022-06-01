@@ -9,13 +9,12 @@ public class Pioche {
   // Un numéro à était attribué pour chacunes des tuiles uniques
   // ci-dessous le tableau stock pour un type de tuiles (index) son nombre d'occurences dans le jeu
   private int[] numberPerTile = { 4, 2, 1, 3, 1, 1, 2, 3, 2, 3, 2, 1, 2, 2, 3, 5, 3, 3, 3, 3, 8, 9, 4, 1 };
-  private LinkedList<Tile> pioche;
+  private List<Tile> pioche;
   private Random r;
 
   public Pioche() {
     pioche = new LinkedList<Tile>();
     r = new Random();
-    initPioche();
   }
 
   public Pioche(byte[][] b) {
@@ -28,7 +27,7 @@ public class Pioche {
   /**
    ** Remplie la pioche de tuiles au début de la partie
    */
-  void initPioche() {
+  Pioche initPioche() {
     int allp = 0;
     while (allp != 71) {
       int typeTuile = r.nextInt(24);
@@ -42,6 +41,7 @@ public class Pioche {
         .instance()
         .logger()
         .info("Initialisation de la pioche avec " + pioche.size() + " tuiles");
+    return this;
   }
 
   /**
@@ -57,8 +57,8 @@ public class Pioche {
    *
    * @return LinkedList<Tile>
    */
-  public LinkedList<Tile> getPioche() {
-    LinkedList<Tile> cp = new LinkedList<>();
+  public List<Tile> getPioche() {
+    List<Tile> cp = new LinkedList<>();
     for (int i = 0; i < pioche.size(); i++) {
       cp.add(i, pioche.get(i).clone());
     }
@@ -100,5 +100,20 @@ public class Pioche {
       bytes.addAll(pioche.get(i).toByteArray());
     }
     return bytes;
+  }
+
+  /**
+   ** Set la pioche avec la liste de tuile list
+   * @param list
+   */
+  private void setList(List<Tile> list) {
+    pioche = list;
+  }
+
+  @Override
+  public Pioche clone() {
+    Pioche res = new Pioche();
+    res.setList(pioche);
+    return res;
   }
 }

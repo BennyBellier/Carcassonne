@@ -38,14 +38,14 @@ public class Music {
   }
 
   /**
-   * Lance le thread permettant de joué la music
+   ** Lance le lecteur de la music
    */
   public void play() {
     clip.start();
   }
 
   /**
-   * Stop les
+   ** Stop le lecteur
    */
   public void stop() {
     clip.stop();

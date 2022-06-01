@@ -7,6 +7,9 @@ import java.awt.*;
 public class AfficheCurrentTile extends JComponent {
   public Image img, blason;
 
+  /**
+   ** Affiche la tuile courante dans la main du joueur
+   */
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D drawable = (Graphics2D) g;

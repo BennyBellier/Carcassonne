@@ -11,6 +11,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +29,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author ludov
  */
 public class Frames extends javax.swing.JFrame {
-  
+
   Player p;
   Controleur control;
   Images imgs;
@@ -42,8 +44,8 @@ public class Frames extends javax.swing.JFrame {
   private String textField;
   List<Player> players = new ArrayList<>();
   Audio audioPlayer;
-  Keybord keyboard = new Keybord();
   Font uniFont;
+  String selectedSave;
 
   /**
    * Creates new form Frames
@@ -55,8 +57,7 @@ public class Frames extends javax.swing.JFrame {
     audioPlayer = new Audio();
     initComponents();
     setupPanel();
-    addKeyListener(keyboard);
-    basculeEnPleineEcran();
+    // basculeEnPleineEcran();
     if (Boolean.parseBoolean(Configuration.instance().lis("MusicState"))){
       audioPlayer.music.play();
     }
@@ -474,6 +475,12 @@ public class Frames extends javax.swing.JFrame {
       filenames[i][0] = fList.get(i).replaceAll(".dat", "");
     }
 
+    if (fList.size() == 0) {
+      supprimerSauvegarde.setEnabled(false);
+    } else {
+      supprimerSauvegarde.setEnabled(true);
+    }
+
     sauvegardeTable.setModel(new javax.swing.table.DefaultTableModel(filenames, new String[] { "Sauvegarde" }) {
       @Override
       public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -495,6 +502,10 @@ public class Frames extends javax.swing.JFrame {
         players.add(new Player("Terminator", Player.Type.IA_HARD, couleurRouge));
         break;
     }
+  }
+
+  void setSelectedSave(String filename) {
+    selectedSave = filename;
   }
 
   /**
@@ -650,7 +661,6 @@ public class Frames extends javax.swing.JFrame {
     menuPrincipaleInGameL = new javax.swing.JLabel();
     vitesseIALabel = new javax.swing.JLabel();
     vitesseIALabel2 = new javax.swing.JLabel();
-
 
     plateauJeu = new AffichePlateau(pioche, refaire, valider, hand);
 
@@ -876,7 +886,7 @@ public class Frames extends javax.swing.JFrame {
         }
     });
     options.add(volumeCheck, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 322, -1, 20));
-    
+
     partieRIA.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     partieRIA.setForeground(Color.WHITE);
     partieRIA.setText("IA Partie Rapide :");
@@ -962,7 +972,7 @@ public class Frames extends javax.swing.JFrame {
         }
     });
     options2.add(volumeCheck2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 322, -1, 20));
-    
+
     partieRIA2.setFont(uniFont.deriveFont((float) 30)); // NOI18N
     partieRIA2.setForeground(Color.WHITE);
     partieRIA2.setText("IA Partie Rapide :");
@@ -1587,11 +1597,6 @@ public class Frames extends javax.swing.JFrame {
     reculerDesactiver.setBackground(new Color(0,0,0,0));
     reculerDesactiver.setIcon(new ImageIcon(imgs.reculerDesactiver()));
     reculerDesactiver.setBorder(null);
-    reculerDesactiver.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            reculerDesactiverActionPerformed(evt);
-        }
-    });
     layoutJeu.add(reculerDesactiver, new org.netbeans.lib.awtextra.AbsoluteConstraints(1640, 40, 130, 71));
 
     javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -1656,6 +1661,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void jouerBActionPerformed(java.awt.event.ActionEvent evt) {
+    selectedSave = "";
     jouerPanel.setVisible(true);
     menuPrincipale.setVisible(false);
     boutonSupDesactiver();
@@ -1799,7 +1805,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable , menuPlateau , tourJ1 , tourJ2 , tourJ3 , tourJ4 , tourJ5);
-    keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
@@ -1819,7 +1824,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable, menuPlateau, tourJ1, tourJ2, tourJ3, tourJ4, tourJ5);
-    keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
@@ -1876,7 +1880,7 @@ public class Frames extends javax.swing.JFrame {
     menuPlateau.setVisible(true);
     layoutJeu.setVisible(false);
     menuInGame.setFocusable(true);
-    
+    control.pauseGame();
   }
 
   private void sauvegarderInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1887,6 +1891,8 @@ public class Frames extends javax.swing.JFrame {
       gameName = formatter.format(date);
     }
     control.saveGame(gameName);
+    menuPrincipale();
+    menuPlateau.setVisible(true);
   }
 
   private void reglesInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1902,6 +1908,7 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFocusable(true);
     menuPlateau.setVisible(true);
     layoutJeu.setVisible(true);
+    control.resumeGame();
   }
 
   private void retourMenuInGameActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1926,7 +1933,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void hintActionPerformed(java.awt.event.ActionEvent evt) {
-
+    control.activateAideIA();
   }
 
   private void volumeCheckActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1949,12 +1956,13 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
-  private void rewindActionPerformed(java.awt.event.ActionEvent evt) { GameEngine gm = control.rewind();
-    plateauJeu.setGameEngine(gm);
+
+  private void rewindActionPerformed(java.awt.event.ActionEvent evt) {
+    control.rewind();
     plateauJeu.repaint();
   }
 
-  private void partieRapideActionPerformed(java.awt.event.ActionEvent evt) {                                             
+  private void partieRapideActionPerformed(java.awt.event.ActionEvent evt) {
     jouerPanel.setVisible(false);
     plateauJeu.setVisible(true);
     layoutJeu.setVisible(true);
@@ -1964,7 +1972,6 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setFont(uniFont);
     plateauJeu.setGameEngine(gm);
     control = new Controleur(gm, scoreFin, scoreTable , menuPlateau , tourJ1 , tourJ2 , tourJ3 , tourJ4 , tourJ5);
-    keyboard.setControleur(control);
     this.setFocusable(true);
     plateauJeu.addMouseListener(new Mouse(plateauJeu, control));
     control.setAfficheur(plateauJeu);
@@ -1972,25 +1979,28 @@ public class Frames extends javax.swing.JFrame {
     affRewind();
     sendLabel();
     plateauJeu.afficherPioche();
-  }   
-
-  private void supprimerSauvegardeActionPerformed(java.awt.event.ActionEvent evt) {                                                    
-    // TODO add your handling code here:
-  }                                                   
-
-private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-    // TODO add your handling code here:
   }
 
-  private void optionsInGameActionPerformed(java.awt.event.ActionEvent evt) {                                              
+  private void supprimerSauvegardeActionPerformed(java.awt.event.ActionEvent evt) {
+    if (!selectedSave.isEmpty()) {
+      try {
+        Files.delete(Paths.get(Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + selectedSave + ".dat"));
+      } catch (IOException e) {
+        Configuration.instance().logger().severe("Impossible de supprimer la sauvegarde");
+      }
+    }
+    loadSaveDisplayFile();
+  }
+
+  private void optionsInGameActionPerformed(java.awt.event.ActionEvent evt) {
     menuInGame.setVisible(false);
     plateauJeu.setVisible(false);
     options2.setVisible(true);
     menuPlateau.setVisible(true);
     background.affichageOptions();
-  } 
-  
-  private void retourOptions2ActionPerformed(java.awt.event.ActionEvent evt) {                                               
+  }
+
+  private void retourOptions2ActionPerformed(java.awt.event.ActionEvent evt) {
     plateauJeu.setVisible(true);
     options2.setVisible(false);
     menuPlateau.setVisible(true);
@@ -2005,17 +2015,17 @@ private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
     } else {
       volumeCheck.setSelected(false);
     }
-  }    
-  
-  private void aideCheck2ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+  }
+
+  private void aideCheck2ActionPerformed(java.awt.event.ActionEvent evt) {
     if(plateauJeu.aide){
       plateauJeu.aide = false;
     } else {
       plateauJeu.aide = true;
     }
-  }                                      
+  }
 
-  private void volumeCheck2ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+  private void volumeCheck2ActionPerformed(java.awt.event.ActionEvent evt) {
     if (!volumeCheck.isSelected()){
       System.out.println("Music stop");
       audioPlayer.music.stop();
@@ -2181,6 +2191,5 @@ private void reculerDesactiverActionPerformed(java.awt.event.ActionEvent evt) {
   private javax.swing.JLabel optionsInGameL;
   private javax.swing.JLabel retourAuJeuInGameL;
   private javax.swing.JLabel menuPrincipaleInGameL;
-  
   // End of variables declaration
 }
