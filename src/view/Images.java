@@ -18,8 +18,8 @@ import java.util.ArrayList;
  * @author ludov
  */
 public class Images {
-  Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisB, bleu, jaune, noir, rouge, vert, pioche,
-      valider, refaire , lueur , hint , reculer , reculerDesactiver;
+  Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisBoutons , bleu, jaune, noir, rouge, vert, pioche,
+      valider, refaire , lueur , hint , reculer , reculerDesactiver , boisBoutonsMini , boisBoutonsMedium;
   Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
       meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
@@ -38,7 +38,9 @@ public class Images {
       menu = ImageIO.read(Configuration.charge("Images/MenuInGame2.png"));
       plateauInGame = ImageIO.read(Configuration.charge("Images/bois.jpg"));
       highlight = ImageIO.read(Configuration.charge("Images/highlight.png"));
-      boisB = ImageIO.read(Configuration.charge("Images/boisBoutons.png"));
+      boisBoutons = ImageIO.read(Configuration.charge("Images/boisBoutons.png"));
+      boisBoutonsMini = ImageIO.read(Configuration.charge("Images/boisBoutonsMini.png"));
+      boisBoutonsMedium = ImageIO.read(Configuration.charge("Images/boisBoutonsMedium.png"));
       bleu = ImageIO.read(Configuration.charge("Images/Bleu.png"));
       rouge = ImageIO.read(Configuration.charge("Images/Rouge.png"));
       noir = ImageIO.read(Configuration.charge("Images/Noir.png"));
@@ -65,8 +67,16 @@ public class Images {
     return menu;
   }
 
-  public Image boisB() {
-    return boisB;
+  public Image boisBoutons() {
+    return boisBoutons;
+  }
+
+  public Image boisBoutonsMini() {
+    return boisBoutonsMini;
+  }
+
+  public Image boisBoutonsMedium() {
+    return boisBoutonsMedium;
   }
 
   public Image bleu() {
