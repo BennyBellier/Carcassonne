@@ -1,72 +1,53 @@
 package global;
 
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-
-public class Music implements Runnable {
+public class Music {
   List<AudioInputStream> playlist = new ArrayList<>();
   Clip clip;
-  Thread thread;
   int playlistNumber = 0;
+  int stop;
 
   public Music() {
+    loadMusic();
     try {
-      for (File f : new File("assets/audio/music").listFiles()) {
-        playlist.add(AudioSystem.getAudioInputStream(new File(f.toPath().toString())));
-      }
       clip = AudioSystem.getClip();
       clip.open(playlist.get(0));
-      thread = new Thread(this);
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
     } catch (Exception e) {
-      Configuration.instance().logger().warning("Impossible de charger les fichiers audio");
+      Configuration.instance().logger().warning("Impossible de charger le lecteur audio");
       e.printStackTrace();
     }
   }
 
   /**
-   * Lance le thread permettant de joué la music
+   ** Charge les différentes musics dans la playlist
+   */
+  void loadMusic() {
+    try {
+      playlist.add(AudioSystem.getAudioInputStream(new BufferedInputStream(Configuration.charge("audio/music/Enchanted-Emotional_Fantasy_Music.au"))));
+    } catch (Exception e) {
+      Configuration.instance().logger().severe("Impossible de charger les musics");
+    }
+  }
+
+  /**
+   ** Lance le lecteur de la music
    */
   public void play() {
-    thread.start();
+    clip.start();
   }
 
   /**
-   * Stop les 
+   ** Stop le lecteur
    */
   public void stop() {
-    if (clip.isRunning()) {
-      clip.stop();
-      clip.close();
-    }
-    if (thread.isAlive())
-      thread.interrupt();
-
+    clip.stop();
   }
-
-  /**
-   * Lance le clip jouant la musique
-   */
-  @Override
-  public void run() {
-    clip.start();
-    // while (thread.isAlive()) {
-    //   if (!clip.isRunning()) {
-    //     clip.close();
-    //     playlistNumber = (playlistNumber + 1) % playlist.size();
-    //     try {
-    //       clip.open(playlist.get(playlistNumber));
-    //       clip.start();
-    //     }
-    //     catch (Exception e) {
-    //       Configuration.instance().logger().severe("Impossible de lire la musique");
-    //     }
-    //   }
-    // }
-  }
-
 }

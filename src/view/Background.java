@@ -3,21 +3,21 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import javax.imageio.ImageIO;
-import java.io.File;
+
+import global.Configuration;
 
 public class Background extends JComponent {
 
-  Image currentbackground , menu , credits , jouer , nouvellePartie , options , regles;
+  Image currentbackground , menu , credits , jouer , nouvellePartie , options , regles , plateauInGame;
 
   public Background() {
     try {
-      //currentbackground = ImageIO.read(new File("assets/Images/background2.png"));
-      menu = ImageIO.read(new File("assets/Images/background2.png"));
-      credits = ImageIO.read(new File("assets/Images/Credits.jpg"));
-      jouer = ImageIO.read(new File("assets/Images/Jouer.jpg"));
-      nouvellePartie = ImageIO.read(new File("assets/Images/NouvellePartie.jpg"));
-      options = ImageIO.read(new File("assets/Images/Options.jpg"));
-      regles = ImageIO.read(new File("assets/Images/Regles.jpg"));
+      menu = ImageIO.read(Configuration.charge("Images/BackgroundTitle.jpg"));
+      credits = ImageIO.read(Configuration.charge("Images/Credits.jpg"));
+      jouer = ImageIO.read(Configuration.charge("Images/Jouer.jpg"));
+      nouvellePartie = ImageIO.read(Configuration.charge("Images/NouvellePartie.jpg"));
+      options = ImageIO.read(Configuration.charge("Images/Options.jpg"));
+      regles = ImageIO.read(Configuration.charge("Images/Regles.jpg"));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -55,6 +55,16 @@ public class Background extends JComponent {
 
   public void desactivate() {
     currentbackground = null;
+    repaint();
+  }
+
+  public void affichagePlateauInGame() {
+    currentbackground = plateauInGame;
+    repaint();
+  }
+
+  public void affichageMenuBoutons() {
+    currentbackground = plateauInGame;
     repaint();
   }
 

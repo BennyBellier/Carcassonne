@@ -22,6 +22,10 @@ public class GameSet {
     tiles[1][1] = start;
   }
 
+  public GameSet(Tile[][] set) {
+    tiles = set;
+  }
+
   /**
    ** Retourne les coordonnées courante de la tuile de départ dans la matrice
    *
@@ -84,7 +88,7 @@ public class GameSet {
    */
   boolean noTilesAround(int x, int y) {
     return !(isTiles(x - 1, y) ||
-        isTiles(x + 1,y) ||
+        isTiles(x + 1, y) ||
         isTiles(x, y - 1) ||
         isTiles(x, y + 1));
   }
@@ -97,7 +101,7 @@ public class GameSet {
    * @return boolean
    */
   boolean isTiles(int x, int y) {
-    if (y >= 0 && y < tiles.length && x >= 0 && x < tiles[y].length)
+    if (y >= 0 && y < tiles.length && x >= 0 && x < tiles.length)
       return (tiles[y][x] != null);
     else
       return false;
@@ -117,6 +121,7 @@ public class GameSet {
 
   /**
    ** Retourne vraie si la tuile de position (x, y) du plateau a été enlevé
+   *
    * @param x int position x de la tuile
    * @param y int position y de la tuile
    * @return boolean vraie si la tuile a été enlevé, faux sinon
@@ -239,7 +244,7 @@ public class GameSet {
     }
 
     if (x == 0 || x == tiles[y].length - 1 || y == 0 || y == tiles.length - 1) {
-      redimTiles();
+    redimTiles();
       x += 1;
       y += 1;
     }
@@ -272,31 +277,33 @@ public class GameSet {
   boolean checkAllTileConnection(int x, int y, Tile t) {
     boolean n = false, s = false, e = false, w = false;
 
-    if (y + 1 >= tiles.length || tiles[y + 1][x] == null)
+    if (y + 1 >= tiles.length)
       s = true;
-    else {
-      if (t.canConnect(tiles[y + 1][x], "s"))
-        s = true;
+    else if (t.canConnect(tiles[y + 1][x], "s")) {
+      s = true;
     }
-    if (y - 1 < 0 || tiles[y - 1][x] == null)
+    if (y - 1 < 0)
       n = true;
-    else {
-      if (t.canConnect(tiles[y - 1][x], "n"))
-        n = true;
+    else if (t.canConnect(tiles[y - 1][x], "n")) {
+      n = true;
     }
-    if (x + 1 >= tiles[y].length || tiles[y][x + 1] == null)
-      w = true;
-    else {
-      if (t.canConnect(tiles[y][x + 1], "w"))
-        w = true;
-    }
-    if (x - 1 < 0 || tiles[y][x - 1] == null)
+    if (x + 1 >= tiles[y].length)
       e = true;
-    else {
-      if (t.canConnect(tiles[y][x - 1], "e"))
-        e = true;
+    else if (t.canConnect(tiles[y][x + 1], "e")) {
+      e = true;
+    }
+    if (x - 1 < 0)
+      w = true;
+    else if (t.canConnect(tiles[y][x - 1], "w")) {
+      w = true;
     }
     return n && s && e && w;
+  }
+
+  public GameSet clone() {
+    GameSet res = new GameSet();
+    res.tiles = cloneSet();
+    return res;
   }
 
   /**
@@ -308,25 +315,29 @@ public class GameSet {
    *                 sinon calcul sans les rotations
    * @return Map<Integer, ArrayList<Integer>>
    */
-  public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile t, boolean withRota) {
+  public Map<Integer, ArrayList<Integer>> tilePositionsAllowed(Tile tile, boolean withRota) {
+    Tile t = tile.clone();
     Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+    int r;
     for (int i = 0; i < tiles.length; i++) {
-      for (int j = 0; j < tiles[i].length; j++) {
-        if ((!map.containsKey(i) || (map.containsKey(i) && !map.get(i).contains(j))) && tiles[i][j] == null
-            && !noTilesAround(i, j)) {
-          for (int r = 0; r < 3 && withRota; r++) {
+      for (int j = 0; j < tiles.length; j++) {
+        if (tiles[j][i] == null && !noTilesAround(i, j)) {
+          r = 0;
+          do {
             if (checkAllTileConnection(i, j, t)) {
               ArrayList<Integer> l;
-              if (!map.containsKey(i))
+              if (!map.containsKey(j))
                 l = new ArrayList<>();
               else
-                l = map.get(i);
-              l.add(j);
-              map.put(i, l);
+                l = map.get(j);
+              l.add(i);
+              map.put(j, l);
               break;
             }
-            t.turnClock();
-          }
+            if (withRota)
+              t.turnClock();
+            ++r;
+          } while (r < 5 && withRota);
         }
       }
     }
@@ -340,7 +351,7 @@ public class GameSet {
    * @return vraie si le meeple peut être placé, faux sinon
    */
   public boolean meeplePlacementAllowed(Meeple m) {
-    Tile t = tiles[m.getX() + getStartTilePoint().x][m.getY() + getStartTilePoint().y];
+    Tile t = getTileFromCoord(m.getX() + getStartTilePoint().x, m.getY() + getStartTilePoint().y);
     if (t != null) {
       System.out.println(t.toString());
       switch (m.getCardinal()) {
@@ -377,7 +388,20 @@ public class GameSet {
    * @return Tile
    */
   public Tile getTileFromCoord(int x, int y) {
-    return tiles[x][y].clone();
+    return tiles[x][y];
+  }
+
+  /**
+   ** Retourne le type à la position (x, y card)
+   *
+   * @param x
+   * @param y
+   * @param card
+   * @return Tile.Type
+   */
+  public Tile.Type getCardType(int x, int y, String card) {
+    Tile t = getTileFromCoord(x, y);
+    return t.getCardinalType(card);
   }
 
   /**

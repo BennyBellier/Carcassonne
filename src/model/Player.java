@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import controller.*;
+
 import java.awt.Color;
 
 public class Player {
@@ -67,6 +70,7 @@ public class Player {
   private Type type;
   private int meeplesNumber, score, nbTilePlaced, curNumberOfProject, numberOfProjects;
   private Color color;
+  private IA ia;
 
 
   public Player(String name, Type type, Color color) {
@@ -78,6 +82,10 @@ public class Player {
     curNumberOfProject = 0;
     numberOfProjects = 0;
     this.color = color;
+    if (type == Type.IA_EASY)
+      ia = new IAEasy();
+    else if (type == Type.IA_MEDIUM)
+      ia = new IAMoyen();
   }
 
   public Player(byte[] b, String pseudo) {
@@ -88,6 +96,36 @@ public class Player {
     curNumberOfProject = b[3];
     numberOfProjects = b[4];
     nbTilePlaced = b[5];
+    System.out.println( b[6] + " " +  b[7] + " " + b[8]);
+    color = new Color((int) b[6] & 0xFF, (int) b[7] & 0xFF, (int) b[8] & 0xFF);
+    if (type == Type.IA_EASY)
+      ia = new IAEasy();
+    else if (type == Type.IA_MEDIUM)
+      ia = new IAMoyen();
+  }
+
+  @Override
+  public Player clone() {
+    Player nwPlayer = new Player(pseudo, type, new Color(color.getRGB()));
+    nwPlayer.setCurNbProject(curNumberOfProject);
+    nwPlayer.setMeeplesNumber(meeplesNumber);
+    nwPlayer.setNbProject(numberOfProjects);
+    nwPlayer.setNbTilePlaced(nbTilePlaced);
+    nwPlayer.setScore(score);
+    return nwPlayer;
+  }
+
+  @Override
+  public String toString() {
+    return type.toString();
+  }
+
+  /**
+   ** Retourne l'object IA du Player
+   * @return
+   */
+  public IA getIA() {
+    return ia;
   }
 
   /**
@@ -98,6 +136,10 @@ public class Player {
     return pseudo;
   }
 
+  /**
+   ** Retourne la couleur du player
+   * @return
+   */
   public Color color() {
     return color;
   }
@@ -180,8 +222,20 @@ public class Player {
     return numberOfProjects;
   }
 
+  /**
+   ** Retourne vraie si le player peut utiliser une IA
+   * @return
+   */
   public boolean canUseMeeple() {
     return meeplesNumber > 0;
+  }
+
+  /**
+   ** Retourne vraie si le Player est une IA
+   * @return
+   */
+  public boolean isIA() {
+    return type != Type.HUMAN;
   }
 
   /**
@@ -199,31 +253,57 @@ public class Player {
     }
   }
 
+  /**
+   ** Met à jour le nombre de meeple disponible du Player
+   * @param nb
+   */
   public void setMeeplesNumber(int nb) {
     meeplesNumber = nb;
   }
 
+  /**
+   ** Met à jour le score disponible du Player
+   * @param nb
+   */
   public void setScore(int score) {
     this.score = score;
   }
 
+  /**
+   ** Met à jour le nombre courant de projet disponible du Player
+   * @param nb
+   */
   public void setCurNbProject(int nb) {
     curNumberOfProject = nb;
   }
 
+  /**
+   ** Met à jour le nombre de projet total disponible du Player
+   * @param nb
+   */
   public void setNbProject(int nb) {
     numberOfProjects = nb;
   }
 
+  /**
+   ** Met à jour le nombre de tuiles placé disponible du Player
+   * @param nb
+   */
   public void setNbTilePlaced(int nb) {
     nbTilePlaced = nb;
   }
 
   /**
-   ** Le joueur récupère un meeple, le nombre de projet courant est réduit de 1 puisque le projet est finie
+   ** Le joueur récupère un meeple
    */
   public void meepleRecovery() {
     meeplesNumber += 1;
+  }
+
+  /**
+   ** Le nombre courant de projet du joueur est réduit de 1
+   */
+  public void minusCurrentNumberProjects() {
     curNumberOfProject -= 1;
   }
 
@@ -232,6 +312,6 @@ public class Player {
    * @return List<Byte>
    */
   public List<Byte> toByteArray() {
-    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) 0));
+    return new ArrayList<>(Arrays.asList(type.toByte(), (byte) meeplesNumber, (byte) score, (byte) curNumberOfProject, (byte) numberOfProjects, (byte) nbTilePlaced, (byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue()));
   }
 }

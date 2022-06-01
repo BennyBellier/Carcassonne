@@ -9,30 +9,171 @@ import javax.imageio.ImageIO;
 import global.Configuration;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.nio.file.Path;
 
 /**
  *
  * @author ludov
  */
 public class Images {
-
-  Image blason, meeplePossibility;
+  Image blason, meeplePossibility, plateauInGame, croix, menu, highlight, boisBoutons , bleu, jaune, noir, rouge, vert, pioche,
+      valider, refaire , lueur , hint , reculer , reculerDesactiver , boisBoutonsMini , boisBoutonsMedium;
+  Image hollowRed, hollowBlack, hollowBlue, hollowGreen, hollowYellow, meepleRed, meepleBlack, meepleBlue, meepleGreen,
+      meepleYellow;
   ArrayList<ArrayList<Image>> list = new ArrayList<>();
+  private final int colorBlue = new Color(7, 45, 249).getRGB();
+  private final int colorRed = new Color(240, 0, 32).getRGB();
+  private final int colorGreen = new Color(60, 212, 21).getRGB();
+  private final int colorYellow = new Color(255, 235, 87).getRGB();
+  private final int colorBlack = new Color(31, 31, 31).getRGB();
 
   public Images() {
     try {
       loadTiles();
-      blason = ImageIO.read(new File("assets/Images/blason.png"));
-      meeplePossibility = ImageIO.read(new File("assets/Images/meeple.png"));
+      loadMeeples();
+      blason = ImageIO.read(Configuration.charge("Images/blason.png"));
+      croix = ImageIO.read(Configuration.charge("Images/skip.png"));
+      menu = ImageIO.read(Configuration.charge("Images/MenuInGame2.png"));
+      plateauInGame = ImageIO.read(Configuration.charge("Images/bois.jpg"));
+      highlight = ImageIO.read(Configuration.charge("Images/highlight.png"));
+      boisBoutons = ImageIO.read(Configuration.charge("Images/boisBoutons.png"));
+      boisBoutonsMini = ImageIO.read(Configuration.charge("Images/boisBoutonsMini.png"));
+      boisBoutonsMedium = ImageIO.read(Configuration.charge("Images/boisBoutonsMedium.png"));
+      bleu = ImageIO.read(Configuration.charge("Images/Bleu.png"));
+      rouge = ImageIO.read(Configuration.charge("Images/Rouge.png"));
+      noir = ImageIO.read(Configuration.charge("Images/Noir.png"));
+      vert = ImageIO.read(Configuration.charge("Images/Vert.png"));
+      jaune = ImageIO.read(Configuration.charge("Images/Jaune.png"));
+      pioche = ImageIO.read(Configuration.charge("Images/Pioche.png"));
+      valider = ImageIO.read(Configuration.charge("Images/validate.png"));
+      refaire = ImageIO.read(Configuration.charge("Images/validate_undo.png"));
+      lueur = ImageIO.read(Configuration.charge("Images/lueur-cards.png"));
+      hint = ImageIO.read(Configuration.charge("Images/hint.png"));
+      reculer = ImageIO.read(Configuration.charge("Images/reculer.png"));
+      reculerDesactiver = ImageIO.read(Configuration.charge("Images/reculerDesactiver.png"));
     } catch (Exception e) {
       Configuration.instance().logger().severe("Impossible de charger les tuiles");
       e.printStackTrace();
     }
+  }
+
+  public Image croix() {
+    return croix;
+  }
+
+  public Image menu() {
+    return menu;
+  }
+
+  public Image boisBoutons() {
+    return boisBoutons;
+  }
+
+  public Image boisBoutonsMini() {
+    return boisBoutonsMini;
+  }
+
+  public Image boisBoutonsMedium() {
+    return boisBoutonsMedium;
+  }
+
+  public Image bleu() {
+    return bleu;
+  }
+
+  public Image rouge() {
+    return rouge;
+  }
+
+  public Image noir() {
+    return noir;
+  }
+
+  public Image jaune() {
+    return jaune;
+  }
+
+  public Image vert() {
+    return vert;
+  }
+
+  public Image pioche() {
+    return pioche;
+  }
+
+  public Image valider() {
+    return valider;
+  }
+
+  public Image refaire() {
+    return refaire;
+  }
+
+  public Image lueur() {
+    return lueur;
+  }
+
+  public Image hint() {
+    return hint;
+  }
+
+  public Image reculer() {
+    return reculer;
+  }
+
+  public Image reculerDesactiver() {
+    return reculerDesactiver;
+  }
+
+  void loadMeeples() {
+
+    try {
+      hollowRed = ImageIO.read(Configuration.charge("Images/meeples/hollowRouge.png"));
+      hollowBlack = ImageIO.read(Configuration.charge("Images/meeples/hollowNoir.png"));
+      hollowBlue = ImageIO.read(Configuration.charge("Images/meeples/hollowBleu.png"));
+      hollowGreen = ImageIO.read(Configuration.charge("Images/meeples/hollowVert.png"));
+      hollowYellow = ImageIO.read(Configuration.charge("Images/meeples/hollowJaune.png"));
+      meepleRed = ImageIO.read(Configuration.charge("Images/meeples/meepleRouge.png"));
+      meepleBlack = ImageIO.read(Configuration.charge("Images/meeples/meepleNoir.png"));
+      meepleBlue = ImageIO.read(Configuration.charge("Images/meeples/meepleBleu.png"));
+      meepleGreen = ImageIO.read(Configuration.charge("Images/meeples/meepleVert.png"));
+      meepleYellow = ImageIO.read(Configuration.charge("Images/meeples/meepleJaune.png"));
+    } catch (IOException e) {
+      Configuration.instance().logger().severe("Impossible de charger les images des meeples");
+      e.printStackTrace();
+    }
+  }
+
+  public Image hollowMeeple(Color c) {
+    if (c.getRGB() == colorBlack)
+      return hollowBlack;
+    else if (c.getRGB() == colorBlue)
+      return hollowBlue;
+    else if (c.getRGB() == colorGreen)
+      return hollowGreen;
+    else if (c.getRGB() == colorYellow)
+      return hollowYellow;
+    else if (c.getRGB() == colorRed)
+      return hollowRed;
+
+    return null;
+  }
+
+  public Image Meeple(Color c) {
+    if (c.getRGB() == colorBlack)
+      return meepleBlack;
+    else if (c.getRGB() == colorBlue)
+      return meepleBlue;
+    else if (c.getRGB() == colorGreen)
+      return meepleGreen;
+    else if (c.getRGB() == colorYellow)
+      return meepleYellow;
+    else if (c.getRGB() == colorRed)
+      return meepleRed;
+
+    return null;
   }
 
   /**
@@ -47,10 +188,11 @@ public class Images {
     for (int i = 0; i <= 18; i++) {
       j = 1;
       try {
-        list.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + ".png")));
+        list.get(i).add(ImageIO.read(Configuration.charge("Images/tiles/" + i + ".png")));
         while (j < 4) {
-          if (Files.exists(Path.of("assets/Images/tiles/" + i + "-" + j + ".png")))
-          list.get(i).add(ImageIO.read(new File("assets/Images/tiles/" + i + "-" + j + ".png")));
+          InputStream in;
+          if ((in = Configuration.charge("Images/tiles/" + i + "-" + j + ".png")) != null)
+            list.get(i).add(ImageIO.read(in));
           ++j;
         }
       } catch (IOException e) {

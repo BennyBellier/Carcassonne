@@ -98,7 +98,7 @@ public class Tile {
   }
 
   private Type c, n, e, s, w;
-  private boolean b, cityEnder, isStart = false;
+  private boolean b, cityEnder, roadEnder, isStart = false;
 
   /**
    ** Créer une tuile de type type et précisant les bords des autres tuiles
@@ -119,7 +119,8 @@ public class Tile {
       Type south,
       Type west,
       boolean blason,
-      boolean cityEnder) {
+      boolean cityEnder,
+      boolean roadEnder) {
     c = center;
     n = north;
     e = east;
@@ -127,6 +128,7 @@ public class Tile {
     w = west;
     b = blason;
     this.cityEnder = cityEnder;
+    this.roadEnder = roadEnder;
   }
 
   public Tile(byte[] b) {
@@ -137,8 +139,9 @@ public class Tile {
     w =  Type.fromByte(b[4]);
     this.b =  (b[5] == 1 ? true : false);
     cityEnder = (b[6] == 1 ? true : false);
+    roadEnder = (b[7] == 1 ? true : false);
 
-    if (b[7] == 1)
+    if (b[8] == 1)
       isStart = true;
   }
 
@@ -188,7 +191,7 @@ public class Tile {
 
   /**
    ** Retourne vraie si la tuile ne contient qu'un ou plusieurs côté non relié
-   * fermant la ville
+   ** fermant la ville
    *
    * @return boolean
    */
@@ -197,10 +200,35 @@ public class Tile {
   }
 
   /**
+   ** Retourne vraie si la tuile termine une route
+   * @return boolean
+   */
+  public boolean roadEnder() {
+    return roadEnder;
+  }
+
+  /**
    ** Définie la tuile comme la tuile de départ
    */
   public void setToStart() {
     isStart = true;
+  }
+
+  public Type getCardinalType(String card) {
+    switch (card) {
+      case "c":
+        return center();
+      case "n":
+        return north();
+      case "s":
+        return south();
+      case "e":
+        return east();
+      case "w":
+        return west();
+      default:
+        return null;
+    }
   }
 
   /**
@@ -239,7 +267,7 @@ public class Tile {
    * @return Tile with deep copy
    */
   public Tile clone() {
-    return new Tile(c, n, e, s, w, b, cityEnder);
+    return new Tile(c, n, e, s, w, b, cityEnder, roadEnder);
   }
 
   /**
@@ -374,9 +402,9 @@ public class Tile {
    *
    * @return la valeur de retour est de type :
    *         $ +-------+
-   *         $ | C |
+   *         $ |   C   |
    *         $ | R S R |
-   *         $ | L |
+   *         $ |   L   |
    *         $ +-------+
    */
   public String[] toStringArray() {
@@ -427,7 +455,8 @@ public class Tile {
         Type.FIELD,
         Type.ROAD,
         false,
-        true);
+        true,
+        false);
     start.setToStart();
     return start;
   }
@@ -439,7 +468,7 @@ public class Tile {
    */
   public List<Byte> toByteArray() {
     return Arrays.asList(c.toByte(), n.toByte(), e.toByte(), s.toByte(), w.toByte(),
-        (byte) (b ? 1 : 0), (byte) (cityEnder ? 1 : 0), (byte) (isStart ? 1 : 0));
+        (byte) (b ? 1 : 0), (byte) (cityEnder ? 1 : 0), (byte) (roadEnder ? 1 : 0), (byte) (isStart ? 1 : 0));
   }
 
   /**
@@ -458,6 +487,7 @@ public class Tile {
             Type.FIELD,
             Type.FIELD,
             false,
+            false,
             false);
       case 1:
         return new Tile(
@@ -467,7 +497,8 @@ public class Tile {
             Type.ROAD,
             Type.FIELD,
             false,
-            false);
+            false,
+            true);
       case 2:
         return new Tile(
             Type.CITY,
@@ -476,6 +507,7 @@ public class Tile {
             Type.CITY,
             Type.CITY,
             true,
+            false,
             false);
       case 3:
         return new Tile(
@@ -484,6 +516,7 @@ public class Tile {
             Type.CITY,
             Type.FIELD,
             Type.CITY,
+            false,
             false,
             false);
       case 4:
@@ -494,6 +527,7 @@ public class Tile {
             Type.FIELD,
             Type.CITY,
             true,
+            false,
             false);
       case 5:
         return new Tile(
@@ -503,16 +537,18 @@ public class Tile {
             Type.ROAD,
             Type.CITY,
             false,
-            false);
+            false,
+            true);
       case 6:
         return new Tile(
             Type.CITY,
             Type.CITY,
             Type.CITY,
-            Type.FIELD,
+            Type.ROAD,
             Type.CITY,
             true,
-            false);
+            false,
+            true);
       case 7:
         return new Tile(
             Type.FIELD,
@@ -520,6 +556,7 @@ public class Tile {
             Type.CITY,
             Type.FIELD,
             Type.FIELD,
+            false,
             false,
             false);
       case 8:
@@ -530,6 +567,7 @@ public class Tile {
             Type.FIELD,
             Type.FIELD,
             true,
+            false,
             false);
       case 9:
         return new Tile(
@@ -538,6 +576,7 @@ public class Tile {
             Type.CITY,
             Type.ROAD,
             Type.ROAD,
+            false,
             false,
             false);
       case 10:
@@ -548,6 +587,7 @@ public class Tile {
             Type.ROAD,
             Type.ROAD,
             true,
+            false,
             false);
       case 11:
         return new Tile(
@@ -556,6 +596,7 @@ public class Tile {
             Type.CITY,
             Type.FIELD,
             Type.CITY,
+            false,
             false,
             false);
       case 12:
@@ -566,6 +607,7 @@ public class Tile {
             Type.FIELD,
             Type.CITY,
             true,
+            false,
             false);
       case 13:
         return new Tile(
@@ -575,7 +617,8 @@ public class Tile {
             Type.FIELD,
             Type.FIELD,
             false,
-            true);
+            true,
+            false);
       case 14:
         return new Tile(
             Type.FIELD,
@@ -584,7 +627,8 @@ public class Tile {
             Type.CITY,
             Type.FIELD,
             false,
-            true);
+            true,
+            false);
       case 15:
         return new Tile(
             Type.FIELD,
@@ -593,7 +637,8 @@ public class Tile {
             Type.FIELD,
             Type.FIELD,
             false,
-            true);
+            true,
+            false);
       case 16:
         return new Tile(
             Type.ROAD,
@@ -602,7 +647,8 @@ public class Tile {
             Type.ROAD,
             Type.FIELD,
             false,
-            true);
+            true,
+            false);
       case 17:
         return new Tile(
             Type.ROAD,
@@ -611,7 +657,8 @@ public class Tile {
             Type.ROAD,
             Type.FIELD,
             false,
-            true);
+            true,
+            false);
       case 18:
         return new Tile(
             Type.TOWN,
@@ -620,6 +667,7 @@ public class Tile {
             Type.ROAD,
             Type.ROAD,
             false,
+            true,
             true);
       case 19:
         return new Tile(
@@ -629,7 +677,8 @@ public class Tile {
             Type.FIELD,
             Type.ROAD,
             false,
-            true);
+            true,
+            false);
       case 20:
         return new Tile(
             Type.ROAD,
@@ -637,6 +686,7 @@ public class Tile {
             Type.FIELD,
             Type.ROAD,
             Type.FIELD,
+            false,
             false,
             false);
       case 21:
@@ -647,6 +697,7 @@ public class Tile {
             Type.ROAD,
             Type.FIELD,
             false,
+            false,
             false);
       case 22:
         return new Tile(
@@ -656,7 +707,8 @@ public class Tile {
             Type.ROAD,
             Type.ROAD,
             false,
-            false);
+            false,
+            true);
       case 23:
         return new Tile(
             Type.TOWN,
@@ -665,7 +717,8 @@ public class Tile {
             Type.ROAD,
             Type.ROAD,
             false,
-            false);
+            false,
+            true);
       default:
         return null;
     }

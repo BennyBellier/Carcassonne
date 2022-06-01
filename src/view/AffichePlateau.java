@@ -3,9 +3,11 @@ package view;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 import java.awt.*;
 
@@ -30,17 +32,56 @@ public class AffichePlateau extends JComponent {
   Random rand;
   Graphics2D drawable;
   CurrentTile currentTile;
+  Images imgs;
+  Font font;
+  List<ScoreEntryPlayer> playersScores;
+  JLabel nbTuileRestante, pioche, refaire, valider;
+  AfficheCurrentTile act;
+  boolean aide;
+  boolean aideIA;
+  Point suggestIA;
 
-  public AffichePlateau() {
-    Images imgs = new Images();
+  public AffichePlateau(JLabel pioche, JLabel refaire, JLabel valider, AfficheCurrentTile act) {
+    imgs = new Images();
     images = imgs.list;
     blason = imgs.blason;
     meeplePossibility = imgs.meeplePossibility;
+    this.pioche = pioche;
+    this.refaire = refaire;
+    this.act = act;
+    valider.setVisible(false);
+    aide = true;
+    aideIA = false;
+    afficherPioche();
     repaint();
   }
 
   public void setGameEngine(GameEngine gameEngine) {
     gm = gameEngine;
+  }
+
+  public void setFont(Font font) {
+    this.font = font;
+  }
+
+  public void setLabelScore(JLabel... labelListe) {
+    playersScores = new ArrayList<>();
+    int nbLabel = (labelListe.length - 1) / 2;
+    System.out.println(labelListe.length + " | " + nbLabel + "\n");
+    if (nbLabel >= 2) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[0], labelListe[1]));
+      playersScores.add(new ScoreEntryPlayer(labelListe[2], labelListe[3]));
+    }
+    if (nbLabel >= 3) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[4], labelListe[5]));
+    }
+    if (nbLabel >= 4) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[6], labelListe[7]));
+    }
+    if (nbLabel >= 5) {
+      playersScores.add(new ScoreEntryPlayer(labelListe[8], labelListe[9]));
+    }
+    nbTuileRestante = labelListe[labelListe.length - 1];
   }
 
   /**
@@ -70,6 +111,31 @@ public class AffichePlateau extends JComponent {
     return startY;
   }
 
+  public void afficherPioche() {
+    pioche.setVisible(true);
+    refaire.setVisible(false);
+  }
+
+  public void afficherRefaire() {
+    refaire.setVisible(true);
+    pioche.setVisible(false);
+  }
+
+  /**
+   ** Active la suggestion
+   */
+  public void activateAideIA(Point p) {
+    aideIA = true;
+    suggestIA = p;
+  }
+
+  /**
+   ** Désactive la suggestion
+   */
+  public void desactivateAideIA() {
+    aideIA = false;
+  }
+
   /**
    ** Définie la taille de la tuile
    */
@@ -94,68 +160,80 @@ public class AffichePlateau extends JComponent {
    */
   public void meeplePaint() {
     rand = new Random(11000);
-    int meepleSize = tileSize / 8;
+    int meepleSize = tileSize / 5;
     int alea = rand.nextInt(meepleSize / 2);
-    for (Meeple m : gm.getMeeplesOnSet()) {
-      int meepleX = startX, meepleY = startY;
+
+    int meepleHeight = meepleSize * 100 / 125;
+    int meepleWidth = meepleSize * 100 / 130;
+
+    for (Meeple m : gm.meeplesDisplay()) {
+      int meepleX = startX, meepleY = startY - meepleHeight / 2;
       switch (m.getCardinal()) {
         case "c":
-          meepleX += ((tileSize / 2) - (meepleSize / 2)) + alea;
-          meepleY += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
+          meepleY += ((tileSize / 2) - (meepleHeight / 2)) + alea;
           break;
         case "n":
           meepleY += (tileSize * 0.03) + alea;
-          meepleX += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
           break;
         case "e":
-          meepleX += tileSize - (meepleSize + tileSize * 0.01);
-          meepleY += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleX += tileSize - (meepleWidth + tileSize * 0.01);
+          meepleY += ((tileSize / 2) - (meepleHeight / 2)) + alea;
           break;
         case "s":
-          meepleX += ((tileSize / 2) - (meepleSize / 2)) + alea;
-          meepleY += tileSize - (meepleSize + tileSize * 0.01);
+          meepleX += ((tileSize / 2) - (meepleWidth / 2)) + alea;
+          meepleY += tileSize - (meepleHeight + tileSize * 0.01);
           break;
         case "w":
           meepleX += tileSize * 0.03;
-          meepleY += ((tileSize / 2) - (meepleSize / 2)) + alea;
+          meepleY += ((tileSize / 2) - (meepleHeight / 2)) + alea;
           break;
       }
       meepleX += ((m.getY() + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((m.getX() + gm.getStartTilePoint().x) * tileSize);
-      drawable.setColor(gm.getListPlayers().get(m.getOwner()).color());
-      drawable.fillOval(meepleX, meepleY, meepleSize, meepleSize);
+      drawable.drawImage(imgs.Meeple(gm.getListPlayers().get(m.getOwner()).color()), meepleX, meepleY, meepleHeight,
+          meepleWidth, null);
     }
   }
 
+  /**
+   ** Affiche les placements possibles des meeples sur la tuile courante
+   */
   void meeplePlacementPaint() {
-    int meepleSize = tileSize / 8;
-    for (String card : currentTile.tile.getMeeplesPosition()) {
-      int meepleX = startX, meepleY = startY;
+    int meepleSize = tileSize / 2;
+
+    int meepleHeight = meepleSize * 100 / 247;
+    int meepleWidth = meepleSize * 100 / 162;
+
+    for (String card : gm.getMeeplePositions()) {
+      int meepleX = startX, meepleY = startY - meepleHeight / 2;
       switch (card) {
         case "c":
-          meepleX += ((tileSize / 2) - (meepleSize / 2));
-          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          meepleX += ((tileSize / 2) - (meepleWidth / 2));
+          meepleY += ((tileSize / 2) - (meepleHeight / 2));
           break;
         case "n":
           meepleY += (tileSize * 0.03);
-          meepleX += ((tileSize / 2) - (meepleSize / 2));
+          meepleX += ((tileSize / 2) - (meepleWidth / 2));
           break;
         case "e":
-          meepleX += tileSize - (meepleSize + tileSize * 0.01);
-          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          meepleX += tileSize - (meepleWidth + tileSize * 0.01);
+          meepleY += ((tileSize / 2) - (meepleHeight / 2));
           break;
         case "s":
-          meepleX += ((tileSize / 2) - (meepleSize / 2));
-          meepleY += tileSize - (meepleSize + tileSize * 0.01);
+          meepleX += ((tileSize / 2) - (meepleWidth / 2));
+          meepleY += tileSize - (meepleHeight + tileSize * 0.01);
           break;
         case "w":
           meepleX += tileSize * 0.03;
-          meepleY += ((tileSize / 2) - (meepleSize / 2));
+          meepleY += ((tileSize / 2) - (meepleHeight / 2));
           break;
       }
       meepleX += ((currentTile.x + gm.getStartTilePoint().y) * tileSize);
       meepleY += ((currentTile.y + gm.getStartTilePoint().x) * tileSize);
-      drawable.drawImage(meeplePossibility, meepleX, meepleY, meepleSize, meepleSize, null);
+      drawable.drawImage(imgs.hollowMeeple(gm.getListPlayers().get(gm.getPlayerTurn()).color()), meepleX, meepleY,
+          meepleHeight, meepleWidth, null);
     }
   }
 
@@ -170,19 +248,33 @@ public class AffichePlateau extends JComponent {
     drawable.drawImage(blason, x, y, (int) (0.29 * blasonSize), (int) (0.39 * blasonSize), null);
   }
 
+  /**
+   ** Met à jour le score des joueurs sur l'overlay
+   */
+  void updateScoreBoard() {
+    List<Player> players = gm.getListPlayers();
+    for (int i = 0; i < playersScores.size(); i++) {
+      playersScores.get(i).score.setText(String.valueOf(players.get(i).score()));
+      playersScores.get(i).nbMeeple.setText(String.valueOf(players.get(i).nbMeeplesRestant()));
+    }
+  }
+
   @Override
   public void paintComponent(Graphics g) {
+    updateScoreBoard();
+    nbTuileRestante.setText(String.valueOf(gm.getPiocheSize()));
+    act.repaint();
     if (gm != null) {
       drawable = (Graphics2D) g;
       drawable.clearRect(0, 0, getSize().width, getSize().height);
+      drawable.drawImage(imgs.plateauInGame, 0, 0, getSize().width, getSize().height, null);
       Tile[][] plateau = gm.getSet();
       currentTile = gm.getCurrentTile();
       getTileSize();
+      afficherPioche();
 
       for (int i = 0; i < plateau.length; i++) {
-        drawable.drawLine(startX, startY + i * tileSize, startX + plateau.length * tileSize, startY + i * tileSize);
         for (int j = 0; j < plateau[i].length; j++) {
-          drawable.drawLine(startX + j * tileSize, startY, startX + j * tileSize, startY + plateau.length * tileSize);
           if (plateau[i][j] != null) {
             drawable.drawImage(getImage(plateau[i][j]), startX + j * tileSize, startY + i * tileSize, tileSize,
                 tileSize, null);
@@ -192,28 +284,42 @@ public class AffichePlateau extends JComponent {
           }
         }
       }
+      if (font != null)
+        drawable.setFont(font.deriveFont((float) 40));
 
-      List<Player> players = gm.getListPlayers();
-      for (int i = 0; i < gm.getNbPlayer(); i++) {
-        if (gm.getPlayerTurn() == i)
-          g.drawString(">", 0, (int) (15 + i * (getSize().height * 0.10)));
-        drawable.setColor(gm.getListPlayers().get(i).color());
-        g.drawString(players.get(i).pseudo(), 10, (int) (15 + i * (getSize().height * 0.10)));
-        drawable.drawString(String.valueOf(players.get(i).score()), 100, (int) (15 + i * (getSize().height * 0.10)));
-        drawable.drawString(String.valueOf(players.get(i).nbMeeplesRestant()), 80,
-            (int) (15 + i * (getSize().height * 0.10)));
-        drawable.setColor(Color.BLACK);
-      }
-
-      g.drawString(gm.getPiocheSize() + " / 71", getSize().width - 80, getSize().height - 120);
-
-      if (!currentTile.placed) {
-        drawable.drawImage(getImage(currentTile.tile), getSize().width - 100, getSize().height - 100, 85, 85, null);
-        if (currentTile.tile.blason()) {
-          drawable.drawImage(blason, getSize().width - 90, getSize().height - 90, 20, 26, null);
-        }
+      if (gm.isIATurn() || currentTile.tile == null) {
+        act.setVisible(false);
       } else {
-        meeplePlacementPaint();
+        if (!currentTile.placed) {
+          act.setVisible(true);
+          act.img = getImage(currentTile.tile);
+          if (currentTile.tile.blason()) {
+            act.blason = blason;
+          }
+          act.repaint();
+          int resize = tileSize / 15;
+          if (aideIA) {
+            drawable.drawImage(imgs.highlight, (startX + suggestIA.y * tileSize) + (resize),
+                (startY + suggestIA.x * tileSize) + (resize), (tileSize) - (resize * 2), (tileSize) - (resize * 2), null);
+          } else if (aide) {
+            Map<Integer, ArrayList<Integer>> allPossiblePlacement = gm.getGameSet().tilePositionsAllowed(
+                currentTile.tile,
+                true);
+            Map<Integer, ArrayList<Integer>> possiblePlacement = gm.getCurrentTilePositions();
+
+            for (Integer i : allPossiblePlacement.keySet()) {
+              for (Integer j : allPossiblePlacement.get(i)) {
+                if (possiblePlacement.containsKey(i) && possiblePlacement.get(i).contains(j))
+                  drawable.drawImage(imgs.highlight, (startX + j * tileSize) + (resize),
+                      (startY + i * tileSize) + (resize), (tileSize) - (resize * 2), (tileSize) - (resize * 2), null);
+              }
+            }
+          }
+        } else {
+          afficherRefaire();
+          act.setVisible(false);
+          meeplePlacementPaint();
+        }
       }
       meeplePaint();
     }

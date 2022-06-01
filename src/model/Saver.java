@@ -5,58 +5,100 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Stack;
 
 import global.Configuration;
 
 public class Saver {
 
-  List<Save> history;
+  Stack<Save> history;
 
   public Saver() {
-    history = new ArrayList<>();
+    history = new Stack<>();
   }
 
+  /**
+   ** Ajoute une save dans l'historique
+   * @param s
+   */
   public void addSave(Save s) {
-    history.add(s);
+    System.out.println(s.toString());
+    history.push(s);
   }
 
+  /**
+   ** Récupère la dernière save sauvegarder
+   * @return
+   */
   public Save getLastSave() {
-    return history.remove(history.size() - 1);
+    Save s = history.pop();
+    System.out.println(s.toString());
+    return s;
   }
 
+  /**
+   ** Format le nom du fichier
+   * @param s
+   * @return
+   */
   public static String formatFileString(String s) {
     if (!s.endsWith(".dat"))
       s = s.concat(".dat");
     return Configuration.instance().getConfigFolderPath() + File.separator + "saves" + File.separator + s;
   }
 
+  /**
+   ** Sauvegarde la partie en cours
+   */
   public void saveGame(String file) {
+    File f = null;
     try {
-      FileOutputStream outputStream = new FileOutputStream(new File(formatFileString(file)));
+      String filePath = formatFileString(file);
+      int i = 1;
+      while (Files.exists(Paths.get(filePath))) {
+        ++i;
+        filePath = formatFileString(file + i);
+      }
 
-      byte[] bytes = history.get(history.size() - 1).toArray();
+      f = new File(filePath);
+
+      FileOutputStream outputStream = new FileOutputStream(f);
+
+      byte[] bytes = history.pop().toArray();
 
       outputStream.write(bytes, 0, bytes.length);
 
       outputStream.close();
-    } catch (Exception e) {
+    } catch (IOException e) {
       Configuration.instance().logger().severe("Erreur, impossible d'enregistrer la partie");
       e.printStackTrace();
+    } catch (IndexOutOfBoundsException iOfBoundsException) {
+      Configuration.instance().logger().severe("Auncune sauvegardes disponible");
+      if (f != null)
+        f.delete();
+      iOfBoundsException.printStackTrace();
     }
   }
 
+  /**
+   ** Charge une partie depuis le fichier
+   * @param file
+   */
   public static Save load(String file) {
     try {
-      FileInputStream inputStream = new FileInputStream(formatFileString(file));
+      Configuration.instance().logger().info("Chargement de la sauvegarde : " + file);
+      FileInputStream inputStream = new FileInputStream(file);
       Save s = Save.fromFile(inputStream);
       inputStream.close();
       return s;
     } catch (FileNotFoundException fe) {
-      Configuration.instance().logger().severe("Ficheier de sauvegarde inexistant");
+      Configuration.instance().logger().severe("Fichier de sauvegarde inexistant");
+      fe.printStackTrace();
     } catch (IOException ioe) {
       Configuration.instance().logger().severe("Fichier de sauvegarde corrompu");
+      ioe.printStackTrace();
     }
     return null;
   }

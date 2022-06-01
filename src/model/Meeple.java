@@ -29,7 +29,7 @@ public class Meeple {
     player = b[0];
     x = b[1];
     y = b[2];
-    card = Byte.toString(b[3]);
+    card = String.valueOf((char) b[3]);
   }
 
   /**
@@ -50,7 +50,7 @@ public class Meeple {
 
   /**
    ** Retourne le cardinal determinant la position du Meeple sur la tuile
-   * @return String type : "n", "s", "e", "o", "c"
+   * @return String type : "n", "s", "e", "w", "c"
    */
   public String getCardinal() {
     return card;
@@ -76,7 +76,13 @@ public class Meeple {
     return Arrays.asList((byte) player, (byte) x, (byte) y, (byte) card.charAt(0));
   }
 
+  @Override
   public String toString() {
     return player + " (" + x + ", " + y + ") " + card;
+  }
+
+  @Override
+  public Meeple clone() {
+    return new Meeple(player, x, y, card);
   }
 }
