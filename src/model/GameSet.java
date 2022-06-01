@@ -353,7 +353,6 @@ public class GameSet {
   public boolean meeplePlacementAllowed(Meeple m) {
     Tile t = getTileFromCoord(m.getX() + getStartTilePoint().x, m.getY() + getStartTilePoint().y);
     if (t != null) {
-      System.out.println(t.toString());
       switch (m.getCardinal()) {
         case "c":
           return typeWhereMeepleAllow(t.center());

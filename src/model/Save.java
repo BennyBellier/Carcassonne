@@ -117,7 +117,6 @@ public class Save {
 
       inputStream.skip(16);
 
-      System.out.println(size - inputStream.available());
 
       byte[] bytes = new byte[6];
       inputStream.read(bytes);
@@ -128,7 +127,6 @@ public class Save {
       nbMeeplesOnSet = bytes[4];
       piocheSize = bytes[5];
 
-      System.out.println(size - inputStream.available());
 
       // lecture des paramètre des joueurs
       byte[][] playerByte = new byte[nbPlayer][9];
@@ -138,7 +136,6 @@ public class Save {
 
       bytes = new byte[12];
 
-      System.out.println(size - inputStream.available());
 
       // lecture de la tuile courante
       inputStream.read(bytes);
@@ -148,7 +145,6 @@ public class Save {
         currentTile = new CurrentTile(bytes);
 
       bytes = new byte[3];
-      System.out.println(size - inputStream.available());
 
       inputStream.read(bytes);
       if (bytes[0] == -1)
@@ -157,7 +153,6 @@ public class Save {
         currentMeeple = new CurrentMeeple(bytes);
 
       bytes = new byte[9];
-      System.out.println(size - inputStream.available());
 
       // lecture du plateau
       set = new Tile[setLength][set0Length];
@@ -169,7 +164,6 @@ public class Save {
           }
         }
       }
-      System.out.println(size - inputStream.available());
 
       // lecture de la pioche
       byte[][] pBytes = new byte[piocheSize][9];
@@ -177,7 +171,7 @@ public class Save {
         inputStream.read(pBytes[i]);
       }
       p = new Pioche(pBytes);
-      System.out.println(size - inputStream.available());
+      
 
       // lecture des meeples sur le plateau
       bytes = new byte[4];
@@ -185,7 +179,7 @@ public class Save {
         inputStream.read(bytes);
         meeples.add(new Meeple(bytes));
       }
-      System.out.println(size - inputStream.available());
+      
 
       // lecture des pseudo
       bytes = new byte[1];
@@ -200,7 +194,7 @@ public class Save {
         players.add(i, new Player(playerByte[i], pseudo));
         inputStream.skip(1);
       }
-      System.out.println(size - inputStream.available());
+      
 
       return new Save(playerTurn, currentTile, currentMeeple, set, p, players, meeples);
     } catch (

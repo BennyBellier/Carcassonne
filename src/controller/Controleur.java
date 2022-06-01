@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import global.Configuration;
 import model.GameEngine;
 import view.AffichePlateau;
 
@@ -55,7 +56,7 @@ public class Controleur implements ActionListener {
     lueurJ5 = tourJ5;
     IAPlaying = false;
     turnSaved = false;
-    timer = new Timer(50, this);
+    timer = new Timer(Integer.parseInt(Configuration.instance().lis("IASpeed")), this);
     timer.start();
   }
 
@@ -302,7 +303,6 @@ public class Controleur implements ActionListener {
     float c = (x - tab.getOffsetX()) / tab.tailleTuile();
     float l = (y - tab.getOffsetY()) / tab.tailleTuile();
     if (ge.getCurrentTile().placed && clickOnCurrentTile((int) c, (int) l)) {
-      System.out.println("placement du meeple");
       ge.placeMeeple(cardOfClic(x, y));
       tab.repaint();
     }

@@ -76,7 +76,6 @@ public class Configuration {
         System.err.println("Impossible de charger le fichier de configuration");
       }
     }
-    System.out.println(prop);
   }
 
   public static Configuration instance() {

@@ -67,7 +67,6 @@ public class AffichePlateau extends JComponent {
   public void setLabelScore(JLabel... labelListe) {
     playersScores = new ArrayList<>();
     int nbLabel = (labelListe.length - 1) / 2;
-    System.out.println(labelListe.length + " | " + nbLabel + "\n");
     if (nbLabel >= 2) {
       playersScores.add(new ScoreEntryPlayer(labelListe[0], labelListe[1]));
       playersScores.add(new ScoreEntryPlayer(labelListe[2], labelListe[3]));

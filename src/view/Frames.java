@@ -82,7 +82,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   /*
-
+    Differentes initialisation
   */
   private void setupPanel() {
     menuPrincipale();
@@ -97,6 +97,9 @@ public class Frames extends javax.swing.JFrame {
     rewind.setVisible(false);
   }
 
+  /*
+    Mode pleine ecran 
+  */
   public void basculeEnPleineEcran() {
     GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
     GraphicsDevice device = env.getDefaultScreenDevice();
@@ -110,11 +113,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
-  public void donnerAction(JButton b, String actionCommand) {
-    b.setActionCommand(actionCommand);
-    b.addActionListener(control);
-  }
-
+  /*
+    Affichage du menu principale
+  */
   public void menuPrincipale() {
     background.affichageMenu();
     menuPrincipale.setVisible(true);
@@ -133,6 +134,9 @@ public class Frames extends javax.swing.JFrame {
     options2.setVisible(false);
   }
 
+  /*
+    Permet de desactiver les boutons supprimer
+  */
   public void boutonSupDesactiver() {
     supprimerJ1.setVisible(false);
     supprimerJ2.setVisible(false);
@@ -141,6 +145,9 @@ public class Frames extends javax.swing.JFrame {
     supprimerJ5.setVisible(false);
   }
 
+  /*
+    Recupere le pseudo et active ajouter si possible
+  */
   public void choixNom() {
     textField = pseudo.getText();
     if (pseudo.getText().isEmpty()) {
@@ -150,6 +157,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Sert a désactiver les differentes couleur si choisi
+  */
   private void desactivation() {
     if (c.equals(couleurNoir)) {
       cNoir.setEnabled(false);
@@ -164,6 +174,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Sert a activer les differentes couleur si supprimer
+  */
   private void activation() {
     if (c.equals(couleurNoir)) {
       cNoir.setEnabled(true);
@@ -178,6 +191,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Ajout d un joueur humain
+  */
   private void ajouterHumain(String text) {
     if (j1.getText().isEmpty()) {
       j1.setForeground(c);
@@ -213,6 +229,9 @@ public class Frames extends javax.swing.JFrame {
     players.add(p);
   }
 
+  /*
+    Ajout d une IA
+  */
   private void ajouterIA(String text) {
     if (j1.getText().isEmpty()) {
       j1.setForeground(c);
@@ -247,6 +266,9 @@ public class Frames extends javax.swing.JFrame {
 
   }
 
+  /*
+    Choix couleur alea IA
+  */
   public void setColor() {
     int cRandom = r.nextInt(5);
     switch (cRandom) {
@@ -300,14 +322,10 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
-  public void affListe() {
-    for (int i = 0; i < players.size(); i++) {
-      System.out.print(players.get(i).pseudo());
-      System.out.print(players.get(i).color());
-      System.out.println(players.get(i).type());
-    }
-  }
 
+  /*
+    Sert a faire remonter les noms si certains label vide 
+  */
   private void remplace4() {
     if (!j5.getText().isEmpty()) {
       j4.setText(j5.getText());
@@ -319,6 +337,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Sert a faire remonter les noms si certains label vide 
+  */
   private void remplace3() {
     if (!j4.getText().isEmpty()) {
       j3.setText(j4.getText());
@@ -330,6 +351,9 @@ public class Frames extends javax.swing.JFrame {
     remplace4();
   }
 
+  /*
+    Sert a faire remonter les noms si certains label vide 
+  */
   private void remplace2() {
     if (!j3.getText().isEmpty()) {
       j2.setText(j3.getText());
@@ -341,6 +365,9 @@ public class Frames extends javax.swing.JFrame {
     remplace3();
   }
 
+  /*
+    Sert a faire remonter les noms si certains label vide 
+  */
   private void remplace1() {
     if (!j2.getText().isEmpty()) {
       j1.setText(j2.getText());
@@ -352,6 +379,9 @@ public class Frames extends javax.swing.JFrame {
     remplace2();
   }
 
+  /*
+    Restore les parametres du panel new game
+  */
   public void reinitialiserParametre() {
     ajouterJoueur.setEnabled(false);
     ajouterIA.setEnabled(true);
@@ -371,6 +401,9 @@ public class Frames extends javax.swing.JFrame {
     nomPartie.setText("");
   }
 
+  /*
+    restore les parametres ingame 
+  */
   void resetInGameLabel() {
     imageBleu.setIcon(null);
     imageJaune.setIcon(null);
@@ -389,6 +422,9 @@ public class Frames extends javax.swing.JFrame {
     cmpMeepleJaune.setText("");
   }
 
+  /*
+    Initialise les cadres des joueurs 
+  */
   public void cadre() {
     resetInGameLabel();
     for (int i = 0; i < players.size(); i++) {
@@ -418,6 +454,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Affichage des scores et des points overlay 
+  */
   void sendLabel() {
     List<JLabel> l = new ArrayList<>();
     if (imageBleu.getIcon() != null) {
@@ -444,6 +483,9 @@ public class Frames extends javax.swing.JFrame {
     plateauJeu.setLabelScore(l.stream().toArray(JLabel[]::new));
   }
 
+  /*
+    Sert a reinitialiser les cadres au J1 seulement
+  */
   public void reinitialiserLueur(){
     tourJ1.setVisible(true);
     tourJ2.setVisible(false);
@@ -452,6 +494,9 @@ public class Frames extends javax.swing.JFrame {
     tourJ5.setVisible(false);
   }
 
+  /*
+    Affichage de rewind si humain vs ia 1v1
+  */
   public void affRewind(){
     int nbHumain=0;
     for (Player p : players){
@@ -468,6 +513,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Charge l affichage des parties existante
+  */
   void loadSaveDisplayFile() {
     List<String> fList = new ArrayList<>();
     for (String f : new File(Configuration.instance().getConfigFolderPath() + File.separator + "saves").list()) {
@@ -492,6 +540,9 @@ public class Frames extends javax.swing.JFrame {
     });
   }
 
+  /*
+    Ajoute d un joueur et d une ia pour une partie Rapide sans passer par la config
+  */
   void partieRapide(){
     players.add(new Player("Joueur1",Player.Type.HUMAN ,couleurBleu ));
     switch (diffIAPartieRapide.getSelectedIndex()) {
@@ -507,6 +558,9 @@ public class Frames extends javax.swing.JFrame {
     }
   }
 
+  /*
+    Selectionne le nom de fichier en surbrillance
+  */
   void setSelectedSave(String filename) {
     selectedSave = filename;
   }
@@ -1698,16 +1752,7 @@ public class Frames extends javax.swing.JFrame {
   }
 
   private void quitterActionPerformed(java.awt.event.ActionEvent evt) {
-    /*
-     * String[] options = { "Oui", "Non" };
-     * int reply = quitterOptionPane.showOptionDialog(null,
-     * "Êtes-vous sûr.e de vouloir quitter le jeu ?", "Quitter le jeu ?" ,
-     * quitterOptionPane.YES_NO_OPTION, quitterOptionPane.QUESTION_MESSAGE, null,
-     * options, null);
-     * if (reply == quitterOptionPane.YES_OPTION) {
-     */
     System.exit(0);
-    // }
   }
 
   private void menuReglesActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1948,11 +1993,9 @@ public class Frames extends javax.swing.JFrame {
 
   private void volumeCheckActionPerformed(java.awt.event.ActionEvent evt) {
       if (!volumeCheck.isSelected()){
-        System.out.println("Music stop");
         audioPlayer.music.stop();
         Configuration.instance().setProperty("MusicState", "false");
       } else {
-        System.out.println("Music start");
         audioPlayer.music.play();
         Configuration.instance().setProperty("MusicState", "true");
       }
@@ -2038,11 +2081,9 @@ public class Frames extends javax.swing.JFrame {
 
   private void volumeCheck2ActionPerformed(java.awt.event.ActionEvent evt) {
     if (!volumeCheck.isSelected()){
-      System.out.println("Music stop");
       audioPlayer.music.stop();
       Configuration.instance().setProperty("MusicState", "false");
     } else {
-      System.out.println("Music start");
       audioPlayer.music.play();
       Configuration.instance().setProperty("MusicState", "true");
     }

@@ -191,7 +191,6 @@ public class IAMoyen implements IA {
     Tile testTile;
     GameSet testGameSet;
     Point start = gs.getStartTilePoint();
-    System.out.println("all : " + pos);
 
     int maxpts = -1;
     int x = 0;

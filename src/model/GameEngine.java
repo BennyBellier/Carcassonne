@@ -307,7 +307,6 @@ public class GameEngine {
     if (currentTile.placed) {
       projectsEvaluation();
       if (pioche.isEmpty()) {
-        System.out.println("Game Engine fin de game");
         gameEnded = true;
         control.finDeGame();
       } else {

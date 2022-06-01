@@ -24,7 +24,6 @@ public class Saver {
    * @param s
    */
   public void addSave(Save s) {
-    System.out.println(s.toString());
     history.push(s);
   }
 
@@ -34,7 +33,6 @@ public class Saver {
    */
   public Save getLastSave() {
     Save s = history.pop();
-    System.out.println(s.toString());
     return s;
   }
 

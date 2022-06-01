@@ -96,7 +96,6 @@ public class Player {
     curNumberOfProject = b[3];
     numberOfProjects = b[4];
     nbTilePlaced = b[5];
-    System.out.println( b[6] + " " +  b[7] + " " + b[8]);
     color = new Color((int) b[6] & 0xFF, (int) b[7] & 0xFF, (int) b[8] & 0xFF);
     if (type == Type.IA_EASY)
       ia = new IAEasy();
