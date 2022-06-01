@@ -6,7 +6,6 @@ import java.util.Map;
 import controller.Controleur;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.awt.Point;
 
 import controller.IA;

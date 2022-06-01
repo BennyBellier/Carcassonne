@@ -1727,6 +1727,8 @@ public class Frames extends javax.swing.JFrame {
       gameName = formatter.format(date);
     }
     control.saveGame(gameName);
+    menuPrincipale();
+    menuPlateau.setVisible(true);
   }
 
   private void reglesInGameActionPerformed(java.awt.event.ActionEvent evt) {
