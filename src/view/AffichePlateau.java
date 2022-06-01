@@ -135,6 +135,10 @@ public class AffichePlateau extends JComponent {
     aideIA = false;
   }
 
+  public boolean getStateAideIA() {
+    return aideIA;
+  }
+
   /**
    ** Définie la taille de la tuile
    */

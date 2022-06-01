@@ -69,7 +69,8 @@ public abstract class Project {
       for (int j = 0; j < t[i].length; j++) {
         if (!roadVisit.contains(t[i][j]) && t[i][j] != null) {
           if (t[i][j].hasRoad()) {
-            if (t[i][j].center() == Tile.Type.ROAD) {
+            if (t[i][j].center() == Tile.Type.ROAD || t[i][j].center() == Tile.Type.CITY
+                || t[i][j].center() == Tile.Type.ABBEY) {
               ProjectRoad p = new ProjectRoad(t, j, i, "c", roadVisit);
               if (p.isFinish() || endGame)
                 projects.add(p);

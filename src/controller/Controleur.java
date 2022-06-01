@@ -354,7 +354,8 @@ public class Controleur implements ActionListener {
    ** Active la suggestion de l'IA
    */
   public void activateAideIA() {
-    tab.activateAideIA(ge.IAPreferedPlay());
+    if (!ge.getCurrentTile().placed && !tab.getStateAideIA())
+      tab.activateAideIA(ge.IAPreferedPlay());
     tab.repaint();
   }
 
@@ -373,6 +374,10 @@ public class Controleur implements ActionListener {
       }
 
        if (clicOnHand(x, y)) {
+         if (tab.getStateAideIA()) {
+           tab.desactivateAideIA();
+           tab.repaint();
+         }
         if (ge.getCurrentTile().placed) {
           endTurn();
         } else if (!ge.getCurrentTile().placed) {
